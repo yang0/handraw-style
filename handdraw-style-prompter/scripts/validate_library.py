@@ -7,6 +7,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from resolve_reference import resolve
+
 SKILL = Path(__file__).resolve().parents[1]
 ROOT = SKILL.parent
 
@@ -20,6 +22,7 @@ def main() -> None:
     subprocess.run(python + [str(SKILL / "scripts" / "build_library.py")], check=True)
     styles = json.loads((SKILL / "references" / "styles.json").read_text(encoding="utf-8"))
     attribution = json.loads((SKILL / "references" / "attribution.json").read_text(encoding="utf-8"))
+    model_capabilities = json.loads((SKILL / "references" / "model_capabilities.json").read_text(encoding="utf-8"))
     expected = [f"{n:03}" for n in range(1, 217)]
     if [item["number"] for item in styles] != expected:
         fail("style numbering is not continuous 001–216")
@@ -28,6 +31,41 @@ def main() -> None:
         fail("018 maps to the wrong generation name")
     if any(record.get("status") == "deceased" and not record.get("source") for record in attribution.values()):
         fail("a deceased attribution record has no verification source")
+    if model_capabilities.get("default", {}).get("name_activation") != "unknown":
+        fail("the model capability default must be unknown")
+    if model_capabilities.get("default", {}).get("use_reference_image") is not True:
+        fail("unknown model capability must use the image fallback")
+    for model, profile in model_capabilities.get("models", {}).items():
+        if profile.get("name_activation") not in {None, "strong", "weak", "none", "unknown"}:
+            fail(f"invalid model capability for {model}")
+        if profile.get("traits_activation") not in {None, "strong", "weak", "none", "unknown"}:
+            fail(f"invalid traits capability for {model}")
+        for number, entry in profile.get("styles", {}).items():
+            if number not in expected:
+                fail(f"model capability references invalid style {number}")
+            if entry.get("name_activation") not in {"strong", "weak", "none", "unknown"}:
+                fail(f"invalid style capability for {model}/{number}")
+            if entry.get("traits_activation") not in {None, "strong", "weak", "none", "unknown"}:
+                fail(f"invalid traits style capability for {model}/{number}")
+    unknown = resolve("unregistered-model", "001")
+    if unknown["name_activation"] != "unknown" or not unknown["use_reference_image"]:
+        fail("unknown model must use reference image")
+    if resolve("gpt-image-2", "001")["use_reference_image"] is not False:
+        fail("gpt-image-2 style 001 should use name activation")
+    if resolve("gpt-image-2", "155")["activation_source"] != "name+style+traits" or resolve("gpt-image-2", "155")["use_reference_image"] is not False:
+        fail("gpt-image-2 style with positive traits should use name+traits activation")
+    synthetic = {"default": model_capabilities["default"], "models": {
+        "test-model": {"name_activation": "unknown", "traits_activation": "strong", "styles": {"201": {"name_activation": "none"}, "002": {"name_activation": "strong"}}},
+    }}
+    if resolve("test-model", "201", synthetic)["use_reference_image"] is not True:
+        fail("empty traits or insufficient capability must use reference image")
+    if resolve("test-model", "002", synthetic)["use_reference_image"] is not False:
+        fail("strong capability must not use reference image")
+    traits_case = resolve("gpt-image-2", "022")
+    if traits_case["activation_source"] != "name+style+traits" or not traits_case["prompt_traits"] or "避免" in traits_case["prompt_traits"]:
+        fail("gpt-image-2 traits activation did not produce filtered positive traits")
+    if resolve("gpt-image-2", "201")["use_reference_image"] is not True:
+        fail("empty-trait style must use reference image")
     if any(item["traits"] for item in styles[200:]):
         fail("201–216 core visual traits must remain blank")
     individual = ROOT / "images" / "individual"
@@ -40,7 +78,7 @@ def main() -> None:
     if "风格索引（216）" not in gallery or "输入 001–216" not in gallery:
         fail("gallery count or range is stale")
     skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    for token in ["Explicit image-generation mode", "referenced_image_paths", "style reference only", "ignore the reference image's subjects", "images\\individual\\{number}.png"]:
+    for token in ["Explicit image-generation mode", "name_activation=strong", "model_capabilities.json", "referenced_image_paths", "style reference only", "ignore the reference image's subjects", "images\\individual\\{number}.png"]:
         if token not in skill_text:
             fail(f"image-reference contract is missing {token}")
     for token in ["Session initialization", "mcp__codex_app__open_in_codex", "file:///E:/handraw-style/handdraw-style-prompter/gallery/index.html", "Do not repeat the browser call", "fallback link"]:
