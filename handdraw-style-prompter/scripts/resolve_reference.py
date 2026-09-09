@@ -4,8 +4,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
+
+ROOT = Path(__file__).resolve().parents[2]
+ROOT_SCRIPTS = ROOT / "scripts"
+if str(ROOT_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(ROOT_SCRIPTS))
+
+from style_asset_paths import grid_path, single_path
 
 SKILL = Path(__file__).resolve().parents[1]
 POLICY = SKILL / "references" / "model_capabilities.json"
@@ -30,12 +38,19 @@ def positive_traits(traits: str) -> str:
     return "；".join(kept)
 
 
+def get_reference_path(number: str) -> str:
+    reference_grid = grid_path(number)
+    return str(reference_grid if reference_grid.exists() else single_path(number))
+
+
 def resolve(model: str, style: str, policy: dict | None = None) -> dict:
-    if not style.isdigit() or not 1 <= int(style) <= 216:
-        raise ValueError("Style must be a number from 001 to 216.")
+    styles = json.loads(STYLES.read_text(encoding="utf-8"))
+    max_num = len(styles)
+    if not style.isdigit() or not 1 <= int(style) <= max_num:
+        raise ValueError(f"Style must be a number from 001 to {max_num:03}.")
     number = f"{int(style):03}"
     policy = policy or load_policy()
-    style_record = load_style(number)
+    style_record = next(item for item in styles if item["number"] == number)
     fallback = dict(policy["default"])
     profile = policy.get("models", {}).get(model)
     entry = dict(fallback)
@@ -68,7 +83,7 @@ def resolve(model: str, style: str, policy: dict | None = None) -> dict:
         "use_reference_image": use_reference_image,
         "include_prompt_traits": bool(prompt_traits),
         "prompt_traits": prompt_traits,
-        "reference_path": f"E:\\handraw-style\\images\\individual\\{number}.png" if use_reference_image else None,
+        "reference_path": get_reference_path(number) if use_reference_image else None,
         "note": entry.get("note", "")
     }
 

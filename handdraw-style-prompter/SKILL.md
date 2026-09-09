@@ -1,6 +1,6 @@
 ---
 name: handdraw-style-prompter
-description: Turn a 001–216 hand-drawn style number and image theme into bilingual prompts, or generate an image with a model-capability-aware decision about whether the matching numbered image is needed as a style reference.
+description: Turn a 001–261 hand-drawn style number and image theme into bilingual prompts, or generate an image with a model-capability-aware decision about whether the matching numbered image is needed as a style reference.
 ---
 
 # Hand-drawn Style Prompter
@@ -13,14 +13,19 @@ When the user explicitly requests image generation, first resolve the current im
 
 - `name_activation=strong`: first choice. Send only the indexed author name plus generated style name and theme; do not add core traits or pass a reference image.
 - If name activation is not strong but `traits_activation=strong` and the style has core traits, second choice. Add only positive, concrete visual traits to the author-name + style-name prompt and do not pass a reference image.
-- If neither author-name + style-name nor author-name + style-name + traits is strong, last choice. Pass the matching single reference image through the image-generation tool's `referenced_image_paths` parameter.
+- If neither author-name + style-name nor author-name + style-name + traits is strong, last choice. Pass the configured reference asset through the image-generation tool's `referenced_image_paths` parameter. Assets live in numbered 200-style buckets: for example, #217 uses `E:\handraw-style\images\individual\201-400\217_grid.jpg`.
 - If the model identifier or its capability entry is unavailable, treat it as `unknown` and pass the image as the safe fallback.
 - Use `python scripts/resolve_reference.py --model <model> --style <number>` when a deterministic decision check is useful. The script prints JSON and never guesses an unknown model's capability.
 - The resolver reports `activation_source` as `name+style`, `name+style+traits`, or `reference-image`, plus the filtered `prompt_traits` when traits are used.
 
-- Resolve the style number to `E:\handraw-style\images\individual\{number}.png` (for example, `048` maps to `E:\handraw-style\images\individual\048.png`).
-- When an image is passed, tell the image model that this input is a style reference only. Extract only broad visual language such as line quality, brush or medium feel, and color tendency when useful.
-- When an image is passed, explicitly ignore the reference image's subjects, people, animals, objects, setting, actions, composition, layout, text, and story elements. The user's written theme is the sole source for image content.
+- Resolve the style number to its configured reference asset. The normal fallback is `E:\handraw-style\images\individual\{bucket}\{number}.png` (for example, `048` maps to `E:\handraw-style\images\individual\001-200\048.png`); a matching `{number}_grid.jpg` in the same bucket takes priority.
+- When an image is passed, inject the following reference-isolation block into the actual image-generation prompt. It is required for every reference-image generation and is not added to ordinary prompt-only output:
+
+  Chinese: `所附图片仅用于参考画风。只提取参考图的风格特征，例如线条、笔触、媒介、材质、色彩倾向和整体视觉语言；不要使用、复制或延续参考图中的任何主体、人物、动物、服装、道具、动作、姿态、场景、背景、构图、布局、文字或故事。最终画面内容完全以用户提供的主题为准。`
+
+  English: `Use the attached image only as a style reference. Extract only its stylistic qualities, such as linework, brushwork, medium, material texture, color tendencies, and overall visual language. Do not use, copy, or carry over any subject, person, animal, clothing, prop, action, pose, setting, background, composition, layout, text, or story from the reference image. The user's written theme is the sole source for the image content.`
+
+- The user's theme is the sole source for subjects and narrative; the reference image must never override or add content to the theme.
 - When core traits are used instead of an image, include only positive visible traits; filter clauses containing `避免`, `不要`, or `不准` and do not copy the traits field mechanically.
 - If the numbered image is missing or cannot be passed, report that limitation and provide the normal text prompts; never invent or substitute a reference image.
 - After generation, identify whether the numbered reference image was used. If used, identify its number. Do not imply generation when the user requested prompts only.
@@ -38,7 +43,7 @@ This initialization applies only when this Skill is invoked for the first time i
 
 ## Inputs
 
-Require a style number (`001`–`216`) and a theme. Accept optional aspect ratio, subject constraints, and text requirements. If the number is absent or invalid, ask the user to choose a valid number; do not invent a style. Do not add an aspect ratio when none was supplied.
+Require a style number (`001`–`261`) and a theme. Accept optional aspect ratio, subject constraints, and text requirements. If the number is absent or invalid, ask the user to choose a valid number; do not invent a style. Do not add an aspect ratio when none was supplied.
 
 Users can browse `gallery/index.html` for the numbered contact sheets. The authoritative style content is `../styles_200_reorganized.md`; `references/styles.json` is a generated index and must be refreshed with `python scripts/build_library.py` after the Markdown changes.
 

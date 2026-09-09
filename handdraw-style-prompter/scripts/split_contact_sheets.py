@@ -2,21 +2,29 @@
 """Split every numbered 4x4 contact sheet into individual numbered PNGs."""
 from __future__ import annotations
 
-import argparse
+import json
 import re
+import sys
 from pathlib import Path
 
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-SHEET = re.compile(r"^[A-G]_(\d{3})-(\d{3})\.png$")
+ROOT_SCRIPTS = ROOT / "scripts"
+if str(ROOT_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(ROOT_SCRIPTS))
+
+from style_asset_paths import single_path
+
+SHEET = re.compile(r"^[A-G]_(\d{3})(?:-(\d{3}))?\.png$")
 
 
-def split_sheet(path: Path, output: Path) -> int:
+def split_sheet(path: Path) -> int:
     match = SHEET.match(path.name)
     if not match:
         return 0
-    start, end = (int(value) for value in match.groups())
+    start = int(match.group(1))
+    end = int(match.group(2)) if match.group(2) else start
     count = end - start + 1
     with Image.open(path) as image:
         image = image.convert("RGB")
@@ -27,19 +35,18 @@ def split_sheet(path: Path, output: Path) -> int:
             x1 = round((column + 1) * width / 4)
             y0 = round(row * height / 4)
             y1 = round((row + 1) * height / 4)
-            image.crop((x0, y0, x1, y1)).save(output / f"{start + offset:03}.png")
+            target = single_path(start + offset)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            image.crop((x0, y0, x1, y1)).save(target)
     return count
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=ROOT / "images" / "individual")
-    args = parser.parse_args()
-    args.output.mkdir(parents=True, exist_ok=True)
-    total = sum(split_sheet(path, args.output) for path in sorted((ROOT / "images").glob("[A-G]_*.png")))
-    if total != 216:
-        raise SystemExit(f"Expected 216 numbered tiles, wrote {total}.")
-    print(f"Split {total} numbered tiles into {args.output}")
+    total = sum(split_sheet(path) for path in sorted((ROOT / "images").glob("[A-G]_*.png")))
+    expected = len(json.loads((ROOT / "handdraw-style-prompter" / "references" / "styles.json").read_text(encoding="utf-8")))
+    if total != expected:
+        raise SystemExit(f"Expected {expected} numbered tiles, wrote {total}.")
+    print(f"Split {total} numbered tiles into numbered 200-style buckets.")
 
 
 if __name__ == "__main__":

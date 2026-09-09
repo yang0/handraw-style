@@ -1,4 +1,4 @@
-# 216 种人物 IP 手绘风格库（重新整理版）
+# 261 种人物 IP 手绘风格库（重新整理版）
 
 规则：保留原参考名称用于索引；生图时优先使用“生图名称”。通用/历史风格保持短描述；当代个人创作者型条目使用稍详细的视觉描述，以减少只靠作者名造成的生成不稳定。
 
@@ -465,3 +465,48 @@
 | 214 · 天翊羽 | 国风幻想插画风 | |
 | 215 · 左手韩 | 治愈生活插画风 | |
 | 216 · 柳维尼 | 时尚女性插画风 | |
+| 217 · OscarAI | Stylized 3D Cartoon Personality | 奇想风格化3D卡通美学、夸张头身比例、富有表现力的大眼、独特剪影轮廓与精细触感材质纹理；具有现代动画长片质感。 |
+| 218 · OscarAI | Quirky 60s-70s Retro Storybook Illustration | 60-70年代复古儿童绘本插画感、夸张大眼睛与生动面部特征、粗糙手绘线条、质朴色铅笔/蜡笔颗粒质感、暖调复古配色、简练几何轮廓与怪诞可爱的人物造型。 |
+| 219 · OscarAI | Charming Vintage Storybook Illustration | 复古暖调手绘儿童绘本插画风、质感蜡笔与彩铅颗粒肌理、松弛粗糙的墨水轮廓线、夸张生动的大眼睛与古怪可爱角色造型、复古纸本留边边框、明亮温暖的欧式复古动画叙事感。 |
+| 220 · OscarAI | Stylized Graphic 2D Animation Character | 现代2D动画概念设计风、干练利落的几何剪影、大块平涂与微质感光影、夸张修长的身体比例、极富个性的面部轮廓与黑框眼镜造型、清新明快的角色概念原画感。 |
+| 221 · OscarAI | Tactile Felt & Knitted 3D Puppet | 定格动画式手工毛毡与针织3D人偶、温润质朴的毛线与布料绒毛纤维肌理、童趣复古粉彩色调、夸张头身比与古怪时尚着装、触感真实的微缩实体模型感。 |
+| 222 · OscarAI | Mid-Century Poetic Ink & Watercolor Storybook | 二十世纪中叶经典复古儿童绘本风、细腻松弛的钢笔墨水线条、清透柔和的水彩晕染、大面积纯净留白、质朴水彩纸纹理、丁丁历险记般的诗意复古童趣。 |
+| 223 · OscarAI | Whimsical Watercolor Die-Cut Sticker Cartoon | 手绘水彩贴纸风、圆形模切与干净白边边框、明亮灵动的大眼睛与微卷发丝、温润水彩与不透明水粉质感、治愈可爱的现代儿童插画与潮玩贴纸美学。 |
+| 224 · OscarAI | Retro 70s Tactile Wool & Clay Stop-Motion Puppet | 70年代复古定格动画人偶风、温润黏土与羊羔绒/颗粒毛圈布料触感、暖调复古暖棕与姜黄配色、朴拙可爱的五官与夸张大脚大耳、怀旧儿童剧集的微缩实体感。 |
+| 225 · OscarAI | Textured Cut-Paper Collage Storybook | 复古手工剪纸拼贴绘本风、几何块面切割与质朴纸张撕边肌理、多层纹理纸张套叠、复古哑光大地与红黄色系、简练图形化的人物肖像与版画手工感。 |
+| 226 · OscarAI | Painterly Gouache Animation Storybook | 温暖厚涂水粉动画插画风、松弛可见的干湿画笔笔触、夸张清澈的纯真大眼、温润电影感柔光与雪景氛围、复古绘本与现代动画长片概念美术质感。 |
+| 227 · Ahmed | Deadpan Stylized 3D Urban Character | 现代风格化3D黏土/胶体角色雕刻、略带厌世与冷幽默的死鱼眼夸张神态、独特的拉长头部与夸张下颌剪影、哑光微雕质感、生动诙谐的都市通勤者小剧场。 |
+| 228 · OscarAI | Scandinavian Folk-Art Naive Storybook | 北欧极简民间艺术绘本风、质朴稚拙的童趣造型、柔和哑光大地色系、松弛质感手绘笔触与克制留白、带有温暖手工民俗温度。 |
+| 229 · OscarAI | Minimalist Organic Pastel Editorial | 现代极简编辑插画风、轻细灵动的铅笔/墨线、抽象有机几何形状、柔和莫兰迪粉彩色调、微颗粒纸本噪点与呼吸感留白。 |
+| 230 · OscarAI | Vintage Ink & Watercolor Comic Storybook | 经典复古手绘漫画绘本风、生动流畅的蘸水笔墨水线条、温润质朴的水彩平涂晕染、复古报刊插画排线、大眼睛与红润脸蛋的可爱人物造型、温暖怀旧的童年冒险叙事感。 |
+| 231 · Ahmed | Chic Urban Editorial Motion Character | 现代都市时尚编辑插画风、优雅舒展的动态剪影、松弛大方的服饰垂坠感、哑光粉彩与柔和铅笔微颗粒纹理、暖色提亮撞色、兼具高级时尚感与动画角色设计的清爽气质。 |
+| 232 · OscarAI | Fuzzy Plush Toy 3D Character | 治愈系毛绒玩具与雪尼尔毛线3D人偶、逼真蓬松的绒毛与针织纤维触感、明快鲜艳的冰淇淋马卡龙配色、憨萌可爱的几何形体与大头小短腿比例、潮流艺术玩具感。 |
+| 233 · OscarAI | Warm Gouache & Colored Pencil Storybook Character | 温暖水粉与彩色铅笔手绘绘本风、细腻柔和的铅笔颗粒质感与排线肌理、圆润饱满的卡通面部轮廓、大黑框眼镜与可爱红鼻头、治愈温馨的现代儿童插画质感。 |
+| 234 · OscarAI | Chunky Knit Mohair Stop-Motion Puppet | 定格动画式粗针马海毛毛衣人偶风、逼真细腻的毛圈毛线编织与毛绒长毛纤维肌理、冷脸呆萌的死鱼眼黑框眼镜宅男造型、夸张长款大衣与修长小腿、微缩实体手办质感。 |
+| 235 · OscarAI | Edwardian Vintage Ink Fashion Editorial | 爱德华时代复古时尚墨水插画风、精美利落的钢笔排线与羽化阴影、典雅复古的礼帽长裙剪影、极简复古蓝与芥末黄点缀平涂、大面积呼吸感留白与诗意文学氛围。 |
+| 236 · OscarAI | Stylized 3D Animation Feature Character | 现代3D动画长片角色风、温润雕刻感面部轮廓与胡须发丝、颗粒毛衣针织纹理、富有神采的大眼与微表情、暖调柔和的工作室柔光光影。 |
+| 237 · OscarAI | Chubby Pastel Knitted Toy 3D Character | 圆滚滚软萌针织与黏土3D玩偶风、细腻质感的棉线针织围巾手套与毛衣、糖果粉彩马卡龙色调、圆润夸张的身材与呆萌微怒表情、潮玩治愈系微缩模型感。 |
+| 238 · OscarAI | Quirky Fantasy Sketchbook Character Concept | 奇幻动画概念速写风、松散纤细的钢笔墨线、质朴水彩晕染与颗粒纸感、精灵耳与慵懒不羁的叛逆神态、层次丰富的异域服饰设计与独立动画设定集美学。 |
+| 239 · OscarAI | Late-80s Cyberpunk Dark OVA Cel Anime | 80年代末日本黑暗赛博朋克OVA赛璐珞动画风、锐利手绘勾线、浓郁阴郁的丙烯手绘背景、高对比度硬光影、冷艳魅惑的女性肖像与黄金时代动画胶片质感。 |
+| 240 · OscarAI | Franco-Belgian Ligne Claire Urban Sketch | 法比清线漫画与欧洲城市速写风、俯瞰全景视角、精密清爽的黑墨水线条、鲜明欢快的色块平涂、细致入微的欧式街区建筑与石板路细节、旅行绘本般的人文温度。 |
+| 241 · OscarAI | Classic 60s-70s Xerox Cel Animation | 60-70年代经典静电复印(Xerox)手绘赛璐珞动画风、生动微糙的石墨铅笔动态勾线、古典手绘水粉城堡背景、优雅灵动的迪士尼黄金时代复古人物造型。 |
+| 242 · OscarAI | Isometric Fantasy Illustrated Cartography | 等轴测俯视手绘奇幻地图风、精细水墨钢笔轮廓排线、温润手绘水彩林地与溪流岩石质感、复古RPG冒险地图细节感。 |
+| 243 · OscarAI | Loose Ink & Gouache Storybook Studio | 松散墨水线条与水粉手绘插画风、率性写意的笔触排线、大头蓬松卷发与胡须大叔与宠物鸭子、温馨充满故事感的欧式生活日常画室。 |
+| 244 · OscarAI | Medieval Dark Fantasy Ink & Ochre Illustration | 中世纪暗黑奇幻墨线插画风、精密细腻的钢笔交错排线、暗调羊皮纸暖赭色调、压迫感十足的重装牛角铠甲骑士与古老石阶遗迹氛围。 |
+| 245 · OscarAI | Classic 80s-90s Heroic Fantasy Cel Anime | 80-90年代经典剑与魔法奇幻赛璐珞动画风、纯正手绘赛璐珞质感、红发持剑女勇士与古堡阴影下的重甲战士、古典戏剧性冷暖打光。 |
+| 246 · OscarAI | Vintage 70s European Comic Animation Cel | 70年代欧洲传统手绘手作动画风、质朴粗糙的手绘石墙背景、夸张滑稽的红发大胡子卫兵与尖帽侍从、古典讽刺动画与阿斯特里克斯式的幽默神态。 |
+| 247 · OscarAI | Modern Cinematic 2D Character Animation | 现代电影级2D动画角色插画风、灵动深邃的大眼睛与微卷盘发墨镜、细腻柔和的室内环境光影与利落干净的动画清线造型。 |
+| 248 · 歸藏(guizang.ai) | Guochao Fantasy Architectural Illustration | 唯美国风奇幻建筑插画风、粉紫祥云与巨大明月、青瓦朱墙重檐宫殿楼阁与山石古松、扁平清丽的东方意境与梦幻国潮配色。 |
+| 249 · Sgt Sref | Retro Pointillist Pixel Grassland Fantasy | 复古点彩微像素奇幻插画风、密性质感草地针织颗粒纹理、至尊金戒与金色钱币散落、绿斗篷隐者背影、莫比斯式的极简神秘寓言感。 |
+| 250 · Shinyi | Stylized Cinematic Action-Comedy Character | 风格化大块面剪影动画插画风、夸张强壮的胡子大叔与市井风情、干练几何块面平涂与微颗粒光影、充满动势与幽默张力的街头角色原画。 |
+| 251 · 城野ぱすてる | Glossy Mecha Cyber Flower Doll | 高光亮面机甲机娘潮玩风、鲜艳大红与金边机甲涂装、机械巨镰与彼岸花发饰造型、极致精细的机械关节与陶瓷般高光质感。 |
+| 252 · なっくす | Soft Crayon & Sumi-e Cat Storybook | 温润蜡笔与水墨和风绘本风、质朴手绘炭笔蜡笔颗粒肌理、巨型猫咪的翡翠绿眼与细腻毛流、微型人偶与红色印章、充满童趣温暖的日式日常绘本。 |
+| 253 · James Yeung | Minimalist Poetic Sempé Ink Doodle | 极简法式诗意水墨线描风、桑贝式松弛写意小人与萌宠、大面积纯净留白、质朴手绘墨水笔触、治愈松弛的都市童心与生活小哲思。 |
+| 254 · AI Prompt Library - PROMPTSREF | New Chinese Gongbi & Shanghai Vintage Fantasy | 新中式细腻工笔重彩与民国月份牌复古风、精巧流畅的游丝铁线描、温润矿物颜料渐变晕染、典雅华贵的东方神话与旗袍仕女、空灵幽远的东方古典美学。 |
+| 255 · midlibrary | Modern Minimalist Sumi-e & Red Gouache Illustration | 现代极简水墨与高对比度红黑插画风、粗粝松弛的宣纸焦墨飞白干笔、大块纯色水粉撞色平涂、现代几何构图与东方意境留白。 |
+| 256 · Morph | Chinese Ink Travelogue & Woodblock Collage | 中式水墨旅行手账与复古木刻版画拼贴风、拓印肌理与书法印章排版、温润复古暖橙与灰蓝水墨调和、充满诗意与市井烟火气的东方纪行美学。 |
+| 257 · midlibrary | Romantic Pink Watercolor Sumi-e Wash | 浪漫粉调新东风水墨晕染风、柔和半透明水粉水彩层次、写意书法墨色点缀、轻盈梦幻的落樱花瓣与东方抒情写意。 |
+| 258 · AI Prompt Library - PROMPTSREF | Vivid Watercolor Anime Fantasy World | 鲜艳水彩与日系动画奇幻风、高饱和明快撞色色块、生动表现力墨水勾线、电影感通透光影与梦幻游戏插画质感。 |
+| 259 · 牙仔⇌ | Retro Gouache Narrative Character Illustration | 复古厚涂水粉叙事插画风、颗粒磨砂纸张肌理、朴实质感的人物造型与暖调复古色相、充满时代温度的绘本生活场景。 |
+| 260 · 牙仔⇌ | Chic Stylized Anime Comic Art | 潮流风格化日系动漫插画风、利落流畅的手绘线稿、鲜明平涂色块与网点纸微纹理、极具辨识度的时尚青年角色设计。 |
+| 261 · OscarAI | Charming 2D Animation Feature Character Visdev | 温润细腻的2D动画长片角色概念设计风、大眼与黑框眼镜的生动表情、利落剪影造型与微质感笔触边缘、纯白留白背景、质朴温和的大地与森林色系、极具亲和力与故事感的动画视觉开发(visdev)艺术。 |

@@ -12,32 +12,420 @@
       "traits_activation": "strong",
       "note": "Use the style name when it is strong; otherwise use positive core traits when available. Empty-trait styles keep the image fallback.",
       "styles": {
-        "001": {"name_activation": "strong"}, "002": {"name_activation": "strong"}, "003": {"name_activation": "strong"},
-        "004": {"name_activation": "strong"}, "005": {"name_activation": "strong"}, "006": {"name_activation": "strong"},
-        "007": {"name_activation": "strong"}, "008": {"name_activation": "strong"}, "009": {"name_activation": "strong"},
-        "010": {"name_activation": "strong"}, "011": {"name_activation": "strong"}, "012": {"name_activation": "strong"},
-        "013": {"name_activation": "strong"}, "017": {"name_activation": "strong"}, "018": {"name_activation": "strong"},
-        "019": {"name_activation": "strong"}, "020": {"name_activation": "strong"}, "021": {"name_activation": "strong"},
-        "025": {"name_activation": "strong"}, "026": {"name_activation": "strong"}, "027": {"name_activation": "strong"},
-        "028": {"name_activation": "strong"}, "029": {"name_activation": "strong"}, "030": {"name_activation": "strong"},
-        "031": {"name_activation": "strong"}, "032": {"name_activation": "strong"}, "033": {"name_activation": "strong"},
-        "034": {"name_activation": "strong"}, "035": {"name_activation": "strong"}, "036": {"name_activation": "strong"},
-        "037": {"name_activation": "strong"}, "038": {"name_activation": "strong"}, "039": {"name_activation": "strong"},
-        "040": {"name_activation": "strong"}, "041": {"name_activation": "strong"}, "042": {"name_activation": "strong"},
-        "043": {"name_activation": "strong"}, "044": {"name_activation": "strong"}, "045": {"name_activation": "strong"},
-        "046": {"name_activation": "strong"}, "047": {"name_activation": "strong"}, "048": {"name_activation": "strong"},
-        "049": {"name_activation": "strong"}, "050": {"name_activation": "strong"}, "051": {"name_activation": "strong"},
-        "052": {"name_activation": "strong"}, "053": {"name_activation": "strong"}, "054": {"name_activation": "strong"},
-        "059": {"name_activation": "strong"}, "060": {"name_activation": "strong"}, "061": {"name_activation": "strong"},
-        "062": {"name_activation": "strong"}, "063": {"name_activation": "strong"}, "064": {"name_activation": "strong"},
-        "065": {"name_activation": "strong"}, "066": {"name_activation": "strong"}, "068": {"name_activation": "strong"},
-        "069": {"name_activation": "strong"}, "070": {"name_activation": "strong"}, "071": {"name_activation": "strong"},
-        "072": {"name_activation": "strong"}, "075": {"name_activation": "strong"}, "076": {"name_activation": "strong"},
-        "077": {"name_activation": "strong"}, "078": {"name_activation": "strong"}, "079": {"name_activation": "strong"},
-        "080": {"name_activation": "strong"}, "083": {"name_activation": "strong"}, "088": {"name_activation": "strong"},
-        "090": {"name_activation": "strong"}, "091": {"name_activation": "strong"}, "092": {"name_activation": "strong"},
-        "094": {"name_activation": "strong"}, "127": {"name_activation": "strong"}, "147": {"name_activation": "strong"},
-        "148": {"name_activation": "strong"}, "208": {"name_activation": "strong"}, "210": {"name_activation": "strong"}
+        "001": {
+          "name_activation": "strong"
+        },
+        "002": {
+          "name_activation": "strong"
+        },
+        "003": {
+          "name_activation": "strong"
+        },
+        "004": {
+          "name_activation": "strong"
+        },
+        "005": {
+          "name_activation": "strong"
+        },
+        "006": {
+          "name_activation": "strong"
+        },
+        "007": {
+          "name_activation": "strong"
+        },
+        "008": {
+          "name_activation": "strong"
+        },
+        "009": {
+          "name_activation": "strong"
+        },
+        "010": {
+          "name_activation": "strong"
+        },
+        "011": {
+          "name_activation": "strong"
+        },
+        "012": {
+          "name_activation": "strong"
+        },
+        "013": {
+          "name_activation": "strong"
+        },
+        "017": {
+          "name_activation": "strong"
+        },
+        "018": {
+          "name_activation": "strong"
+        },
+        "019": {
+          "name_activation": "strong"
+        },
+        "020": {
+          "name_activation": "strong"
+        },
+        "021": {
+          "name_activation": "strong"
+        },
+        "025": {
+          "name_activation": "strong"
+        },
+        "026": {
+          "name_activation": "strong"
+        },
+        "027": {
+          "name_activation": "strong"
+        },
+        "028": {
+          "name_activation": "strong"
+        },
+        "029": {
+          "name_activation": "strong"
+        },
+        "030": {
+          "name_activation": "strong"
+        },
+        "031": {
+          "name_activation": "strong"
+        },
+        "032": {
+          "name_activation": "strong"
+        },
+        "033": {
+          "name_activation": "strong"
+        },
+        "034": {
+          "name_activation": "strong"
+        },
+        "035": {
+          "name_activation": "strong"
+        },
+        "036": {
+          "name_activation": "strong"
+        },
+        "037": {
+          "name_activation": "strong"
+        },
+        "038": {
+          "name_activation": "strong"
+        },
+        "039": {
+          "name_activation": "strong"
+        },
+        "040": {
+          "name_activation": "strong"
+        },
+        "041": {
+          "name_activation": "strong"
+        },
+        "042": {
+          "name_activation": "strong"
+        },
+        "043": {
+          "name_activation": "strong"
+        },
+        "044": {
+          "name_activation": "strong"
+        },
+        "045": {
+          "name_activation": "strong"
+        },
+        "046": {
+          "name_activation": "strong"
+        },
+        "047": {
+          "name_activation": "strong"
+        },
+        "048": {
+          "name_activation": "strong"
+        },
+        "049": {
+          "name_activation": "strong"
+        },
+        "050": {
+          "name_activation": "strong"
+        },
+        "051": {
+          "name_activation": "strong"
+        },
+        "052": {
+          "name_activation": "strong"
+        },
+        "053": {
+          "name_activation": "strong"
+        },
+        "054": {
+          "name_activation": "strong"
+        },
+        "059": {
+          "name_activation": "strong"
+        },
+        "060": {
+          "name_activation": "strong"
+        },
+        "061": {
+          "name_activation": "strong"
+        },
+        "062": {
+          "name_activation": "strong"
+        },
+        "063": {
+          "name_activation": "strong"
+        },
+        "064": {
+          "name_activation": "strong"
+        },
+        "065": {
+          "name_activation": "strong"
+        },
+        "066": {
+          "name_activation": "strong"
+        },
+        "068": {
+          "name_activation": "strong"
+        },
+        "069": {
+          "name_activation": "strong"
+        },
+        "070": {
+          "name_activation": "strong"
+        },
+        "071": {
+          "name_activation": "strong"
+        },
+        "072": {
+          "name_activation": "strong"
+        },
+        "075": {
+          "name_activation": "strong"
+        },
+        "076": {
+          "name_activation": "strong"
+        },
+        "077": {
+          "name_activation": "strong"
+        },
+        "078": {
+          "name_activation": "strong"
+        },
+        "079": {
+          "name_activation": "strong"
+        },
+        "080": {
+          "name_activation": "strong"
+        },
+        "083": {
+          "name_activation": "strong"
+        },
+        "088": {
+          "name_activation": "strong"
+        },
+        "090": {
+          "name_activation": "strong"
+        },
+        "091": {
+          "name_activation": "strong"
+        },
+        "092": {
+          "name_activation": "strong"
+        },
+        "094": {
+          "name_activation": "strong"
+        },
+        "127": {
+          "name_activation": "strong"
+        },
+        "147": {
+          "name_activation": "strong"
+        },
+        "148": {
+          "name_activation": "strong"
+        },
+        "208": {
+          "name_activation": "strong"
+        },
+        "210": {
+          "name_activation": "strong"
+        },
+        "217": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "218": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "219": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "220": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "221": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "222": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "223": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "224": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "225": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "226": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "227": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "228": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "229": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "230": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "231": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "232": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "233": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "234": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "235": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "236": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "237": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "238": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "239": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "240": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "241": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "242": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "243": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "244": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "245": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "246": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "247": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "248": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "249": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "250": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "251": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "252": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "253": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "254": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "255": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "256": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "257": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "258": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "259": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "260": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        },
+        "261": {
+          "name_activation": "none",
+          "traits_activation": "none"
+        }
       }
     }
   }
