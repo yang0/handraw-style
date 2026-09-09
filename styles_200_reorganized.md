@@ -40,37 +40,37 @@
 
 | 016 · Rubyetc | Raw Emotional Internet Doodle | 粗糙黑线、极简人体、心理情绪、自嘲式互联网漫画；脸部与服装主动做减法，依靠清楚轮廓、眼口和少量关键形状建立人物辨识度；保留纸纹、颗粒、套印或手工媒介的不完美，强化独立出版物的触感。 |
 
-| 017 · Sarah Andersen | Black-and-White Reaction Diary Cartoon | 黑白网络漫画、简化人物、极强 reaction 表情与肢体；脸部与服装主动做减法，依靠清楚轮廓、眼口和少量关键形状建立人物辨识度；主要依靠黑白关系和大面积留白塑形，表情集中在眼神、眉形与嘴形变化。 |
+| 017 · Sarah Andersen | Black-and-White Reaction Diary Cartoon | 黑白简线、圆眼反应表情、松散黑发、日常衣着；人物常与小动物或生活物件并置，依靠简单轮廓和大面积留白塑造轻松的生活漫画感。 |
 
-| 018 · Poorly Drawn Lines / Reza Farazmand | Minimal Deadpan Dialogue Cartoon | 简笔人物动物、荒诞对白、面无表情互联网冷梗；脸部与服装主动做减法，依靠清楚轮廓、眼口和少量关键形状建立人物辨识度；表情偏冷脸、尴尬或突然夸张，姿态要有明确喜剧节奏，避免统一的可爱微笑。 |
+| 018 · Poorly Drawn Lines / Reza Farazmand | Minimal Deadpan Dialogue Cartoon | 极简圆头人物、面无表情、简单动物、灰蓝与米色小色块；人物和动物以干净轮廓置于白底中，靠冷淡姿态和微小关系制造荒诞幽默。 |
 
-| 019 · The Oatmeal / Matthew Inman | Explosive Webcomic Exaggeration | 粗黑线、巨大表情、夸张人体、互联网知识型幽默；以醒目外轮廓和大形组织人物，五官少而有力，动作通过肩胯与手脚方向直接传达；表情偏冷脸、尴尬或突然夸张，姿态要有明确喜剧节奏，避免统一的可爱微笑。 |
+| 019 · The Oatmeal / Matthew Inman | Explosive Webcomic Exaggeration | 粗黑线、夸张圆眼、张大嘴、头发和四肢大幅甩动；人物常与动物同框，以强烈动作、巨大表情和少量灰黑色块形成爆发式网络漫画效果。 |
 
-| 020 · Allie Brosh | Low-Fi Frenzy Cartoon | 极粗糙鼠绘感、疯狂表情、失控姿势、经典互联网 Low-fi；人物轮廓优先于细节堆砌，脸型、头身比例与手脚形状要形成清楚而独立的视觉语言；保留纸纹、颗粒、套印或手工媒介的不完美，强化独立出版物的触感。 |
+| 020 · Allie Brosh | Low-Fi Frenzy Cartoon | 粗糙鼠绘感、黑色乱发、极端大眼大嘴、粉色大色块、单人失控动作；保留低保真数字涂画的不规整轮廓和直接粗粝的互联网幽默。 |
 
-| 021 · Mari Andrew | Watercolor Handwritten Life Notes | 手写文字、极简人物、水彩点染、女性生活观察；脸部与服装主动做减法，依靠清楚轮廓、眼口和少量关键形状建立人物辨识度；上色保留透明叠染、柔软边缘和纸纹，允许轻微颜色不均与留白。 |
+| 021 · Mari Andrew | Watercolor Handwritten Life Notes | 极简女性人物、细黑线、细长四肢、柔和水彩点染；以红色心形等单一物件承载生活情绪，画面保持白底、留白和轻微纸张质感。 |
 
-| 022 · Sally Nixon | Flat Everyday Women Lifestyle | 平面女性人物、日常室内生活、自然动作、不摆拍感；人物以圆、方、弧线等大形构成，五官图标化，比例强调图形辨识而非写实解剖；人物姿态松弛自然，服装靠清楚剪影体现时尚感，避免模板化甜美脸。 |
+| 022 · Sally Nixon | Flat Everyday Women Lifestyle | 日常女性人物、蓬松手绘线稿、低饱和外套与围巾、旁边的小鸟；姿态自然站立，服装和动物用清楚色块区分，整体保留生活速写的轻松感。 |
 
-| 023 · Agathe Sorlet | Warm Minimal Female Line Cartoon | 黑色简线、暖色平涂、年轻女性、亲密轻松日常；脸部与服装主动做减法，依靠清楚轮廓、眼口和少量关键形状建立人物辨识度；配色控制在柔和低刺激色域，用少量点色区分层次，背景保持轻和干净。 |
+| 023 · Agathe Sorlet | Warm Minimal Female Line Cartoon | 黑色简线、黑色长发女性、坐姿、白上衣与蓝色牛仔裤；以少量暖色腮红和红色鞋带点亮画面，背景保持干净，气质亲密而松弛。 |
 
-| 024 · Jean-Michel Tixier | Geometric Fashion Deadpan | 几何人物、冷面表情、现代时尚、社论式构图；人物以圆、方、弧线等大形构成，五官图标化，比例强调图形辨识而非写实解剖；表情偏冷脸、尴尬或突然夸张，姿态要有明确喜剧节奏，避免统一的可爱微笑。 |
+| 024 · Jean-Michel Tixier | Geometric Fashion Deadpan | 夸张大头、松散黑色短线、冷面人物、横条纹上衣、灰黑与浅色块；人物比例故意不协调，依靠简化脸部和粗略纹理形成时尚而疏离的幽默感。 |
 
-| 025 · Gary Larson | One-Panel Absurd Social Cartoon | 单格漫画、动物社会、荒诞设定、一本正经的反逻辑；人物轮廓优先于细节堆砌，脸型、头身比例与手脚形状要形成清楚而独立的视觉语言；表情偏冷脸、尴尬或突然夸张，姿态要有明确喜剧节奏，避免统一的可爱微笑。 |
+| 025 · Gary Larson | One-Panel Absurd Social Cartoon | 单格漫画、极简黑线、细长人物与动物并置、荒诞社会情境；人物和动物以克制的姿态和少量灰绿色块呈现一本正经的反逻辑幽默。 |
 
-| 026 · Sergio Aragonés | Dense Silent Physical Comedy | 密集小人物、肢体喜剧、无字漫画、动作信息量极高；人物轮廓优先于细节堆砌，脸型、头身比例与手脚形状要形成清楚而独立的视觉语言；表情与肢体动作要服从该风格的人格机制，避免回落为统一的标准Q版表情。 |
+| 026 · Sergio Aragonés | Dense Silent Physical Comedy | 密集小动物和小人物、粗黑线、夸张鼻子与张嘴大笑、四肢向外伸展；画面充满无字肢体喜剧和拥挤的动作信息。 |
 
-| 027 · R. Crumb | Underground Crosshatched Grotesque Cartoon | 地下漫画、粗线密排线、怪诞人体、复古反主流；以醒目外轮廓和大形组织人物，五官少而有力，动作通过肩胯与手脚方向直接传达；表情与肢体动作要服从该风格的人格机制，避免回落为统一的标准Q版表情。 |
+| 027 · R. Crumb | Underground Crosshatched Grotesque Cartoon | 黑色密排线、粗重轮廓、坐姿人物、夸张而不修饰的人体比例；皮肤、头发和衣物依靠密集交叉排线塑造，带有地下漫画的粗粝与怪诞。 |
 
-| 028 · Daniel Clowes | Retro Detached American Comic | 美式复古漫画、冷色、疏离人物、成人都市气质；人物轮廓优先于细节堆砌，脸型、头身比例与手脚形状要形成清楚而独立的视觉语言；表情与肢体动作要服从该风格的人格机制，避免回落为统一的标准Q版表情。 |
+| 028 · Daniel Clowes | Retro Detached American Comic | 黑色齐肩直发、方形眼镜、条纹上衣与绿色外套、冷静平涂色块；人物正面站立、表情疏离，画面具有复古美式成人漫画的克制感。 |
 
-| 029 · Chris Ware | Geometric Diagrammatic Narrative | 几何精密线条、信息图布局、克制人物、结构化叙事；人物以圆、方、弧线等大形构成，五官图标化，比例强调图形辨识而非写实解剖；表情与肢体动作要服从该风格的人格机制，避免回落为统一的标准Q版表情。 |
+| 029 · Chris Ware | Geometric Diagrammatic Narrative | 几何精密线条、孤立小人物、公交站牌与城市方块、信息图式留白；人物和环境由规整矩形与细线组成，色彩克制，叙事像一张安静的城市图表。 |
 
-| 030 · Adrian Tomine | Clean Urban Solitude Comic | 清晰线稿、都市青年、日常观察、安静疏离；人物轮廓优先于细节堆砌，脸型、头身比例与手脚形状要形成清楚而独立的视觉语言；表情与肢体动作要服从该风格的人格机制，避免回落为统一的标准Q版表情。 |
+| 030 · Adrian Tomine | Clean Urban Solitude Comic | 清晰细线、年轻亚洲女性半身像、深色外套、低饱和肤色与黑发；人物侧身回望，表情安静克制，背景留白，呈现都市观察和轻微疏离。 |
 
-| 031 · Marjane Satrapi | High-Contrast Black-White Memoir Cartoon | 黑白高对比、剪影式人物、极少细节、直接叙事；人物轮廓优先于细节堆砌，脸型、头身比例与手脚形状要形成清楚而独立的视觉语言；主要依靠黑白关系和大面积留白塑形，表情集中在眼神、眉形与嘴形变化。 |
+| 031 · Marjane Satrapi | High-Contrast Black-White Memoir Cartoon | 黑白高对比、粗黑剪影、盘坐女性、简化五官、大片纯黑服装；人物姿态直接而静止，依靠白色脸部和黑色轮廓形成克制的回忆录漫画感。 |
 
-| 032 · Joann Sfar | Loose French Improvised Ink | 松散法式墨线、怪比例、即兴人体、随意但很灵；保留明显手绘笔压、停顿与轻微不齐整感，让轮廓产生真实纸上绘制的节奏；表情与肢体动作要服从该风格的人格机制，避免回落为统一的标准Q版表情。 |
+| 032 · Joann Sfar | Loose French Improvised Ink | 松散法式墨线、蓬乱卷发、大眼女性、黑猫、随意坐姿；线条保留手绘停顿和轻微不齐整，配合少量暖色块，形成即兴、俏皮而略带怪诞的画面。 |
 
 | 033 · Charles M. Schulz | Minimal Newspaper Comic | 极简报纸漫画线、圆头小人物、低动作高人格、细微表情。 |
 
