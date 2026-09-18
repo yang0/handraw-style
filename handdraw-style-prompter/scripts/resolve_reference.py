@@ -64,9 +64,9 @@ def resolve(model: str, style: str, policy: dict | None = None) -> dict:
         use_reference_image = False
         prompt_traits = traits
     else:
-        activation_source = "reference-image"
+        activation_source = "name+style+traits+reference-image" if traits else "name+style+reference-image"
         use_reference_image = True
-        prompt_traits = ""
+        prompt_traits = traits
     return {
         "model": model,
         "style": number,

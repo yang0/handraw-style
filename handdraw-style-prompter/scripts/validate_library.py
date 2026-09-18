@@ -92,7 +92,7 @@ def main() -> None:
         fail("style 217 must preserve traits and use its four-panel grid reference")
     if not grid_path(217).exists():
         fail("style 217 four-panel grid is missing")
-    for number in range(262, 269):
+    for number in range(262, total_styles + 1):
         reference = resolve("unregistered-model", f"{number:03}")
         if grid_path(number).exists() or reference["reference_path"] != str(single_path(number)):
             fail(f"single-image style {number:03} must not retain a redundant grid reference")
