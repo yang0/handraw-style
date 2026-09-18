@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+public/images/
+src/data/styles.json
+.DS_Store
+*.log

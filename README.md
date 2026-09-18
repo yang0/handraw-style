@@ -4,6 +4,14 @@
 
 这里整理了 **001–267 种手绘风格**。先选一个编号，再告诉 Skill 你想表现的主题，就能得到带有风格名称的中文和英文提示词，直接交给支持生图的 AI 使用。
 
+## 在线预览
+
+不需要本地安装，直接在浏览器里浏览全部风格、按分组检索、复制双语提示词：
+
+- 在线预览站：<https://why-qw1ko.github.io/handraw-style/>
+- 风格库（支持搜索与分组筛选）：<https://why-qw1ko.github.io/handraw-style/styles/>
+- 拼图画廊（分组速览、点击放大）：<https://why-qw1ko.github.io/handraw-style/gallery/>
+
 ## 它适合谁
 
 - 不知道该怎么描述画风的创作者
@@ -26,7 +34,7 @@ $skill-installer install --repo yang0/handraw-style --path . --name handdraw-sty
 
 ## 这个 Skill 怎么用
 
-1. 打开[编号画廊](handdraw-style-prompter/gallery/index.html)，浏览风格图片。
+1. 打开[在线预览站](https://why-qw1ko.github.io/handraw-style/)（或本地 [编号画廊](handdraw-style-prompter/gallery/index.html)），浏览风格图片。
 2. 记下喜欢的编号，例如 `041`。
 3. 输入“编号 + 主题”，例如：`041号风格，主题：秋天的第一杯奶茶`。
 4. 得到带风格名称的中文和英文提示词。

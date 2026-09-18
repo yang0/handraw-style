@@ -1,0 +1,19 @@
+{
+  "name": "handraw-style-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "手绘风格库在线预览站（手绘风格提示词库 001–267）",
+  "scripts": {
+    "dev": "npm run sync:assets && astro dev",
+    "start": "npm run dev",
+    "preview": "astro preview",
+    "build": "npm run sync:assets && astro build",
+    "sync:assets": "node scripts/sync-assets.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.4.0"
+  }
+}

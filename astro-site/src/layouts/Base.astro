@@ -1,0 +1,68 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalPath?: string;
+  type?: 'website' | 'article';
+}
+
+// BASE 前缀，供 OG/绝对链接使用
+const base = import.meta.env.BASE_URL;
+const {
+  title = '手绘风格库 · Handraw Style Prompter',
+  description = '001–267 种手绘风格的编号提示词库，快速做出有辨识度的图片。',
+  image = `${base}favicon.svg`,
+  canonicalPath = '/',
+  type = 'website',
+} = Astro.props;
+
+const fullTitle = Astro.props.title
+  ? `${Astro.props.title} · 手绘风格库`
+  : '手绘风格库 · 001–267 种手绘风格';
+const canonical = new URL(base.replace(/\/$/, '') + canonicalPath, Astro.site) || canonicalPath;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="手绘风格库" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <meta name="theme-color" content="#f7f3ec" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主内容</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script>import '../scripts/favorites.ts';</script>
+    <script>import '../scripts/clipboard.ts';</script>
+  </body>
+</html>

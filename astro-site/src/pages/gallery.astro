@@ -1,0 +1,236 @@
+---
+import Base from '../layouts/Base.astro';
+import { groups, contactSheets } from '../data/styles';
+const base = import.meta.env.BASE_URL;
+const imgBase = `${import.meta.env.BASE_URL}images/`;
+---
+
+<Base
+  title="拼图画廊"
+  description="以分组拼图快速浏览 001–267 种手绘风格，点击可放大查看每一张编号参考图。"
+  canonicalPath="/gallery"
+>
+  <header class="page-head container">
+    <nav class="crumbs" aria-label="面包屑">
+      <a href={`${base}`}>首页</a> <span>/</span> <span>拼图画廊</span>
+    </nav>
+    <h1>拼图画廊</h1>
+    <p class="sub">
+      按 A–H 分组展示的全部 267 张编号参考拼图。点击任意拼图可放大，关联编号可跳转到对应风格详情。
+    </p>
+  </header>
+
+  <section class="container">
+    <div class="legend">
+      {groups.map((g) => (
+        <a class="legend-item" href={`${base}styles?group=${g.letter}`}><b>{g.letter}</b>{g.short}</a>
+      ))}
+    </div>
+
+    <div class="sheets">
+      {contactSheets.map((s) => (
+        <figure class="sheet-card" id={`sheet-${s.letter}-${s.start}-${s.end}`} data-group={s.letter}>
+          <span class="sheet-badge">{s.letter} · #{String(s.start).padStart(3, '0')}–#{String(s.end).padStart(3, '0')}</span>
+          <button class="sheet-btn" type="button" data-src={`${imgBase}${s.file}`} aria-label={`放大查看 ${s.letter} #${s.start} 到 #${s.end}`}>
+            <img src={`${imgBase}${s.file}`} alt={`${s.letter} styles ${s.start} to ${s.end}`} loading="lazy" decoding="async" />
+          </button>
+          <figcaption>
+            <span>{s.letter} · #{String(s.start).padStart(3, '0')}–#{String(s.end).padStart(3, '0')}</span>
+            <a class="to-styles" href={`${base}styles?group=${s.letter}`}>在「全部风格」中查看本组 →</a>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <dialog class="lightbox" aria-label="拼图放大预览">
+    <form method="dialog" class="lb-top">
+      <button class="lb-close" type="submit" aria-label="关闭">✕</button>
+    </form>
+    <img class="lb-img" src="" alt="" />
+  </dialog>
+</Base>
+
+<style>
+  .page-head {
+    padding: 3rem 0 1.4rem;
+  }
+  .crumbs {
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    margin-bottom: 0.8rem;
+  }
+  .crumbs a:hover {
+    color: var(--accent-ink);
+  }
+  .page-head h1 {
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  }
+  .sub {
+    color: var(--ink-soft);
+    max-width: 46rem;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.6rem;
+  }
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .legend-item b {
+    width: 20px;
+    height: 20px;
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 50%;
+    font-size: 0.7rem;
+  }
+  .legend-item:hover {
+    border-color: var(--accent);
+  }
+
+  .sheets {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+  }
+  .sheet-card {
+    margin: 0;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.7rem;
+    scroll-margin-top: 90px;
+    transition: transform 0.14s, box-shadow 0.14s, border-color 0.14s;
+  }
+  .sheet-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--line-strong);
+  }
+  .sheet-badge {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 2;
+    background: rgba(36, 33, 30, 0.85);
+    color: #fff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    letter-spacing: 0.03em;
+  }
+  .sheet-btn {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+    border-radius: var(--radius-sm);
+  }
+  .sheet-btn img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    background: #fff;
+  }
+  .sheet-btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.2rem 0.1rem;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    font-weight: 650;
+    font-family: var(--mono);
+    flex-wrap: wrap;
+  }
+  figcaption .to-styles {
+    color: var(--accent-ink);
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  figcaption .to-styles:hover {
+    text-decoration: underline;
+  }
+
+  .lightbox {
+    width: min(94vw, 1400px);
+    max-width: none;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: #171513;
+    color: #fff;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .lightbox::backdrop {
+    background: rgba(12, 11, 10, 0.6);
+  }
+  .lb-top {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
+  }
+  .lb-close {
+    border: 0;
+    border-radius: 8px;
+    padding: 0.35rem 0.7rem;
+    background: #fff;
+    color: #24211e;
+    font-size: 1rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .lb-img {
+    width: 100%;
+    max-height: 82vh;
+    object-fit: contain;
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector('.lightbox') as HTMLDialogElement;
+  const lbImg = dialog.querySelector<HTMLImageElement>('.lb-img');
+  const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('.sheet-btn'));
+  btns.forEach((b) => {
+    b.addEventListener('click', () => {
+      const src = b.getAttribute('data-src') || '';
+      if (lbImg) {
+        lbImg.src = src;
+        lbImg.alt = b.getAttribute('aria-label') || '';
+      }
+      dialog.showModal();
+    });
+  });
+  dialog.addEventListener('close', () => {
+    if (lbImg) lbImg.src = '';
+  });
+  // 点击遮罩关闭
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+</script>

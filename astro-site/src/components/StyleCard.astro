@@ -1,0 +1,130 @@
+---
+import { imagePath } from '../data/styles';
+export interface Props {
+  number: string;
+  name: string;
+  author: string;
+  group: string;
+  groupLetter: string;
+  traits?: string;
+  hidden?: boolean;
+}
+const { number, name, author, group, groupLetter, traits = '', hidden = false } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const href = `${base}styles/${number}/`;
+---
+
+<article class="card" data-number={number} data-group={groupLetter} data-search={`${number} ${name} ${author} ${group} ${traits}`.toLowerCase()} hidden={hidden || undefined}>
+  <a class="card-media" href={href} aria-label={`查看风格号 ${number}：${name}`}>
+    <img src={imagePath(number)} alt={`风格 ${number} · ${name}`} width="512" height="512" loading="lazy" decoding="async" />
+  </a>
+  <div class="card-body">
+    <div class="card-head">
+      <span class="no">{number}</span>
+      <div class="card-actions">
+        <button class="star" type="button" data-fav aria-label="收藏风格 {number}" aria-pressed="false">☆</button>
+      </div>
+    </div>
+    <a class="card-name" href={href}>{name}</a>
+    <div class="card-meta">
+      <span class="chip chip--paper">{groupLetter}</span>
+      <span class="author">{author}</span>
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--line-strong);
+  }
+  .card-media {
+    display: block;
+    aspect-ratio: 1 / 1;
+    background: #fff;
+  }
+  .card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .card:hover .card-media img {
+    transform: scale(1.03);
+  }
+  .card-body {
+    padding: 0.7rem 0.85rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .no {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent-ink);
+    font-size: 0.82rem;
+  }
+  .card-actions {
+    display: flex;
+  }
+  .star {
+    background: none;
+    border: 0;
+    padding: 2px 4px;
+    font-size: 1.15rem;
+    line-height: 1;
+    color: var(--line-strong);
+    cursor: pointer;
+    transition: transform 0.12s, color 0.12s;
+  }
+  .star:hover {
+    transform: scale(1.2);
+    color: var(--accent);
+  }
+  .star.on {
+    color: var(--accent);
+  }
+  .card-name {
+    font-weight: 680;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: var(--ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-name:hover {
+    color: var(--accent-ink);
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+    min-width: 0;
+  }
+  .author {
+    font-size: 0.8rem;
+    color: var(--ink-mute);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>

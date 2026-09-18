@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import { groups, totalCount } from '../data/styles';
+const base = import.meta.env.BASE_URL;
+
+const install = `$skill-installer install --repo yang0/handraw-style --path . --name handdraw-style-prompter --ref master`;
+const usage = `041 号风格，主题：秋天的第一杯奶茶`;
+const oldPage = `${base}../handdraw-style-prompter/gallery/index.html`;
+---
+
+<Base
+  title="关于"
+  description="手绘风格库是一个收录 001–267 种手绘风格的编号提示词库，选风格、报主题、拿双语提示词。"
+  canonicalPath="/about"
+>
+  <article class="page prose container">
+    <nav class="crumbs" aria-label="面包屑">
+      <a href={`${base}`}>首页</a> <span>/</span> <span>关于</span>
+    </nav>
+    <h1>关于手绘风格库</h1>
+
+    <p class="lede">
+      这里是 <strong>手绘风格提示词库</strong> 的在线预览站。我们整理了 <strong>{totalCount} 种手绘风格</strong>（{groups.length} 个分组），
+      每个风格对应一个编号、一个英文风格名和一段中文特征提示词。目的很简单：
+      <b>不会描述画风，也能快速做出有辨识度的图片。</b>
+    </p>
+
+    <h2>它解决什么问题</h2>
+    <ul>
+      <li>只能说出“可爱一点”“文艺一点”，生成结果每次画风都漂移；</li>
+      <li>面对一整页参考图，难以说清自己到底喜欢哪一种；</li>
+      <li>换个生图 AI 或模型，同一个风格又会跑偏。</li>
+    </ul>
+    <p>这套风格库把“凭感觉选图”变成“记住一个编号”。你不需要背风格名，也不需要自己拼提示词。</p>
+
+    <h2>怎么用</h2>
+    <ol>
+      <li>
+        在<strong>风格库</strong>或<strong>拼图画廊</strong>里挑一个喜欢的编号（例如
+        <a href={`${base}styles/041`}>041</a>）。
+      </li>
+      <li>把这个 Skill 装进你的编辑器/助手，或直接告诉生图 AI 风格名和主题。</li>
+      <li>例如：<code class="usage">{usage}</code></li>
+      <li>得到带风格名称的中文 + 英文提示词，复制到你正在用的生图模型即可。</li>
+    </ol>
+
+    <h2>安装（Skill）</h2>
+    <p>安装时必须选择仓库根目录 <code>.</code>，根目录同时包含画廊、拼图和编号参考图：</p>
+    <pre><code>{install}</code></pre>
+
+    <h2>风格分组</h2>
+    <p>全部风格按 A–H 分为 8 组，方便按方向快速定位。</p>
+    <ul>
+      {groups.map((g) => (
+        <li>
+          <a href={`${base}styles?group=${g.letter}`}><b>{g.letter}</b> · {g.name}</a>
+          〔{g.range} · {g.count} 种〕
+        </li>
+      ))}
+    </ul>
+
+    <h2>页面说明</h2>
+    <ul>
+      <li><a href={`${base}styles`}>全部风格</a>：按编号 / 风格名 / 作者 / 关键词搜索，支持 <code>#001</code> 编号检索。</li>
+      <li><a href={`${base}gallery`}>拼图画廊</a>：分组拼图速览，点击放大。</li>
+      <li>旧版单页画廊仍保留：<a href={oldPage}>handdraw-style-prompter/gallery/index.html</a></li>
+    </ul>
+
+    <h2>版权与免责</h2>
+    <p>
+      本站在线的图片均为风格编号参考样例，版权归原作者所有，仅用于“选择风格”与“生成提示词”，
+      不会用于任何盈利目的。生图时模型会参考该作者风格，如需商用请自行评估对应画师的授权情况。
+    </p>
+    <p>作者：X <a href="https://x.com/yang02010" target="_blank" rel="noopener">@yang02010</a></p>
+  </article>
+</Base>
+
+<style>
+  .page {
+    padding: 3rem 0 3rem;
+    max-width: 780px;
+  }
+  .crumbs {
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    margin-bottom: 1.2rem;
+  }
+  .crumbs a:hover {
+    color: var(--accent-ink);
+  }
+  .page h1 {
+    font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+    margin-bottom: 0.6rem;
+  }
+  .lede {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+  }
+  .lede b,
+  .lede strong {
+    color: var(--ink);
+  }
+  code {
+    font-family: var(--mono);
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
+    padding: 0.1rem 0.35rem;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+  pre {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1rem 1.2rem;
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  .usage {
+    display: inline-block;
+    margin: 0.2rem 0;
+  }
+</style>

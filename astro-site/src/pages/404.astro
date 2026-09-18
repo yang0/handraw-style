@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="页面未找到" description="你访问的页面不存在。">
+  <section class="container notfound">
+    <div class="art" aria-hidden="true">
+      <span>4</span>
+      <span class="splat">✕</span>
+      <span>4</span>
+    </div>
+    <h1>这页被画丢了</h1>
+    <p>你要找的编号或页面不存在，试试回到风格库看看其他风格。</p>
+    <div class="cta">
+      <a class="btn btn--primary" href={`${base}`}>回到首页</a>
+      <a class="btn" href={`${base}styles`}>浏览全部风格</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .notfound {
+    text-align: center;
+    padding: 6rem 1rem 5rem;
+  }
+  .art {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 5.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--accent-ink);
+    margin-bottom: 1rem;
+  }
+  .art .splat {
+    color: var(--accent);
+    font-weight: 400;
+    transform: rotate(12deg);
+  }
+  .notfound h1 {
+    font-size: 1.9rem;
+  }
+  .notfound p {
+    color: var(--ink-mute);
+    max-width: 34rem;
+    margin: 0 auto 1.6rem;
+  }
+  .cta {
+    display: flex;
+    gap: 0.7rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

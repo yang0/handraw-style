@@ -1,0 +1,41 @@
+---
+import { groups } from '../data/styles';
+const base = import.meta.env.BASE_URL;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-cols">
+      <div>
+        <h4>手绘风格库</h4>
+        <p class="intro">
+          001–267 种手绘风格的编号提示词库。选一个编号，告诉描述主题，
+          即可得到中文 + 英文提示词，直接交给生图 AI。
+        </p>
+      </div>
+      <div>
+        <h4>探索</h4>
+        <ul>
+          <li><a href={`${base}styles`}>全部风格（{groups.length} 组）</a></li>
+          <li><a href={`${base}gallery`}>拼图画廊</a></li>
+          <li><a href={`${base}about`}>使用方式</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>风格分组</h4>
+        <ul>
+          {groups.slice(0, 8).map((g) => (
+            <li>
+              <a href={`${base}styles?group=${g.letter}`}>{g.letter} · {g.short}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>仅供选择风格、生成提示词使用；图片为样例，版权归原作者所有。</span>
+      <span>·</span>
+      <a href="https://x.com/yang02010" target="_blank" rel="noopener">作者 X：@yang02010</a>
+    </div>
+  </div>
+</footer>

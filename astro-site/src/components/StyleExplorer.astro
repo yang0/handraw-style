@@ -1,0 +1,262 @@
+---
+import type { Style } from '../data/styles';
+import { groups } from '../data/styles';
+import StyleCard from './StyleCard.astro';
+
+interface Props {
+  styles: Style[];
+}
+const { styles: items } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+// 服务端做一次可用的过滤（收藏依赖 localStorage，仅由前端处理）。
+const params = Astro.url.searchParams;
+const serverGroup = (params.get('group') || '').toUpperCase();
+const serverQ = (params.get('search') || '').trim().toLowerCase();
+
+function matchesServer(s: Style) {
+  const letter = s.group.trim().charAt(0).toUpperCase();
+  if (serverGroup && letter !== serverGroup) return false;
+  if (serverQ) {
+    const hay = `${s.number} ${s.generation_name} ${s.reference} ${s.group} ${s.traits}`.toLowerCase();
+    if (!hay.includes(serverQ) && !s.number.includes(serverQ.replace(/^#/, ''))) return false;
+  }
+  return true;
+}
+
+const groupNames: Record<string, string> = Object.fromEntries(groups.map((g) => [g.letter, g.name]));
+const allNumbers = items.map((s) => s.number);
+---
+
+<section class="explorer" data-explorer data-group-names={JSON.stringify(groupNames)} data-all-numbers={JSON.stringify(allNumbers)}>
+  <div class="controls">
+    <label class="search">
+      <span class="visually-hidden icon" aria-hidden="true">⌕</span>
+      <input
+        type="search"
+        id="mk-search"
+        placeholder="搜索编号、风格名、作者、关键词（例如 018、#001、watercolor、水墨）"
+        value={serverQ}
+      />
+    </label>
+
+    <div class="group-row" role="group" aria-label="按分组筛选">
+      <button class="gbtn" type="button" data-group="" title="显示全部分组">全部</button>
+      {groups.map((g) => (
+        <button class="gbtn" type="button" data-group={g.letter} title={g.name} class:list={{ active: serverGroup === g.letter }}>
+          {g.letter}
+        </button>
+      ))}
+    </div>
+
+    <div class="toolbar">
+      <label class="fav-toggle">
+        <input type="checkbox" id="mk-fav" />
+        <span>★ 只看收藏</span>
+      </label>
+      <span class="count" id="mk-count" role="status">{items.length} / {items.length}</span>
+    </div>
+  </div>
+
+  <div class="grid" id="mk-grid">
+    {
+      items.map((s) => (
+        <StyleCard
+          number={s.number}
+          name={s.generation_name}
+          author={s.reference}
+          group={s.group}
+          groupLetter={s.group.trim().charAt(0).toUpperCase()}
+          traits={s.traits}
+          hidden={!matchesServer(s)}
+        />
+      ))
+    }
+    <p class="empty" data-empty hidden>没有匹配的风格，换个关键词试试。</p>
+  </div>
+</section>
+
+<style>
+  .controls {
+    display: grid;
+    gap: 0.9rem;
+    margin-bottom: 1.4rem;
+  }
+  .search {
+    position: relative;
+    display: block;
+  }
+  .search .icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-mute);
+  }
+  .search input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    background: var(--paper-2);
+    color: var(--ink);
+  }
+  .search input:focus {
+    outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    border-color: var(--accent);
+  }
+  .group-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .gbtn {
+    min-width: 40px;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--line-strong);
+    background: var(--paper-2);
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .gbtn:hover {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  .gbtn.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .fav-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    user-select: none;
+  }
+  .fav-toggle input {
+    accent-color: var(--accent);
+    width: 16px;
+    height: 16px;
+  }
+  .count {
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    font-family: var(--mono);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1rem;
+  }
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--ink-mute);
+    padding: 3rem 0;
+  }
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector('[data-explorer]') as HTMLElement;
+  if (root) {
+    const allNumbers = JSON.parse(root.getAttribute('data-all-numbers') || '[]');
+    const grid = root.querySelector('#mk-grid') as HTMLElement;
+    const input = root.querySelector('#mk-search') as HTMLInputElement;
+    const favBox = root.querySelector('#mk-fav') as HTMLInputElement;
+    const countEl = root.querySelector('#mk-count') as HTMLElement;
+    const emptyEl = root.querySelector('[data-empty]') as HTMLElement;
+    const groupBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('.gbtn'));
+
+    const favKey = 'handraw:favorites';
+    let q = '';
+    let group = '';
+    let favOnly = false;
+
+    const readFavs = (): Set<string> => {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(favKey) || '[]'));
+      } catch {
+        return new Set();
+      }
+    };
+
+    const render = () => {
+      const favs = readFavs();
+      const cards = Array.from(grid.querySelectorAll<HTMLElement>('.card'));
+      let shown = 0;
+      for (const c of cards) {
+        const num = c.getAttribute('data-number') || '';
+        const cg = (c.getAttribute('data-group') || '').toUpperCase();
+        const okGroup = !group || cg === group;
+        const okFav = !favOnly || favs.has(num);
+        const okQ = !q || (c.getAttribute('data-search') || '').includes(q) || num.includes(q.replace(/^#/, ''));
+        const show = okGroup && okFav && okQ;
+        c.hidden = !show;
+        if (show) shown++;
+      }
+      emptyEl.hidden = shown !== 0;
+      countEl.textContent = `${shown} / ${allNumbers.length}`;
+    };
+
+    const applyUrl = () => {
+      const sp = new URLSearchParams();
+      if (group) sp.set('group', group);
+      if (q) sp.set('search', q);
+      if (favOnly) sp.set('fav', '1');
+      const next = sp.toString();
+      window.history.replaceState(null, '', next ? `${location.pathname}?${next}` : location.pathname);
+    };
+
+    // 初始读 URL
+    const initial = new URLSearchParams(location.search);
+    q = (initial.get('search') || '').trim().toLowerCase();
+    group = (initial.get('group') || '').toUpperCase();
+    favOnly = initial.get('fav') === '1';
+    input.value = q;
+    favBox.checked = favOnly;
+    groupBtns.forEach((b) =>
+      b.classList.toggle('active', (b.getAttribute('data-group') || '').toUpperCase() === group)
+    );
+    render();
+
+    input.addEventListener('input', () => {
+      q = input.value.trim().toLowerCase();
+      render();
+      applyUrl();
+    });
+    groupBtns.forEach((b) => {
+      b.addEventListener('click', () => {
+        group = (b.getAttribute('data-group') || '').toUpperCase();
+        groupBtns.forEach((x) => x.classList.toggle('active', (x.getAttribute('data-group') || '').toUpperCase() === group));
+        render();
+        applyUrl();
+      });
+    });
+    favBox.addEventListener('change', () => {
+      favOnly = favBox.checked;
+      render();
+      applyUrl();
+    });
+    window.addEventListener('handraw:fav', render);
+    window.addEventListener('storage', render);
+  }
+</script>

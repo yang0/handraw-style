@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import StyleExplorer from '../../components/StyleExplorer.astro';
+import { styles, groups, totalCount } from '../../data/styles';
+const base = import.meta.env.BASE_URL;
+const currentGroup = (Astro.url.searchParams.get('group') || '').toUpperCase();
+const groupName = groups.find((g) => g.letter === currentGroup)?.name;
+---
+
+<Base
+  title="全部风格"
+  description="浏览全部 267 种手绘风格，支持按编号、风格名、作者、关键词搜索，并可按 A–H 分组筛选。"
+  canonicalPath="/styles"
+>
+  <header class="page-head container">
+    <nav class="crumbs" aria-label="面包屑">
+      <a href={`${base}`}>首页</a> <span>/</span> <span>全部风格</span>
+    </nav>
+    <h1>全部风格 <span class="chip chip--accent">{totalCount} 种</span></h1>
+    <p class="sub">
+      {currentGroup && groupName
+        ? `当前筛选：${currentGroup} · ${groupName}`
+        : '输入编号、风格名、作者或关键词即可实时筛选；也可用上方 A–H 分组按钮快速定位。'}
+    </p>
+  </header>
+
+  <section class="container">
+    <StyleExplorer styles={styles} />
+  </section>
+</Base>
+
+<style>
+  .page-head {
+    padding: 3rem 0 1.6rem;
+  }
+  .crumbs {
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    margin-bottom: 0.8rem;
+  }
+  .crumbs a:hover {
+    color: var(--accent-ink);
+  }
+  .page-head h1 {
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .sub {
+    color: var(--ink-soft);
+    margin: 0.3rem 0 0;
+  }
+</style>
