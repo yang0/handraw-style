@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Knowledge A/B-Roll Theater · 知识双轨教程引擎</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: #0f1013;
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    }
+    #stage {
+      display: block;
+      width: 1080px;
+      height: 1920px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<script>
+/**
+ * Knowledge A/B-Roll Director Engine v1.0
+ * ⚪ A-roll (白底 IP 小剧场) ⇄ ⚫ B-roll (黑底实操与知识增量) 智能轮换
+ */
+/*ABROLL_CONFIG*/
+const C = window.CONFIG || {
+  duration: 10,
+  themeColor: '#00d26a',
+  title: '知识视频',
+  segments: []
+};
+
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const W = 1080, H = 1920;
+
+const segments = C.segments || [];
+
+const clamp = (v, min = 0, max = 1) => Math.max(min, Math.min(max, v));
+const ease = v => { v = clamp(v); return v * v * (3 - 2 * v); };
+const easeOutQuad = v => { v = clamp(v); return 1 - (1 - v) * (1 - v); };
+const easeBackOut = (v, s = 1.70158) => {
+  v = clamp(v) - 1;
+  return v * v * ((s + 1) * v + s) + 1;
+};
+const easeElasticOut = (v) => {
+  v = clamp(v);
+  if (v === 0 || v === 1) return v;
+  const p = 0.35;
+  return Math.pow(2, -10 * v) * Math.sin((v - p / 4) * (2 * Math.PI) / p) + 1;
+};
+
+// 增强版图片缓存与异步预加载
+const imageCache = {};
+const poseCache = {};
+const propCache = {};
+
+function loadImage(url) {
+  if (!url) return Promise.resolve(null);
+  if (imageCache[url]) return Promise.resolve(imageCache[url]);
+  return new Promise(resolve => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => { imageCache[url] = img; resolve(img); };
+    img.onerror = () => { resolve(null); };
+    img.src = url;
+    if (img.complete && img.naturalWidth) { imageCache[url] = img; resolve(img); }
+  });
+}
+
+// 预加载所有镜头图片、多姿态及独立道具
+const preloadPromises = [];
+segments.forEach(seg => {
+  if (seg.imageUrl) {
+    preloadPromises.push(loadImage(seg.imageUrl).then(img => { imageCache[seg.id] = img; }));
+  }
+  if (seg.bgUrl) {
+    preloadPromises.push(loadImage(seg.bgUrl).then(img => { imageCache['bg_' + seg.id] = img; }));
+  }
+  if (Array.isArray(seg.poses) && seg.poses.length > 0) {
+    poseCache[seg.id] = [];
+    seg.poses.forEach((pUrl, pIdx) => {
+      preloadPromises.push(loadImage(pUrl).then(img => { if (img) poseCache[seg.id][pIdx] = img; }));
+    });
+  }
+  if (Array.isArray(seg.props)) {
+    seg.props.forEach(p => {
+      if (p.url) preloadPromises.push(loadImage(p.url).then(img => { propCache[p.id || p.url] = img; }));
+    });
+  }
+});
+if (C.bgUrl) {
+  preloadPromises.push(loadImage(C.bgUrl).then(img => { imageCache['global_bg'] = img; }));
+}
+window.ready = Promise.all(preloadPromises);
+
+function hexToRgba(hex, alpha) {
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+  const num = parseInt(hex, 16);
+  return `rgba(${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}, ${alpha})`;
+}
+
+// 绘制科技光晕背景 (B-roll 深底)
+function drawDarkBackground(ctx, w, h, themeColor) {
+  ctx.fillStyle = '#101216';
+  ctx.fillRect(0, 0, w, h);
+
+  // 顶部与底部光晕
+  const grad = ctx.createRadialGradient(w / 2, 400, 100, w / 2, 400, 800);
+  grad.addColorStop(0, hexToRgba(themeColor, 0.12));
+  grad.addColorStop(1, 'rgba(16, 18, 22, 0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+}
+
+// 绘制 A-roll 知识演播室空镜舞台 (空镜背景 + 桌面视差舞台)
+function drawStudioStage(ctx, w, h, seg, segTime, t) {
+  const bgImg = imageCache['bg_' + seg.id] || imageCache['global_bg'];
+  if (bgImg) {
+    // 存在自定义空镜背景图：渲染视差微推镜
+    const zoom = 1.0 + Math.sin(t * 0.4) * 0.015;
+    ctx.save();
+    ctx.translate(w / 2, h / 2);
+    ctx.scale(zoom, zoom);
+    ctx.drawImage(bgImg, -w / 2, -h / 2, w, h);
+    ctx.restore();
+    return;
+  }
+
+  // 1. 墙面背景与环境柔光 (上半部演播室浅色墙体)
+  const wallGrad = ctx.createLinearGradient(0, 0, 0, 1420);
+  wallGrad.addColorStop(0, '#f2f4f8');
+  wallGrad.addColorStop(0.65, '#f8fafc');
+  wallGrad.addColorStop(1, '#e5ecf4');
+  ctx.fillStyle = wallGrad;
+  ctx.fillRect(0, 0, w, 1420);
+
+  // 墙面科技网格微点点阵 (0.035 不透明度)
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.035)';
+  const step = 44;
+  for (let x = 22; x < w; x += step) {
+    for (let y = 22; y < 1400; y += step) {
+      ctx.beginPath();
+      ctx.arc(x, y, 2.0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // 2. 演播室背景悬挂手绘白板架构框
+  ctx.save();
+  ctx.strokeStyle = 'rgba(195, 208, 225, 0.55)';
+  ctx.lineWidth = 3;
+  ctx.setLineDash([14, 10]);
+  ctx.strokeRect(90, 260, w - 180, 720);
+  ctx.setLineDash([]);
+
+  // 白板装饰手绘小标签
+  ctx.fillStyle = 'rgba(180, 198, 222, 0.35)';
+  ctx.beginPath();
+  ctx.roundRect(130, 300, 220, 28, 6);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.roundRect(130, 340, 140, 16, 4);
+  ctx.fill();
+  ctx.restore();
+
+  // 3. 物理操作工作台 (Desk Surface)
+  const deskY = 1380;
+  // 桌面深邃接缝阴影
+  ctx.fillStyle = 'rgba(15, 23, 42, 0.09)';
+  ctx.fillRect(0, deskY, w, 20);
+
+  // 桌面斜角厚度
+  const deskGrad = ctx.createLinearGradient(0, deskY, 0, h);
+  deskGrad.addColorStop(0, '#e8eef6');
+  deskGrad.addColorStop(0.08, '#dce5f0');
+  deskGrad.addColorStop(1, '#cad7e6');
+  ctx.fillStyle = deskGrad;
+  ctx.fillRect(0, deskY + 20, w, h - deskY - 20);
+
+  // 桌面边缘手绘高光条
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+  ctx.lineWidth = 3.5;
+  ctx.beginPath();
+  ctx.moveTo(0, deskY);
+  ctx.lineTo(w, deskY);
+  ctx.stroke();
+}
+
+// 绘制逐个弹入的 Sprite 道具与贴纸
+function renderStagedProps(ctx, seg, segTime, t, layer) {
+  const theme = C.themeColor || '#00d26a';
+
+  if (layer === 'front') {
+    // 桌面道具 1：极客笔记本电脑 (0.35s 弹入)
+    const laptopDelay = 0.35;
+    if (segTime >= laptopDelay) {
+      const pT = easeBackOut(clamp((segTime - laptopDelay) / 0.42), 1.8);
+      const lx = 310, ly = 1390;
+
+      ctx.save();
+      ctx.translate(lx, ly);
+      ctx.scale(pT, pT);
+
+      // 笔记本桌面投影
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.12)';
+      ctx.beginPath();
+      ctx.ellipse(0, 14, 110, 16, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 笔记本底座
+      ctx.fillStyle = '#2b3240';
+      ctx.beginPath();
+      ctx.roundRect(-100, -8, 200, 18, 5);
+      ctx.fill();
+
+      // 笔记本屏幕 (打开角度)
+      ctx.fillStyle = '#1e2430';
+      ctx.beginPath();
+      ctx.roundRect(-90, -110, 180, 105, 8);
+      ctx.fill();
+
+      // 屏幕内微光显示 (代码行)
+      ctx.fillStyle = '#0f141c';
+      ctx.beginPath();
+      ctx.roundRect(-82, -102, 164, 90, 4);
+      ctx.fill();
+
+      // 荧光代码行
+      ctx.fillStyle = theme;
+      ctx.fillRect(-72, -90, 50, 6);
+      ctx.fillStyle = '#64748b';
+      ctx.fillRect(-72, -76, 120, 5);
+      ctx.fillRect(-72, -64, 85, 5);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(-72, -52, 98, 5);
+      ctx.fillStyle = theme;
+      ctx.fillRect(-72, -40, 60, 5);
+
+      ctx.restore();
+    }
+
+    // 桌面道具 2：马克杯 / 治愈绿植 (0.75s 弹入)
+    const mugDelay = 0.75;
+    if (segTime >= mugDelay) {
+      const pT = easeBackOut(clamp((segTime - mugDelay) / 0.4), 1.6);
+      const mx = 820, my = 1385;
+
+      ctx.save();
+      ctx.translate(mx, my);
+      ctx.scale(pT, pT);
+
+      // 投影
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.1)';
+      ctx.beginPath();
+      ctx.ellipse(0, 12, 38, 12, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 杯身
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.roundRect(-28, -50, 56, 60, [4, 4, 16, 16]);
+      ctx.fill();
+      ctx.stroke();
+
+      // 杯耳
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(28, -22, 14, -Math.PI / 2, Math.PI / 2);
+      ctx.stroke();
+
+      // 咖啡微热气流 (微动)
+      const steam = Math.sin((t + 1) * 3) * 4;
+      ctx.strokeStyle = 'rgba(148, 163, 184, 0.5)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-8 + steam, -60);
+      ctx.quadraticCurveTo(-14, -75, -6 + steam, -90);
+      ctx.moveTo(8 - steam, -60);
+      ctx.quadraticCurveTo(14, -75, 6 - steam, -90);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+  }
+
+  if (layer === 'floating') {
+    // 浮动 Sprite 道具：根据台词语义在角色身侧弹出情绪与思考贴纸 (1.1s 弹入)
+    const floatDelay = 1.1;
+    if (segTime >= floatDelay) {
+      const pT = easeBackOut(clamp((segTime - floatDelay) / 0.38), 2.1);
+      const fx = 750, fy = 540 + Math.sin(t * 3.2) * 8; // 浮动呼吸
+
+      ctx.save();
+      ctx.translate(fx, fy);
+      ctx.scale(pT, pT);
+
+      // 判断贴纸类型
+      const txt = (seg.caption || '') + (seg.subCaption || '');
+      const isError = txt.includes('错') || txt.includes('翻车') || txt.includes('跌') || txt.includes('迷失') || txt.includes('笨');
+      const isTip = txt.includes('口诀') || txt.includes('约束') || txt.includes('Prompt') || txt.includes('拆') || txt.includes('秘');
+
+      if (isError) {
+        // 报错警告贴纸
+        ctx.fillStyle = '#fee2e2';
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.roundRect(-100, -42, 200, 84, 20);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#dc2626';
+        ctx.font = 'bold 30px "PingFang SC"';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('⚠️ 注意力断崖', 0, 0);
+      } else if (isTip) {
+        // 避坑灵感灯泡贴纸
+        ctx.fillStyle = '#fef3c7';
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.roundRect(-105, -42, 210, 84, 20);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#b45309';
+        ctx.font = 'bold 30px "PingFang SC"';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('💡 约束置底', 0, 0);
+      } else {
+        // 知识对话气泡贴纸
+        ctx.fillStyle = '#ffffff';
+        ctx.strokeStyle = theme;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.roundRect(-100, -42, 200, 84, 20);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#1e293b';
+        ctx.font = 'bold 30px "PingFang SC"';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('✨ 实测拆解', 0, 0);
+      }
+      ctx.restore();
+    }
+  }
+}
+
+// 角色核心渲染：支持同位置多动作切换、挤压拉伸冲击与入场就位物理
+function renderCharacterWithPoses(ctx, seg, segTime, t) {
+  // 1. 获取当前 Pose
+  const poses = poseCache[seg.id] || [];
+  let img = null;
+  let isSwitchPunch = false;
+  let punchRatio = 0;
+
+  if (poses.length > 0) {
+    const segDur = Math.max(1, (seg.end || seg.start + 5) - seg.start);
+    const poseCount = poses.length;
+    // 平分时间或根据 poseTimings
+    let poseIdx = 0;
+    if (Array.isArray(seg.poseTimings) && seg.poseTimings.length === poseCount) {
+      for (let i = 0; i < poseCount; i++) {
+        if (segTime >= seg.poseTimings[i]) poseIdx = i;
+      }
+    } else {
+      poseIdx = Math.min(poseCount - 1, Math.floor((segTime / segDur) * poseCount));
+    }
+
+    img = poses[poseIdx] || poses[0];
+
+    // 切换动作瞬间触发 0.22 秒 Squash & Stretch 定格冲击
+    const switchInterval = segDur / poseCount;
+    const timeInPose = segTime - (poseIdx * switchInterval);
+    if (timeInPose >= 0 && timeInPose < 0.22) {
+      isSwitchPunch = true;
+      punchRatio = timeInPose / 0.22;
+    }
+  } else {
+    img = imageCache[seg.id];
+  }
+
+  // 2. 角色登场弹性就位 (Entrance Spring: 0.42s 内从下方弹性升起就位)
+  const entranceT = clamp(segTime / 0.42);
+  const entranceSpring = easeBackOut(entranceT, 1.35);
+  const entranceY = (1 - entranceSpring) * 85;
+
+  // 3. 动作切换定格冲击波 (Squash & Stretch)
+  let punchScaleX = 1.0, punchScaleY = 1.0;
+  if (isSwitchPunch) {
+    const pWave = Math.sin(punchRatio * Math.PI);
+    punchScaleX = 1.0 + pWave * 0.055; // 瞬间微扁宽
+    punchScaleY = 1.0 - pWave * 0.045;
+  }
+
+  // 4. 自然讲话微颔首与轻微呼吸
+  const nod = Math.sin(t * 4.5) * 0.009;
+  const breathe = Math.sin(t * 3.0) * 5;
+
+  if (img) {
+    ctx.save();
+    // 角色锚定在桌面后方中央
+    ctx.translate(W / 2, 940 + entranceY + breathe);
+    ctx.rotate(nod);
+    ctx.scale(punchScaleX, punchScaleY);
+
+    // 角色地影 (随入场扩大)
+    ctx.fillStyle = `rgba(15, 23, 42, ${0.08 * entranceT})`;
+    ctx.beginPath();
+    ctx.ellipse(0, 425, 230 * entranceT, 30, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 绘制角色
+    const targetH = 920;
+    const targetW = (img.naturalWidth / img.naturalHeight) * targetH;
+    ctx.drawImage(img, -targetW / 2, -targetH / 2, targetW, targetH);
+    ctx.restore();
+  } else {
+    // 占位
+    ctx.save();
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = '#dee2e6';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.roundRect(140, 520 + entranceY + breathe, 800, 800, 40);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#495057';
+    ctx.font = 'bold 52px "PingFang SC"';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('⚪ A-Roll: IP 主持人剧场', W / 2, 920 + entranceY + breathe);
+    ctx.restore();
+  }
+}
+
+// 绘制 A-roll IP 角色场景
+function renderARoll(seg, segTime, t) {
+  // 1. 空镜背景与演播室工作台
+  drawStudioStage(ctx, W, H, seg, segTime, t);
+
+  // 2. 顶部模式药丸胶囊
+  ctx.save();
+  ctx.fillStyle = '#ffffff';
+  ctx.strokeStyle = '#e2e6ea';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(80, 100, 260, 68, 34);
+  ctx.fill();
+  ctx.stroke();
+
+  // 绿点与角色标识
+  ctx.fillStyle = C.themeColor || '#00d26a';
+  ctx.beginPath();
+  ctx.arc(118, 134, 8, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#212529';
+  ctx.font = 'bold 30px "PingFang SC", "Microsoft YaHei"';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('IP 视角讲解', 142, 134);
+  ctx.restore();
+
+  // 3. 角色核心渲染 (支持多 Pose 切换与动作定格动画)
+  renderCharacterWithPoses(ctx, seg, segTime, t);
+
+  // 4. 前景桌面道具 (笔记本、咖啡杯) 逐个弹入
+  renderStagedProps(ctx, seg, segTime, t, 'front');
+
+  // 5. 身侧浮动情绪与思考贴纸 (根据台词重点弹入)
+  renderStagedProps(ctx, seg, segTime, t, 'floating');
+
+  // 6. 底部字幕与对白大卡片
+  renderCaptions(seg, false);
+}
+
+// 绘制 B-roll 知识增量场景
+// 绘制 LiveCanvas 原生动态数据看板 (B-roll 专属)
+function renderLiveCanvasBoard(ctx, seg, segTime, t) {
+  const boxW = 960, boxH = 1120;
+  const boxX = (W - boxW) / 2;
+  const boxY = 360;
+  const db = seg.dataBoard || {};
+  const theme = C.themeColor || '#00d26a';
+  const segDur = Math.max(1, (seg.end || seg.start + 3) - seg.start);
+
+  ctx.save();
+  // 1. 卡片背景 (高质感暗黑微光底卡)
+  ctx.shadowColor = hexToRgba(theme, 0.28);
+  ctx.shadowBlur = 40;
+  ctx.fillStyle = '#14171f';
+  ctx.beginPath();
+  ctx.roundRect(boxX, boxY, boxW, boxH, 32);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // 边框 (发光细线)
+  ctx.strokeStyle = hexToRgba(theme, 0.45);
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // 2. 顶部胶囊标与查证日期
+  ctx.fillStyle = hexToRgba(theme, 0.15);
+  ctx.beginPath();
+  ctx.roundRect(boxX + 50, boxY + 45, 250, 48, 24);
+  ctx.fill();
+
+  ctx.fillStyle = theme;
+  ctx.font = 'bold 22px "PingFang SC"';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('LIVECANVAS / 数据实况', boxX + 175, boxY + 69);
+
+  ctx.fillStyle = '#7a8292';
+  ctx.font = '22px "PingFang SC"';
+  ctx.textAlign = 'right';
+  ctx.fillText(db.asOf || '标准评测 · 真实可复现', boxX + boxW - 50, boxY + 69);
+
+  // 3. 主标题与副标题 (反假大空，直接下结论)
+  const title = db.title || seg.caption || '核心性能评测';
+  const subtitle = db.subtitle || seg.subCaption || '标准基准测试 · 相比基线表现';
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 44px "PingFang SC", "Noto Sans SC"';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  ctx.fillText(title, boxX + 50, boxY + 120);
+
+  ctx.fillStyle = '#9aa2b1';
+  ctx.font = '26px "PingFang SC"';
+  ctx.fillText(subtitle, boxX + 50, boxY + 185);
+
+  // 4. 英雄量化指标 (Hero Metric，如 "1M tokens", "+39%", "57%")
+  const heroReveal = easeOutQuad(clamp(segTime / 0.45));
+  if (db.hero) {
+    ctx.save();
+    ctx.globalAlpha = heroReveal;
+    ctx.translate(0, (1 - heroReveal) * 15);
+
+    ctx.fillStyle = theme;
+    ctx.font = 'bold 96px "PingFang SC", -apple-system';
+    ctx.fillText(db.hero, boxX + 50, boxY + 235);
+
+    if (db.headline) {
+      ctx.fillStyle = '#8f97a5';
+      ctx.font = '24px "PingFang SC"';
+      ctx.fillText(db.headline, boxX + 52, boxY + 355);
+    }
+    ctx.restore();
+  }
+
+  // 5. 核心动态图表区 (基于 kind 渲染不同可视化)
+  const chartKind = db.kind || (db.items ? 'versus' : (db.points ? 'trend' : 'versus'));
+  const chartY = db.hero ? (boxY + 415) : (boxY + 260);
+  const chartH = boxH - (chartY - boxY) - 120;
+
+  if (chartKind === 'versus') {
+    // 柱状横向能力对决条 (Versus Benchmark)
+    const items = db.items || [
+      { name: 'Gemini 4 Argon', value: 57, unit: '%', isHero: true, tag: '领先 +14%' },
+      { name: 'Claude 3.7 Sonnet', value: 43, unit: '%' },
+      { name: 'GPT-4.5 Preview', value: 38, unit: '%' }
+    ];
+
+    const rowH = chartH / Math.max(2, items.length);
+    const maxVal = Math.max(...items.map(it => it.value || 100)) * 1.15;
+    const barProgress = easeOutQuad(clamp((segTime - 0.25) / 1.1));
+
+    items.forEach((it, idx) => {
+      const iy = chartY + idx * rowH + 15;
+
+      // 名称与数值标签
+      ctx.fillStyle = it.isHero ? '#ffffff' : '#9da6b5';
+      ctx.font = it.isHero ? 'bold 30px "PingFang SC"' : '28px "PingFang SC"';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText(it.name, boxX + 50, iy);
+
+      // 槽位底色
+      const barX = boxX + 50;
+      const barY = iy + 45;
+      const maxBarW = boxW - 100;
+      const curBarW = ((it.value / maxVal) * maxBarW) * barProgress;
+
+      ctx.fillStyle = '#1e222c';
+      ctx.beginPath();
+      ctx.roundRect(barX, barY, maxBarW, 36, 18);
+      ctx.fill();
+
+      // 动态填充条
+      ctx.fillStyle = it.isHero ? theme : '#374151';
+      ctx.beginPath();
+      ctx.roundRect(barX, barY, Math.max(36, curBarW), 36, 18);
+      ctx.fill();
+
+      // 数值文本 (随进度动态增长)
+      const curNum = (it.value * barProgress).toFixed(it.decimals !== undefined ? it.decimals : 0);
+      ctx.fillStyle = it.isHero ? '#ffffff' : '#9da6b5';
+      ctx.font = 'bold 26px "PingFang SC"';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`${curNum}${it.unit || ''}`, barX + Math.max(48, curBarW) + 16, barY + 18);
+
+      // 胜出标签 (Tag)
+      if (it.isHero && it.tag && barProgress > 0.7) {
+        const tagAlpha = easeOutQuad(clamp((barProgress - 0.7) / 0.3));
+        ctx.save();
+        ctx.globalAlpha = tagAlpha;
+        ctx.fillStyle = hexToRgba(theme, 0.2);
+        ctx.strokeStyle = theme;
+        ctx.lineWidth = 1.5;
+        const tagW = ctx.measureText(it.tag).width + 32;
+        const tagX = boxX + boxW - 50 - tagW;
+        ctx.beginPath();
+        ctx.roundRect(tagX, iy - 4, tagW, 38, 19);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = theme;
+        ctx.font = 'bold 22px "PingFang SC"';
+        ctx.textAlign = 'center';
+        ctx.fillText(it.tag, tagX + tagW / 2, iy + 15);
+        ctx.restore();
+      }
+    });
+  } else if (chartKind === 'trend') {
+    // 趋势线时间轴扫光动态展开 (Time Series Sweep)
+    const points = db.points || [
+      { x: 0.1, y: 0.2, label: '初版' },
+      { x: 0.35, y: 0.35, label: '优化' },
+      { x: 0.65, y: 0.58, label: '突破' },
+      { x: 0.92, y: 0.95, label: '最新' }
+    ];
+    const sweepProgress = easeOutQuad(clamp((segTime - 0.2) / 1.2));
+    const plotX = boxX + 60, plotY = chartY + 20;
+    const plotW = boxW - 120, plotH = chartH - 40;
+
+    // 绘制横向网格参考线
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.lineWidth = 1.5;
+    for (let i = 0; i <= 3; i++) {
+      const gy = plotY + (plotH / 3) * i;
+      ctx.beginPath();
+      ctx.moveTo(plotX, gy);
+      ctx.lineTo(plotX + plotW, gy);
+      ctx.stroke();
+    }
+
+    // 动态裁剪展开曲线
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(plotX - 10, plotY - 20, (plotW + 20) * sweepProgress, plotH + 50);
+    ctx.clip();
+
+    // 折线连线
+    ctx.strokeStyle = theme;
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    points.forEach((pt, i) => {
+      const px = plotX + pt.x * plotW;
+      const py = plotY + plotH - pt.y * plotH;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+
+    // 数据圆点
+    points.forEach(pt => {
+      const px = plotX + pt.x * plotW;
+      const py = plotY + plotH - pt.y * plotH;
+      ctx.fillStyle = theme;
+      ctx.beginPath();
+      ctx.arc(px, py, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#14171f';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    });
+
+    // 顶点脉冲光环 (Peak Pulse)
+    const lastPt = points[points.length - 1];
+    const lx = plotX + lastPt.x * plotW;
+    const ly = plotY + plotH - lastPt.y * plotH;
+    const pulseR = 10 + Math.sin(t * 8) * 5;
+    ctx.strokeStyle = hexToRgba(theme, 0.6);
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(lx, ly, pulseR, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // 6. 底部来源与证据链 (Sources & Footnote)
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(boxX + 50, boxY + boxH - 75);
+  ctx.lineTo(boxX + boxW - 50, boxY + boxH - 75);
+  ctx.stroke();
+
+  ctx.fillStyle = '#6b7280';
+  ctx.font = '22px "PingFang SC"';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  const sourceText = db.source || '测试来源：标准权威评测集 · 证据可查证';
+  ctx.fillText(sourceText, boxX + 50, boxY + boxH - 38);
+  ctx.restore();
+
+  ctx.restore();
+}
+
+// 绘制 B-roll 知识增量场景
+function renderBRoll(seg, segTime, t) {
+  drawDarkBackground(ctx, W, H, C.themeColor || '#00d26a');
+
+  // 核心内容区：若有图片且未指定强制数据看板，绘制图片；否则绘制原生 LiveCanvas 数据看板
+  const img = imageCache[seg.id];
+  if (img && !seg.dataBoard) {
+    const zoom = 1.0 + 0.04 * ease(segTime / Math.max(1, seg.end - seg.start));
+    ctx.save();
+    ctx.translate(W / 2, 900);
+    ctx.scale(zoom, zoom);
+
+    const boxW = 960, boxH = 1100;
+    ctx.shadowColor = hexToRgba(C.themeColor || '#00d26a', 0.35);
+    ctx.shadowBlur = 35;
+
+    ctx.fillStyle = '#181b22';
+    ctx.beginPath();
+    ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 36);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 36);
+    ctx.clip();
+
+    const s = Math.max(boxW / img.naturalWidth, boxH / img.naturalHeight);
+    const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+    ctx.drawImage(img, -dw / 2, -dh / 2, dw, dh);
+    ctx.restore();
+
+    ctx.strokeStyle = hexToRgba(C.themeColor || '#00d26a', 0.6);
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.roundRect(-boxW / 2, -boxH / 2, boxW, boxH, 36);
+    ctx.stroke();
+    ctx.restore();
+  } else {
+    // 渲染高保真 LiveCanvas 动态数据看板
+    renderLiveCanvasBoard(ctx, seg, segTime, t);
+  }
+
+  // 底部字幕与结论
+  renderCaptions(seg, true);
+}
+
+// 统一底部字幕与标题渲染
+function renderCaptions(seg, isDark) {
+  const cap = seg.caption || '';
+  if (!cap) return;
+
+  const boxY = 1580;
+  const boxH = 220;
+  const boxW = 960;
+  const boxX = (W - boxW) / 2;
+
+  ctx.save();
+  // 磨砂拟态底板
+  ctx.fillStyle = isDark ? 'rgba(28, 31, 38, 0.92)' : 'rgba(255, 255, 255, 0.94)';
+  ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(boxX, boxY, boxW, boxH, 32);
+  ctx.fill();
+  ctx.stroke();
+
+  // 主句字幕
+  ctx.fillStyle = isDark ? '#ffffff' : '#111317';
+  ctx.font = 'bold 50px "PingFang SC", "Microsoft YaHei"';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(cap, W / 2, boxY + (seg.subCaption ? 85 : 110));
+
+  // 副标或强调金句
+  if (seg.subCaption) {
+    ctx.fillStyle = C.themeColor || '#00d26a';
+    ctx.font = '32px "PingFang SC", "Microsoft YaHei"';
+    ctx.fillText(seg.subCaption, W / 2, boxY + 155);
+  }
+  ctx.restore();
+}
+
+// 主渲染驱动
+function draw(t) {
+  t = clamp(t, 0, C.duration || 10);
+
+  // 查找当前所在的段落
+  let curSeg = segments[0] || { type: 'A', start: 0, end: C.duration };
+  for (let i = 0; i < segments.length; i++) {
+    if (t >= segments[i].start && t < segments[i].end) {
+      curSeg = segments[i];
+      break;
+    }
+    if (t >= segments[i].end) curSeg = segments[i];
+  }
+
+  const segTime = t - curSeg.start;
+  const isB = (curSeg.type || '').toUpperCase() === 'B';
+
+  ctx.clearRect(0, 0, W, H);
+  if (isB) {
+    renderBRoll(curSeg, segTime, t);
+  } else {
+    renderARoll(curSeg, segTime, t);
+  }
+}
+
+// 导出 Playwright 逐帧接口
+window.renderFrame = async function(t) {
+  await window.ready;
+  draw(t);
+  return canvas.toDataURL('image/png').split(',')[1];
+};
+
+// 导出 4:3 与 3:4 双封面接口
+window.renderCover = async function(w, h) {
+  await window.ready;
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const d = c.getContext('2d');
+
+  // 深色高端质感底
+  d.fillStyle = '#111317';
+  d.fillRect(0, 0, w, h);
+
+  // 主题色微光
+  const grad = d.createRadialGradient(w / 2, h / 2, 50, w / 2, h / 2, w * 0.7);
+  grad.addColorStop(0, hexToRgba(C.themeColor || '#00d26a', 0.22));
+  grad.addColorStop(1, 'rgba(17, 19, 23, 0)');
+  d.fillStyle = grad;
+  d.fillRect(0, 0, w, h);
+
+  // 封面大标题 (自适应字号)
+  const titleText = C.title || '知识双轨实操课';
+  const maxTitleW = w * 0.88;
+  let fontSize = Math.round(w * 0.088);
+  d.font = `bold ${fontSize}px "PingFang SC", "Microsoft YaHei"`;
+  const titleW = d.measureText(titleText).width;
+  if (titleW > maxTitleW) {
+    fontSize = Math.max(32, Math.floor(fontSize * (maxTitleW / titleW)));
+    d.font = `bold ${fontSize}px "PingFang SC", "Microsoft YaHei"`;
+  }
+  d.fillStyle = '#ffffff';
+  d.textAlign = 'center';
+  d.textBaseline = 'middle';
+  d.fillText(titleText, w / 2, h * 0.38);
+
+  // 副标胶囊
+  d.fillStyle = C.themeColor || '#00d26a';
+  d.beginPath();
+  d.roundRect(w * 0.15, h * 0.54, w * 0.7, h * 0.14, 24);
+  d.fill();
+
+  d.fillStyle = '#0f1013';
+  d.font = `bold ${Math.round(w * 0.052)}px "PingFang SC"`;
+  d.fillText('A/B-Roll 双轨极速实操', w / 2, h * 0.61);
+
+  return c.toDataURL('image/png').split(',')[1];
+};
+
+window.ready.then(() => {
+  draw(0.5);
+});
+</script>
+</body>
+</html>

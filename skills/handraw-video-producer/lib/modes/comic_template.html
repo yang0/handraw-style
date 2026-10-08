@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Comic Director · 动态漫镜头引擎</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: #1a1918;
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    #stage {
+      width: 1080px;
+      height: 1920px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<script>
+/**
+ * Comic Director 运镜核心逻辑
+ * window.COMIC_CONFIG = {
+ *   imageUrl: string,        // 漫画图片路径或 base64
+ *   duration: number,        // 视频总时长
+ *   panels: [                // 分格坐标归一化 [x, y, w, h] (0.0~1.0)
+ *     { id: 1, rect: [0.0, 0.0, 1.0, 0.5], start: 0.0, end: 3.0, caption: "格一文字" },
+ *     { id: 2, rect: [0.0, 0.5, 1.0, 0.5], start: 3.0, end: 6.0, caption: "格二文字" }
+ *   ]
+ * };
+ */
+
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const W = 1080, H = 1920;
+
+let comicImg = new Image();
+let imgLoaded = false;
+
+window.initComic = function(config) {
+  window.COMIC_CONFIG = config;
+  comicImg.crossOrigin = "anonymous";
+  comicImg.onload = () => { imgLoaded = true; };
+  comicImg.src = config.imageUrl;
+};
+
+// 缓动函数
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+// 当前时刻相机视口平滑插值计算
+function getCameraViewport(t, config) {
+  const panels = config.panels || [];
+  if (!panels.length || !imgLoaded) {
+    return { sx: 0, sy: 0, sw: comicImg.width || 1, sh: comicImg.height || 1, caption: "" };
+  }
+
+  const imgW = comicImg.width;
+  const imgH = comicImg.height;
+
+  // 找到当前时间所在的 panel
+  let curIdx = 0;
+  for (let i = 0; i < panels.length; i++) {
+    if (t >= panels[i].start && t < panels[i].end) {
+      curIdx = i;
+      break;
+    }
+    if (t >= panels[i].end) {
+      curIdx = i;
+    }
+  }
+
+  const curPanel = panels[curIdx];
+  const nextPanel = panels[Math.min(panels.length - 1, curIdx + 1)];
+
+  // 视口目标矩形（像素）
+  const getRectPx = (p) => {
+    return {
+      x: p.rect[0] * imgW,
+      y: p.rect[1] * imgH,
+      w: p.rect[2] * imgW,
+      h: p.rect[3] * imgH
+    };
+  };
+
+  const rCurrent = getRectPx(curPanel);
+
+  // 检查是否正在切镜转场（每段末尾 0.4 秒发生平滑 Pan & Zoom 到下一格）
+  const transDur = 0.45;
+  const timeToEnd = curPanel.end - t;
+
+  let target = { ...rCurrent };
+  let activeCaption = curPanel.caption || "";
+
+  if (timeToEnd < transDur && curIdx < panels.length - 1) {
+    const rNext = getRectPx(nextPanel);
+    const progress = easeInOutCubic(1.0 - (timeToEnd / transDur));
+    target.x = lerp(rCurrent.x, rNext.x, progress);
+    target.y = lerp(rCurrent.y, rNext.y, progress);
+    target.w = lerp(rCurrent.w, rNext.w, progress);
+    target.h = lerp(rCurrent.h, rNext.h, progress);
+    if (progress > 0.5) activeCaption = nextPanel.caption || "";
+  } else {
+    // 格内微动呼吸感 (Subtle Ken Burns Zoom 1.0 -> 1.03)
+    const pDur = Math.max(0.1, curPanel.end - curPanel.start);
+    const pProgress = Math.min(1.0, (t - curPanel.start) / pDur);
+    const scale = 1.0 + pProgress * 0.03;
+    const centerNormX = target.x + target.w / 2;
+    const centerNormY = target.y + target.h / 2;
+    target.w /= scale;
+    target.h /= scale;
+    target.x = centerNormX - target.w / 2;
+    target.y = centerNormY - target.h / 2;
+  }
+
+  return {
+    sx: target.x,
+    sy: target.y,
+    sw: target.w,
+    sh: target.h,
+    caption: activeCaption
+  };
+}
+
+window.renderFrame = function(t) {
+  ctx.clearRect(0, 0, W, H);
+
+  // 复古暖色纸张底色
+  ctx.fillStyle = '#fbf7ee';
+  ctx.fillRect(0, 0, W, H);
+
+  if (!imgLoaded || !window.COMIC_CONFIG) {
+    ctx.fillStyle = '#666';
+    ctx.font = '36px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('加载漫画素材中...', W / 2, H / 2);
+    return canvas.toDataURL('image/png').split(',')[1];
+  }
+
+  const cam = getCameraViewport(t, window.COMIC_CONFIG);
+
+  // 保持漫画画面在画框中央（竖屏留出上下边距，带手绘质感阴影）
+  const stageMargin = 60;
+  const stageW = W - stageMargin * 2;
+  const stageH = H - 320; // 底部留给字幕与台词栏
+  const stageX = stageMargin;
+  const stageY = 100;
+
+  // 绘制漫画视口画面（带手绘圆角和边缘框）
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(stageX, stageY, stageW, stageH, 24);
+  ctx.clip();
+
+  // 图像居中裁剪映射
+  const aspectCam = cam.sw / cam.sh;
+  const aspectStage = stageW / stageH;
+  let drawW = stageW, drawH = stageH;
+  let drawX = stageX, drawY = stageY;
+
+  ctx.drawImage(
+    comicImg,
+    cam.sx, cam.sy, cam.sw, cam.sh,
+    stageX, stageY, stageW, stageH
+  );
+  ctx.restore();
+
+  // 外边框（粗手绘描边）
+  ctx.beginPath();
+  ctx.roundRect(stageX, stageY, stageW, stageH, 24);
+  ctx.strokeStyle = '#2d2926';
+  ctx.lineWidth = 8;
+  ctx.stroke();
+
+  // 顶部装饰标签
+  ctx.fillStyle = '#2d2926';
+  ctx.font = 'bold 32px "Microsoft YaHei", sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('🎬 手绘动态漫 · 剧场', stageX + 10, stageY - 30);
+
+  // 底部台词与字幕栏
+  if (cam.caption) {
+    const barY = H - 180;
+    ctx.fillStyle = 'rgba(45, 41, 38, 0.92)';
+    ctx.beginPath();
+    ctx.roundRect(stageMargin, barY, stageW, 110, 20);
+    ctx.fill();
+
+    ctx.fillStyle = '#fbf7ee';
+    ctx.font = 'bold 42px "Microsoft YaHei", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(cam.caption, W / 2, barY + 70);
+  }
+
+  return canvas.toDataURL('image/png').split(',')[1];
+};
+</script>
+</body>
+</html>

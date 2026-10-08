@@ -1,0 +1,92 @@
+[
+  {
+    "key": "egypt_walk8",
+    "source_atlas_sha256": "620de5649b9ed7aff7be8e7556fb6223cf607a044aafdbec5873e2d165787cdf",
+    "source": "videos\\episodes\\2026-10-08 让画回应你\\assets\\ink_atlas.png",
+    "poses": [
+      "walk_stride_a",
+      "walk_stride_a",
+      "walk_pass_a",
+      "walk_pass_a",
+      "walk_stride_b",
+      "walk_stride_b",
+      "walk_pass_b",
+      "walk_pass_b"
+    ]
+  },
+  {
+    "key": "egypt_dodge",
+    "source_atlas_sha256": "620de5649b9ed7aff7be8e7556fb6223cf607a044aafdbec5873e2d165787cdf",
+    "source": "videos\\episodes\\2026-10-08 让画回应你\\assets\\ink_atlas.png",
+    "poses": [
+      "idle",
+      "crouch",
+      "crouch",
+      "airborne",
+      "airborne",
+      "land",
+      "idle",
+      "idle"
+    ]
+  },
+  {
+    "key": "monet_walk",
+    "source_atlas_sha256": "a1067067105a75976ae9bda3829232690709d93918bdca084541eaae4a9817f7",
+    "source": "videos\\episodes\\2026-10-08 让画回应你\\assets\\paint_atlas.png",
+    "poses": [
+      "walk_stride_a",
+      "walk_stride_a",
+      "walk_pass_a",
+      "walk_pass_a",
+      "walk_stride_b",
+      "walk_stride_b",
+      "walk_pass_b",
+      "walk_pass_b"
+    ]
+  },
+  {
+    "key": "monet_throw",
+    "source_atlas_sha256": "a1067067105a75976ae9bda3829232690709d93918bdca084541eaae4a9817f7",
+    "source": "videos\\episodes\\2026-10-08 让画回应你\\assets\\paint_atlas.png",
+    "poses": [
+      "idle",
+      "pick",
+      "idle",
+      "windup",
+      "throw_release",
+      "reach",
+      "idle",
+      "idle"
+    ]
+  },
+  {
+    "key": "8bit_walk",
+    "source_atlas_sha256": "903b0bab73012dd85b7d5d14f33a5a1d482a23ada97196c46ee6e6bca0c97e0f",
+    "source": "videos\\episodes\\2026-10-08 让画回应你\\assets\\pixel_atlas.png",
+    "poses": [
+      "walk_stride_a",
+      "walk_stride_a",
+      "walk_pass_a",
+      "walk_pass_a",
+      "walk_stride_b",
+      "walk_stride_b",
+      "walk_pass_b",
+      "walk_pass_b"
+    ]
+  },
+  {
+    "key": "8bit_act",
+    "source_atlas_sha256": "903b0bab73012dd85b7d5d14f33a5a1d482a23ada97196c46ee6e6bca0c97e0f",
+    "source": "videos\\episodes\\2026-10-08 让画回应你\\assets\\pixel_atlas.png",
+    "poses": [
+      "idle",
+      "crouch",
+      "airborne",
+      "airborne",
+      "airborne",
+      "land",
+      "reach",
+      "idle"
+    ]
+  }
+]

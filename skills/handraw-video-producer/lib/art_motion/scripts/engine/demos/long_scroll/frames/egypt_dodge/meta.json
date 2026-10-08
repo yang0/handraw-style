@@ -1,0 +1,127 @@
+{
+  "ref_h": 351,
+  "frames": [
+    {
+      "file": "01.png",
+      "ax": 76.96,
+      "ay": 350,
+      "w": 148,
+      "h": 351,
+      "air": 0,
+      "pose": "idle",
+      "source_rect": [
+        108,
+        10,
+        148,
+        351
+      ]
+    },
+    {
+      "file": "02.png",
+      "ax": 138.6,
+      "ay": 281,
+      "w": 231,
+      "h": 282,
+      "air": 0,
+      "pose": "crouch",
+      "source_rect": [
+        436,
+        784,
+        231,
+        282
+      ]
+    },
+    {
+      "file": "03.png",
+      "ax": 138.6,
+      "ay": 281,
+      "w": 231,
+      "h": 282,
+      "air": 0,
+      "pose": "crouch",
+      "source_rect": [
+        436,
+        784,
+        231,
+        282
+      ]
+    },
+    {
+      "file": "04.png",
+      "ax": 130.68,
+      "ay": 277,
+      "w": 242,
+      "h": 278,
+      "air": 0,
+      "pose": "airborne",
+      "source_rect": [
+        790,
+        725,
+        242,
+        278
+      ]
+    },
+    {
+      "file": "05.png",
+      "ax": 130.68,
+      "ay": 277,
+      "w": 242,
+      "h": 278,
+      "air": 0,
+      "pose": "airborne",
+      "source_rect": [
+        790,
+        725,
+        242,
+        278
+      ]
+    },
+    {
+      "file": "06.png",
+      "ax": 118.16,
+      "ay": 302,
+      "w": 211,
+      "h": 303,
+      "air": 0,
+      "pose": "land",
+      "source_rect": [
+        1171,
+        766,
+        211,
+        303
+      ]
+    },
+    {
+      "file": "07.png",
+      "ax": 76.96,
+      "ay": 350,
+      "w": 148,
+      "h": 351,
+      "air": 0,
+      "pose": "idle",
+      "source_rect": [
+        108,
+        10,
+        148,
+        351
+      ]
+    },
+    {
+      "file": "08.png",
+      "ax": 76.96,
+      "ay": 350,
+      "w": 148,
+      "h": 351,
+      "air": 0,
+      "pose": "idle",
+      "source_rect": [
+        108,
+        10,
+        148,
+        351
+      ]
+    }
+  ],
+  "identity": "project original traveler, not source author",
+  "animation": "four distinct walking poses held across eight slots; finite interaction keyframes"
+}

@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Motion Comic Theater · 2.5D 视差剧场</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      margin: 0;
+      background: #f6f1e6;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    }
+    canvas#stage {
+      display: block;
+      width: 1080px;
+      height: 1920px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<script>
+/**
+ * Motion Comic Theater Engine v1.0
+ * 2.5D 视差分层、3x2 姿态图集、弹簧气泡与漫画特效
+ */
+/*THEATER_CONFIG*/
+const C = window.CONFIG || {
+  duration: 10,
+  background: '',
+  sprites: '',
+  starts: [0, 3, 6, 8],
+  cues: [],
+  sfx: [],
+  title: '动态漫'
+};
+
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const W = 1080, H = 1920;
+
+const background = new Image();
+const atlas = new Image();
+let isReady = false;
+
+if (C.background) background.src = C.background;
+if (C.sprites) atlas.src = C.sprites;
+
+window.ready = Promise.all([background, atlas].filter(im => im.src).map(im => new Promise((resolve, reject) => {
+  im.onload = resolve;
+  im.onerror = reject;
+  if (im.complete && im.naturalWidth) resolve();
+}))).then(() => { isReady = true; });
+
+// 常用数学与缓动工具
+const clamp = (v, min = 0, max = 1) => Math.max(min, Math.min(max, v));
+const ease = v => { v = clamp(v); return v * v * (3 - 2 * v); };
+const easeOutBack = v => {
+  v = clamp(v);
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * Math.pow(v - 1, 3) + c1 * Math.pow(v - 1, 2);
+};
+
+// 绘制 Sprite 图集中的指定单元格 (3 列 x 2 行)
+function drawSprite(index, x, y, w, h) {
+  if (!atlas.naturalWidth) return;
+  const col = index % 3;
+  const row = Math.floor(index / 3);
+  const sw = atlas.naturalWidth / 3;
+
+  // 自定义切分比例（兼容部分生成图中线偏移，默认 0.5）
+  const rowSplit = C.atlasRowSplit || 0.5;
+  const sy = row === 0 ? 0 : atlas.naturalHeight * rowSplit;
+  const sh = row === 0 ? atlas.naturalHeight * rowSplit : atlas.naturalHeight * (1 - rowSplit);
+  const sx = col * sw;
+
+  const destH = h ? (w * sh / sw) : h;
+  ctx.drawImage(atlas, sx, sy, sw, sh, x, y, w, destH);
+}
+
+// 居中自适应缩放平铺背景
+function drawCoverBackground(img, x, y, w, h) {
+  if (!img.naturalWidth) {
+    ctx.fillStyle = C.themeColor || '#f3ede2';
+    ctx.fillRect(x, y, w, h);
+    return;
+  }
+  const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+  const dw = img.naturalWidth * s;
+  const dh = img.naturalHeight * s;
+  ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+}
+
+// 椭圆地影
+function drawShadow(x, y, rx, ry) {
+  ctx.save();
+  ctx.fillStyle = '#30433624';
+  ctx.beginPath();
+  ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+// 独立旋转平移道具
+function drawProp(index, x, y, size, angle) {
+  ctx.save();
+  ctx.translate(x, y);
+  if (angle) ctx.rotate(angle);
+  drawSprite(index, -size / 2, -size / 2, size, size);
+  ctx.restore();
+}
+
+// 舞台世界渲染 (根据当前场景与时刻插值)
+function renderWorld(sceneIdx, sceneTime, t) {
+  drawCoverBackground(background, 0, 0, W, H);
+
+  // 相机运镜计算
+  const cam = (C.cameras && C.cameras[sceneIdx]) || {};
+  let scale = 1;
+  let offsetX = 0, offsetY = 0;
+
+  if (C.customWorld) {
+    // 如果工程定制了舞台逻辑
+    C.customWorld(ctx, sceneIdx, sceneTime, t);
+    return;
+  }
+
+  // 默认相机运镜模式
+  if (sceneIdx >= 2) {
+    // 关键转折镜头：推近特写
+    scale = cam.scale || (1.48 + 0.025 * ease(sceneTime / 0.65));
+    ctx.save();
+    ctx.translate(540, 1090);
+    ctx.scale(scale, scale);
+    ctx.translate(-580, -1030);
+  } else {
+    // 普通中景：微幅呼吸平移
+    scale = 1;
+    ctx.save();
+    ctx.translate(-5 * ease(sceneTime / 2), 0);
+  }
+
+  // 角色地影
+  drawShadow(500, 1720, 200, 25);
+
+  // 道具层渲染 (Prop 4, Prop 5)
+  if (C.renderProps) {
+    C.renderProps(ctx, sceneIdx, sceneTime, t);
+  } else {
+    // 默认道具摆放
+    if (sceneIdx === 0) {
+      const lift = ease((sceneTime - 0.35) / 0.45);
+      drawProp(4, 824, 1420 - 170 * lift, 320, -0.12 * lift + 0.015 * Math.sin(sceneTime * 9));
+      drawProp(5, 800, 1590, 295, 0);
+    } else if (sceneIdx === 1) {
+      drawProp(4, 245, 1135, 290, -0.1);
+      drawProp(5, 788 + 4 * Math.sin(sceneTime * 9), 1590 - 28 * ease((sceneTime - 1.8) / 0.3), 295, 0.035 * Math.sin(sceneTime * 9));
+    } else {
+      drawProp(4, 245, 1135, 290, -0.1);
+      drawProp(5, 800, 1590, 295, 0);
+    }
+  }
+
+  // 角色姿态与位移计算
+  let pose = 0, dx = 0, dy = 0;
+  if (C.getCharacterPose) {
+    const res = C.getCharacterPose(sceneIdx, sceneTime, t);
+    pose = res.pose || 0; dx = res.dx || 0; dy = res.dy || 0;
+  } else {
+    if (sceneIdx === 0) {
+      pose = 0;
+    } else if (sceneIdx === 1) {
+      pose = (sceneTime < (C.cueThresholds ? C.cueThresholds[1] : 2.0)) ? 0 : 1;
+      dx = 8 * Math.sin(sceneTime * 8);
+      dy = 3 * Math.sin(sceneTime * 8);
+    } else if (sceneIdx === 2) {
+      const friendEnd = C.friend_end || (C.starts[2] + 2.5);
+      pose = t < friendEnd - 0.1 ? 0 : 2;
+      dx = pose === 2 ? 233 : 0;
+    } else if (sceneIdx === 3) {
+      pose = sceneTime < 0.24 ? 2 : 3;
+      dx = pose === 3 ? 45 : 233;
+    }
+  }
+
+  drawSprite(pose, -55 + dx, 745 + dy, 1050, 1050);
+
+  // 漫画特效：冷场无语黑线
+  if (sceneIdx === 2 && C.friend_end && t > C.friend_end + 0.1 && t < C.friend_end + 0.65) {
+    const a = clamp(1 - (t - C.friend_end - 0.1) / 0.55);
+    ctx.globalAlpha = a;
+    ctx.strokeStyle = '#25362c';
+    ctx.lineWidth = 5;
+    for (let i = 0; i < 5; i++) {
+      const angle = -2.8 + i * 0.4;
+      ctx.beginPath();
+      ctx.moveTo(600 + Math.cos(angle) * 130, 900 + Math.sin(angle) * 145);
+      ctx.lineTo(600 + Math.cos(angle) * 170, 900 + Math.sin(angle) * 190);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // 漫画特效：尴尬水滴
+  if (sceneIdx === 3 && sceneTime > 0.45 && sceneTime < 1.5) {
+    ctx.fillStyle = '#a9d8ce';
+    ctx.strokeStyle = '#263c32';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(654, 853);
+    ctx.bezierCurveTo(628, 889, 629, 909, 648, 912);
+    ctx.bezierCurveTo(673, 912, 677, 889, 654, 853);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+// 弹簧漫画气泡渲染
+function renderBubble(cue, t) {
+  const elapsed = t - cue.start;
+  const p = clamp(elapsed / 0.16);
+  // 弹簧物理公式：0.86 -> 1.06 -> 1.0
+  const pop = p < 0.7 ? 0.86 + 0.2 * ease(p / 0.7) : 1.06 - 0.06 * ease((p - 0.7) / 0.3);
+
+  const text = cue.text;
+  const lines = text.split('\n');
+  const w = cue.width || (lines.length > 1 && lines[0].length > 6 ? 900 : 700);
+  const h = cue.height || (lines.length >= 2 ? 260 : 180);
+  const x = (W - w) / 2;
+  const y = cue.y || 430;
+
+  const isPhone = cue.speaker === 'friend' || cue.isPhone;
+
+  ctx.save();
+  ctx.translate(540, y + h / 2);
+  ctx.scale(pop, pop);
+  ctx.translate(-540, -(y + h / 2));
+  ctx.globalAlpha = clamp(elapsed / 0.08);
+
+  // 气泡底色与描边
+  ctx.fillStyle = isPhone ? '#eaf7ef' : '#fffdf6';
+  ctx.strokeStyle = '#25372d';
+  ctx.lineWidth = 6;
+  if (isPhone) ctx.setLineDash([15, 11]);
+
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, 40);
+  ctx.fill();
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // 气泡小尾巴 (实线指向现场人物，虚线指向听筒)
+  const tailX = cue.tailX || (isPhone ? 430 : 610);
+  const targetY = cue.tailTargetY || (isPhone ? 850 : 810);
+
+  ctx.beginPath();
+  ctx.moveTo(tailX - 35, y + h - 3);
+  ctx.lineTo(tailX - 28, targetY);
+  ctx.lineTo(tailX + 30, y + h - 3);
+  ctx.fill();
+  ctx.stroke();
+
+  // 气泡文字
+  ctx.fillStyle = '#25372d';
+  ctx.font = 'bold 60px "Microsoft YaHei"';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const lineSpacing = 88;
+  lines.forEach((line, i) => {
+    ctx.fillText(line, 540, y + h / 2 + (i - (lines.length - 1) / 2) * lineSpacing);
+  });
+
+  ctx.restore();
+}
+
+// 卡点拟声词抖动特效
+function renderFoley(t) {
+  if (!C.sfx) return;
+  for (const item of C.sfx) {
+    let at, kind, label;
+    if (Array.isArray(item)) {
+      at = item[0]; kind = item[1]; label = item[2] || (kind === 'cloth' ? '沙沙' : '');
+    } else {
+      at = item.at; kind = item.kind; label = item.label || '沙沙';
+    }
+
+    if (!label || t < at || t > at + 0.42) continue;
+    const u = t - at;
+    ctx.save();
+    ctx.translate(862 + 5 * Math.sin(u * 90), 1370);
+    ctx.rotate(0.04 * Math.sin(u * 70));
+    ctx.fillStyle = '#fffdf8';
+    ctx.strokeStyle = '#22372e';
+    ctx.lineWidth = 7;
+    ctx.font = 'bold 54px "Microsoft YaHei"';
+    ctx.textAlign = 'center';
+    ctx.strokeText(label, 0, 0);
+    ctx.fillText(label, 0, 0);
+    ctx.restore();
+  }
+}
+
+// 主渲染函数
+function draw(t) {
+  t = clamp(t, 0, C.duration || 10);
+
+  // 计算当前场景编号
+  const starts = C.starts || [0];
+  let scene = 0;
+  for (let i = 1; i < starts.length; i++) {
+    if (t >= starts[i]) scene = i;
+  }
+  const sceneTime = t - starts[scene];
+
+  ctx.clearRect(0, 0, W, H);
+  renderWorld(scene, sceneTime, t);
+
+  // 检查对白气泡
+  if (C.cues) {
+    const cue = C.cues.find(c => t >= c.start && t < c.end + 0.24);
+    if (cue) renderBubble(cue, t);
+  }
+
+  renderFoley(t);
+}
+
+// Playwright 导出接口
+window.renderFrame = async function(t) {
+  await window.ready;
+  draw(t);
+  return canvas.toDataURL('image/png').split(',')[1];
+};
+
+// 独立封面生成接口 (4:3 与 3:4)
+window.renderCover = async function(w, h) {
+  await window.ready;
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const d = c.getContext('2d');
+
+  // 绘制背景
+  if (background.naturalWidth) {
+    const scale = Math.max(w / background.naturalWidth, h / background.naturalHeight);
+    d.drawImage(background, (w - background.naturalWidth * scale) / 2, (h - background.naturalHeight * scale) / 2, background.naturalWidth * scale, background.naturalHeight * scale);
+  } else {
+    d.fillStyle = C.themeColor || '#f6f1e6';
+    d.fillRect(0, 0, w, h);
+  }
+
+  // 角色姿态 0 或指定封面姿态
+  if (atlas.naturalWidth) {
+    const sw = atlas.naturalWidth / 3;
+    const sh = atlas.naturalHeight * (C.atlasRowSplit || 0.5);
+    const size = h * 0.94;
+    d.drawImage(atlas, 0, 0, sw, sh, w * 0.46 - size * 0.5, h * 0.18, size, size);
+  }
+
+  // 标题框
+  d.fillStyle = '#fffdf5';
+  d.strokeStyle = '#22372d';
+  d.lineWidth = 5;
+  d.beginPath();
+  d.roundRect(w * 0.06, h * 0.055, w * 0.88, h * 0.22, 30);
+  d.fill();
+  d.stroke();
+
+  // 标题文字
+  d.fillStyle = '#25372d';
+  d.font = `bold ${Math.round(w * 0.11)}px "Microsoft YaHei"`;
+  d.textAlign = 'center';
+  d.textBaseline = 'middle';
+  d.fillText(C.coverTitle || C.title || '手绘动态漫', w / 2, h * 0.17);
+
+  return c.toDataURL('image/png').split(',')[1];
+};
+
+window.ready.then(() => {
+  draw(0.5);
+});
+</script>
+</body>
+</html>

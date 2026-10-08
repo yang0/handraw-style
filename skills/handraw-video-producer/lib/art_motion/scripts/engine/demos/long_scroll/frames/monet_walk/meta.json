@@ -1,0 +1,127 @@
+{
+  "ref_h": 366,
+  "frames": [
+    {
+      "file": "01.png",
+      "ax": 110.0,
+      "ay": 367,
+      "w": 220,
+      "h": 368,
+      "air": 0,
+      "pose": "walk_stride_a",
+      "source_rect": [
+        462,
+        7,
+        220,
+        368
+      ]
+    },
+    {
+      "file": "02.png",
+      "ax": 110.0,
+      "ay": 367,
+      "w": 220,
+      "h": 368,
+      "air": 0,
+      "pose": "walk_stride_a",
+      "source_rect": [
+        462,
+        7,
+        220,
+        368
+      ]
+    },
+    {
+      "file": "03.png",
+      "ax": 87.98,
+      "ay": 364,
+      "w": 166,
+      "h": 365,
+      "air": 0,
+      "pose": "walk_pass_a",
+      "source_rect": [
+        837,
+        9,
+        166,
+        365
+      ]
+    },
+    {
+      "file": "04.png",
+      "ax": 87.98,
+      "ay": 364,
+      "w": 166,
+      "h": 365,
+      "air": 0,
+      "pose": "walk_pass_a",
+      "source_rect": [
+        837,
+        9,
+        166,
+        365
+      ]
+    },
+    {
+      "file": "05.png",
+      "ax": 104.88,
+      "ay": 360,
+      "w": 228,
+      "h": 361,
+      "air": 0,
+      "pose": "walk_stride_b",
+      "source_rect": [
+        1179,
+        12,
+        228,
+        361
+      ]
+    },
+    {
+      "file": "06.png",
+      "ax": 104.88,
+      "ay": 360,
+      "w": 228,
+      "h": 361,
+      "air": 0,
+      "pose": "walk_stride_b",
+      "source_rect": [
+        1179,
+        12,
+        228,
+        361
+      ]
+    },
+    {
+      "file": "07.png",
+      "ax": 101.92,
+      "ay": 355,
+      "w": 196,
+      "h": 356,
+      "air": 0,
+      "pose": "walk_pass_b",
+      "source_rect": [
+        97,
+        381,
+        196,
+        356
+      ]
+    },
+    {
+      "file": "08.png",
+      "ax": 101.92,
+      "ay": 355,
+      "w": 196,
+      "h": 356,
+      "air": 0,
+      "pose": "walk_pass_b",
+      "source_rect": [
+        97,
+        381,
+        196,
+        356
+      ]
+    }
+  ],
+  "identity": "project original traveler, not source author",
+  "animation": "four distinct walking poses held across eight slots; finite interaction keyframes"
+}

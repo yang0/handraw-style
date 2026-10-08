@@ -1,0 +1,27 @@
+{
+  "grammar": "t3_finance_chart",
+  "duration": 7,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "data": {
+    "title": "英伟达：五个财年营收涨到原来的 7.8 倍",
+    "unit": "年营收，十亿美元",
+    "source": "来源：英伟达 2021–2025 财年 10-K 年报（财年截至次年 1 月）",
+    "chart": "bar",
+    "decimals": 1,
+    "series": [
+      { "label": "FY2021", "value": 16.68 },
+      { "label": "FY2022", "value": 26.91 },
+      { "label": "FY2023", "value": 26.97 },
+      { "label": "FY2024", "value": 60.92 },
+      { "label": "FY2025", "value": 130.50 }
+    ],
+    "highlight": { "index": 4, "text": "7.8 倍", "sub": "130.5 ÷ 16.7" }
+  },
+  "cues": [
+    { "at": 0.0, "kind": "title" },
+    { "at": 1.2, "kind": "bar" },
+    { "at": 4.4, "kind": "highlight" }
+  ]
+}

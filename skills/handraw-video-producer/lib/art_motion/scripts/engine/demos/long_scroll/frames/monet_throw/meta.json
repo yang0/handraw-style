@@ -1,0 +1,127 @@
+{
+  "ref_h": 366,
+  "frames": [
+    {
+      "file": "01.png",
+      "ax": 87.36,
+      "ay": 365,
+      "w": 168,
+      "h": 366,
+      "air": 0,
+      "pose": "idle",
+      "source_rect": [
+        99,
+        8,
+        168,
+        366
+      ]
+    },
+    {
+      "file": "02.png",
+      "ax": 130.5,
+      "ay": 263,
+      "w": 290,
+      "h": 264,
+      "air": 0,
+      "pose": "pick",
+      "source_rect": [
+        420,
+        467,
+        290,
+        264
+      ]
+    },
+    {
+      "file": "03.png",
+      "ax": 87.36,
+      "ay": 365,
+      "w": 168,
+      "h": 366,
+      "air": 0,
+      "pose": "idle",
+      "source_rect": [
+        99,
+        8,
+        168,
+        366
+      ]
+    },
+    {
+      "file": "04.png",
+      "ax": 124.0,
+      "ay": 349,
+      "w": 248,
+      "h": 350,
+      "air": 0,
+      "pose": "windup",
+      "source_rect": [
+        830,
+        380,
+        248,
+        350
+      ]
+    },
+    {
+      "file": "05.png",
+      "ax": 117.6,
+      "ay": 349,
+      "w": 294,
+      "h": 350,
+      "air": 0,
+      "pose": "throw_release",
+      "source_rect": [
+        1154,
+        381,
+        294,
+        350
+      ]
+    },
+    {
+      "file": "06.png",
+      "ax": 105.84,
+      "ay": 347,
+      "w": 252,
+      "h": 348,
+      "air": 0,
+      "pose": "reach",
+      "source_rect": [
+        94,
+        737,
+        252,
+        348
+      ]
+    },
+    {
+      "file": "07.png",
+      "ax": 87.36,
+      "ay": 365,
+      "w": 168,
+      "h": 366,
+      "air": 0,
+      "pose": "idle",
+      "source_rect": [
+        99,
+        8,
+        168,
+        366
+      ]
+    },
+    {
+      "file": "08.png",
+      "ax": 87.36,
+      "ay": 365,
+      "w": 168,
+      "h": 366,
+      "air": 0,
+      "pose": "idle",
+      "source_rect": [
+        99,
+        8,
+        168,
+        366
+      ]
+    }
+  ],
+  "identity": "project original traveler, not source author",
+  "animation": "four distinct walking poses held across eight slots; finite interaction keyframes"
+}

@@ -1,0 +1,17 @@
+{
+  "grammar": "y3_whiteboard",
+  "duration": 10,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "cues": [
+    { "at": 0.0, "kind": "title", "text": "AI 为什么会一本正经地胡说" },
+    { "at": 1.9, "kind": "point", "text": "它读过海量的文字" },
+    { "at": 2.8, "kind": "draw", "text": "海量文本", "data": { "icon": "stack" } },
+    { "at": 3.9, "kind": "point", "text": "学会的是下一个词最像什么" },
+    { "at": 4.9, "kind": "draw", "text": "猜下一个词", "data": { "icon": "network" } },
+    { "at": 6.0, "kind": "point", "text": "没人教过它说「不知道」" },
+    { "at": 6.9, "kind": "draw", "text": "照样作答", "data": { "icon": "chat" } },
+    { "at": 8.0, "kind": "highlight", "data": { "index": 2 } }
+  ]
+}

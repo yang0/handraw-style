@@ -1,0 +1,5 @@
+numpy>=1.24
+Pillow>=10
+playwright>=1.40
+edge-tts>=6.1
+fonttools>=4.50

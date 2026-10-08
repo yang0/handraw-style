@@ -1,0 +1,110 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Illustrated Whiteboard</title>
+<style>html,body{margin:0;overflow:hidden}canvas{display:block}</style><canvas id="stage"></canvas>
+<script>
+/*WHITEBOARD_CONFIG*/
+const C=window.CONFIG,g=document.getElementById('stage').getContext('2d'),canvas=g.canvas;
+const W=C.width,H=C.height,S=Math.min(W,H),wide=W>H,P=C.palette;
+const subtitleMode=C.subtitle_mode??'burn-in';
+if(!['burn-in','sidecar','none'].includes(subtitleMode))throw new Error('Unknown subtitle_mode');
+canvas.width=W;canvas.height=H;canvas.style.width=W+'px';canvas.style.height=H+'px';
+document.body.style.width=W+'px';document.body.style.height=H+'px';
+const M=S*.065, body={x:M,y:H*.235,w:W-2*M,h:H*.515};
+const cache=new Map();let audit;
+const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));const ease=n=>1-(1-clamp(n))**3;
+const allImages=C.scenes.flatMap(s=>[s.image,...(s.items||[]).map(i=>i.image)]).filter(Boolean);
+window.ready=Promise.all([...new Map(allImages.map(a=>[a.imageUrl,a])).values()].map(a=>new Promise((resolve,reject)=>{
+  const im=new Image();im.onload=()=>{cache.set(a.imageUrl,im);resolve()};im.onerror=()=>reject(new Error('图像加载失败: '+a.path));im.src=a.imageUrl;
+})).concat([document.fonts.ready]));
+function font(size,weight=700){g.font=`${weight} ${size}px "Microsoft YaHei",sans-serif`;g.textBaseline='middle'}
+function box(b,fill,stroke=null){g.beginPath();g.roundRect(b.x,b.y,b.w,b.h,S*.026);g.fillStyle=fill;g.fill();if(stroke){g.strokeStyle=stroke;g.lineWidth=S*.003;g.stroke()}}
+function line(points,p=1,col=P.primary,lw=S*.005){
+  p=clamp(p);if(!p)return;g.strokeStyle=col;g.lineWidth=lw;g.lineJoin='round';g.lineCap='round';
+  const lens=points.slice(1).map((v,i)=>Math.hypot(v[0]-points[i][0],v[1]-points[i][1]));let left=lens.reduce((a,b)=>a+b,0)*p;
+  let end=points[0];g.beginPath();g.moveTo(...end);
+  for(let i=0;i<lens.length;i++){let k=Math.min(1,left/lens[i]);end=[points[i][0]+(points[i+1][0]-points[i][0])*k,points[i][1]+(points[i+1][1]-points[i][1])*k];g.lineTo(...end);left-=lens[i];if(left<=0)break}g.stroke();
+  g.save();g.globalAlpha*=.2;g.translate(S*.002,S*.002);g.lineWidth=lw*.45;g.stroke();g.restore();
+  if(p<.98){g.save();g.translate(...end);g.rotate(.35);g.fillStyle=P.accent;g.fillRect(-S*.004,-S*.035,S*.01,S*.035);g.restore()}
+}
+function arrow(a,b,p=1){line([a,b],p);if(p>.8){const angle=Math.atan2(b[1]-a[1],b[0]-a[0]),l=S*.02;line([[b[0]-Math.cos(angle-.6)*l,b[1]-Math.sin(angle-.6)*l],b,[b[0]-Math.cos(angle+.6)*l,b[1]-Math.sin(angle+.6)*l]],(p-.8)/.2)}}
+function outline(b,p){line([[b.x-3,b.y],[b.x+b.w+3,b.y+2],[b.x+b.w,b.y+b.h+3],[b.x-2,b.y+b.h],[b.x,b.y-3]],p)}
+function wrap(text,width,size){
+  font(size);let lines=[],remaining=String(text);
+  while(remaining){let take=0;while(take<remaining.length&&g.measureText(remaining.slice(0,take+1)).width<=width)take++;
+    if(!take)throw new Error('文字宽度不足');
+    if(take<remaining.length){const part=remaining.slice(0,take);const mark=Math.max(...['，','。','：','；','！','？','、',' '].map(c=>part.lastIndexOf(c)));
+      if(mark>=take*.45)take=mark+1; // Prefer phrase boundaries; explicit lines override this heuristic.
+      while(take>1&&/[，。！？；：、）”]/.test(remaining[take]))take--;
+    }
+    lines.push(remaining.slice(0,take).trim());remaining=remaining.slice(take).trim();
+  }return lines;
+}
+function text(text,b,size=S*.046,opts={}){
+  let lines=opts.lines||wrap(text,b.w,size),min=opts.min||S*.027;
+  while((lines.length*size*1.32>b.h||lines.some(s=>(font(size),g.measureText(s).width>b.w)))&&size>min){size*=.94;lines=opts.lines||wrap(text,b.w,size)}
+  font(size,opts.weight||700);if(lines.length*size*1.32>b.h||lines.some(s=>g.measureText(s).width>b.w))throw new Error('文字放不下；缩稿或拆幕: '+text);
+  g.fillStyle=opts.color||P.ink;g.textAlign=opts.align||'left';
+  const y0=b.y+(b.h-lines.length*size*1.32)/2+size*.66;
+  lines.forEach((s,i)=>{const x=opts.align==='center'?b.x+b.w/2:b.x;g.fillText(s,x,y0+i*size*1.32)});
+  audit.textBoxes.push({...b,text:String(text),role:opts.role||'graphic'});
+  if(b.x<0||b.y<0||b.x+b.w>W||b.y+b.h>H)audit.overflows.push(String(text));
+}
+function art(a,b,p=1){
+  const im=cache.get(a.imageUrl);if(!im)throw new Error('未加载图片: '+a.path);
+  const r=a.sourceRect,scale=Math.min(b.w/r[2],b.h/r[3]);const w=r[2]*scale,h=r[3]*scale,x=b.x+(b.w-w)/2,y=b.y+(b.h-h)/2;
+  p=clamp(p);if(!p)return;g.save();g.beginPath();g.moveTo(x-2,y-2);
+  for(let i=0;i<=20;i++)g.lineTo(x+w*p+(p<.99?Math.sin(i*2.3)*S*.01:2),y+h*i/20);
+  g.lineTo(x-2,y+h+2);g.closePath();g.clip();g.drawImage(im,...r,x,y,w,h);g.restore();audit.images.push(a.path);audit.imageBoxes.push({x,y,w,h});
+}
+function grid(b,n,vertical,gap=S*.025){const space=(vertical?b.h:b.w)-gap*(n-1);return Array.from({length:n},(_,i)=>vertical?{x:b.x,y:b.y+i*(space/n+gap),w:b.w,h:space/n}:{x:b.x+i*(space/n+gap),y:b.y,w:space/n,h:b.h})}
+function scene(s,t){
+  g.fillStyle=P.paper;g.fillRect(0,0,W,H);
+  g.fillStyle='rgba(70,45,20,.025)';for(let x=20;x<W;x+=S*.041)for(let y=20;y<H;y+=S*.041)g.fillRect(x,y,S*.0015,S*.0015);
+  text(C.title,{x:M,y:H*.04,w:W-2*M,h:H*.043},S*.027,{color:P.primary,weight:400});
+  const title={x:M,y:H*.105,w:W-2*M,h:H*.106};
+  g.save();g.beginPath();g.rect(title.x,title.y,title.w*ease(t/.38),title.h);g.clip();text(s.title,title,S*.078);g.restore();
+  const p=delay=>ease((t-delay)/.55);
+  if(s.layout==='hero'){
+    const ib=wide?{x:body.x+body.w*.44,y:body.y,w:body.w*.56,h:body.h}:{x:body.x,y:body.y+body.h*.21,w:body.w,h:body.h*.79};
+    const tb=wide?{x:body.x,y:body.y,w:body.w*.4,h:body.h}:{x:body.x,y:body.y,w:body.w,h:body.h*.19};
+    if(s.body)text(s.body,tb,S*.048);art(s.image,ib,p(.18));
+  }else if(s.layout==='steps'||s.layout==='compare'){
+    const vertical=!wide,items=s.items,n=items.length,tiles=grid(body,n,vertical,S*.036);
+    tiles.forEach((b,i)=>{box(b,'rgba(255,255,255,.62)');outline(b,p(.1+i*.2));
+      const ib=vertical?{x:b.x+S*.014,y:b.y+S*.009,w:b.w*.39,h:b.h-S*.018}:{x:b.x+S*.014,y:b.y+b.h*.05,w:b.w-S*.028,h:b.h*.69};
+      const tb=vertical?{x:b.x+b.w*.44,y:b.y+b.h*.06,w:b.w*.51,h:b.h*.88}:{x:b.x+b.w*.06,y:b.y+b.h*.76,w:b.w*.88,h:b.h*.18};
+      art(items[i].image,ib,p(.22+i*.28));text(items[i].text,tb,S*.048,{align:vertical?'left':'center'});
+      if(i<n-1){const a=vertical?[b.x+b.w/2,b.y+b.h+S*.005]:[b.x+b.w+S*.005,b.y+b.h/2],next=tiles[i+1],end=vertical?[a[0],next.y-S*.005]:[next.x-S*.005,a[1]];arrow(a,end,p(.42+i*.28))}
+    });
+  }else if(s.layout==='diagram'){
+    const vertical=!wide,tiles=grid({...body,y:body.y+body.h*.08,h:body.h*.84},s.nodes.length,vertical,S*.08);
+    tiles.forEach((b,i)=>{box(b,'rgba(255,255,255,.68)');outline(b,p(.16+i*.33));text(s.nodes[i],{x:b.x+S*.025,y:b.y+S*.012,w:b.w-S*.05,h:b.h-S*.024},S*.055,{align:'center'});if(i<tiles.length-1){const next=tiles[i+1];arrow(vertical?[b.x+b.w/2,b.y+b.h]:[b.x+b.w,b.y+b.h/2],vertical?[b.x+b.w/2,next.y]:[next.x,b.y+b.h/2],p(.45+i*.33))}});
+  }
+  if(s.takeaway)text(s.takeaway,{x:M,y:H*.772,w:W-2*M,h:H*.053},S*.036,{color:P.primary,align:'center'});
+}
+function caption(t){const cue=C.cues.find(c=>t>=c.start&&t<c.end);if(!cue)return;
+  const size=S*.041,lines=cue.lines||wrap(cue.text,W-2*M-S*.05,size),height=Math.max(H*.082,lines.length*size*1.38+S*.028);
+  const b={x:M,y:H-H*.07-height,w:W-2*M,h:height};
+  if(b.y<H*.83)throw new Error('字幕占用过大；按真实语音边界拆句或缩稿，不要遮住主体');
+  box(b,'rgba(35,43,56,.95)');text(cue.text,{x:b.x+S*.025,y:b.y+S*.01,w:b.w-S*.05,h:b.h-S*.02},size,{lines,color:P.paper,align:'center',weight:400,role:'subtitle'});
+}
+window.renderFrame=async (time)=>{
+  await window.ready;let t=clamp(time,0,C.duration),index=Math.max(0,C.scenes.findLastIndex(s=>t>=s.start)),s=C.scenes[index];
+  audit={scene:s.id,orientation:wide?'landscape':'portrait',subtitle_mode:subtitleMode,overflows:[],images:[],imageBoxes:[],textBoxes:[]};
+  g.setTransform(1,0,0,1,0,0);g.globalAlpha=1;scene(s,t-s.start);
+  // Deliberate page cut; reveals apply to new information only, no flash overlay.
+  if(subtitleMode==='burn-in')caption(t);g.fillStyle=P.accent;g.fillRect(M,H*.967,(W-2*M)*t/C.duration,S*.003);window.lastAudit=audit;
+  return canvas.toDataURL('image/png').split(',')[1];
+};
+window.renderCover=async(w,h)=>{
+  await window.ready;
+  const cover=document.createElement('canvas');cover.width=w;cover.height=h;const c=cover.getContext('2d');
+  c.fillStyle=P.paper;c.fillRect(0,0,w,h);c.fillStyle=P.primary;c.fillRect(0,0,w,Math.min(w,h)*.025);
+  const image=allImages[0];let size=Math.min(w,h)*.082,lines=wrap(C.title,w*.86,size);
+  while(lines.length*size*1.25>h*.25&&size>Math.min(w,h)*.032){size*=.94;lines=wrap(C.title,w*.86,size)}
+  if(lines.length*size*1.25>h*.25)throw new Error('封面标题过长，需要缩稿');
+  c.font=`700 ${size}px "Microsoft YaHei"`;c.fillStyle=P.ink;c.textBaseline='middle';lines.forEach((s,i)=>c.fillText(s,w*.07,h*.09+size*.65+i*size*1.25));
+  if(image){const im=cache.get(image.imageUrl),r=image.sourceRect,b={x:w*.09,y:h*.30,w:w*.82,h:h*.59},k=Math.min(b.w/r[2],b.h/r[3]);c.drawImage(im,...r,b.x+(b.w-r[2]*k)/2,b.y+(b.h-r[3]*k)/2,r[2]*k,r[3]*k)}
+  c.font=`400 ${Math.min(w,h)*.029}px "Microsoft YaHei"`;c.fillStyle=P.primary;c.fillText('手绘知识 · '+Math.round(C.duration)+'秒',w*.07,h*.94);
+  return cover.toDataURL('image/png').split(',')[1];
+};
+</script></html>

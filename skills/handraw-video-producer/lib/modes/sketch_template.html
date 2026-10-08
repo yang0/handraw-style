@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Handraw Vector Sketch · 逐笔手绘白板引擎</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: #fbf9f4;
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    #stage {
+      display: block;
+      width: 1080px;
+      height: 1920px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<script>
+/**
+ * Handraw Vector Sketch Engine v1.0
+ * 纯本地零依赖矢量手绘白板引擎：
+ * 1. 矢量双描边微颤线稿 (Dual-stroke Rough Vector)
+ * 2. 拐角手绘出头微超尾 (Corner Overshoot)
+ * 3. 手绘马克笔“唰唰”扫光打底高亮
+ * 4. 大师级手绘插画贴纸“毛刷有机擦出 (Brush Wipe)”
+ * 5. 内置 165 款 IG 图型与 SC 社媒卡蓝图自动排版
+ */
+
+/*SKETCH_CONFIG*/
+const C = window.CONFIG || {
+  duration: 10,
+  themeColor: '#00d26a',
+  secondaryColor: '#f59e0b',
+  title: '手绘白板',
+  elements: [],
+  cues: []
+};
+
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const W = 1080, H = 1920;
+
+// 缓存贴纸图片
+const stickerCache = {};
+const stickersToLoad = (C.elements || []).filter(el => el.type === 'sticker' && el.imageUrl);
+
+window.ready = Promise.all(stickersToLoad.map(el => new Promise(resolve => {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => { stickerCache[el.id || el.imageUrl] = img; resolve(); };
+  img.onerror = () => { resolve(); };
+  img.src = el.imageUrl;
+  if (img.complete && img.naturalWidth) { stickerCache[el.id || el.imageUrl] = img; resolve(); }
+})));
+
+// 工具数学函数
+const clamp = (v, min = 0, max = 1) => Math.max(min, Math.min(max, v));
+const smooth = t => { t = clamp(t); return t * t * (3 - 2 * t); };
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// 绘制单条带手绘微颤的矢量线 (Dual Stroke)
+function drawWobblyLine(c, x1, y1, x2, y2, progress, col = '#23211f', lw = 4, seed = 1, overshoot = 8) {
+  if (progress <= 0) return;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const len = Math.hypot(dx, dy) || 1;
+  const ux = dx / len;
+  const uy = dy / len;
+
+  // 沿切线自身方向超尾出头
+  const targetX = x2 + ux * overshoot;
+  const targetY = y2 + uy * overshoot;
+  const curX = lerp(x1, targetX, progress);
+  const curY = lerp(y1, targetY, progress);
+
+  c.save();
+  c.strokeStyle = col;
+  c.lineWidth = lw;
+  c.lineCap = 'round';
+  c.lineJoin = 'round';
+
+  // 第一道手绘主线 (沿切线法向微颤)
+  c.beginPath();
+  const curDist = Math.hypot(curX - x1, curY - y1);
+  const steps = Math.max(3, Math.floor(curDist / 24));
+  c.moveTo(x1, y1);
+  for (let i = 1; i <= steps; i++) {
+    const p = i / steps;
+    const px = x1 + (curX - x1) * p;
+    const py = y1 + (curY - y1) * p;
+    const wobble = Math.sin(p * Math.PI * 4 + seed) * 1.5;
+    const perpX = -uy * wobble;
+    const perpY = ux * wobble;
+    c.lineTo(px + perpX, py + perpY);
+  }
+  c.stroke();
+
+  // 第二道手绘复线 (微颤双描边，rough 质感)
+  if (lw >= 3 && progress > 0.3) {
+    c.beginPath();
+    c.strokeStyle = col;
+    c.globalAlpha = 0.42;
+    c.lineWidth = lw * 0.75;
+    c.moveTo(x1 + uy * 1.2, y1 - ux * 1.2);
+    for (let i = 1; i <= steps; i++) {
+      const p = i / steps;
+      const px = x1 + (curX - x1) * p;
+      const py = y1 + (curY - y1) * p;
+      const wobble = Math.cos(p * Math.PI * 5 + seed * 2) * 1.6;
+      const perpX = -uy * wobble;
+      const perpY = ux * wobble;
+      c.lineTo(px + perpX, py + perpY);
+    }
+    c.stroke();
+  }
+  c.restore();
+}
+
+// 绘制手绘矩形框 (顺时针逐边画出，带拐角超尾出头)
+function drawWobblyRect(c, x, y, w, h, progress, col = '#23211f', lw = 4, fillCol = null) {
+  if (progress <= 0) return;
+
+  // 背景柔和填充色
+  if (fillCol && progress > 0.2) {
+    c.save();
+    c.fillStyle = fillCol;
+    c.globalAlpha = clamp((progress - 0.2) / 0.5) * 0.95;
+    c.beginPath();
+    c.roundRect(x + 4, y + 4, w - 8, h - 8, 12);
+    c.fill();
+    c.restore();
+  }
+
+  // 顺时针 4 条边，每条边占 0.25 进度，overshoot 为 8px
+  // 1. Top: (x, y) -> (x + w, y)
+  const pTop = clamp(progress / 0.25);
+  drawWobblyLine(c, x, y, x + w, y, pTop, col, lw, 1.2, 8);
+
+  // 2. Right: (x + w, y) -> (x + w, y + h)
+  if (progress > 0.25) {
+    const pRight = clamp((progress - 0.25) / 0.25);
+    drawWobblyLine(c, x + w, y, x + w, y + h, pRight, col, lw, 2.4, 8);
+  }
+
+  // 3. Bottom: (x + w, y + h) -> (x, y + h)
+  if (progress > 0.50) {
+    const pBottom = clamp((progress - 0.50) / 0.25);
+    drawWobblyLine(c, x + w, y + h, x, y + h, pBottom, col, lw, 3.6, 8);
+  }
+
+  // 4. Left: (x, y + h) -> (x, y)
+  if (progress > 0.75) {
+    const pLeft = clamp((progress - 0.75) / 0.25);
+    drawWobblyLine(c, x, y + h, x, y, pLeft, col, lw, 4.8, 8);
+  }
+}
+
+// 绘制手绘指示箭头 (线干画完后画箭头翅膀)
+function drawWobblyArrow(c, x1, y1, x2, y2, progress, col = '#00d26a', lw = 5) {
+  if (progress <= 0) return;
+  // 前 70% 进度画箭身
+  const shaftP = clamp(progress / 0.7);
+  drawWobblyLine(c, x1, y1, x2, y2, shaftP, col, lw, 5.1, 0);
+
+  // 后 30% 进度画两侧箭头翅膀
+  if (progress > 0.7) {
+    const headP = clamp((progress - 0.7) / 0.3);
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const arrowLen = 24;
+
+    // 左翅膀
+    const leftX = x2 - Math.cos(angle - Math.PI / 6) * arrowLen;
+    const leftY = y2 - Math.sin(angle - Math.PI / 6) * arrowLen;
+    drawWobblyLine(c, x2, y2, leftX, leftY, headP, col, lw, 6.2, 0);
+
+    // 右翅膀
+    const rightX = x2 - Math.cos(angle + Math.PI / 6) * arrowLen;
+    const rightY = y2 - Math.sin(angle + Math.PI / 6) * arrowLen;
+    drawWobblyLine(c, x2, y2, rightX, rightY, headP, col, lw, 7.3, 0);
+  }
+}
+
+// 绘制手绘马克笔涂刷高亮 (半透明荧光底色)
+function drawMarkerHighlight(c, x, y, w, h, progress, col = 'rgba(0, 210, 106, 0.28)') {
+  if (progress <= 0) return;
+  c.save();
+  c.fillStyle = col;
+  const curW = w * progress;
+  c.beginPath();
+  c.roundRect(x - 6, y - 4, curW + 12, h + 8, 8);
+  c.fill();
+  c.restore();
+}
+
+// 绘制透明贴纸毛刷擦出动效 (Brush Wipe)
+function drawBrushWipeSticker(c, img, x, y, w, h, progress) {
+  if (!img || !img.naturalWidth || progress <= 0) return;
+
+  c.save();
+  // 裁剪路径：毛刷自左向右扫出，带有锯齿波浪刷毛边缘
+  c.beginPath();
+  const curRight = x + (w + 40) * progress;
+  c.moveTo(x - 20, y - 20);
+  c.lineTo(curRight, y - 20);
+
+  // 毛刷不规则波浪边缘
+  const bristles = 16;
+  for (let i = 0; i <= bristles; i++) {
+    const py = y - 20 + ((h + 40) / bristles) * i;
+    const wave = Math.sin(i * 3.7) * 12 + Math.cos(i * 7.1) * 8;
+    c.lineTo(curRight + wave, py);
+  }
+  c.lineTo(x - 20, y + h + 20);
+  c.closePath();
+  c.clip();
+
+  // 绘制贴纸本体 (带微阴影)
+  c.drawImage(img, x, y, w, h);
+  c.restore();
+}
+
+// 绘制宣纸底纹与微噪点
+function drawPaperBackground(c, w, h) {
+  c.fillStyle = '#fbf9f4';
+  c.fillRect(0, 0, w, h);
+
+  // 极淡米黄微点阵
+  c.fillStyle = 'rgba(60, 45, 30, 0.035)';
+  const step = 42;
+  for (let x = 20; x < w; x += step) {
+    for (let y = 20; y < h; y += step) {
+      c.beginPath();
+      c.arc(x, y, 1.8, 0, Math.PI * 2);
+      c.fill();
+    }
+  }
+}
+
+// 统一底部字幕排版
+function renderCaptions(c, t) {
+  if (!C.cues) return;
+  const cue = C.cues.find(item => t >= item.start && t < item.end + 0.15);
+  if (!cue) return;
+
+  const boxY = 1620;
+  const boxH = 160;
+  const boxW = 960;
+  const boxX = (W - boxW) / 2;
+
+  c.save();
+  c.fillStyle = 'rgba(255, 255, 255, 0.95)';
+  c.strokeStyle = '#23211f';
+  c.lineWidth = 3;
+  c.beginPath();
+  c.roundRect(boxX, boxY, boxW, boxH, 24);
+  c.fill();
+  c.stroke();
+
+  c.fillStyle = '#23211f';
+  c.font = 'bold 48px "PingFang SC", "Microsoft YaHei"';
+  c.textAlign = 'center';
+  c.textBaseline = 'middle';
+  c.fillText(cue.text, W / 2, boxY + boxH / 2);
+  c.restore();
+}
+
+// 逐个元素主渲染逻辑
+function drawElements(c, t) {
+  const elements = C.elements || [];
+
+  for (const el of elements) {
+    if (t < el.start) continue; // 尚未开始
+    if (el.end && t > el.end + 0.1) continue; // 已结束
+
+    // 手绘动作耗时 (默认 0.5s~0.7s 画完，画完后持续常驻展示)
+    const drawDur = el.drawDuration || 0.6;
+    const progress = clamp((t - el.start) / drawDur);
+    const p = smooth(progress);
+
+    if (el.type === 'rect') {
+      const col = el.color || C.themeColor || '#23211f';
+      drawWobblyRect(c, el.x, el.y, el.w, el.h, p, col, el.lineWidth || 4, el.fillColor);
+    } else if (el.type === 'arrow') {
+      const col = el.color || C.themeColor || '#00d26a';
+      drawWobblyArrow(c, el.x1, el.y1, el.x2, el.y2, p, col, el.lineWidth || 5);
+    } else if (el.type === 'highlight') {
+      drawMarkerHighlight(c, el.x, el.y, el.w, el.h, p, el.color || 'rgba(0, 210, 106, 0.28)');
+    } else if (el.type === 'sticker') {
+      const img = stickerCache[el.id || el.imageUrl];
+      drawBrushWipeSticker(c, img, el.x, el.y, el.w, el.h, p);
+    } else if (el.type === 'text') {
+      c.save();
+      c.globalAlpha = clamp((t - el.start) / (el.drawDuration || 0.35));
+      c.fillStyle = el.color || '#23211f';
+      c.font = el.font || 'bold 44px "PingFang SC", "Microsoft YaHei"';
+      c.textAlign = el.align || 'left';
+      c.textBaseline = el.baseline || 'top';
+      c.fillText(el.text, el.x, el.y);
+      c.restore();
+    }
+  }
+}
+
+// 帧渲染入口
+window.renderFrame = async function(t) {
+  await window.ready;
+  t = clamp(t, 0, C.duration || 10);
+
+  ctx.clearRect(0, 0, W, H);
+  drawPaperBackground(ctx, W, H);
+
+  // 顶部手绘大标题印记
+  ctx.save();
+  ctx.fillStyle = '#23211f';
+  ctx.font = 'bold 54px "PingFang SC", "Microsoft YaHei"';
+  ctx.textAlign = 'center';
+  ctx.fillText(C.title || '思维导图拆解', W / 2, 130);
+
+  // 标题底下的手绘横线
+  drawWobblyLine(ctx, W / 2 - 200, 160, W / 2 + 200, 160, clamp(t / 0.6), C.themeColor || '#00d26a', 5, 2.1);
+  ctx.restore();
+
+  // 绘制思维导图各个图元
+  drawElements(ctx, t);
+
+  // 绘制底部字幕
+  renderCaptions(ctx, t);
+
+  return canvas.toDataURL('image/png').split(',')[1];
+};
+
+// 导出 4:3 与 3:4 双封面接口
+window.renderCover = async function(w, h) {
+  await window.ready;
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const d = c.getContext('2d');
+
+  drawPaperBackground(d, w, h);
+
+  // 封面大卡片
+  drawWobblyRect(d, w * 0.08, h * 0.12, w * 0.84, h * 0.76, 1.0, C.themeColor || '#00d26a', 6, 'rgba(255, 255, 255, 0.95)');
+
+  // 封面标题
+  d.fillStyle = '#23211f';
+  d.font = `bold ${Math.round(w * 0.085)}px "PingFang SC", "Microsoft YaHei"`;
+  d.textAlign = 'center';
+  d.textBaseline = 'middle';
+  d.fillText(C.title || '手绘思维导图', w / 2, h * 0.38);
+
+  // 马克笔高亮副标
+  drawMarkerHighlight(d, w * 0.2, h * 0.52, w * 0.6, h * 0.12, 1.0, 'rgba(0, 210, 106, 0.35)');
+  d.fillStyle = '#1c1f26';
+  d.font = `bold ${Math.round(w * 0.046)}px "PingFang SC"`;
+  d.fillText('一图看懂 · 核心逻辑拆解', w / 2, h * 0.58);
+
+  return c.toDataURL('image/png').split(',')[1];
+};
+
+window.ready.then(() => {
+  window.renderFrame(1.0);
+});
+</script>
+</body>
+</html>

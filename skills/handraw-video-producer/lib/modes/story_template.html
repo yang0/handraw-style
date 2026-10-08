@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Watercolor Story Director · 全屏沉浸水彩画卷引擎</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background: #12100e;
+      font-family: -apple-system, "Songti SC", "SimSun", "Noto Serif CJK SC", "PingFang SC", serif;
+    }
+    #stage {
+      display: block;
+      width: 1080px;
+      height: 1920px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<script>
+/**
+ * 全屏沉浸式水彩绘本引擎 (彻底告别 PPT 卡片感)：
+ * 1. 100% 全画幅铺满（Full Bleed），彻底干掉中间小框与大白边！
+ * 2. 真实电影摄影机视口运镜 (Cinematic Pan & Tilt & Zoom)，画面在景别间流转
+ * 3. 全局宣纸肌理 + 浮尘光斑粒子 (Sun Dust / Bokeh) 营造空气呼吸感
+ * 4. 场景切换采用水彩墨晕物理渗透 (Organic Bleed Transition)
+ * 5. 诗意漂浮文字排版，带雅致电影渐变与书法质感
+ */
+
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const W = 1080, H = 1920;
+
+// 离屏 scratch canvas 用于全屏水彩墨晕过渡
+const scratch = document.createElement('canvas');
+scratch.width = W; scratch.height = H;
+const sCtx = scratch.getContext('2d');
+
+let sceneImages = [];
+let imagesLoaded = false;
+
+// 浮尘光斑粒子系统
+const DUST_COUNT = 45;
+const dustParticles = [];
+for (let i = 0; i < DUST_COUNT; i++) {
+  dustParticles.push({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: 1.8 + Math.random() * 3.5,
+    alpha: 0.12 + Math.random() * 0.38,
+    speedY: 15 + Math.random() * 25,
+    speedX: (Math.random() - 0.5) * 12,
+    phase: Math.random() * Math.PI * 2
+  });
+}
+
+window.initStory = function(config) {
+  window.STORY_CONFIG = config;
+  const scenes = config.scenes || [];
+  let loadedCount = 0;
+
+  sceneImages = scenes.map(s => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      loadedCount++;
+      if (loadedCount === scenes.length) imagesLoaded = true;
+    };
+    img.onerror = () => { loadedCount++; };
+    img.src = s.imageUrl;
+    return img;
+  });
+
+  if (scenes.length === 0) imagesLoaded = true;
+};
+
+// 工具函数
+const clamp = (v, min = 0, max = 1) => Math.max(min, Math.min(max, v));
+const smooth = t => { t = clamp(t); return t * t * (3 - 2 * t); };
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// 全屏裁剪与推拉运镜渲染
+function drawCinematicFrame(targetCtx, img, focusX, focusY, zoom, w = W, h = H) {
+  if (!img || !img.naturalWidth) return;
+
+  // 计算基于焦点的视口裁剪
+  let sw = img.naturalWidth / zoom;
+  let sh = sw * (h / w);
+  if (sh > img.naturalHeight) {
+    sh = img.naturalHeight;
+    sw = sh * (w / h);
+  }
+
+  const sx = clamp(focusX * img.naturalWidth - sw / 2, 0, img.naturalWidth - sw);
+  const sy = clamp(focusY * img.naturalHeight - sh / 2, 0, img.naturalHeight - sh);
+
+  targetCtx.drawImage(img, sx, sy, sw, sh, 0, 0, w, h);
+}
+
+// 全局宣纸纤维与阳光粒子微风层
+function renderAtmosphere(t) {
+  // 1. 浮尘光斑粒子
+  for (let i = 0; i < dustParticles.length; i++) {
+    const p = dustParticles[i];
+    const y = ((p.y - t * p.speedY) % H + H) % H;
+    const x = ((p.x + Math.sin(t * 0.8 + p.phase) * 20) % W + W) % W;
+    const flicker = p.alpha * (0.7 + 0.3 * Math.sin(t * 2.5 + p.phase));
+
+    ctx.save();
+    ctx.fillStyle = `rgba(255, 235, 190, ${flicker})`;
+    ctx.beginPath();
+    ctx.arc(x, y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // 2. 电影级边缘柔和渐变暗角 (Vignette)
+  const vig = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.3, W / 2, H * 0.5, H * 0.72);
+  vig.addColorStop(0, 'rgba(15, 12, 10, 0)');
+  vig.addColorStop(1, 'rgba(15, 12, 10, 0.42)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+}
+
+// 诗意文字排版渲染 (拒绝呆板底部框，采用电影片头式排版)
+function renderTypography(sc, localT, dur, themeColor) {
+  const cap = sc.caption || '';
+  const subCap = sc.subCaption || '';
+  if (!cap && !subCap) return;
+
+  // 缓动淡入与微上浮
+  const enterProgress = smooth(localT / 1.0);
+  const exitProgress = smooth((dur - localT) / 0.8);
+  const alpha = Math.min(enterProgress, exitProgress);
+  const translateY = (1 - enterProgress) * 25;
+
+  ctx.save();
+  ctx.globalAlpha = clamp(alpha);
+
+  // 文本区域背景微阴影衬托 (确保任何背景下都极高辨识度)
+  const textY = H * 0.68 + translateY;
+  const grad = ctx.createLinearGradient(0, textY - 140, 0, textY + 180);
+  grad.addColorStop(0, 'rgba(12, 10, 8, 0)');
+  grad.addColorStop(0.5, 'rgba(12, 10, 8, 0.55)');
+  grad.addColorStop(1, 'rgba(12, 10, 8, 0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, textY - 140, W, 320);
+
+  // 主句诗歌
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = '500 54px "Songti SC", "SimSun", "Noto Serif CJK SC", serif';
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = 'rgba(10, 8, 6, 0.8)';
+  ctx.strokeText(cap, W / 2, textY);
+  ctx.fillStyle = '#fffdf7';
+  ctx.fillText(cap, W / 2, textY);
+
+  // 副句诗歌 / 回味词
+  if (subCap) {
+    const subY = textY + 75;
+    ctx.font = '400 34px "Songti SC", "SimSun", "Noto Serif CJK SC", serif';
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'rgba(10, 8, 6, 0.7)';
+    ctx.strokeText(subCap, W / 2, subY);
+    ctx.fillStyle = themeColor || '#e8be89';
+    ctx.fillText(subCap, W / 2, subY);
+  }
+
+  ctx.restore();
+}
+
+// 核心帧渲染逻辑
+window.renderFrame = function(t) {
+  ctx.clearRect(0, 0, W, H);
+
+  if (!imagesLoaded || !window.STORY_CONFIG) {
+    ctx.fillStyle = '#181512';
+    ctx.fillRect(0, 0, W, H);
+    return canvas.toDataURL('image/png').split(',')[1];
+  }
+
+  const scenes = window.STORY_CONFIG.scenes || [];
+  if (scenes.length === 0) return canvas.toDataURL('image/png').split(',')[1];
+
+  // 查找当前场景与下一场景
+  let curIdx = 0;
+  for (let i = 0; i < scenes.length; i++) {
+    if (t >= scenes[i].start && t < scenes[i].end) {
+      curIdx = i;
+      break;
+    }
+    if (t >= scenes[i].end) curIdx = i;
+  }
+
+  const sc = scenes[curIdx];
+  const img = sceneImages[curIdx];
+  const localT = t - sc.start;
+  const dur = Math.max(0.1, sc.end - sc.start);
+  const u = clamp(localT / dur);
+
+  // 镜头设计：每镜设计呼吸感平移与变焦
+  // 奇数镜头：自下而上缓缓推移；偶数镜头：由近景缓慢推向远方
+  const isOdd = curIdx % 2 === 1;
+  const startFocus = isOdd ? [0.5, 0.62] : [0.5, 0.45];
+  const endFocus = isOdd ? [0.5, 0.48] : [0.5, 0.58];
+  const startZoom = isOdd ? 1.08 : 1.20;
+  const endZoom = isOdd ? 1.22 : 1.06;
+
+  const focusX = lerp(startFocus[0], endFocus[0], smooth(u));
+  const focusY = lerp(startFocus[1], endFocus[1], smooth(u));
+  const curZoom = lerp(startZoom, endZoom, smooth(u));
+
+  // 1. 渲染当前全屏画面
+  if (img && img.complete) {
+    drawCinematicFrame(ctx, img, focusX, focusY, curZoom);
+  } else {
+    ctx.fillStyle = '#221e1a';
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // 2. 检查场景转场：入场时执行全屏有机墨晕渗透
+  const transDur = 1.0;
+  if (localT < transDur && curIdx > 0) {
+    const prevImg = sceneImages[curIdx - 1];
+    if (prevImg && prevImg.complete) {
+      // 在底图上覆盖上一场景，并通过扩散蒙版溶解
+      sCtx.clearRect(0, 0, W, H);
+      drawCinematicFrame(sCtx, prevImg, 0.5, 0.5, 1.15);
+
+      const blendP = smooth(localT / transDur);
+      ctx.save();
+      ctx.globalAlpha = 1.0 - blendP;
+      ctx.drawImage(scratch, 0, 0);
+      ctx.restore();
+    }
+  }
+
+  // 3. 渲染全屏大气光斑微尘与暗角
+  renderAtmosphere(t);
+
+  // 4. 渲染诗意文字排版
+  renderTypography(sc, localT, dur, window.STORY_CONFIG.themeColor);
+
+  // 5. 开头与结尾平滑黑场
+  const totalDur = window.STORY_CONFIG.duration || 10;
+  const fade = t < 0.4 ? 1 - t / 0.4 : (t > totalDur - 0.5 ? (t - (totalDur - 0.5)) / 0.5 : 0);
+  if (fade > 0) {
+    ctx.fillStyle = `rgba(12, 10, 8, ${clamp(fade)})`;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  return canvas.toDataURL('image/png').split(',')[1];
+};
+
+// 导出 4:3 与 3:4 双封面接口
+window.renderCover = async function(w, h) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const d = c.getContext('2d');
+
+  const coverImg = sceneImages[0] || sceneImages[1];
+  if (coverImg && coverImg.complete) {
+    drawCinematicFrame(d, coverImg, 0.5, 0.5, 1.08, w, h);
+  } else {
+    d.fillStyle = '#221e1a';
+    d.fillRect(0, 0, w, h);
+  }
+
+  // 底部优雅暗色渐变
+  const g = d.createLinearGradient(0, h * 0.4, 0, h);
+  g.addColorStop(0, 'rgba(12, 10, 8, 0)');
+  g.addColorStop(0.65, 'rgba(12, 10, 8, 0.65)');
+  g.addColorStop(1, 'rgba(12, 10, 8, 0.95)');
+  d.fillStyle = g;
+  d.fillRect(0, h * 0.4, w, h * 0.6);
+
+  // 大标题
+  d.fillStyle = '#fffdf5';
+  d.font = `500 ${Math.round(w * 0.082)}px "Songti SC", "SimSun", serif`;
+  d.textAlign = 'left';
+  d.textBaseline = 'middle';
+  d.fillText(window.STORY_CONFIG.title || '晚安温柔的风', w * 0.09, h * 0.82);
+
+  d.fillStyle = window.STORY_CONFIG.themeColor || '#e8be89';
+  d.font = `400 ${Math.round(w * 0.038)}px "Songti SC", "SimSun", serif`;
+  d.fillText('手绘治愈绘本 · 伴你入眠', w * 0.09, h * 0.89);
+
+  return c.toDataURL('image/png').split(',')[1];
+};
+</script>
+</body>
+</html>

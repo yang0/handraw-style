@@ -1,0 +1,42 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="icon" href="data:,"><title>Art History Speedrun · 复刻</title>
+<style>
+html,body{margin:0;background:#111;overflow:hidden}
+canvas{display:block;width:100vw;height:auto;max-width:1920px}
+#ui{position:fixed;left:8px;bottom:8px;color:#ddd;font:12px monospace}
+body.render #ui{display:none}
+</style></head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<div id="ui"><input id="scrub" type="range" min="0" max="60" step="0.0166667" value="0" style="width:600px"> <span id="tt"></span> <button id="play">play</button></div>
+<script src="lib/canvas_runtime.js"></script>
+<script src="lib/fonts.js"></script>
+<script src="lib/util.js"></script>
+<script src="lib/paint.js"></script>
+<script src="lib/brush.js"></script>
+<script src="lib/render.js"></script>
+<script src="lib/post.js"></script>
+<script src="lib/rig.js"></script>
+<script src="lib/rig_huashu.js"></script>
+<script src="lib/kit.js"></script>
+<!-- YouTube 解说语法库（references/09）：动效时间、相机、图解形变、文字、图表、发布会界面、拼贴、卡通 -->
+<script src="lib/motion.js"></script>
+<script src="lib/camera.js"></script>
+<script src="lib/diagram.js"></script>
+<script src="lib/typo.js"></script>
+<script src="lib/chart.js"></script>
+<script src="lib/ui.js"></script>
+<script src="lib/collage.js"></script>
+<script src="lib/toon.js"></script>
+<script src="lib/handdraw.js"></script>
+<script>
+// 选片子：默认 eras.js；?film=<名> → eras_<名>.js（如 ?film=gallery = 35 种风格样片）；?film=demos/<名> → demos/<名>/eras.js（8 种 YouTube 语法示范）。
+// render.py / qa.py 用 --film 传。
+(() => { const f = new URLSearchParams(location.search).get('film');
+  const src = f && /^demos\/[a-z0-9_]+$/.test(f) ? `${f}/eras.js` : f && /^[a-z0-9_]+$/.test(f) ? `eras_${f}.js` : 'eras.js';
+  document.write(`<script src="${src}"><\/script>`); })();
+</script>
+<script src="transitions.js"></script>
+<script src="scenes/index.js"></script>
+<script src="engine.js"></script>
+</body></html>

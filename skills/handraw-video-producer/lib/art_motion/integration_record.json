@@ -1,0 +1,446 @@
+{
+  "status": "runtime_and_static_checks_passed_awaiting_visual_review",
+  "checks": [
+    {
+      "scene": "01_cave",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "02_egypt",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "03_greek",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "04_roman",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "05_gothic",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "06_renaissance",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "08_impressionism",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "09_postimp",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "10_nouveau",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "11_cubism",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "12_bauhaus",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "13_pop",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "14_8bit",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "15_raytrace",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "16_2026",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "17_ink",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "18_klimt",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "19_munch",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "20_dunhuang",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "21_kusama",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "22_constructivism",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "23_dali",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "24_hopper",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "25_ghibli",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "26_vaporwave",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "27_kirby",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "28_monet",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "29_seurat",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "30_matisse",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "31_haring",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "32_rembrandt",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "33_rubberhose",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "34_shadowpuppet",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "35_shinkai",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "scene": "36_picasso_blue",
+      "load": true,
+      "same_time_deterministic": true,
+      "reverse_seek": true
+    },
+    {
+      "grammar": "t1_3b1b",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "t1_3b1b",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "grammar": "t2_keynote_ui",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "t2_keynote_ui",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "grammar": "t3_finance_chart",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "t3_finance_chart",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "grammar": "y1_kurzgesagt",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "y1_kurzgesagt",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "grammar": "y2_vox",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "y2_vox",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "grammar": "y3_whiteboard",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "y3_whiteboard",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "grammar": "y4_storytime",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "y4_storytime",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "grammar": "y5_kinetic_type",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "y5_kinetic_type",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "grammar": "y6_presenter_explainer",
+      "portrait": false,
+      "three_times_and_reload": true,
+      "resolution": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "grammar": "y6_presenter_explainer",
+      "portrait": true,
+      "three_times_and_reload": true,
+      "resolution": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "long_scroll": "project original finite frames",
+      "sample_times": [
+        1,
+        5,
+        9
+      ],
+      "loaded": true,
+      "aesthetic_and_contact_review": "not claimed"
+    },
+    {
+      "encoding": "smoke.mp4",
+      "frames": 60,
+      "duration": 2,
+      "pixel_format": "yuv420p"
+    },
+    {
+      "encoding": "smoke-alpha.mov",
+      "frames": 60,
+      "duration": 2,
+      "pixel_format": "yuva444p10le"
+    }
+  ],
+  "all_scene_count": 35,
+  "clip_count": 9,
+  "reverse_seek_and_reload": true,
+  "missing_assets_rejected": true,
+  "style_alias_binding": true,
+  "dynamic_review": "not performed",
+  "user_acceptance": "pending",
+  "full_smoke_video_decode": true,
+  "alpha_extremes": [
+    0,
+    255
+  ],
+  "music_pcm_peak": 911,
+  "sprite_and_font_tool_help": true,
+  "qa_smoke": {
+    "project": "E:\\handraw-style\\skills\\handraw-video-producer\\lib\\art_motion\\scripts\\engine",
+    "segments": [
+      {
+        "id": "art-motion-validation",
+        "window_lt": [
+          0.0,
+          1.98
+        ],
+        "frames": 59,
+        "ms_mean": 3.4,
+        "ms_max": 5.3,
+        "ms_cold": 5.3,
+        "deterministic": true,
+        "det_maxdiff": 0,
+        "motion_pct": 1.75,
+        "motion_max": 4.33,
+        "still_pairs_pct": 15.5,
+        "spike_ratio": 2.8,
+        "spikes_at_lt": [],
+        "framing": [],
+        "text_tracked": 294
+      }
+    ],
+    "transitions": [],
+    "page_errors": []
+  },
+  "reference_analysis_output": "E:\\handraw-style\\tmp\\art-motion-validation\\analysis",
+  "static_contact_sheet_review": {
+    "performed": true,
+    "limits": "Nine grammar end frames sampled; does not establish dynamic aesthetics or current sample fact correctness."
+  },
+  "installed_sync": "verified by release_art_motion.py --sync"
+}

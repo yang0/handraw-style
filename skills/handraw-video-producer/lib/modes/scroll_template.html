@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Unbounded Stroll Scroll Engine</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #0d0f12;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Serif SC", serif;
+    }
+    #stage {
+      display: block;
+      width: 1080px;
+      height: 1920px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<script>
+/**
+ * Unbounded Stroll Scroll Engine (无界漫步长卷视差引擎) v1.0
+ * 1. 一镜到底水平匀速运镜 (Continuous Camera Pan X)
+ * 2. 多画风大图水平无缝缝合与 200px 软边缘羽化过渡 (Feathered Alpha Blending)
+ * 3. 2.5D 三层物理视差景深：远景层 0.35x ⇄ 中景画卷 1.0x ⇄ 前景粒子 1.4x
+ * 4. 漫步主体 (旅人剪影/IP人物) 拟步行呼吸起伏
+ * 5. 沿途古典卷轴印章与章节题跋自然滑入浮现
+ */
+
+/*SCROLL_CONFIG*/
+const C = window.CONFIG || {
+  duration: 15,
+  width: 1080,
+  height: 1920,
+  themeColor: '#00d26a',
+  title: '无界漫步长卷',
+  characterUrl: null,
+  scenes: [],
+  milestones: [],
+  cues: []
+};
+
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const W = C.width || 1080;
+const H = C.height || 1920;
+canvas.width = W;
+canvas.height = H;
+canvas.style.width = W + 'px';
+canvas.style.height = H + 'px';
+
+// 缓存与预加载图片
+const sceneImages = [];
+let characterImg = null;
+
+const loadPromises = [];
+
+(C.scenes || []).forEach((sc, idx) => {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  const p = new Promise((resolve, reject) => {
+    img.onload = () => resolve();
+    img.onerror = () => reject(new Error('Unable to load scroll scene: ' + sc.url));
+    img.src = sc.url;
+    if (img.complete && img.naturalWidth) resolve();
+  });
+  loadPromises.push(p);
+  sceneImages.push({ img, data: sc });
+});
+
+if (C.characterUrl) {
+  characterImg = new Image();
+  characterImg.crossOrigin = 'anonymous';
+  loadPromises.push(new Promise((resolve, reject) => {
+    characterImg.onload = () => resolve();
+    characterImg.onerror = () => reject(new Error('Unable to load scroll character'));
+    characterImg.src = C.characterUrl;
+    if (characterImg.complete && characterImg.naturalWidth) resolve();
+  }));
+}
+
+// 飘逸前景视差粒子系统
+const PARTICLES_COUNT = C.particleCount == null ? 45 : Math.max(0, Math.floor(C.particleCount));
+let seed = (C.seed == null ? 20261008 : C.seed) >>> 0;
+function seededRandom() {
+  seed = (Math.imul(1664525, seed) + 1013904223) >>> 0;
+  return seed / 4294967296;
+}
+const particles = [];
+for (let i = 0; i < PARTICLES_COUNT; i++) {
+  particles.push({
+    x: seededRandom() * (W + 600),
+    y: seededRandom() * H,
+    size: 2.5 + seededRandom() * 5.5,
+    speedX: 0.8 + seededRandom() * 1.4,
+    speedY: 0.5 + seededRandom() * 1.2,
+    alpha: 0.25 + seededRandom() * 0.55,
+    rot: seededRandom() * Math.PI * 2,
+    rotSpeed: (seededRandom() - 0.5) * 0.05
+  });
+}
+
+// 数学与缓动
+const clamp = (v, min = 0, max = 1) => Math.max(min, Math.min(max, v));
+const smooth = t => { t = clamp(t); return t * t * (3 - 2 * t); };
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// 建立长卷世界坐标模型
+const OVERLAP = C.overlap == null ? 220 : Math.max(0, Number(C.overlap));
+let totalWorldWidth = W;
+const sceneWorldLayout = [];
+
+function buildWorldLayout() {
+  let curX = 0;
+  for (let i = 0; i < sceneImages.length; i++) {
+    const item = sceneImages[i];
+    const nw = item.img.naturalWidth || 1080;
+    const nh = item.img.naturalHeight || 1080;
+    // 画面缩放以充满高度 H
+    const scale = H / nh;
+    const rw = nw * scale;
+    if (sceneImages.length > 1 && OVERLAP >= rw) {
+      throw new Error('Scroll overlap must be smaller than each scene width');
+    }
+
+    sceneWorldLayout.push({
+      index: i,
+      img: item.img,
+      data: item.data,
+      worldX: curX,
+      renderW: rw,
+      renderH: H
+    });
+
+    curX += rw - (i < sceneImages.length - 1 ? OVERLAP : 0);
+  }
+  if (curX < W) throw new Error('Scroll background does not cover the viewport');
+  totalWorldWidth = curX;
+}
+
+// 离线羽化缓存 Canvas
+let featherCanvas = null;
+let featherCtx = null;
+function getFeatherBuffer(w, h) {
+  if (!featherCanvas) {
+    featherCanvas = document.createElement('canvas');
+    featherCtx = featherCanvas.getContext('2d');
+  }
+  if (featherCanvas.width !== w || featherCanvas.height !== h) {
+    featherCanvas.width = w;
+    featherCanvas.height = h;
+  }
+  return { fc: featherCanvas, fctx: featherCtx };
+}
+
+window.ready = Promise.all(loadPromises).then(() => {
+  buildWorldLayout();
+});
+
+// 1. 绘制远景视差层 (0.32x 慢速平移，宣纸天际与柔和群山)
+function drawFarBackground(c, camX) {
+  const bgX = camX * 0.32;
+
+  // 底色：温润古风宣纸渐变
+  const grad = c.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, '#15171c');
+  grad.addColorStop(0.45, '#1e222b');
+  grad.addColorStop(0.75, '#282b33');
+  grad.addColorStop(1, '#111317');
+  c.fillStyle = grad;
+  c.fillRect(0, 0, W, H);
+
+  // 宣纸极淡点阵肌理
+  c.save();
+  c.fillStyle = 'rgba(255, 255, 255, 0.025)';
+  const step = 48;
+  const offX = -(bgX % step);
+  for (let x = offX; x < W; x += step) {
+    for (let y = 30; y < H; y += step) {
+      c.beginPath();
+      c.arc(x, y, 1.4, 0, Math.PI * 2);
+      c.fill();
+    }
+  }
+  c.restore();
+}
+
+// 2. 绘制中景手绘画卷层 (1.0x 连续漫步推镜与羽化接缝)
+function drawScrollScenes(c, camX) {
+  c.save();
+
+  for (let i = 0; i < sceneWorldLayout.length; i++) {
+    const sc = sceneWorldLayout[i];
+    const scrX = sc.worldX - camX;
+
+    // 视锥体裁剪判断 (Off-screen culling)
+    if (scrX + sc.renderW < -10 || scrX > W + 10) {
+      continue;
+    }
+
+    if (i === 0) {
+      // 第一张场景：无前序重叠，整图直接绘制
+      c.drawImage(sc.img, scrX, 0, sc.renderW, sc.renderH);
+    } else {
+      // 场景 i 与场景 i-1 之间存在 OVERLAP 像素重叠
+      // 1) 绘制主干部分 (从 scrX + OVERLAP 到 scrX + renderW)
+      const mainLeft = Math.max(0, scrX + OVERLAP);
+      const mainRight = Math.min(W, scrX + sc.renderW);
+      if (mainRight > mainLeft) {
+        const scaleX = sc.img.naturalWidth / sc.renderW;
+        const srcX = (mainLeft - scrX) * scaleX;
+        const srcW = (mainRight - mainLeft) * scaleX;
+        c.drawImage(sc.img, srcX, 0, srcW, sc.img.naturalHeight, mainLeft, 0, mainRight - mainLeft, sc.renderH);
+      }
+
+      // 2) 绘制左侧重叠羽化过渡带 (scrX 到 scrX + OVERLAP)
+      const stripLeft = Math.max(0, scrX);
+      const stripRight = Math.min(W, scrX + OVERLAP);
+      if (stripRight > stripLeft) {
+        const { fc, fctx } = getFeatherBuffer(OVERLAP, sc.renderH);
+        fctx.clearRect(0, 0, OVERLAP, sc.renderH);
+
+        // 截取场景 i 最左端 OVERLAP 像素画入离线画布
+        const scaleX = sc.img.naturalWidth / sc.renderW;
+        fctx.drawImage(sc.img, 0, 0, OVERLAP * scaleX, sc.img.naturalHeight, 0, 0, OVERLAP, sc.renderH);
+
+        // 施加渐变羽化遮罩 (从左至右 0 -> 1)
+        fctx.globalCompositeOperation = 'destination-in';
+        const maskGrad = fctx.createLinearGradient(0, 0, OVERLAP, 0);
+        maskGrad.addColorStop(0, 'rgba(0,0,0,0)');
+        maskGrad.addColorStop(1, 'rgba(0,0,0,1)');
+        fctx.fillStyle = maskGrad;
+        fctx.fillRect(0, 0, OVERLAP, sc.renderH);
+        fctx.globalCompositeOperation = 'source-over';
+
+        // 贴回主画布
+        const subSrcX = stripLeft - scrX;
+        const subW = stripRight - stripLeft;
+        c.drawImage(fc, subSrcX, 0, subW, sc.renderH, stripLeft, 0, subW, sc.renderH);
+      }
+    }
+  }
+
+  c.restore();
+}
+
+// 3. 绘制漫步主体 (旅人 / IP 角色剪影)
+function drawStroller(c, t) {
+  const strollerX = W * 0.28; // 固定在黄金分割点 28%
+  const groundY = H * 0.74;  // 近地面行进基准线
+
+  // 行走呼吸起伏算法 (Walking step bounce)
+  const bobY = Math.sin(t * 5.2) * (H * 0.007);
+  const bobRot = Math.sin(t * 2.6) * 0.025;
+  const curY = groundY + bobY;
+
+  c.save();
+  c.translate(strollerX, curY);
+  c.rotate(bobRot);
+
+  const scale = H / 1200;
+  c.scale(scale, scale);
+
+  // 底部柔和脚下地面接触微阴影
+  c.save();
+  c.fillStyle = 'rgba(0, 0, 0, 0.4)';
+  c.beginPath();
+  c.ellipse(0, 10, 48 + Math.abs(bobY) * 1.5, 14, 0, 0, Math.PI * 2);
+  c.fill();
+  c.restore();
+
+  if (characterImg && characterImg.naturalWidth) {
+    // 渲染定制 IP 人物贴纸
+    const chW = 220;
+    const chH = 220 * (characterImg.naturalHeight / characterImg.naturalWidth);
+    c.drawImage(characterImg, -chW / 2, -chH + 5, chW, chH);
+  } else {
+    // 优雅手绘旅人剪影 (斗笠/长风衣/行走剪影，带手绘质感)
+    c.fillStyle = '#1c1f24';
+    c.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    c.lineWidth = 2.5;
+
+    // 斗笠/宽檐帽
+    c.beginPath();
+    c.ellipse(0, -170, 42, 10, 0, 0, Math.PI * 2);
+    c.fill();
+    c.stroke();
+
+    // 头部
+    c.beginPath();
+    c.arc(0, -155, 16, 0, Math.PI * 2);
+    c.fill();
+
+    // 身躯风衣 (随微风摆动)
+    const cloakWiggle = Math.sin(t * 4.5) * 8;
+    c.beginPath();
+    c.moveTo(-16, -140);
+    c.lineTo(18, -140);
+    c.lineTo(26, -30);
+    c.lineTo(-30 + cloakWiggle, -25);
+    c.closePath();
+    c.fill();
+    c.stroke();
+
+    // 随行手杖/提灯
+    c.strokeStyle = '#d4af37';
+    c.lineWidth = 3;
+    c.beginPath();
+    c.moveTo(22, -110);
+    c.lineTo(34, 5);
+    c.stroke();
+    // 提灯暖光晕
+    c.fillStyle = 'rgba(245, 158, 11, 0.35)';
+    c.beginPath();
+    c.arc(28, -80, 24, 0, Math.PI * 2);
+    c.fill();
+    c.fillStyle = '#fbbf24';
+    c.beginPath();
+    c.arc(28, -80, 6, 0, Math.PI * 2);
+    c.fill();
+  }
+
+  c.restore();
+}
+
+// 4. 绘制前景视差粒子层 (1.45x 极速飘拂，落樱/金尘)
+function drawForegroundParallax(c, camX, t) {
+  c.save();
+
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    // 视差水平位置：比镜头移动更快 (1.45x)，带有自身漂移速度
+    const px = (p.x - camX * 1.45 - t * 45 * p.speedX) % (W + 400);
+    const screenX = px < -200 ? px + W + 600 : px;
+    const screenY = (p.y + t * 30 * p.speedY) % H;
+
+    c.save();
+    c.translate(screenX, screenY);
+    c.rotate(p.rot + t * p.rotSpeed);
+
+    // 温暖金樱微尘粒子
+    c.fillStyle = `rgba(255, 235, 195, ${p.alpha})`;
+    c.shadowColor = 'rgba(255, 215, 0, 0.6)';
+    c.shadowBlur = 8;
+
+    // 椭圆微尘花瓣
+    c.beginPath();
+    c.ellipse(0, 0, p.size * 1.6, p.size * 0.9, Math.PI / 4, 0, Math.PI * 2);
+    c.fill();
+
+    c.restore();
+  }
+
+  c.restore();
+}
+
+// 5. 绘制沿途卷轴印章与章节题跋 (Milestones)
+function drawMilestones(c, camX, t) {
+  const milestones = C.milestones || [];
+  if (!milestones.length) return;
+
+  for (const m of milestones) {
+    const triggerTime = m.time || 0;
+    const diff = t - triggerTime;
+
+    // 在触发点前后 3.5 秒内呈现
+    if (diff < -0.3 || diff > 4.2) continue;
+
+    // 优雅弹入淡出 (0~0.6s 滑入，0.6~3.6s 驻留，3.6~4.2s 滑出)
+    let alpha = 1.0;
+    let slideX = 0;
+    if (diff < 0.6) {
+      const p = smooth(clamp((diff + 0.3) / 0.9));
+      alpha = p;
+      slideX = (1 - p) * 80;
+    } else if (diff > 3.6) {
+      const p = smooth(clamp((diff - 3.6) / 0.6));
+      alpha = 1 - p;
+      slideX = -p * 60;
+    }
+
+    const posX = W * 0.55 + slideX;
+    const posY = Math.round(H * 0.18);
+
+    c.save();
+    c.globalAlpha = alpha;
+
+    // 印章背景卡片
+    c.fillStyle = 'rgba(18, 20, 26, 0.88)';
+    c.strokeStyle = m.color || C.themeColor || '#c27d53';
+    c.lineWidth = 3;
+    c.beginPath();
+    c.roundRect(posX - 240, posY - 60, 480, 120, 18);
+    c.fill();
+    c.stroke();
+
+    // 古典红色方印
+    const sealX = posX - 200;
+    const sealY = posY - 40;
+    c.fillStyle = '#b91c1c';
+    c.beginPath();
+    c.roundRect(sealX, sealY, 80, 80, 8);
+    c.fill();
+    c.strokeStyle = '#fef3c7';
+    c.lineWidth = 2;
+    c.stroke();
+
+    // 印章文字
+    c.fillStyle = '#fef3c7';
+    c.font = 'bold 34px "PingFang SC", "Microsoft YaHei"';
+    c.textAlign = 'center';
+    c.textBaseline = 'middle';
+    c.fillText(m.badge || '长卷', sealX + 40, sealY + 40);
+
+    // 章节题跋大字
+    c.fillStyle = '#ffffff';
+    c.font = `bold ${Math.round(H * 0.026)}px "PingFang SC", "Noto Serif SC"`;
+    c.textAlign = 'left';
+    c.textBaseline = 'middle';
+    c.fillText(m.title || '画风流转', posX - 90, posY);
+
+    c.restore();
+  }
+}
+
+// 6. 统一底部字幕排版
+function renderCaptions(c, t) {
+  if (!C.cues || !C.cues.length) return;
+  const cue = C.cues.find(item => t >= item.start && t < item.end + 0.15);
+  if (!cue) return;
+
+  const boxH = Math.round(Math.max(100, H * 0.08));
+  const boxY = H - boxH - Math.round(H * 0.045);
+  const boxW = Math.min(Math.round(W * 0.88), 1280);
+  const boxX = (W - boxW) / 2;
+
+  c.save();
+  // 宣纸黑半透明底卡
+  c.fillStyle = 'rgba(15, 17, 23, 0.88)';
+  c.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+  c.lineWidth = 2.5;
+  c.beginPath();
+  c.roundRect(boxX, boxY, boxW, boxH, 20);
+  c.fill();
+  c.stroke();
+
+  // 主题色微光细线
+  c.fillStyle = C.themeColor || '#00d26a';
+  c.fillRect(boxX + 30, boxY + boxH - 6, boxW - 60, 4);
+
+  // 字幕文字
+  c.fillStyle = '#ffffff';
+  c.font = `bold ${Math.round(boxH * 0.38)}px "PingFang SC", "Microsoft YaHei"`;
+  c.textAlign = 'center';
+  c.textBaseline = 'middle';
+  c.fillText(cue.text, W / 2, boxY + boxH / 2 - 2);
+  c.restore();
+}
+
+// 7. 顶部艺术卷标
+function renderHeaderTitle(c, t) {
+  c.save();
+  const headY = Math.round(H * 0.075);
+  c.fillStyle = 'rgba(255, 255, 255, 0.9)';
+  c.font = `bold ${Math.round(H * 0.03)}px "PingFang SC", "Noto Serif SC"`;
+  c.textAlign = 'center';
+  c.shadowColor = 'rgba(0, 0, 0, 0.8)';
+  c.shadowBlur = 12;
+  c.fillText(C.title || '无界漫步长卷', W / 2, headY);
+
+  // 极细手绘卷标线
+  c.strokeStyle = C.themeColor || '#00d26a';
+  c.lineWidth = 3;
+  c.beginPath();
+  c.moveTo(W / 2 - 160, headY + 28);
+  c.lineTo(W / 2 + 160, headY + 28);
+  c.stroke();
+  c.restore();
+}
+
+// 帧渲染入口
+window.renderFrame = async function(t) {
+  await window.ready;
+  t = clamp(t, 0, C.duration || 10);
+
+  // 计算相机水平平移位置 Camera Pan X (匀速行进)
+  const maxCamX = Math.max(0, totalWorldWidth - W);
+  const travelProgress = (C.duration > 0) ? (t / C.duration) : 0;
+  const camX = travelProgress * maxCamX;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // 1. 远景层
+  drawFarBackground(ctx, camX);
+
+  // 2. 中景画卷层 (多画风水平羽化连续平铺)
+  drawScrollScenes(ctx, camX);
+
+  // 3. 漫步主体 (旅人 / IP 人物)
+  if (C.panorama !== true && C.showCharacter !== false) drawStroller(ctx, t);
+
+  // 4. 前景粒子视差层
+  drawForegroundParallax(ctx, camX, t);
+
+  // 5. 沿途印章里程碑
+  drawMilestones(ctx, camX, t);
+
+  // 6. 顶部标题
+  if (C.showTitle !== false) renderHeaderTitle(ctx, t);
+
+  // 7. 底部字幕
+  if (!C.subtitleMode || C.subtitleMode === 'burn-in') renderCaptions(ctx, t);
+
+  return canvas.toDataURL('image/png').split(',')[1];
+};
+
+// 导出 4:3 与 3:4 艺术封面
+window.renderCover = async function(w, h) {
+  await window.ready;
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const d = c.getContext('2d');
+
+  // 选取中段最具代表性的场景
+  const midIndex = Math.floor(sceneWorldLayout.length / 2);
+  const sample = sceneWorldLayout[midIndex] || sceneWorldLayout[0];
+  if (sample && sample.img) {
+    d.drawImage(sample.img, 0, 0, w, h);
+  } else {
+    d.fillStyle = '#1c1f26';
+    d.fillRect(0, 0, w, h);
+  }
+
+  // 电影级暗角与暗层
+  d.fillStyle = 'rgba(10, 12, 16, 0.45)';
+  d.fillRect(0, 0, w, h);
+
+  // 封面大画框
+  d.strokeStyle = C.themeColor || '#00d26a';
+  d.lineWidth = 6;
+  d.strokeRect(w * 0.05, h * 0.05, w * 0.9, h * 0.9);
+
+  // 主标题
+  d.fillStyle = '#ffffff';
+  d.font = `bold ${Math.round(w * 0.09)}px "PingFang SC", "Noto Serif SC"`;
+  d.textAlign = 'center';
+  d.textBaseline = 'middle';
+  d.shadowColor = 'rgba(0, 0, 0, 0.9)';
+  d.shadowBlur = 18;
+  d.fillText(C.title || '无界漫步长卷', w / 2, h * 0.42);
+
+  // 红色方印
+  const sealX = w / 2 - 40;
+  const sealY = h * 0.54;
+  d.fillStyle = '#b91c1c';
+  d.beginPath();
+  d.roundRect(sealX, sealY, 80, 80, 8);
+  d.fill();
+  d.strokeStyle = '#fef3c7';
+  d.lineWidth = 2;
+  d.stroke();
+  d.fillStyle = '#fef3c7';
+  d.font = `bold ${Math.round(w * 0.048)}px "PingFang SC"`;
+  d.fillText('长卷', w / 2, sealY + 40);
+
+  // 副标
+  d.fillStyle = 'rgba(255, 255, 255, 0.9)';
+  d.font = `bold ${Math.round(w * 0.042)}px "PingFang SC"`;
+  d.fillText('一镜到底 · 穿行四时与画风', w / 2, h * 0.72);
+
+  return c.toDataURL('image/png').split(',')[1];
+};
+
+window.ready.then(() => {
+  window.renderFrame(0.5);
+});
+</script>
+</body>
+</html>

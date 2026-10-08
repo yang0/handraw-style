@@ -1,0 +1,18 @@
+{
+  "grammar": "y1_kurzgesagt",
+  "duration": 10,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "data": { "center": "大模型" },
+  "cues": [
+    { "at": 0.0, "kind": "title", "text": "一个大模型里面有什么？" },
+    { "at": 1.4, "kind": "point", "text": "几千亿个参数" },
+    { "at": 2.3, "kind": "point", "text": "几十层网络" },
+    { "at": 3.2, "kind": "point", "text": "一张词表" },
+    { "at": 4.2, "kind": "enter", "text": "其中一层", "data": { "index": 1 } },
+    { "at": 6.2, "kind": "point", "text": "注意力" },
+    { "at": 7.0, "kind": "point", "text": "前馈网络" },
+    { "at": 8.0, "kind": "highlight", "data": { "index": 0 } }
+  ]
+}

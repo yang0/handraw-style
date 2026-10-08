@@ -38,11 +38,16 @@ When the user asks to design an IP character, build a Character Bible or IP Desi
 When the user asks to manage, add, query, replace, or delete assets in the custom library (例如“添加到角色库”、“保存到道具库/场景库”、“替换角色基准图”、“修改资产名称/标签”、“初始化/挂载图库目录”、“查看图库清单”), read and invoke
 [custom-asset-manager](skills/custom-asset-manager/SKILL.md) before handling the request. It manages the full lifecycle of custom character (CH-*), prop (PR-*), and scene (SCN-*) assets with zero Git conflicts.
 
+When the user explicitly requests art animation, an art scroll for knowledge, animation reference breakdown, narration-driven art, or Kurzgesagt/Vox/3b1b/presenter animation, invoke [handraw-video-producer](skills/handraw-video-producer/SKILL.md) and its [art-motion integration guide](skills/handraw-video-producer/references/art_motion_integration_guide.md) first. Preserve the chosen visual format; bind the current handdraw style, layout and color libraries to actual assets and editable explanation layers.
+
 When the user asks to plan, script, or direct a knowledge or tutorial AI video, generate A/B-roll visual shot lists, or structure video production (例如“做教学视频”、“视频分镜表”、“知识类视频剪辑”、“A/B-roll编排”、“视频导演”), read and invoke
 [knowledge-video-director](skills/knowledge-video-director/SKILL.md) before handling the request. It orchestrates voiceover scripts, acoustic alignment, and 7-column visual shot lists alternating between white-background IP theater (A-roll) and dark-background motion graphics/demos (B-roll).
 
 When the user asks to plan a photo shoot, create a photography project, generate shot lists, design couple/wedding/family/portrait/cosplay photography plans, or draw card for a themed shoot (例如“拍摄企划”、“情侣照”、“婚纱照”、“写真”、“全家福”、“Cosplay拍摄”、“抽卡”、“8宫格”、“摄影分镜”), read and invoke
 [couple-photo-orchestrator](skills/couple-photo-orchestrator/SKILL.md) before handling the request. It orchestrates the full pipeline from direction selection through Look design, scene micro-zones, pose-emotion planning, Share Card compilation, and 8-shot adaptive grid generation.
+
+When the user asks to create, produce, or render hand-drawn animated videos, motion comics, picture book animations, whiteboard videos, or art scrolls (例如“做手绘视频”、“制作手绘动画”、“动态漫画”、“漫动画”、“有声绘本”、“边画边讲视频”、“手绘视频制作”、“白板视频出片”), read and invoke
+[handraw-video-producer](skills/handraw-video-producer/SKILL.md) before handling the request. It routes comic, knowledge/A-B-roll, story, illustrated whiteboard and scroll workflows. Respect the requested landscape/portrait framing and narration provider; check real assets and current mode capabilities rather than assuming a fixed portrait template or universal provider support. See its frame/asset contract for reflow and validation.
 
 
 ## Default mode

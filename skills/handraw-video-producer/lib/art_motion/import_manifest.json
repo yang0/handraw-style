@@ -1,0 +1,2300 @@
+{
+  "upstream": "huashu-art-motion",
+  "license": "MIT + font OFL + stroke Arphic",
+  "files": [
+    {
+      "source": "scripts/analyze/breakdown.py",
+      "destination": "lib/art_motion/scripts/analyze/breakdown.py",
+      "source_sha256": "89c21c19f6165f50bd6d09fe264bea677557a96d9fcd6743354fa5a0d5296512",
+      "import_sha256": "89c21c19f6165f50bd6d09fe264bea677557a96d9fcd6743354fa5a0d5296512",
+      "adapted_sha256": "89c21c19f6165f50bd6d09fe264bea677557a96d9fcd6743354fa5a0d5296512"
+    },
+    {
+      "source": "scripts/audio/synth_艺术史速通.py",
+      "destination": "lib/art_motion/scripts/audio/synth_艺术史速通.py",
+      "source_sha256": "ac077c430de63e45831e49303e73fb137e85dbe8a1ead2be6e646f4721627fea",
+      "import_sha256": "ac077c430de63e45831e49303e73fb137e85dbe8a1ead2be6e646f4721627fea",
+      "adapted_sha256": "ac077c430de63e45831e49303e73fb137e85dbe8a1ead2be6e646f4721627fea"
+    },
+    {
+      "source": "scripts/engine/clip.html",
+      "destination": "lib/art_motion/scripts/engine/clip.html",
+      "source_sha256": "084c2de2eaef612aeebdf2ed1d796f6912f918ce1400e30f66ef869d40378bc4",
+      "import_sha256": "084c2de2eaef612aeebdf2ed1d796f6912f918ce1400e30f66ef869d40378bc4",
+      "adapted_sha256": "f80f7711398ae8f25684085912488a44c85d610c8b58ce23ee2ac2f43dd2ea3e"
+    },
+    {
+      "source": "scripts/engine/clip.js",
+      "destination": "lib/art_motion/scripts/engine/clip.js",
+      "source_sha256": "cb9f77868f0a4a57dc8e39a2d1d294e3497cae900643c162aaa5b0ed3c384f57",
+      "import_sha256": "cb9f77868f0a4a57dc8e39a2d1d294e3497cae900643c162aaa5b0ed3c384f57",
+      "adapted_sha256": "48892b7a4ca30383e2645a0495fb5a64e16fe39ab5de51c41ae0797aee35a00b"
+    },
+    {
+      "source": "scripts/engine/clips/t1_3b1b.js",
+      "destination": "lib/art_motion/scripts/engine/clips/t1_3b1b.js",
+      "source_sha256": "7756d452101754de1856da099996fe3a2d974730b5bbc9e1d10cb46b89847c56",
+      "import_sha256": "7756d452101754de1856da099996fe3a2d974730b5bbc9e1d10cb46b89847c56",
+      "adapted_sha256": "7756d452101754de1856da099996fe3a2d974730b5bbc9e1d10cb46b89847c56"
+    },
+    {
+      "source": "scripts/engine/clips/t2_keynote_ui.js",
+      "destination": "lib/art_motion/scripts/engine/clips/t2_keynote_ui.js",
+      "source_sha256": "03e1c91567781d14fc45421b4e5ebd63b98fab7894e53d36c9b62f725cf5e68d",
+      "import_sha256": "03e1c91567781d14fc45421b4e5ebd63b98fab7894e53d36c9b62f725cf5e68d",
+      "adapted_sha256": "03e1c91567781d14fc45421b4e5ebd63b98fab7894e53d36c9b62f725cf5e68d"
+    },
+    {
+      "source": "scripts/engine/clips/t3_finance_chart.js",
+      "destination": "lib/art_motion/scripts/engine/clips/t3_finance_chart.js",
+      "source_sha256": "ad62ce4c9f1f0a1d17ab4d1779277685665cd6869a6bee76dfb263aed5a03623",
+      "import_sha256": "ad62ce4c9f1f0a1d17ab4d1779277685665cd6869a6bee76dfb263aed5a03623",
+      "adapted_sha256": "ad62ce4c9f1f0a1d17ab4d1779277685665cd6869a6bee76dfb263aed5a03623"
+    },
+    {
+      "source": "scripts/engine/clips/y1_kurzgesagt.js",
+      "destination": "lib/art_motion/scripts/engine/clips/y1_kurzgesagt.js",
+      "source_sha256": "bf1cf93fd75dcf271aaab8aefc52018ff175eb7fe291e73686fa0afd56cd78c2",
+      "import_sha256": "bf1cf93fd75dcf271aaab8aefc52018ff175eb7fe291e73686fa0afd56cd78c2",
+      "adapted_sha256": "bf1cf93fd75dcf271aaab8aefc52018ff175eb7fe291e73686fa0afd56cd78c2"
+    },
+    {
+      "source": "scripts/engine/clips/y2_vox.js",
+      "destination": "lib/art_motion/scripts/engine/clips/y2_vox.js",
+      "source_sha256": "93fb2a22ed5b9d422559e7da17acd97a8a19a37577f925a8ab78a55936e2c2b2",
+      "import_sha256": "93fb2a22ed5b9d422559e7da17acd97a8a19a37577f925a8ab78a55936e2c2b2",
+      "adapted_sha256": "93fb2a22ed5b9d422559e7da17acd97a8a19a37577f925a8ab78a55936e2c2b2"
+    },
+    {
+      "source": "scripts/engine/clips/y3_whiteboard.js",
+      "destination": "lib/art_motion/scripts/engine/clips/y3_whiteboard.js",
+      "source_sha256": "a4038564be607ca7b2509325c94ab4e4f8f12a5f2451d633a936713a16297108",
+      "import_sha256": "a4038564be607ca7b2509325c94ab4e4f8f12a5f2451d633a936713a16297108",
+      "adapted_sha256": "a4038564be607ca7b2509325c94ab4e4f8f12a5f2451d633a936713a16297108"
+    },
+    {
+      "source": "scripts/engine/clips/y4_storytime.js",
+      "destination": "lib/art_motion/scripts/engine/clips/y4_storytime.js",
+      "source_sha256": "89cf971916f96425eac68894496d9ca2b988da8f74515c089499cdd8951e53c8",
+      "import_sha256": "89cf971916f96425eac68894496d9ca2b988da8f74515c089499cdd8951e53c8",
+      "adapted_sha256": "89cf971916f96425eac68894496d9ca2b988da8f74515c089499cdd8951e53c8"
+    },
+    {
+      "source": "scripts/engine/clips/y5_kinetic_type.js",
+      "destination": "lib/art_motion/scripts/engine/clips/y5_kinetic_type.js",
+      "source_sha256": "768b3c403acf68511c03204c06406c9058934cbd4d8a0c07d0babe9dd9b8d215",
+      "import_sha256": "768b3c403acf68511c03204c06406c9058934cbd4d8a0c07d0babe9dd9b8d215",
+      "adapted_sha256": "768b3c403acf68511c03204c06406c9058934cbd4d8a0c07d0babe9dd9b8d215"
+    },
+    {
+      "source": "scripts/engine/compare.py",
+      "destination": "lib/art_motion/scripts/engine/compare.py",
+      "source_sha256": "231dbc77fb90c291e57f9a90b8e01f453bf009f3b6215c13000651ba7072bb32",
+      "import_sha256": "231dbc77fb90c291e57f9a90b8e01f453bf009f3b6215c13000651ba7072bb32",
+      "adapted_sha256": "231dbc77fb90c291e57f9a90b8e01f453bf009f3b6215c13000651ba7072bb32"
+    },
+    {
+      "source": "scripts/engine/demos/_shared/hero.js",
+      "destination": "lib/art_motion/scripts/engine/demos/_shared/hero.js",
+      "source_sha256": "49eeca2393835d6568487e3b1567e2686c5f2d11f1f20f30832b43b7ed5ffca7",
+      "import_sha256": "49eeca2393835d6568487e3b1567e2686c5f2d11f1f20f30832b43b7ed5ffca7",
+      "adapted_sha256": "f71a17dd35d09c1f198457e2ff36d9264d75686565744c47da0f149dc2ce4077"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/eras.js",
+      "source_sha256": "2e45d87b51af56696ee5ae63487ba09beb59cbc6efe0a62785aa81b8b9af5cf8",
+      "import_sha256": "2e45d87b51af56696ee5ae63487ba09beb59cbc6efe0a62785aa81b8b9af5cf8",
+      "adapted_sha256": "2e45d87b51af56696ee5ae63487ba09beb59cbc6efe0a62785aa81b8b9af5cf8"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/frames/8bit_act/meta.json",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/frames/8bit_act/meta.json",
+      "source_sha256": "86b31498586d84a245b1e7fdd5f37835170d6b31d0774e18aa3f954b547326ba",
+      "import_sha256": "86b31498586d84a245b1e7fdd5f37835170d6b31d0774e18aa3f954b547326ba",
+      "adapted_sha256": "c0e685283fe08ac28644520048d663ee9a54774eede64fde9dd34491fde29a77"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/frames/8bit_walk/meta.json",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/frames/8bit_walk/meta.json",
+      "source_sha256": "4d65f05c935168251394ef7e249fb080ad7d0a32fd4ed7ec53061a625c51da72",
+      "import_sha256": "4d65f05c935168251394ef7e249fb080ad7d0a32fd4ed7ec53061a625c51da72",
+      "adapted_sha256": "466a4f25bd340abbd34230738c469d5733522161878b62100444bfc92e6c3d88"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/frames/egypt_dodge/meta.json",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/frames/egypt_dodge/meta.json",
+      "source_sha256": "933894bfa263797d1995d3e89a7b10bd98ab892dda7b53a0c13538e6b3987fda",
+      "import_sha256": "933894bfa263797d1995d3e89a7b10bd98ab892dda7b53a0c13538e6b3987fda",
+      "adapted_sha256": "75ab90017e6bc6ae657366956cc83f9f2d1a4a01331a7274774d99edfab1a7cb"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/frames/egypt_walk8/meta.json",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/frames/egypt_walk8/meta.json",
+      "source_sha256": "0c7b78bd13568de048541c7c2d62fa685e5261695dd05e1daadb0c2916759850",
+      "import_sha256": "0c7b78bd13568de048541c7c2d62fa685e5261695dd05e1daadb0c2916759850",
+      "adapted_sha256": "5211bd7e2d00714cd6fab97f2a805df7c32b55e1441b80e6365ca420d191c26a"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/frames/monet_throw/meta.json",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/frames/monet_throw/meta.json",
+      "source_sha256": "a69271a726e7335de4e14f854d5ea4e952c44b0e4375e70d3d4ebd8a61f8bda6",
+      "import_sha256": "a69271a726e7335de4e14f854d5ea4e952c44b0e4375e70d3d4ebd8a61f8bda6",
+      "adapted_sha256": "ad540b9b5a3c69ff55a1083f41212f52a84e742bffef0fcb47e8da09d9798a58"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/frames/monet_walk/meta.json",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/frames/monet_walk/meta.json",
+      "source_sha256": "8043f81928b42c3d588b270c8e7ff1e8f40a94a729c091249be5542190128eb0",
+      "import_sha256": "8043f81928b42c3d588b270c8e7ff1e8f40a94a729c091249be5542190128eb0",
+      "adapted_sha256": "bf37f996e65eaf7229b5a09e6a39a68a942c5e2b89c4c48ddc8b4d7c4d6e3e90"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/lib/acts.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/lib/acts.js",
+      "source_sha256": "55bf4fa2e99f0c132654cd098d2e9a48c0aeaadbc42dde3c40be2eb9c3003b1c",
+      "import_sha256": "55bf4fa2e99f0c132654cd098d2e9a48c0aeaadbc42dde3c40be2eb9c3003b1c",
+      "adapted_sha256": "55bf4fa2e99f0c132654cd098d2e9a48c0aeaadbc42dde3c40be2eb9c3003b1c"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/lib/crossing.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/lib/crossing.js",
+      "source_sha256": "7ca98756055dfb4c60218e0347f4e99595896ba199dac6baa28ca035ac0d5448",
+      "import_sha256": "7ca98756055dfb4c60218e0347f4e99595896ba199dac6baa28ca035ac0d5448",
+      "adapted_sha256": "7ca98756055dfb4c60218e0347f4e99595896ba199dac6baa28ca035ac0d5448"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/lib/world.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/lib/world.js",
+      "source_sha256": "74d673dfab91bc58f61132c247ac72dec3b734b884631a299c853bd88ecb59cd",
+      "import_sha256": "74d673dfab91bc58f61132c247ac72dec3b734b884631a299c853bd88ecb59cd",
+      "adapted_sha256": "74d673dfab91bc58f61132c247ac72dec3b734b884631a299c853bd88ecb59cd"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/lib/xing2_ding.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/lib/xing2_ding.js",
+      "source_sha256": "04feec0c6050d33762826d587b2aef43c62309132b28f98a5d20cce7ea8e1968",
+      "import_sha256": "04feec0c6050d33762826d587b2aef43c62309132b28f98a5d20cce7ea8e1968",
+      "adapted_sha256": "04feec0c6050d33762826d587b2aef43c62309132b28f98a5d20cce7ea8e1968"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/lib/xing2_jia.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/lib/xing2_jia.js",
+      "source_sha256": "4ff2f6b33b6e60aed45f14aa14d1c37fcb5b8d92d3d258d11c66d47a78014217",
+      "import_sha256": "4ff2f6b33b6e60aed45f14aa14d1c37fcb5b8d92d3d258d11c66d47a78014217",
+      "adapted_sha256": "4ff2f6b33b6e60aed45f14aa14d1c37fcb5b8d92d3d258d11c66d47a78014217"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/lib/xing2_yi.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/lib/xing2_yi.js",
+      "source_sha256": "f5ab1c925e72ea5c17b847e38bf6f076f4a7d3a07d4743b945c124d3a769eac9",
+      "import_sha256": "f5ab1c925e72ea5c17b847e38bf6f076f4a7d3a07d4743b945c124d3a769eac9",
+      "adapted_sha256": "f5ab1c925e72ea5c17b847e38bf6f076f4a7d3a07d4743b945c124d3a769eac9"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/segments/02_egypt.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/segments/02_egypt.js",
+      "source_sha256": "c982c559b2da6c2f857ef6c87bf2dae9823e8764ebdf91a83dfeab75c0ac7582",
+      "import_sha256": "c982c559b2da6c2f857ef6c87bf2dae9823e8764ebdf91a83dfeab75c0ac7582",
+      "adapted_sha256": "c982c559b2da6c2f857ef6c87bf2dae9823e8764ebdf91a83dfeab75c0ac7582"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/segments/14_8bit.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/segments/14_8bit.js",
+      "source_sha256": "ffc80a22410e4f903d355906f19cce75f6521521e20f9ca648f97743c18087c5",
+      "import_sha256": "ffc80a22410e4f903d355906f19cce75f6521521e20f9ca648f97743c18087c5",
+      "adapted_sha256": "ffc80a22410e4f903d355906f19cce75f6521521e20f9ca648f97743c18087c5"
+    },
+    {
+      "source": "scripts/engine/demos/long_scroll/segments/28_monet.js",
+      "destination": "lib/art_motion/scripts/engine/demos/long_scroll/segments/28_monet.js",
+      "source_sha256": "c3b948612dbcf1fb619867396c4e092b0a29bae2c1aa679ab2c1c428001b052e",
+      "import_sha256": "c3b948612dbcf1fb619867396c4e092b0a29bae2c1aa679ab2c1c428001b052e",
+      "adapted_sha256": "c3b948612dbcf1fb619867396c4e092b0a29bae2c1aa679ab2c1c428001b052e"
+    },
+    {
+      "source": "scripts/engine/demos/t1_3b1b/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t1_3b1b/eras.js",
+      "source_sha256": "76baa94e2042d67daa126785e0f8b862a8ada451706e1e2ef9e689fa019664d0",
+      "import_sha256": "76baa94e2042d67daa126785e0f8b862a8ada451706e1e2ef9e689fa019664d0",
+      "adapted_sha256": "76baa94e2042d67daa126785e0f8b862a8ada451706e1e2ef9e689fa019664d0"
+    },
+    {
+      "source": "scripts/engine/demos/t1_3b1b/t1_s1.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t1_3b1b/t1_s1.js",
+      "source_sha256": "f597a632e551bc83169d2691d6c7b5b8a6379cd9a4de7cde4f6626f196e58680",
+      "import_sha256": "f597a632e551bc83169d2691d6c7b5b8a6379cd9a4de7cde4f6626f196e58680",
+      "adapted_sha256": "f597a632e551bc83169d2691d6c7b5b8a6379cd9a4de7cde4f6626f196e58680"
+    },
+    {
+      "source": "scripts/engine/demos/t1_3b1b/t1_s2.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t1_3b1b/t1_s2.js",
+      "source_sha256": "27be9965ae9a6ddbad7097dc631b5cea30bdbe0e28486a0dd8d6da7c294c070f",
+      "import_sha256": "27be9965ae9a6ddbad7097dc631b5cea30bdbe0e28486a0dd8d6da7c294c070f",
+      "adapted_sha256": "27be9965ae9a6ddbad7097dc631b5cea30bdbe0e28486a0dd8d6da7c294c070f"
+    },
+    {
+      "source": "scripts/engine/demos/t1_3b1b/t1_s3.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t1_3b1b/t1_s3.js",
+      "source_sha256": "1888cf3f514d9fd888916aa97cefc2b297f73c907b233bbef6f5c7624e234bf9",
+      "import_sha256": "1888cf3f514d9fd888916aa97cefc2b297f73c907b233bbef6f5c7624e234bf9",
+      "adapted_sha256": "1888cf3f514d9fd888916aa97cefc2b297f73c907b233bbef6f5c7624e234bf9"
+    },
+    {
+      "source": "scripts/engine/demos/t2_keynote_ui/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t2_keynote_ui/eras.js",
+      "source_sha256": "00510446ee6579cc46ab37466cdefca8a762b43282f9bcfcc8bfa573658fc4e9",
+      "import_sha256": "00510446ee6579cc46ab37466cdefca8a762b43282f9bcfcc8bfa573658fc4e9",
+      "adapted_sha256": "00510446ee6579cc46ab37466cdefca8a762b43282f9bcfcc8bfa573658fc4e9"
+    },
+    {
+      "source": "scripts/engine/demos/t2_keynote_ui/t2_s1.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t2_keynote_ui/t2_s1.js",
+      "source_sha256": "60416d5c4826a575438fd0155b23c19afb60c4152a773e51490d91076be11c33",
+      "import_sha256": "60416d5c4826a575438fd0155b23c19afb60c4152a773e51490d91076be11c33",
+      "adapted_sha256": "60416d5c4826a575438fd0155b23c19afb60c4152a773e51490d91076be11c33"
+    },
+    {
+      "source": "scripts/engine/demos/t2_keynote_ui/t2_s2.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t2_keynote_ui/t2_s2.js",
+      "source_sha256": "9b75fe9ebb2b3ac633876206d0538ef6cac5399cf3c8a2745c557f546324228f",
+      "import_sha256": "9b75fe9ebb2b3ac633876206d0538ef6cac5399cf3c8a2745c557f546324228f",
+      "adapted_sha256": "9b75fe9ebb2b3ac633876206d0538ef6cac5399cf3c8a2745c557f546324228f"
+    },
+    {
+      "source": "scripts/engine/demos/t2_keynote_ui/t2_s3.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t2_keynote_ui/t2_s3.js",
+      "source_sha256": "185c83f9dd4300268ae519de310eceee73f69b5fb031f37f11ddb59ad2a1d6b6",
+      "import_sha256": "185c83f9dd4300268ae519de310eceee73f69b5fb031f37f11ddb59ad2a1d6b6",
+      "adapted_sha256": "185c83f9dd4300268ae519de310eceee73f69b5fb031f37f11ddb59ad2a1d6b6"
+    },
+    {
+      "source": "scripts/engine/demos/t3_finance_chart/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t3_finance_chart/eras.js",
+      "source_sha256": "39d047f047a7110b06d60240100d66fc5a79cd09523f482e254d279826029f1f",
+      "import_sha256": "39d047f047a7110b06d60240100d66fc5a79cd09523f482e254d279826029f1f",
+      "adapted_sha256": "39d047f047a7110b06d60240100d66fc5a79cd09523f482e254d279826029f1f"
+    },
+    {
+      "source": "scripts/engine/demos/t3_finance_chart/t3_s1.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t3_finance_chart/t3_s1.js",
+      "source_sha256": "c7c6b39b982423cf52b7c32091c5b93465e2f750fd4c08204ce931e04461e67b",
+      "import_sha256": "c7c6b39b982423cf52b7c32091c5b93465e2f750fd4c08204ce931e04461e67b",
+      "adapted_sha256": "c7c6b39b982423cf52b7c32091c5b93465e2f750fd4c08204ce931e04461e67b"
+    },
+    {
+      "source": "scripts/engine/demos/t3_finance_chart/t3_s2.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t3_finance_chart/t3_s2.js",
+      "source_sha256": "4a93ac980ac723d4083642ef739b42a5f69ef1bafa606b5cc260c41b200a656b",
+      "import_sha256": "4a93ac980ac723d4083642ef739b42a5f69ef1bafa606b5cc260c41b200a656b",
+      "adapted_sha256": "4a93ac980ac723d4083642ef739b42a5f69ef1bafa606b5cc260c41b200a656b"
+    },
+    {
+      "source": "scripts/engine/demos/t3_finance_chart/t3_s3.js",
+      "destination": "lib/art_motion/scripts/engine/demos/t3_finance_chart/t3_s3.js",
+      "source_sha256": "8e96acf0847a8701b1be07e686d35a88efc84a18f6ad1af03ef75d2f2b4fae51",
+      "import_sha256": "8e96acf0847a8701b1be07e686d35a88efc84a18f6ad1af03ef75d2f2b4fae51",
+      "adapted_sha256": "8e96acf0847a8701b1be07e686d35a88efc84a18f6ad1af03ef75d2f2b4fae51"
+    },
+    {
+      "source": "scripts/engine/demos/y1_kurzgesagt/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y1_kurzgesagt/eras.js",
+      "source_sha256": "5b5be66bed5dbc9cdcfac053e41c37eec434239f444980af9f94b02fc83f24b0",
+      "import_sha256": "5b5be66bed5dbc9cdcfac053e41c37eec434239f444980af9f94b02fc83f24b0",
+      "adapted_sha256": "5b5be66bed5dbc9cdcfac053e41c37eec434239f444980af9f94b02fc83f24b0"
+    },
+    {
+      "source": "scripts/engine/demos/y1_kurzgesagt/kurzgesagt.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y1_kurzgesagt/kurzgesagt.js",
+      "source_sha256": "31f6072383c943e80ae76441bed1642375130f9dab942f7bb4823be97539fc97",
+      "import_sha256": "31f6072383c943e80ae76441bed1642375130f9dab942f7bb4823be97539fc97",
+      "adapted_sha256": "31f6072383c943e80ae76441bed1642375130f9dab942f7bb4823be97539fc97"
+    },
+    {
+      "source": "scripts/engine/demos/y2_vox/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y2_vox/eras.js",
+      "source_sha256": "050975415637269297f5be6b50e94ba7b09e94e36e8dbcb89971277d911be277",
+      "import_sha256": "050975415637269297f5be6b50e94ba7b09e94e36e8dbcb89971277d911be277",
+      "adapted_sha256": "050975415637269297f5be6b50e94ba7b09e94e36e8dbcb89971277d911be277"
+    },
+    {
+      "source": "scripts/engine/demos/y2_vox/vox.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y2_vox/vox.js",
+      "source_sha256": "403c73cc68dda580329f94476a6de6697d0f26e9fb5a8fed9a2dcc98459edbd3",
+      "import_sha256": "403c73cc68dda580329f94476a6de6697d0f26e9fb5a8fed9a2dcc98459edbd3",
+      "adapted_sha256": "403c73cc68dda580329f94476a6de6697d0f26e9fb5a8fed9a2dcc98459edbd3"
+    },
+    {
+      "source": "scripts/engine/demos/y3_whiteboard/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y3_whiteboard/eras.js",
+      "source_sha256": "425d124bca0742ffe2ee16a39b1c31c53e6cb177ccdff82bd56031f75ae85148",
+      "import_sha256": "425d124bca0742ffe2ee16a39b1c31c53e6cb177ccdff82bd56031f75ae85148",
+      "adapted_sha256": "425d124bca0742ffe2ee16a39b1c31c53e6cb177ccdff82bd56031f75ae85148"
+    },
+    {
+      "source": "scripts/engine/demos/y3_whiteboard/whiteboard.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y3_whiteboard/whiteboard.js",
+      "source_sha256": "8de170ed4443e5cfa3dccafd1609526d15de8e72f79275ae10667a6c63d204ee",
+      "import_sha256": "8de170ed4443e5cfa3dccafd1609526d15de8e72f79275ae10667a6c63d204ee",
+      "adapted_sha256": "8de170ed4443e5cfa3dccafd1609526d15de8e72f79275ae10667a6c63d204ee"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/eras.js",
+      "source_sha256": "db6f7463c0361c0328cb982bc0acd73febe9cd42bec18ea7f80a176dc1e2acc7",
+      "import_sha256": "db6f7463c0361c0328cb982bc0acd73febe9cd42bec18ea7f80a176dc1e2acc7",
+      "adapted_sha256": "db6f7463c0361c0328cb982bc0acd73febe9cd42bec18ea7f80a176dc1e2acc7"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/s1_desk.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/s1_desk.js",
+      "source_sha256": "7cf006e1f65afef6a7673b19d07703cfb7c53a966ed8294010392fb5e73b17b7",
+      "import_sha256": "7cf006e1f65afef6a7673b19d07703cfb7c53a966ed8294010392fb5e73b17b7",
+      "adapted_sha256": "7cf006e1f65afef6a7673b19d07703cfb7c53a966ed8294010392fb5e73b17b7"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/s2_screen.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/s2_screen.js",
+      "source_sha256": "cad5e079632274a7e762142d1708b85599fa40a598a73917729e6cc187fc5221",
+      "import_sha256": "cad5e079632274a7e762142d1708b85599fa40a598a73917729e6cc187fc5221",
+      "adapted_sha256": "cad5e079632274a7e762142d1708b85599fa40a598a73917729e6cc187fc5221"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/s3_react.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/s3_react.js",
+      "source_sha256": "0ac183a1ec523f3d6206f48a5ccea433c0a9038d6cdafb5127073f957f6b1f15",
+      "import_sha256": "0ac183a1ec523f3d6206f48a5ccea433c0a9038d6cdafb5127073f957f6b1f15",
+      "adapted_sha256": "0ac183a1ec523f3d6206f48a5ccea433c0a9038d6cdafb5127073f957f6b1f15"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/s4_wide.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/s4_wide.js",
+      "source_sha256": "6292d1e890376701f389a9c94e8ab61908d239d715296595c69ecc62322523d5",
+      "import_sha256": "6292d1e890376701f389a9c94e8ab61908d239d715296595c69ecc62322523d5",
+      "adapted_sha256": "6292d1e890376701f389a9c94e8ab61908d239d715296595c69ecc62322523d5"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/s5_close.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/s5_close.js",
+      "source_sha256": "47ded69fce55e170d0dbe9a52ac637c237b62c0ee62a047de33951403f1e3e51",
+      "import_sha256": "47ded69fce55e170d0dbe9a52ac637c237b62c0ee62a047de33951403f1e3e51",
+      "adapted_sha256": "47ded69fce55e170d0dbe9a52ac637c237b62c0ee62a047de33951403f1e3e51"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/story.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/story.js",
+      "source_sha256": "c1a71d98c843dc9fe3093312877007f513222f4d4f1f79fd28c9aea4bf058d0e",
+      "import_sha256": "c1a71d98c843dc9fe3093312877007f513222f4d4f1f79fd28c9aea4bf058d0e",
+      "adapted_sha256": "c1a71d98c843dc9fe3093312877007f513222f4d4f1f79fd28c9aea4bf058d0e"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/vo_env.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/vo_env.js",
+      "source_sha256": "9218d107da535ab444615d468769f4e826d9305f2d7065baeaffb9b00704fcea",
+      "import_sha256": "9218d107da535ab444615d468769f4e826d9305f2d7065baeaffb9b00704fcea",
+      "adapted_sha256": "9218d107da535ab444615d468769f4e826d9305f2d7065baeaffb9b00704fcea"
+    },
+    {
+      "source": "scripts/engine/demos/y4_storytime/world.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y4_storytime/world.js",
+      "source_sha256": "f0b906850c8d4c5b2f8f8a57d0804d4155f754ea9ee4586d37d702c6c2080c70",
+      "import_sha256": "f0b906850c8d4c5b2f8f8a57d0804d4155f754ea9ee4586d37d702c6c2080c70",
+      "adapted_sha256": "f0b906850c8d4c5b2f8f8a57d0804d4155f754ea9ee4586d37d702c6c2080c70"
+    },
+    {
+      "source": "scripts/engine/demos/y5_kinetic_type/eras.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y5_kinetic_type/eras.js",
+      "source_sha256": "02c2086a00dce614958a993aa013b33105716c6002fa04807ef7173bb600957e",
+      "import_sha256": "02c2086a00dce614958a993aa013b33105716c6002fa04807ef7173bb600957e",
+      "adapted_sha256": "02c2086a00dce614958a993aa013b33105716c6002fa04807ef7173bb600957e"
+    },
+    {
+      "source": "scripts/engine/demos/y5_kinetic_type/k1_title.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y5_kinetic_type/k1_title.js",
+      "source_sha256": "1192be6cc145dfb1cfb809011f26ccf4a50cf0d5506e4f57bc8feddf77232ca1",
+      "import_sha256": "1192be6cc145dfb1cfb809011f26ccf4a50cf0d5506e4f57bc8feddf77232ca1",
+      "adapted_sha256": "1192be6cc145dfb1cfb809011f26ccf4a50cf0d5506e4f57bc8feddf77232ca1"
+    },
+    {
+      "source": "scripts/engine/demos/y5_kinetic_type/k2_complete.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y5_kinetic_type/k2_complete.js",
+      "source_sha256": "da60a18ec05a94d1cf1f0e13d5601c5dd5dadcde16f593ce9f2e403a235fec5b",
+      "import_sha256": "da60a18ec05a94d1cf1f0e13d5601c5dd5dadcde16f593ce9f2e403a235fec5b",
+      "adapted_sha256": "da60a18ec05a94d1cf1f0e13d5601c5dd5dadcde16f593ce9f2e403a235fec5b"
+    },
+    {
+      "source": "scripts/engine/demos/y5_kinetic_type/k3_chat.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y5_kinetic_type/k3_chat.js",
+      "source_sha256": "35deec8c216432dcfe4b536a48df7bd7af213f2346e3d4311aae5af8fa2a0021",
+      "import_sha256": "35deec8c216432dcfe4b536a48df7bd7af213f2346e3d4311aae5af8fa2a0021",
+      "adapted_sha256": "35deec8c216432dcfe4b536a48df7bd7af213f2346e3d4311aae5af8fa2a0021"
+    },
+    {
+      "source": "scripts/engine/demos/y5_kinetic_type/k4_agent.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y5_kinetic_type/k4_agent.js",
+      "source_sha256": "5c3e300b61db66228376408ce003102650c8569e91d15ba7388a48ea3905d2f1",
+      "import_sha256": "5c3e300b61db66228376408ce003102650c8569e91d15ba7388a48ea3905d2f1",
+      "adapted_sha256": "5c3e300b61db66228376408ce003102650c8569e91d15ba7388a48ea3905d2f1"
+    },
+    {
+      "source": "scripts/engine/demos/y5_kinetic_type/kinetic.js",
+      "destination": "lib/art_motion/scripts/engine/demos/y5_kinetic_type/kinetic.js",
+      "source_sha256": "36d3d540129354f9e50bc3078b45e2f63db5cddcb712f0436ee64fd2799e37d3",
+      "import_sha256": "36d3d540129354f9e50bc3078b45e2f63db5cddcb712f0436ee64fd2799e37d3",
+      "adapted_sha256": "36d3d540129354f9e50bc3078b45e2f63db5cddcb712f0436ee64fd2799e37d3"
+    },
+    {
+      "source": "scripts/engine/engine.js",
+      "destination": "lib/art_motion/scripts/engine/engine.js",
+      "source_sha256": "b7fd70575868b889cc07b2a080236b2373284044be3f9e9b66711babd3e6b041",
+      "import_sha256": "b7fd70575868b889cc07b2a080236b2373284044be3f9e9b66711babd3e6b041",
+      "adapted_sha256": "b7fd70575868b889cc07b2a080236b2373284044be3f9e9b66711babd3e6b041"
+    },
+    {
+      "source": "scripts/engine/eras.js",
+      "destination": "lib/art_motion/scripts/engine/eras.js",
+      "source_sha256": "0a3b5080c64cc719e4de70bff7bb59e195482787bd04c10f1696446574866d6e",
+      "import_sha256": "0a3b5080c64cc719e4de70bff7bb59e195482787bd04c10f1696446574866d6e",
+      "adapted_sha256": "316c1915b016b1e67a34daa04bfbb1178d6b2f5efa67acbdfebfb33e9d5f9bb5"
+    },
+    {
+      "source": "scripts/engine/eras_gallery.js",
+      "destination": "lib/art_motion/scripts/engine/eras_gallery.js",
+      "source_sha256": "9a4f2723cc5f28d68e3b79c520e2a102c9f728bf40fac2b084ce52716e549d76",
+      "import_sha256": "9a4f2723cc5f28d68e3b79c520e2a102c9f728bf40fac2b084ce52716e549d76",
+      "adapted_sha256": "9a4f2723cc5f28d68e3b79c520e2a102c9f728bf40fac2b084ce52716e549d76"
+    },
+    {
+      "source": "scripts/engine/examples/assets/K线图_横屏.png",
+      "destination": "lib/art_motion/scripts/engine/examples/assets/K线图_横屏.png",
+      "source_sha256": "04a61f9be80bc4895136cfb168ed102860d96af41edab1957e326d647993cb19",
+      "import_sha256": "04a61f9be80bc4895136cfb168ed102860d96af41edab1957e326d647993cb19",
+      "adapted_sha256": "04a61f9be80bc4895136cfb168ed102860d96af41edab1957e326d647993cb19"
+    },
+    {
+      "source": "scripts/engine/examples/assets/营收图_竖屏.png",
+      "destination": "lib/art_motion/scripts/engine/examples/assets/营收图_竖屏.png",
+      "source_sha256": "5c3c9207a8ea289347463408547fdd8f19c63e68e1cbcbcdbc5de77b556b1648",
+      "import_sha256": "5c3c9207a8ea289347463408547fdd8f19c63e68e1cbcbcdbc5de77b556b1648",
+      "adapted_sha256": "5c3c9207a8ea289347463408547fdd8f19c63e68e1cbcbcdbc5de77b556b1648"
+    },
+    {
+      "source": "scripts/engine/examples/assets/财经图表_横屏.png",
+      "destination": "lib/art_motion/scripts/engine/examples/assets/财经图表_横屏.png",
+      "source_sha256": "95c56c106f6eed633cf2c8b6bc46465ecf335aefe5abd9bb8e91563b48c572e1",
+      "import_sha256": "95c56c106f6eed633cf2c8b6bc46465ecf335aefe5abd9bb8e91563b48c572e1",
+      "adapted_sha256": "95c56c106f6eed633cf2c8b6bc46465ecf335aefe5abd9bb8e91563b48c572e1"
+    },
+    {
+      "source": "scripts/engine/examples/t1_3b1b.json",
+      "destination": "lib/art_motion/scripts/engine/examples/t1_3b1b.json",
+      "source_sha256": "fc09974ced9f8176f5299577eda8d6638b8e98221dc4349c99c63fd6fcb7b563",
+      "import_sha256": "fc09974ced9f8176f5299577eda8d6638b8e98221dc4349c99c63fd6fcb7b563",
+      "adapted_sha256": "fc09974ced9f8176f5299577eda8d6638b8e98221dc4349c99c63fd6fcb7b563"
+    },
+    {
+      "source": "scripts/engine/examples/t2_keynote_ui.json",
+      "destination": "lib/art_motion/scripts/engine/examples/t2_keynote_ui.json",
+      "source_sha256": "197055d5e041321dad958331dd16eb93ccd359550b741fbe8a1d5d18ee220d27",
+      "import_sha256": "197055d5e041321dad958331dd16eb93ccd359550b741fbe8a1d5d18ee220d27",
+      "adapted_sha256": "197055d5e041321dad958331dd16eb93ccd359550b741fbe8a1d5d18ee220d27"
+    },
+    {
+      "source": "scripts/engine/examples/t3_finance_chart.json",
+      "destination": "lib/art_motion/scripts/engine/examples/t3_finance_chart.json",
+      "source_sha256": "361d3f6cadab4c774d932581976601e50658bd5092935e988194ba0087f4fa4f",
+      "import_sha256": "361d3f6cadab4c774d932581976601e50658bd5092935e988194ba0087f4fa4f",
+      "adapted_sha256": "361d3f6cadab4c774d932581976601e50658bd5092935e988194ba0087f4fa4f"
+    },
+    {
+      "source": "scripts/engine/examples/y1_kurzgesagt.json",
+      "destination": "lib/art_motion/scripts/engine/examples/y1_kurzgesagt.json",
+      "source_sha256": "38a04cc7f2bec69b56d7632767a0d0f75056ad4cdfb1e10d39ce577414b42bae",
+      "import_sha256": "38a04cc7f2bec69b56d7632767a0d0f75056ad4cdfb1e10d39ce577414b42bae",
+      "adapted_sha256": "38a04cc7f2bec69b56d7632767a0d0f75056ad4cdfb1e10d39ce577414b42bae"
+    },
+    {
+      "source": "scripts/engine/examples/y2_vox.json",
+      "destination": "lib/art_motion/scripts/engine/examples/y2_vox.json",
+      "source_sha256": "de8a19cb7d5d33c72e0bcf35fab4436e4fd2cdc7c48238bddc6a1839d091ecee",
+      "import_sha256": "de8a19cb7d5d33c72e0bcf35fab4436e4fd2cdc7c48238bddc6a1839d091ecee",
+      "adapted_sha256": "de8a19cb7d5d33c72e0bcf35fab4436e4fd2cdc7c48238bddc6a1839d091ecee"
+    },
+    {
+      "source": "scripts/engine/examples/y3_whiteboard.json",
+      "destination": "lib/art_motion/scripts/engine/examples/y3_whiteboard.json",
+      "source_sha256": "8c4ce97341cbcc541b1aae4d468c4f039278acfdaac084ec9d27c40afcec0bdc",
+      "import_sha256": "8c4ce97341cbcc541b1aae4d468c4f039278acfdaac084ec9d27c40afcec0bdc",
+      "adapted_sha256": "8c4ce97341cbcc541b1aae4d468c4f039278acfdaac084ec9d27c40afcec0bdc"
+    },
+    {
+      "source": "scripts/engine/examples/y4_storytime.json",
+      "destination": "lib/art_motion/scripts/engine/examples/y4_storytime.json",
+      "source_sha256": "1f8c8863d5ae30c1bbec177408cc6e6e8fb290d8f0434b48e78b9f62291d4336",
+      "import_sha256": "1f8c8863d5ae30c1bbec177408cc6e6e8fb290d8f0434b48e78b9f62291d4336",
+      "adapted_sha256": "1f8c8863d5ae30c1bbec177408cc6e6e8fb290d8f0434b48e78b9f62291d4336"
+    },
+    {
+      "source": "scripts/engine/examples/y5_kinetic_type.json",
+      "destination": "lib/art_motion/scripts/engine/examples/y5_kinetic_type.json",
+      "source_sha256": "442c20bef51788fc8ff0ba196d459c8ea51ba41bff2c279ac27c675921e72352",
+      "import_sha256": "442c20bef51788fc8ff0ba196d459c8ea51ba41bff2c279ac27c675921e72352",
+      "adapted_sha256": "442c20bef51788fc8ff0ba196d459c8ea51ba41bff2c279ac27c675921e72352"
+    },
+    {
+      "source": "scripts/engine/index.html",
+      "destination": "lib/art_motion/scripts/engine/index.html",
+      "source_sha256": "37bc589ff4290753297a4344a0cade12d42a2a79dacb568bd1dae0f40c4dd45b",
+      "import_sha256": "37bc589ff4290753297a4344a0cade12d42a2a79dacb568bd1dae0f40c4dd45b",
+      "adapted_sha256": "238e3fef6cba22cef443102731cf5764666fbd625e711105c2692d666f6e9680"
+    },
+    {
+      "source": "scripts/engine/lib/brush.js",
+      "destination": "lib/art_motion/scripts/engine/lib/brush.js",
+      "source_sha256": "1fb65fb89dc0e263abf0d3c0a5ceddcc7b26f783624f1bf7ffa2be495bbf83b8",
+      "import_sha256": "1fb65fb89dc0e263abf0d3c0a5ceddcc7b26f783624f1bf7ffa2be495bbf83b8",
+      "adapted_sha256": "1fb65fb89dc0e263abf0d3c0a5ceddcc7b26f783624f1bf7ffa2be495bbf83b8"
+    },
+    {
+      "source": "scripts/engine/lib/camera.js",
+      "destination": "lib/art_motion/scripts/engine/lib/camera.js",
+      "source_sha256": "8ebf92f37dcdff9cac953f64e2e17b2b7d4be10c0e9f742b34868e643de7f692",
+      "import_sha256": "8ebf92f37dcdff9cac953f64e2e17b2b7d4be10c0e9f742b34868e643de7f692",
+      "adapted_sha256": "8ebf92f37dcdff9cac953f64e2e17b2b7d4be10c0e9f742b34868e643de7f692"
+    },
+    {
+      "source": "scripts/engine/lib/chart.js",
+      "destination": "lib/art_motion/scripts/engine/lib/chart.js",
+      "source_sha256": "9d4463c514fe86cdbcd5ed22d92238af469c799460800e4c1eb9fb4b5d7314cb",
+      "import_sha256": "9d4463c514fe86cdbcd5ed22d92238af469c799460800e4c1eb9fb4b5d7314cb",
+      "adapted_sha256": "9d4463c514fe86cdbcd5ed22d92238af469c799460800e4c1eb9fb4b5d7314cb"
+    },
+    {
+      "source": "scripts/engine/lib/collage.js",
+      "destination": "lib/art_motion/scripts/engine/lib/collage.js",
+      "source_sha256": "b2d23618f1ceb9bb8557e9f92a3e7dde53ba5933341a5c0714399fdf19ef27e4",
+      "import_sha256": "b2d23618f1ceb9bb8557e9f92a3e7dde53ba5933341a5c0714399fdf19ef27e4",
+      "adapted_sha256": "b2d23618f1ceb9bb8557e9f92a3e7dde53ba5933341a5c0714399fdf19ef27e4"
+    },
+    {
+      "source": "scripts/engine/lib/diagram.js",
+      "destination": "lib/art_motion/scripts/engine/lib/diagram.js",
+      "source_sha256": "c02208b114a2a37e003f29c9947ccc88a5578767f87b48c01d4f1bceceebeca4",
+      "import_sha256": "c02208b114a2a37e003f29c9947ccc88a5578767f87b48c01d4f1bceceebeca4",
+      "adapted_sha256": "c02208b114a2a37e003f29c9947ccc88a5578767f87b48c01d4f1bceceebeca4"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/AlfaSlabOne-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/AlfaSlabOne-400.woff",
+      "source_sha256": "2f8b04d3eada32d7047255260a0e81ab74938fada1aad154f5653850a68aebe8",
+      "import_sha256": "2f8b04d3eada32d7047255260a0e81ab74938fada1aad154f5653850a68aebe8",
+      "adapted_sha256": "2f8b04d3eada32d7047255260a0e81ab74938fada1aad154f5653850a68aebe8"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Anton-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Anton-400.woff",
+      "source_sha256": "791375bdbed00de4a3aad4811291220ead0e1405d6f8b5bdbf109798c8359ac5",
+      "import_sha256": "791375bdbed00de4a3aad4811291220ead0e1405d6f8b5bdbf109798c8359ac5",
+      "adapted_sha256": "791375bdbed00de4a3aad4811291220ead0e1405d6f8b5bdbf109798c8359ac5"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/ArchivoBlack-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/ArchivoBlack-400.woff",
+      "source_sha256": "c029965cfbc3cbb79431babf56d0fee6bc185f366c4fc2a0957817137d374c95",
+      "import_sha256": "c029965cfbc3cbb79431babf56d0fee6bc185f366c4fc2a0957817137d374c95",
+      "adapted_sha256": "c029965cfbc3cbb79431babf56d0fee6bc185f366c4fc2a0957817137d374c95"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Bangers-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Bangers-400.woff",
+      "source_sha256": "62f0a30b1d48cc21bb35b084ae5d17ad22135df5dc4c18f3f591fc5443eddf39",
+      "import_sha256": "62f0a30b1d48cc21bb35b084ae5d17ad22135df5dc4c18f3f591fc5443eddf39",
+      "adapted_sha256": "62f0a30b1d48cc21bb35b084ae5d17ad22135df5dc4c18f3f591fc5443eddf39"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Caveat-600.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Caveat-600.woff",
+      "source_sha256": "7a101c766f28866c5aa36ebbce5cfedcea2601f2439d3b16694b9c8eee75e9dc",
+      "import_sha256": "7a101c766f28866c5aa36ebbce5cfedcea2601f2439d3b16694b9c8eee75e9dc",
+      "adapted_sha256": "7a101c766f28866c5aa36ebbce5cfedcea2601f2439d3b16694b9c8eee75e9dc"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Cinzel-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Cinzel-400.woff",
+      "source_sha256": "39c4e70ca598e2c0d78d355cd5fbe37017353a5de3008787a03e0d30a2d715ad",
+      "import_sha256": "39c4e70ca598e2c0d78d355cd5fbe37017353a5de3008787a03e0d30a2d715ad",
+      "adapted_sha256": "39c4e70ca598e2c0d78d355cd5fbe37017353a5de3008787a03e0d30a2d715ad"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Cinzel-700.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Cinzel-700.woff",
+      "source_sha256": "1bb7ec5b84ee97a9eae36528d5bae3bfeddf035c19842fc1740ce44c09fac4ad",
+      "import_sha256": "1bb7ec5b84ee97a9eae36528d5bae3bfeddf035c19842fc1740ce44c09fac4ad",
+      "adapted_sha256": "1bb7ec5b84ee97a9eae36528d5bae3bfeddf035c19842fc1740ce44c09fac4ad"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/cmunrm.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/cmunrm.woff",
+      "source_sha256": "32115abbbfb231586813333bfa5a234f4dc7f28b27df7260f42f81146ccd9097",
+      "import_sha256": "32115abbbfb231586813333bfa5a234f4dc7f28b27df7260f42f81146ccd9097",
+      "adapted_sha256": "32115abbbfb231586813333bfa5a234f4dc7f28b27df7260f42f81146ccd9097"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/cmunti.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/cmunti.woff",
+      "source_sha256": "d9a02b7b67874c62f47f9c9a0914c115972ab77d43e82a163baf0888eb5d4a2d",
+      "import_sha256": "d9a02b7b67874c62f47f9c9a0914c115972ab77d43e82a163baf0888eb5d4a2d",
+      "adapted_sha256": "d9a02b7b67874c62f47f9c9a0914c115972ab77d43e82a163baf0888eb5d4a2d"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/CormorantGaramond-500.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/CormorantGaramond-500.woff",
+      "source_sha256": "f25b87d41579955733df25af8319b168d704b5333d8ac53e991fac442e7a9844",
+      "import_sha256": "f25b87d41579955733df25af8319b168d704b5333d8ac53e991fac442e7a9844",
+      "adapted_sha256": "f25b87d41579955733df25af8319b168d704b5333d8ac53e991fac442e7a9844"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/CormorantGaramond-500i.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/CormorantGaramond-500i.woff",
+      "source_sha256": "0ab1e72da6037d218386d9a6e148d7f5b0357e1965abf743aef30d641a5e2874",
+      "import_sha256": "0ab1e72da6037d218386d9a6e148d7f5b0357e1965abf743aef30d641a5e2874",
+      "adapted_sha256": "0ab1e72da6037d218386d9a6e148d7f5b0357e1965abf743aef30d641a5e2874"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/CormorantGaramond-700.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/CormorantGaramond-700.woff",
+      "source_sha256": "6417fd78440278f109d84cf00283fbf9b91b6d639fc5afd208a121ae7c636e61",
+      "import_sha256": "6417fd78440278f109d84cf00283fbf9b91b6d639fc5afd208a121ae7c636e61",
+      "adapted_sha256": "6417fd78440278f109d84cf00283fbf9b91b6d639fc5afd208a121ae7c636e61"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/EBGaramond-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/EBGaramond-400.woff",
+      "source_sha256": "61ea4fa656e4ec2c6103483625f0d6a2e1571c2be57015063b73f23392b3ff98",
+      "import_sha256": "61ea4fa656e4ec2c6103483625f0d6a2e1571c2be57015063b73f23392b3ff98",
+      "adapted_sha256": "61ea4fa656e4ec2c6103483625f0d6a2e1571c2be57015063b73f23392b3ff98"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/EBGaramond-400i.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/EBGaramond-400i.woff",
+      "source_sha256": "413c5879fa73e5e168dcb59e8e692b24049756c5b961fcd8adee3db2e1624ef4",
+      "import_sha256": "413c5879fa73e5e168dcb59e8e692b24049756c5b961fcd8adee3db2e1624ef4",
+      "adapted_sha256": "413c5879fa73e5e168dcb59e8e692b24049756c5b961fcd8adee3db2e1624ef4"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/EBGaramond-600.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/EBGaramond-600.woff",
+      "source_sha256": "d0ecbbe1d933b68d32ef2629e9a46673ae5eff5ce9c04cd7f4c012504da33a11",
+      "import_sha256": "d0ecbbe1d933b68d32ef2629e9a46673ae5eff5ce9c04cd7f4c012504da33a11",
+      "adapted_sha256": "d0ecbbe1d933b68d32ef2629e9a46673ae5eff5ce9c04cd7f4c012504da33a11"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Exo2-800i.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Exo2-800i.woff",
+      "source_sha256": "8296afc88a371a81345e07d852a06e45ae401d5793866fd9a7f351daf523740a",
+      "import_sha256": "8296afc88a371a81345e07d852a06e45ae401d5793866fd9a7f351daf523740a",
+      "adapted_sha256": "8296afc88a371a81345e07d852a06e45ae401d5793866fd9a7f351daf523740a"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/GochiHand-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/GochiHand-400.woff",
+      "source_sha256": "152552ee5c95ec30b75edf3ba42f3406925462ea1a52d4c049d22f550f10167a",
+      "import_sha256": "152552ee5c95ec30b75edf3ba42f3406925462ea1a52d4c049d22f550f10167a",
+      "adapted_sha256": "152552ee5c95ec30b75edf3ba42f3406925462ea1a52d4c049d22f550f10167a"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/IMFellEnglish-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/IMFellEnglish-400.woff",
+      "source_sha256": "b915ee6c7034491df57eed8153ec2a5c3ee1ba55788a96737465d4c3239bd2a0",
+      "import_sha256": "b915ee6c7034491df57eed8153ec2a5c3ee1ba55788a96737465d4c3239bd2a0",
+      "adapted_sha256": "b915ee6c7034491df57eed8153ec2a5c3ee1ba55788a96737465d4c3239bd2a0"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/IMFellEnglish-400i.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/IMFellEnglish-400i.woff",
+      "source_sha256": "7c6064b4e7ca80d131a01b9133ddaf11978d43bc954eb0d1c1dd1391371c56d6",
+      "import_sha256": "7c6064b4e7ca80d131a01b9133ddaf11978d43bc954eb0d1c1dd1391371c56d6",
+      "adapted_sha256": "7c6064b4e7ca80d131a01b9133ddaf11978d43bc954eb0d1c1dd1391371c56d6"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/index.json",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/index.json",
+      "source_sha256": "a0870057845b502a11037acef99b6e9cbc3994fdb5149caf3aac036140dbfbb1",
+      "import_sha256": "a0870057845b502a11037acef99b6e9cbc3994fdb5149caf3aac036140dbfbb1",
+      "adapted_sha256": "0e12cedc01eff22b3caf9cb44bd09976eb67c94e232fb9e9153c6cb1d4e79d67"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Inter-var.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Inter-var.woff",
+      "source_sha256": "a54bc9f6ba847df43752bfb35f63aa1599ccc113b58c23bfa07c4dc88976647b",
+      "import_sha256": "a54bc9f6ba847df43752bfb35f63aa1599ccc113b58c23bfa07c4dc88976647b",
+      "adapted_sha256": "a54bc9f6ba847df43752bfb35f63aa1599ccc113b58c23bfa07c4dc88976647b"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/JosefinSans-700.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/JosefinSans-700.woff",
+      "source_sha256": "1e9f0aab2caa768ead521a88be3ea118d47c29a3ae052f9b5d0c2af0d6a8eb8d",
+      "import_sha256": "1e9f0aab2caa768ead521a88be3ea118d47c29a3ae052f9b5d0c2af0d6a8eb8d",
+      "adapted_sha256": "1e9f0aab2caa768ead521a88be3ea118d47c29a3ae052f9b5d0c2af0d6a8eb8d"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Kalam-700.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Kalam-700.woff",
+      "source_sha256": "53b9c2a4260ba9a1320d2a92c6dbd532fa509bdeda0897580611a9f16f1a2bda",
+      "import_sha256": "53b9c2a4260ba9a1320d2a92c6dbd532fa509bdeda0897580611a9f16f1a2bda",
+      "adapted_sha256": "53b9c2a4260ba9a1320d2a92c6dbd532fa509bdeda0897580611a9f16f1a2bda"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/LibreBaskerville-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/LibreBaskerville-400.woff",
+      "source_sha256": "e5134e031d30b4dcc76f3806701cafe92ff4ed5b8b6271d06d63ca3ee7af9bc4",
+      "import_sha256": "e5134e031d30b4dcc76f3806701cafe92ff4ed5b8b6271d06d63ca3ee7af9bc4",
+      "adapted_sha256": "e5134e031d30b4dcc76f3806701cafe92ff4ed5b8b6271d06d63ca3ee7af9bc4"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/LibreBaskerville-700.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/LibreBaskerville-700.woff",
+      "source_sha256": "57b9986d47ab6d7ea1964d5693c56b5e5e97c889e31ba9546815de365d356dab",
+      "import_sha256": "57b9986d47ab6d7ea1964d5693c56b5e5e97c889e31ba9546815de365d356dab",
+      "adapted_sha256": "57b9986d47ab6d7ea1964d5693c56b5e5e97c889e31ba9546815de365d356dab"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/LICENSES.md",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/LICENSES.md",
+      "source_sha256": "9f437c332471f719042a56d49a680c33a765ab3064c74947c39c62a612705648",
+      "import_sha256": "9f437c332471f719042a56d49a680c33a765ab3064c74947c39c62a612705648",
+      "adapted_sha256": "9f437c332471f719042a56d49a680c33a765ab3064c74947c39c62a612705648"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/LilitaOne-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/LilitaOne-400.woff",
+      "source_sha256": "8f4283865fad7cbb92e3b9e8ec6e48ab1225f7fb2eaa9c75741ff46d4f230456",
+      "import_sha256": "8f4283865fad7cbb92e3b9e8ec6e48ab1225f7fb2eaa9c75741ff46d4f230456",
+      "adapted_sha256": "8f4283865fad7cbb92e3b9e8ec6e48ab1225f7fb2eaa9c75741ff46d4f230456"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/LXGWWenKai-500.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/LXGWWenKai-500.woff",
+      "source_sha256": "734bd187392579417ac83effe31d37b9de43c7b290bcb400800456511ed79e8f",
+      "import_sha256": "734bd187392579417ac83effe31d37b9de43c7b290bcb400800456511ed79e8f",
+      "adapted_sha256": "734bd187392579417ac83effe31d37b9de43c7b290bcb400800456511ed79e8f"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Marcellus-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Marcellus-400.woff",
+      "source_sha256": "9893ac05a03ff1e80ecf97f73853bff1378edfdec633b6c3a67ae7c33d7018e7",
+      "import_sha256": "9893ac05a03ff1e80ecf97f73853bff1378edfdec633b6c3a67ae7c33d7018e7",
+      "adapted_sha256": "9893ac05a03ff1e80ecf97f73853bff1378edfdec633b6c3a67ae7c33d7018e7"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/NotoSansSC-500.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/NotoSansSC-500.woff",
+      "source_sha256": "928d841b1ec663ebce82593568cbc19749fe652f88b8ec960723b7d87b551512",
+      "import_sha256": "928d841b1ec663ebce82593568cbc19749fe652f88b8ec960723b7d87b551512",
+      "adapted_sha256": "928d841b1ec663ebce82593568cbc19749fe652f88b8ec960723b7d87b551512"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/NotoSansSC-700.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/NotoSansSC-700.woff",
+      "source_sha256": "dd0d39a9780eb995c499af0c20cca93b1dfdda865da70871a20890b3e406b968",
+      "import_sha256": "dd0d39a9780eb995c499af0c20cca93b1dfdda865da70871a20890b3e406b968",
+      "adapted_sha256": "dd0d39a9780eb995c499af0c20cca93b1dfdda865da70871a20890b3e406b968"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/NotoSansSC-800.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/NotoSansSC-800.woff",
+      "source_sha256": "b57f9c645b1a4967a3c8914ed41f24d109394a8175e36af08f93e40803e84664",
+      "import_sha256": "b57f9c645b1a4967a3c8914ed41f24d109394a8175e36af08f93e40803e84664",
+      "adapted_sha256": "b57f9c645b1a4967a3c8914ed41f24d109394a8175e36af08f93e40803e84664"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/NotoSansSC-900.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/NotoSansSC-900.woff",
+      "source_sha256": "d2d8a42438b18b65b6577434df4e41bb08c6b5051281757849af00ab743bb58f",
+      "import_sha256": "d2d8a42438b18b65b6577434df4e41bb08c6b5051281757849af00ab743bb58f",
+      "adapted_sha256": "d2d8a42438b18b65b6577434df4e41bb08c6b5051281757849af00ab743bb58f"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/NotoSansSC-sub.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/NotoSansSC-sub.woff",
+      "source_sha256": "f29be895b3e7002432e6d94756a163936e9586843864740b1fc172b1859e462d",
+      "import_sha256": "f29be895b3e7002432e6d94756a163936e9586843864740b1fc172b1859e462d",
+      "adapted_sha256": "f29be895b3e7002432e6d94756a163936e9586843864740b1fc172b1859e462d"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/NotoSerifJP-600.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/NotoSerifJP-600.woff",
+      "source_sha256": "dce02fcc08d8629226ef017472eef25b5bc152d1c32a742075fcda8f351f87d0",
+      "import_sha256": "dce02fcc08d8629226ef017472eef25b5bc152d1c32a742075fcda8f351f87d0",
+      "adapted_sha256": "dce02fcc08d8629226ef017472eef25b5bc152d1c32a742075fcda8f351f87d0"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/NotoSerifSC-sub.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/NotoSerifSC-sub.woff",
+      "source_sha256": "be59f4f630f0fac191dbc6e8d6945da681e5613df7602b2cef8ca7049fa19b66",
+      "import_sha256": "be59f4f630f0fac191dbc6e8d6945da681e5613df7602b2cef8ca7049fa19b66",
+      "adapted_sha256": "be59f4f630f0fac191dbc6e8d6945da681e5613df7602b2cef8ca7049fa19b66"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/OFL.txt",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/OFL.txt",
+      "source_sha256": "9992d96f64c6ea41c83b578bf02c22c7fddc17843b5fd0650301728c800e0f65",
+      "import_sha256": "9992d96f64c6ea41c83b578bf02c22c7fddc17843b5fd0650301728c800e0f65",
+      "adapted_sha256": "9992d96f64c6ea41c83b578bf02c22c7fddc17843b5fd0650301728c800e0f65"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/PlayfairDisplay-400i.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/PlayfairDisplay-400i.woff",
+      "source_sha256": "30cbe57e84bc719727dc54814f708eb9fa2d05a06f04d8c196b1466ecacb74d8",
+      "import_sha256": "30cbe57e84bc719727dc54814f708eb9fa2d05a06f04d8c196b1466ecacb74d8",
+      "adapted_sha256": "30cbe57e84bc719727dc54814f708eb9fa2d05a06f04d8c196b1466ecacb74d8"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/PlayfairDisplay-700.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/PlayfairDisplay-700.woff",
+      "source_sha256": "2644f0e3c7c8f79e9d0c56ad22d246294c7c2b21ea884a7a2b1a10261cb95469",
+      "import_sha256": "2644f0e3c7c8f79e9d0c56ad22d246294c7c2b21ea884a7a2b1a10261cb95469",
+      "adapted_sha256": "2644f0e3c7c8f79e9d0c56ad22d246294c7c2b21ea884a7a2b1a10261cb95469"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/PlayfairDisplay-700i.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/PlayfairDisplay-700i.woff",
+      "source_sha256": "f263323db61a414618d9cafe489d0e18adf6682cd36baa45239ed804fe26fcf1",
+      "import_sha256": "f263323db61a414618d9cafe489d0e18adf6682cd36baa45239ed804fe26fcf1",
+      "adapted_sha256": "f263323db61a414618d9cafe489d0e18adf6682cd36baa45239ed804fe26fcf1"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Poppins-600.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Poppins-600.woff",
+      "source_sha256": "952d2591178ef0c2dea37fb2c14f01e18433c8d59db10f6365c9e1ca9e8efe2a",
+      "import_sha256": "952d2591178ef0c2dea37fb2c14f01e18433c8d59db10f6365c9e1ca9e8efe2a",
+      "adapted_sha256": "952d2591178ef0c2dea37fb2c14f01e18433c8d59db10f6365c9e1ca9e8efe2a"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Poppins-700.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Poppins-700.woff",
+      "source_sha256": "282b1ac42689074c38c62378b1412544f5ab11b91ba145ce56c54802496b7d86",
+      "import_sha256": "282b1ac42689074c38c62378b1412544f5ab11b91ba145ce56c54802496b7d86",
+      "adapted_sha256": "282b1ac42689074c38c62378b1412544f5ab11b91ba145ce56c54802496b7d86"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Poppins-800.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Poppins-800.woff",
+      "source_sha256": "4c2bd05974d03c8058b14a452b2d0d869420b1671a22c35d52da4d58864e46a6",
+      "import_sha256": "4c2bd05974d03c8058b14a452b2d0d869420b1671a22c35d52da4d58864e46a6",
+      "adapted_sha256": "4c2bd05974d03c8058b14a452b2d0d869420b1671a22c35d52da4d58864e46a6"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/PressStart2P-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/PressStart2P-400.woff",
+      "source_sha256": "f831461d0239882019837f2b1cfea598743768f89c0b052102a1fd55050f5ca1",
+      "import_sha256": "f831461d0239882019837f2b1cfea598743768f89c0b052102a1fd55050f5ca1",
+      "adapted_sha256": "f831461d0239882019837f2b1cfea598743768f89c0b052102a1fd55050f5ca1"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Righteous-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Righteous-400.woff",
+      "source_sha256": "374317573c47429a8d87b5c862abc96572e90eef1a445439cc329d2768022121",
+      "import_sha256": "374317573c47429a8d87b5c862abc96572e90eef1a445439cc329d2768022121",
+      "adapted_sha256": "374317573c47429a8d87b5c862abc96572e90eef1a445439cc329d2768022121"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/RobotoCondensed-var.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/RobotoCondensed-var.woff",
+      "source_sha256": "d149ef1478076ad3f201676de2f58d11de18257590d9faeee2318fa3bc4b90e6",
+      "import_sha256": "d149ef1478076ad3f201676de2f58d11de18257590d9faeee2318fa3bc4b90e6",
+      "adapted_sha256": "d149ef1478076ad3f201676de2f58d11de18257590d9faeee2318fa3bc4b90e6"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/Rye-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/Rye-400.woff",
+      "source_sha256": "2b6ae29cb40d75d69b547e7544f4ad540c5a641e7268df578a9bbc062376070e",
+      "import_sha256": "2b6ae29cb40d75d69b547e7544f4ad540c5a641e7268df578a9bbc062376070e",
+      "adapted_sha256": "2b6ae29cb40d75d69b547e7544f4ad540c5a641e7268df578a9bbc062376070e"
+    },
+    {
+      "source": "scripts/engine/lib/fonts/UnifrakturMaguntia-400.woff",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts/UnifrakturMaguntia-400.woff",
+      "source_sha256": "af995e1259780861fd6b8bb3dada5cb1272fc2fd24dbb2ba5b7cc4411ffde566",
+      "import_sha256": "af995e1259780861fd6b8bb3dada5cb1272fc2fd24dbb2ba5b7cc4411ffde566",
+      "adapted_sha256": "af995e1259780861fd6b8bb3dada5cb1272fc2fd24dbb2ba5b7cc4411ffde566"
+    },
+    {
+      "source": "scripts/engine/lib/fonts.js",
+      "destination": "lib/art_motion/scripts/engine/lib/fonts.js",
+      "source_sha256": "329efaab384c5555bdb118a4375f641eea84b468669d121557769867274e0f7b",
+      "import_sha256": "329efaab384c5555bdb118a4375f641eea84b468669d121557769867274e0f7b",
+      "adapted_sha256": "329efaab384c5555bdb118a4375f641eea84b468669d121557769867274e0f7b"
+    },
+    {
+      "source": "scripts/engine/lib/kit.js",
+      "destination": "lib/art_motion/scripts/engine/lib/kit.js",
+      "source_sha256": "eed62e8b9c176d885f8f16e63c34d08447a54d7cf2478b1145bcb51a187ee415",
+      "import_sha256": "eed62e8b9c176d885f8f16e63c34d08447a54d7cf2478b1145bcb51a187ee415",
+      "adapted_sha256": "eed62e8b9c176d885f8f16e63c34d08447a54d7cf2478b1145bcb51a187ee415"
+    },
+    {
+      "source": "scripts/engine/lib/motion.js",
+      "destination": "lib/art_motion/scripts/engine/lib/motion.js",
+      "source_sha256": "fd90ddedbc80221f046f06a6c8c6d2c97c0edb1ab2d8f007c63c2720e60c7655",
+      "import_sha256": "fd90ddedbc80221f046f06a6c8c6d2c97c0edb1ab2d8f007c63c2720e60c7655",
+      "adapted_sha256": "fd90ddedbc80221f046f06a6c8c6d2c97c0edb1ab2d8f007c63c2720e60c7655"
+    },
+    {
+      "source": "scripts/engine/lib/paint.js",
+      "destination": "lib/art_motion/scripts/engine/lib/paint.js",
+      "source_sha256": "93b838b5d08e53abe35228da4e62fdf5cbe8dcb916e821b8c4672bb441dd2ff1",
+      "import_sha256": "93b838b5d08e53abe35228da4e62fdf5cbe8dcb916e821b8c4672bb441dd2ff1",
+      "adapted_sha256": "e85dc8a915399122038b10112a28e96f247fc91aef3be1d381fa7f9a339aaf89"
+    },
+    {
+      "source": "scripts/engine/lib/post.js",
+      "destination": "lib/art_motion/scripts/engine/lib/post.js",
+      "source_sha256": "e586bcc5775078f5e970f799f8158454a54ada9489ecf7255d83d555031fbdf5",
+      "import_sha256": "e586bcc5775078f5e970f799f8158454a54ada9489ecf7255d83d555031fbdf5",
+      "adapted_sha256": "e586bcc5775078f5e970f799f8158454a54ada9489ecf7255d83d555031fbdf5"
+    },
+    {
+      "source": "scripts/engine/lib/render.js",
+      "destination": "lib/art_motion/scripts/engine/lib/render.js",
+      "source_sha256": "f9bef36682aad07977d733b04ba3e483931056e57e0879d343b455717fba8abb",
+      "import_sha256": "f9bef36682aad07977d733b04ba3e483931056e57e0879d343b455717fba8abb",
+      "adapted_sha256": "f9bef36682aad07977d733b04ba3e483931056e57e0879d343b455717fba8abb"
+    },
+    {
+      "source": "scripts/engine/lib/rig.js",
+      "destination": "lib/art_motion/scripts/engine/lib/rig.js",
+      "source_sha256": "f874b6888c2b883473a546e6ccd7c32b08c85df06156f8cb78b0f64481dd954c",
+      "import_sha256": "f874b6888c2b883473a546e6ccd7c32b08c85df06156f8cb78b0f64481dd954c",
+      "adapted_sha256": "0300ae119b565b2cdcd0097f19c8925ba32bb5c011c5d680ca06dc89852b4b98"
+    },
+    {
+      "source": "scripts/engine/lib/rig_huashu.js",
+      "destination": "lib/art_motion/scripts/engine/lib/rig_huashu.js",
+      "source_sha256": "4dd2651658f51fa35a3c47aadff6eb3049dcc8cb997fed17ebc90035ce744910",
+      "import_sha256": "4dd2651658f51fa35a3c47aadff6eb3049dcc8cb997fed17ebc90035ce744910",
+      "adapted_sha256": "4dd2651658f51fa35a3c47aadff6eb3049dcc8cb997fed17ebc90035ce744910"
+    },
+    {
+      "source": "scripts/engine/lib/toon.js",
+      "destination": "lib/art_motion/scripts/engine/lib/toon.js",
+      "source_sha256": "0dde087b1adbd82310b7302f14821fdca92618eb03b32a62ee2dd50e09bb07dd",
+      "import_sha256": "0dde087b1adbd82310b7302f14821fdca92618eb03b32a62ee2dd50e09bb07dd",
+      "adapted_sha256": "0dde087b1adbd82310b7302f14821fdca92618eb03b32a62ee2dd50e09bb07dd"
+    },
+    {
+      "source": "scripts/engine/lib/typo.js",
+      "destination": "lib/art_motion/scripts/engine/lib/typo.js",
+      "source_sha256": "04acce9c9036f5fc80662c4460dcbe2dbe2851e5aee7fd024cb3c567c4e76f0e",
+      "import_sha256": "04acce9c9036f5fc80662c4460dcbe2dbe2851e5aee7fd024cb3c567c4e76f0e",
+      "adapted_sha256": "04acce9c9036f5fc80662c4460dcbe2dbe2851e5aee7fd024cb3c567c4e76f0e"
+    },
+    {
+      "source": "scripts/engine/lib/ui.js",
+      "destination": "lib/art_motion/scripts/engine/lib/ui.js",
+      "source_sha256": "ad9527cf23a8b2ab71483de00dd3648ee42dada729507ca56bacd414f0bf788a",
+      "import_sha256": "ad9527cf23a8b2ab71483de00dd3648ee42dada729507ca56bacd414f0bf788a",
+      "adapted_sha256": "ad9527cf23a8b2ab71483de00dd3648ee42dada729507ca56bacd414f0bf788a"
+    },
+    {
+      "source": "scripts/engine/lib/util.js",
+      "destination": "lib/art_motion/scripts/engine/lib/util.js",
+      "source_sha256": "fc7a37e867d72c73d5ea3143188d036e940c2ad451ec85c546c25cefcc8e2445",
+      "import_sha256": "fc7a37e867d72c73d5ea3143188d036e940c2ad451ec85c546c25cefcc8e2445",
+      "adapted_sha256": "fc7a37e867d72c73d5ea3143188d036e940c2ad451ec85c546c25cefcc8e2445"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/eras_lin.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/eras_lin.js",
+      "source_sha256": "bb99c0d7cfe4f852a6a085f9d672cf311f4263aff308309979781e10cdd8cc99",
+      "import_sha256": "bb99c0d7cfe4f852a6a085f9d672cf311f4263aff308309979781e10cdd8cc99",
+      "adapted_sha256": "bb99c0d7cfe4f852a6a085f9d672cf311f4263aff308309979781e10cdd8cc99"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/eras_spacex.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/eras_spacex.js",
+      "source_sha256": "56af08d77500035c7646cce36bee5a69f318693e03c984efab17bc6c7bb5ea28",
+      "import_sha256": "56af08d77500035c7646cce36bee5a69f318693e03c984efab17bc6c7bb5ea28",
+      "adapted_sha256": "56af08d77500035c7646cce36bee5a69f318693e03c984efab17bc6c7bb5ea28"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/eras_vox.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/eras_vox.js",
+      "source_sha256": "d8ebec587418fc3192ce32dcd6a3d343f4eb0fbe9a0a5eff6bd7bdaf733257ee",
+      "import_sha256": "d8ebec587418fc3192ce32dcd6a3d343f4eb0fbe9a0a5eff6bd7bdaf733257ee",
+      "adapted_sha256": "d8ebec587418fc3192ce32dcd6a3d343f4eb0fbe9a0a5eff6bd7bdaf733257ee"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/eras_wbx.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/eras_wbx.js",
+      "source_sha256": "ce3ab4c63520393a7ad661fce9894b609e6b4bf9f5b8be91198978bf449a7872",
+      "import_sha256": "ce3ab4c63520393a7ad661fce9894b609e6b4bf9f5b8be91198978bf449a7872",
+      "adapted_sha256": "ce3ab4c63520393a7ad661fce9894b609e6b4bf9f5b8be91198978bf449a7872"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/README.md",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/README.md",
+      "source_sha256": "3563af5878d8dcb75bf026bf468f931e667cacc816097bee23815973714dc0e3",
+      "import_sha256": "3563af5878d8dcb75bf026bf468f931e667cacc816097bee23815973714dc0e3",
+      "adapted_sha256": "3563af5878d8dcb75bf026bf468f931e667cacc816097bee23815973714dc0e3"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/rockets.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/rockets.js",
+      "source_sha256": "d97f97f5664237b7919dfe8958af3ed51ed62587ee7e52cd491282c79434402d",
+      "import_sha256": "d97f97f5664237b7919dfe8958af3ed51ed62587ee7e52cd491282c79434402d",
+      "adapted_sha256": "d97f97f5664237b7919dfe8958af3ed51ed62587ee7e52cd491282c79434402d"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s01.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s01.js",
+      "source_sha256": "3afe81e24e39476345ed74b94fc4dec6778ea0457c7d4e6227ea65a48aaea266",
+      "import_sha256": "3afe81e24e39476345ed74b94fc4dec6778ea0457c7d4e6227ea65a48aaea266",
+      "adapted_sha256": "3afe81e24e39476345ed74b94fc4dec6778ea0457c7d4e6227ea65a48aaea266"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s02.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s02.js",
+      "source_sha256": "0a2bf9245291cee5e8292af58f72337023a517d1405d02c5f26a7b89a3b9c73e",
+      "import_sha256": "0a2bf9245291cee5e8292af58f72337023a517d1405d02c5f26a7b89a3b9c73e",
+      "adapted_sha256": "0a2bf9245291cee5e8292af58f72337023a517d1405d02c5f26a7b89a3b9c73e"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s03.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s03.js",
+      "source_sha256": "7740e48c0e6c4f3ed293775c637f1373eca16e73ef6ec0a5b0638bb7cc3fc4bc",
+      "import_sha256": "7740e48c0e6c4f3ed293775c637f1373eca16e73ef6ec0a5b0638bb7cc3fc4bc",
+      "adapted_sha256": "7740e48c0e6c4f3ed293775c637f1373eca16e73ef6ec0a5b0638bb7cc3fc4bc"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s04.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s04.js",
+      "source_sha256": "bae6db992ebcd3b9813180f2f03e90c46af944afab30e68a1474b4fe4edc1c78",
+      "import_sha256": "bae6db992ebcd3b9813180f2f03e90c46af944afab30e68a1474b4fe4edc1c78",
+      "adapted_sha256": "bae6db992ebcd3b9813180f2f03e90c46af944afab30e68a1474b4fe4edc1c78"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s05.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s05.js",
+      "source_sha256": "6699a7e92eefa088980f4ac367f25876a2265469ee06b08bf36654e3838632c6",
+      "import_sha256": "6699a7e92eefa088980f4ac367f25876a2265469ee06b08bf36654e3838632c6",
+      "adapted_sha256": "6699a7e92eefa088980f4ac367f25876a2265469ee06b08bf36654e3838632c6"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s06.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s06.js",
+      "source_sha256": "11857169e0e8d3d31cb65e4f0bb508c4802ca2517ce3c23409637b42628e7eac",
+      "import_sha256": "11857169e0e8d3d31cb65e4f0bb508c4802ca2517ce3c23409637b42628e7eac",
+      "adapted_sha256": "11857169e0e8d3d31cb65e4f0bb508c4802ca2517ce3c23409637b42628e7eac"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s07.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s07.js",
+      "source_sha256": "8d2178e06ff44b08ddcd42b1117e44a8aa89965155a2054aa6a7023d26b2ee2f",
+      "import_sha256": "8d2178e06ff44b08ddcd42b1117e44a8aa89965155a2054aa6a7023d26b2ee2f",
+      "adapted_sha256": "8d2178e06ff44b08ddcd42b1117e44a8aa89965155a2054aa6a7023d26b2ee2f"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s08.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s08.js",
+      "source_sha256": "c23822903b0ccd7f4365eb9b30fc0762200e2d5242fa38f4b8659d7f06f6b758",
+      "import_sha256": "c23822903b0ccd7f4365eb9b30fc0762200e2d5242fa38f4b8659d7f06f6b758",
+      "adapted_sha256": "c23822903b0ccd7f4365eb9b30fc0762200e2d5242fa38f4b8659d7f06f6b758"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s09.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s09.js",
+      "source_sha256": "8e3c3c6e0ce2b6d5939fe113e5c42f37ed9385ceb161e6c9e5dc17bae943b22f",
+      "import_sha256": "8e3c3c6e0ce2b6d5939fe113e5c42f37ed9385ceb161e6c9e5dc17bae943b22f",
+      "adapted_sha256": "8e3c3c6e0ce2b6d5939fe113e5c42f37ed9385ceb161e6c9e5dc17bae943b22f"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s10.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s10.js",
+      "source_sha256": "c3237e73fe158c275bab630abff43e9413c82d7ab0003300c865f793a2244028",
+      "import_sha256": "c3237e73fe158c275bab630abff43e9413c82d7ab0003300c865f793a2244028",
+      "adapted_sha256": "c3237e73fe158c275bab630abff43e9413c82d7ab0003300c865f793a2244028"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s11.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s11.js",
+      "source_sha256": "135ba733c9bd0e1d7a03403f1494bab335f8c2865dd9e204cc7ba6b281e2690f",
+      "import_sha256": "135ba733c9bd0e1d7a03403f1494bab335f8c2865dd9e204cc7ba6b281e2690f",
+      "adapted_sha256": "135ba733c9bd0e1d7a03403f1494bab335f8c2865dd9e204cc7ba6b281e2690f"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/scenes/s12.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/scenes/s12.js",
+      "source_sha256": "62d1bd77db52fc098763f76ef525d57550976800144067fdb0a9e1cc44efb6fe",
+      "import_sha256": "62d1bd77db52fc098763f76ef525d57550976800144067fdb0a9e1cc44efb6fe",
+      "adapted_sha256": "62d1bd77db52fc098763f76ef525d57550976800144067fdb0a9e1cc44efb6fe"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/timing.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/timing.js",
+      "source_sha256": "301d4704ca46111134fb7c6cc59d71305fa7c1b10edc1d1379c93649ba71dad9",
+      "import_sha256": "301d4704ca46111134fb7c6cc59d71305fa7c1b10edc1d1379c93649ba71dad9",
+      "adapted_sha256": "301d4704ca46111134fb7c6cc59d71305fa7c1b10edc1d1379c93649ba71dad9"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex/tm.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex/tm.js",
+      "source_sha256": "ef1733ba3ec55c2c6207c1be1c6ab8a02e36c779db019e64f456f5a6a9b6b170",
+      "import_sha256": "ef1733ba3ec55c2c6207c1be1c6ab8a02e36c779db019e64f456f5a6a9b6b170",
+      "adapted_sha256": "ef1733ba3ec55c2c6207c1be1c6ab8a02e36c779db019e64f456f5a6a9b6b170"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/common.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/common.js",
+      "source_sha256": "2df78005a48c1e90e19b5a402f5f068259fb0171853a7f68e0b25254d74a9225",
+      "import_sha256": "2df78005a48c1e90e19b5a402f5f068259fb0171853a7f68e0b25254d74a9225",
+      "adapted_sha256": "2df78005a48c1e90e19b5a402f5f068259fb0171853a7f68e0b25254d74a9225"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/presenter_meta.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/presenter_meta.js",
+      "source_sha256": "494da8ea6910389dc70b608e35c387cb31855a87036144df779a17dfdabf152e",
+      "import_sha256": "494da8ea6910389dc70b608e35c387cb31855a87036144df779a17dfdabf152e",
+      "adapted_sha256": "494da8ea6910389dc70b608e35c387cb31855a87036144df779a17dfdabf152e"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s01.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s01.js",
+      "source_sha256": "98add41208b1b2dce184045cbaf414ff2ec6ddaf8e67a90edd690c866a13d786",
+      "import_sha256": "98add41208b1b2dce184045cbaf414ff2ec6ddaf8e67a90edd690c866a13d786",
+      "adapted_sha256": "98add41208b1b2dce184045cbaf414ff2ec6ddaf8e67a90edd690c866a13d786"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s02.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s02.js",
+      "source_sha256": "70c896b2a21700699b6e24ebe93c3f3108ebdb76583805607712f0058f6970a3",
+      "import_sha256": "70c896b2a21700699b6e24ebe93c3f3108ebdb76583805607712f0058f6970a3",
+      "adapted_sha256": "70c896b2a21700699b6e24ebe93c3f3108ebdb76583805607712f0058f6970a3"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s03.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s03.js",
+      "source_sha256": "08c780b0ddd5873f0ea6ef0e5b85be3265c132050fdafbcb697aa960f2481143",
+      "import_sha256": "08c780b0ddd5873f0ea6ef0e5b85be3265c132050fdafbcb697aa960f2481143",
+      "adapted_sha256": "08c780b0ddd5873f0ea6ef0e5b85be3265c132050fdafbcb697aa960f2481143"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s04.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s04.js",
+      "source_sha256": "2165cd417a314781b2e1055ee049218a73b42d13152995719cec6f9a9a9202c4",
+      "import_sha256": "2165cd417a314781b2e1055ee049218a73b42d13152995719cec6f9a9a9202c4",
+      "adapted_sha256": "2165cd417a314781b2e1055ee049218a73b42d13152995719cec6f9a9a9202c4"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s05.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s05.js",
+      "source_sha256": "0c8c5879df92510a15ccdad1639b11fd0593003f74cd7d50500128514b88e031",
+      "import_sha256": "0c8c5879df92510a15ccdad1639b11fd0593003f74cd7d50500128514b88e031",
+      "adapted_sha256": "0c8c5879df92510a15ccdad1639b11fd0593003f74cd7d50500128514b88e031"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s06.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s06.js",
+      "source_sha256": "5b81c361be10b455de21a9f2d6dc8820132764dd192c1d3b31ad90ac23c7f878",
+      "import_sha256": "5b81c361be10b455de21a9f2d6dc8820132764dd192c1d3b31ad90ac23c7f878",
+      "adapted_sha256": "5b81c361be10b455de21a9f2d6dc8820132764dd192c1d3b31ad90ac23c7f878"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s07.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s07.js",
+      "source_sha256": "19e76ea7f888e640325c5efb52c1a67558fac1c3567bade22d0b1da72c0e4aac",
+      "import_sha256": "19e76ea7f888e640325c5efb52c1a67558fac1c3567bade22d0b1da72c0e4aac",
+      "adapted_sha256": "19e76ea7f888e640325c5efb52c1a67558fac1c3567bade22d0b1da72c0e4aac"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s08.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s08.js",
+      "source_sha256": "81c4b8f6e5cb3620e654bccb6413cebdc7365b058ab93b991e8296703260004f",
+      "import_sha256": "81c4b8f6e5cb3620e654bccb6413cebdc7365b058ab93b991e8296703260004f",
+      "adapted_sha256": "81c4b8f6e5cb3620e654bccb6413cebdc7365b058ab93b991e8296703260004f"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s09.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s09.js",
+      "source_sha256": "3ea8d6a5290ac0bd796641fa7aaab8496f662ec20dda98e80c9f7b2716452758",
+      "import_sha256": "3ea8d6a5290ac0bd796641fa7aaab8496f662ec20dda98e80c9f7b2716452758",
+      "adapted_sha256": "3ea8d6a5290ac0bd796641fa7aaab8496f662ec20dda98e80c9f7b2716452758"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s10.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s10.js",
+      "source_sha256": "eaeb584da17587d3d670dc896678609f6cc799c509d5f6fc712a1b0943e3e39d",
+      "import_sha256": "eaeb584da17587d3d670dc896678609f6cc799c509d5f6fc712a1b0943e3e39d",
+      "adapted_sha256": "eaeb584da17587d3d670dc896678609f6cc799c509d5f6fc712a1b0943e3e39d"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s11.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s11.js",
+      "source_sha256": "7150e6b78e2a09b30249eb9cf48888f78f19d2eb6e15fe14e27cb8acdf974979",
+      "import_sha256": "7150e6b78e2a09b30249eb9cf48888f78f19d2eb6e15fe14e27cb8acdf974979",
+      "adapted_sha256": "7150e6b78e2a09b30249eb9cf48888f78f19d2eb6e15fe14e27cb8acdf974979"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/scenes/s12.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/scenes/s12.js",
+      "source_sha256": "d0a0c540b40772d5af2e315aee5a14cfa0403fa2499b5555d9201bf5f90b38fb",
+      "import_sha256": "d0a0c540b40772d5af2e315aee5a14cfa0403fa2499b5555d9201bf5f90b38fb",
+      "adapted_sha256": "d0a0c540b40772d5af2e315aee5a14cfa0403fa2499b5555d9201bf5f90b38fb"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_lin/tools/prep_presenter.py",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_lin/tools/prep_presenter.py",
+      "source_sha256": "925554c5d6c128167e67f5853ee70f7fe0171646ec564ac2be9faa61e0742e76",
+      "import_sha256": "925554c5d6c128167e67f5853ee70f7fe0171646ec564ac2be9faa61e0742e76",
+      "adapted_sha256": "925554c5d6c128167e67f5853ee70f7fe0171646ec564ac2be9faa61e0742e76"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/common.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/common.js",
+      "source_sha256": "f5184f3900c0e94420916b7a8a8f9e4b3cc511117228a2d2557362fa28d3be78",
+      "import_sha256": "f5184f3900c0e94420916b7a8a8f9e4b3cc511117228a2d2557362fa28d3be78",
+      "adapted_sha256": "927b3ed8bb0e88f2667b4926688846b3a105d339679328ff561a0c7431cb0a04"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s01.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s01.js",
+      "source_sha256": "e4738ad9d1ae474dfa373ed5d6ca88704941d23961541bbfcf283a1d6761711c",
+      "import_sha256": "e4738ad9d1ae474dfa373ed5d6ca88704941d23961541bbfcf283a1d6761711c",
+      "adapted_sha256": "e4738ad9d1ae474dfa373ed5d6ca88704941d23961541bbfcf283a1d6761711c"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s02.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s02.js",
+      "source_sha256": "c473510226a1b94a5b089b34f4ca94eec5415e2a186ffb5d3a275345fc63c413",
+      "import_sha256": "c473510226a1b94a5b089b34f4ca94eec5415e2a186ffb5d3a275345fc63c413",
+      "adapted_sha256": "c473510226a1b94a5b089b34f4ca94eec5415e2a186ffb5d3a275345fc63c413"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s03.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s03.js",
+      "source_sha256": "1d9f2c2f72fad7064ab498d98879932b32d85996b3decf7e95d94308c258d007",
+      "import_sha256": "1d9f2c2f72fad7064ab498d98879932b32d85996b3decf7e95d94308c258d007",
+      "adapted_sha256": "1d9f2c2f72fad7064ab498d98879932b32d85996b3decf7e95d94308c258d007"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s04.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s04.js",
+      "source_sha256": "77776ec70741decd9b4cd202b4340a0f44df2eac56d84592e1c972ed793ac735",
+      "import_sha256": "77776ec70741decd9b4cd202b4340a0f44df2eac56d84592e1c972ed793ac735",
+      "adapted_sha256": "77776ec70741decd9b4cd202b4340a0f44df2eac56d84592e1c972ed793ac735"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s05.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s05.js",
+      "source_sha256": "668faeb2a3680faa5711fbd4bad8ebe7104fce2fdea083058c85571a569b5365",
+      "import_sha256": "668faeb2a3680faa5711fbd4bad8ebe7104fce2fdea083058c85571a569b5365",
+      "adapted_sha256": "668faeb2a3680faa5711fbd4bad8ebe7104fce2fdea083058c85571a569b5365"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s06.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s06.js",
+      "source_sha256": "8c240be32908a1b22180781168489c319193e466d48b7fbf65ce687253fc1e2b",
+      "import_sha256": "8c240be32908a1b22180781168489c319193e466d48b7fbf65ce687253fc1e2b",
+      "adapted_sha256": "8c240be32908a1b22180781168489c319193e466d48b7fbf65ce687253fc1e2b"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s07.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s07.js",
+      "source_sha256": "08c2d1d1d2e6a1ac399edf317ce1774fecbc315a527f116984a69e148fde0c3f",
+      "import_sha256": "08c2d1d1d2e6a1ac399edf317ce1774fecbc315a527f116984a69e148fde0c3f",
+      "adapted_sha256": "08c2d1d1d2e6a1ac399edf317ce1774fecbc315a527f116984a69e148fde0c3f"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s08.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s08.js",
+      "source_sha256": "e7e990f9d865c115fc4389fc05d09d453973a67ecd2b622d3dd112d324cd1485",
+      "import_sha256": "e7e990f9d865c115fc4389fc05d09d453973a67ecd2b622d3dd112d324cd1485",
+      "adapted_sha256": "e7e990f9d865c115fc4389fc05d09d453973a67ecd2b622d3dd112d324cd1485"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s09.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s09.js",
+      "source_sha256": "87bf35bba443c88a10440d262606e94f0c04cf142ff423b5fa243a6d4854d88d",
+      "import_sha256": "87bf35bba443c88a10440d262606e94f0c04cf142ff423b5fa243a6d4854d88d",
+      "adapted_sha256": "87bf35bba443c88a10440d262606e94f0c04cf142ff423b5fa243a6d4854d88d"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s10.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s10.js",
+      "source_sha256": "4e9087278b1448f950b4a22992a283dece0cc7daf031c097b4c55f3da1212bfe",
+      "import_sha256": "4e9087278b1448f950b4a22992a283dece0cc7daf031c097b4c55f3da1212bfe",
+      "adapted_sha256": "4e9087278b1448f950b4a22992a283dece0cc7daf031c097b4c55f3da1212bfe"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s11.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s11.js",
+      "source_sha256": "b09ad063a9d6efdaa2a65e3d7865b6c290ec449485a27160c38046464ed95c8f",
+      "import_sha256": "b09ad063a9d6efdaa2a65e3d7865b6c290ec449485a27160c38046464ed95c8f",
+      "adapted_sha256": "b09ad063a9d6efdaa2a65e3d7865b6c290ec449485a27160c38046464ed95c8f"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_vox/scenes/s12.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_vox/scenes/s12.js",
+      "source_sha256": "d703064dec6b9cce0a30105784c214f6590aaa10f47014a946bd284d5b2a5510",
+      "import_sha256": "d703064dec6b9cce0a30105784c214f6590aaa10f47014a946bd284d5b2a5510",
+      "adapted_sha256": "d703064dec6b9cce0a30105784c214f6590aaa10f47014a946bd284d5b2a5510"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/assets/ARPHICPL.TXT",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/assets/ARPHICPL.TXT",
+      "source_sha256": "50901d54f0878ebd494d9792803f1f44ff56b3ed4e4db8ab86547e850c4d7a78",
+      "import_sha256": "50901d54f0878ebd494d9792803f1f44ff56b3ed4e4db8ab86547e850c4d7a78",
+      "adapted_sha256": "50901d54f0878ebd494d9792803f1f44ff56b3ed4e4db8ab86547e850c4d7a78"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/assets/hand_1.png",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/assets/hand_1.png",
+      "source_sha256": "19761f892b70430e24b8e4780c547c0b1547f584d72b840d5a23fb06bb93c0c7",
+      "import_sha256": "19761f892b70430e24b8e4780c547c0b1547f584d72b840d5a23fb06bb93c0c7",
+      "adapted_sha256": "19761f892b70430e24b8e4780c547c0b1547f584d72b840d5a23fb06bb93c0c7"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/assets/hand_2.png",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/assets/hand_2.png",
+      "source_sha256": "f404f8d1f597cc4d97e91123e7e57d47c4514278ebf2b897498ba9483e4215c7",
+      "import_sha256": "f404f8d1f597cc4d97e91123e7e57d47c4514278ebf2b897498ba9483e4215c7",
+      "adapted_sha256": "f404f8d1f597cc4d97e91123e7e57d47c4514278ebf2b897498ba9483e4215c7"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/assets/hand_3.png",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/assets/hand_3.png",
+      "source_sha256": "c16036d4a837b88cf977ff0a0910b08497eceef9c605eff80bfeab712e3ef10b",
+      "import_sha256": "c16036d4a837b88cf977ff0a0910b08497eceef9c605eff80bfeab712e3ef10b",
+      "adapted_sha256": "c16036d4a837b88cf977ff0a0910b08497eceef9c605eff80bfeab712e3ef10b"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/assets/make_hand.py",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/assets/make_hand.py",
+      "source_sha256": "ada01639bee48afd096418704fb0c2c0c0790bd3232db389c71373cbd0b92bec",
+      "import_sha256": "ada01639bee48afd096418704fb0c2c0c0790bd3232db389c71373cbd0b92bec",
+      "adapted_sha256": "ada01639bee48afd096418704fb0c2c0c0790bd3232db389c71373cbd0b92bec"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/assets/strokes.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/assets/strokes.js",
+      "source_sha256": "c012fc01a0d7512c29a5d25146335637b082cb98423649ee5e2225da6ac4bcdb",
+      "import_sha256": "c012fc01a0d7512c29a5d25146335637b082cb98423649ee5e2225da6ac4bcdb",
+      "adapted_sha256": "c012fc01a0d7512c29a5d25146335637b082cb98423649ee5e2225da6ac4bcdb"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/common.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/common.js",
+      "source_sha256": "1cd32da40193784770112adb2c83a84ce1fe211d9023551775973974a2fd0f99",
+      "import_sha256": "1cd32da40193784770112adb2c83a84ce1fe211d9023551775973974a2fd0f99",
+      "adapted_sha256": "8bb35230f1573c7e09ebc78e080cec9003a5d4d6b8a73cea7360bd1ac5936cf0"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s01.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s01.js",
+      "source_sha256": "81ee10f67c997ac75c3eb797eddbdd04e2376c88b6d4c392c8f34a0b28a4fba8",
+      "import_sha256": "81ee10f67c997ac75c3eb797eddbdd04e2376c88b6d4c392c8f34a0b28a4fba8",
+      "adapted_sha256": "81ee10f67c997ac75c3eb797eddbdd04e2376c88b6d4c392c8f34a0b28a4fba8"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s02.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s02.js",
+      "source_sha256": "18d9929eaf3ca0170108cc4d6ace3be7700a903ee53a6a0115213b0cab66a870",
+      "import_sha256": "18d9929eaf3ca0170108cc4d6ace3be7700a903ee53a6a0115213b0cab66a870",
+      "adapted_sha256": "18d9929eaf3ca0170108cc4d6ace3be7700a903ee53a6a0115213b0cab66a870"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s03.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s03.js",
+      "source_sha256": "8b4e0b8815a6ac9f240bfa81eedcddf5c2f0c6708016f3e1648d35a9be564267",
+      "import_sha256": "8b4e0b8815a6ac9f240bfa81eedcddf5c2f0c6708016f3e1648d35a9be564267",
+      "adapted_sha256": "8b4e0b8815a6ac9f240bfa81eedcddf5c2f0c6708016f3e1648d35a9be564267"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s04.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s04.js",
+      "source_sha256": "024101b6ca88094dea5c81497cffa2af6e15d50f1d64e8fe55cc39efc40fe4ed",
+      "import_sha256": "024101b6ca88094dea5c81497cffa2af6e15d50f1d64e8fe55cc39efc40fe4ed",
+      "adapted_sha256": "024101b6ca88094dea5c81497cffa2af6e15d50f1d64e8fe55cc39efc40fe4ed"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s05.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s05.js",
+      "source_sha256": "2bbffe9871e7af8c3d63ec463ff958a52d0f39dd170170c3b990e27aa6ba27b3",
+      "import_sha256": "2bbffe9871e7af8c3d63ec463ff958a52d0f39dd170170c3b990e27aa6ba27b3",
+      "adapted_sha256": "2bbffe9871e7af8c3d63ec463ff958a52d0f39dd170170c3b990e27aa6ba27b3"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s06.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s06.js",
+      "source_sha256": "d89e63c0e4d411b75fe9df7a97e3f7781ae989bd1f761ad2dd65f09388eb1036",
+      "import_sha256": "d89e63c0e4d411b75fe9df7a97e3f7781ae989bd1f761ad2dd65f09388eb1036",
+      "adapted_sha256": "d89e63c0e4d411b75fe9df7a97e3f7781ae989bd1f761ad2dd65f09388eb1036"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s07.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s07.js",
+      "source_sha256": "553e075d44ef22cadd548c55f6b920ce32400dc037eceff5b55d9ca011039d14",
+      "import_sha256": "553e075d44ef22cadd548c55f6b920ce32400dc037eceff5b55d9ca011039d14",
+      "adapted_sha256": "553e075d44ef22cadd548c55f6b920ce32400dc037eceff5b55d9ca011039d14"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s08.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s08.js",
+      "source_sha256": "fcb8bdb31c33e7250c9c390c225c192bbfc6fa53b1da34927bad11de1529c3d0",
+      "import_sha256": "fcb8bdb31c33e7250c9c390c225c192bbfc6fa53b1da34927bad11de1529c3d0",
+      "adapted_sha256": "fcb8bdb31c33e7250c9c390c225c192bbfc6fa53b1da34927bad11de1529c3d0"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s09.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s09.js",
+      "source_sha256": "f612563408f8a92607bf83825a2a9cf7382d96101d33b95f2c12884036dda2b1",
+      "import_sha256": "f612563408f8a92607bf83825a2a9cf7382d96101d33b95f2c12884036dda2b1",
+      "adapted_sha256": "f612563408f8a92607bf83825a2a9cf7382d96101d33b95f2c12884036dda2b1"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s10.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s10.js",
+      "source_sha256": "61377b163ce4eac50d8adbaf4c129de027c018cb009ae6b8b15966c37e13ec46",
+      "import_sha256": "61377b163ce4eac50d8adbaf4c129de027c018cb009ae6b8b15966c37e13ec46",
+      "adapted_sha256": "61377b163ce4eac50d8adbaf4c129de027c018cb009ae6b8b15966c37e13ec46"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s11.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s11.js",
+      "source_sha256": "b72ffa96db2b33f488299ae7976ad177754ea9f37eb52c14b590fd3b0ce989b1",
+      "import_sha256": "b72ffa96db2b33f488299ae7976ad177754ea9f37eb52c14b590fd3b0ce989b1",
+      "adapted_sha256": "b72ffa96db2b33f488299ae7976ad177754ea9f37eb52c14b590fd3b0ce989b1"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/spacex_wb/scenes/s12.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/spacex_wb/scenes/s12.js",
+      "source_sha256": "5b08f3dfb0c63d046cb635a41ee847d013d31e400755c5cdf6ca5782f6b2b2d0",
+      "import_sha256": "5b08f3dfb0c63d046cb635a41ee847d013d31e400755c5cdf6ca5782f6b2b2d0",
+      "adapted_sha256": "5b08f3dfb0c63d046cb635a41ee847d013d31e400755c5cdf6ca5782f6b2b2d0"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/transitions/cardFlip.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/transitions/cardFlip.js",
+      "source_sha256": "951ffe6fdf9f107d743d95104f4ed47f78ba45556a503df707357f63e401d2cd",
+      "import_sha256": "951ffe6fdf9f107d743d95104f4ed47f78ba45556a503df707357f63e401d2cd",
+      "adapted_sha256": "951ffe6fdf9f107d743d95104f4ed47f78ba45556a503df707357f63e401d2cd"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/transitions/deskPullOut.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/transitions/deskPullOut.js",
+      "source_sha256": "fd0b61475ba0c829247557846b10ee98487582a8b5fa2bc9f473fce1550426a3",
+      "import_sha256": "fd0b61475ba0c829247557846b10ee98487582a8b5fa2bc9f473fce1550426a3",
+      "adapted_sha256": "fd0b61475ba0c829247557846b10ee98487582a8b5fa2bc9f473fce1550426a3"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/transitions/kzBloom.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/transitions/kzBloom.js",
+      "source_sha256": "9b716acace91fef959a66aeda79b64c49eb5ab8d40c368d6af890da0de582002",
+      "import_sha256": "9b716acace91fef959a66aeda79b64c49eb5ab8d40c368d6af890da0de582002",
+      "adapted_sha256": "9b716acace91fef959a66aeda79b64c49eb5ab8d40c368d6af890da0de582002"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/transitions/lin_page.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/transitions/lin_page.js",
+      "source_sha256": "fbdc0938cb76ed491a230e27812c3206ad9b594712e09f14c29d0a559d71acce",
+      "import_sha256": "fbdc0938cb76ed491a230e27812c3206ad9b594712e09f14c29d0a559d71acce",
+      "adapted_sha256": "fbdc0938cb76ed491a230e27812c3206ad9b594712e09f14c29d0a559d71acce"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/transitions/paperSlide.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/transitions/paperSlide.js",
+      "source_sha256": "894889fbb7b9e27bf6fa45169e684ec05fd958c8761186bb7aab759fec903ff3",
+      "import_sha256": "894889fbb7b9e27bf6fa45169e684ec05fd958c8761186bb7aab759fec903ff3",
+      "adapted_sha256": "894889fbb7b9e27bf6fa45169e684ec05fd958c8761186bb7aab759fec903ff3"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/transitions/vox_pull.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/transitions/vox_pull.js",
+      "source_sha256": "f83a6363229fb77657385a7196aea8722589b422db2e17fd77e4eb95d1e82983",
+      "import_sha256": "f83a6363229fb77657385a7196aea8722589b422db2e17fd77e4eb95d1e82983",
+      "adapted_sha256": "f83a6363229fb77657385a7196aea8722589b422db2e17fd77e4eb95d1e82983"
+    },
+    {
+      "source": "scripts/engine/reference_films/spacex/transitions/vox_slap.js",
+      "destination": "lib/art_motion/scripts/engine/reference_films/spacex/transitions/vox_slap.js",
+      "source_sha256": "3db236b0206b003778e8fb1f3eaf5b7a38a6d9f753dce9a37c5bed60bd02f1d0",
+      "import_sha256": "3db236b0206b003778e8fb1f3eaf5b7a38a6d9f753dce9a37c5bed60bd02f1d0",
+      "adapted_sha256": "3db236b0206b003778e8fb1f3eaf5b7a38a6d9f753dce9a37c5bed60bd02f1d0"
+    },
+    {
+      "source": "scripts/engine/render.py",
+      "destination": "lib/art_motion/scripts/engine/render.py",
+      "source_sha256": "ca20f5d23470955d71e9ef58c8d899561497b6e4cc1fb43280ede66721eb324b",
+      "import_sha256": "7affd01e2632d85891eb9ab7da5dbd93a2f81e1f6ce797b951057649e44f3995",
+      "adapted_sha256": "5ae8a081b613a0aeb669d1c696b6588b6286d9eb1c7b1ba5d52fc4508bc159ee"
+    },
+    {
+      "source": "scripts/engine/scenes/01_cave.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/01_cave.js",
+      "source_sha256": "9ec753ff0e043aad579ecce9fbcccd47d38fbf65aaa28609a50322eaa8ce052c",
+      "import_sha256": "9ec753ff0e043aad579ecce9fbcccd47d38fbf65aaa28609a50322eaa8ce052c",
+      "adapted_sha256": "9ec753ff0e043aad579ecce9fbcccd47d38fbf65aaa28609a50322eaa8ce052c"
+    },
+    {
+      "source": "scripts/engine/scenes/02_egypt.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/02_egypt.js",
+      "source_sha256": "de8a0bbfb3b75ee682396bc291af9d6630ac38ba6559939c555bff6e410b7839",
+      "import_sha256": "de8a0bbfb3b75ee682396bc291af9d6630ac38ba6559939c555bff6e410b7839",
+      "adapted_sha256": "de8a0bbfb3b75ee682396bc291af9d6630ac38ba6559939c555bff6e410b7839"
+    },
+    {
+      "source": "scripts/engine/scenes/03_greek.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/03_greek.js",
+      "source_sha256": "46ba01fb59f0294c1287abf8f5c1a86a7ff1fc4bf714cd5864425957e103b086",
+      "import_sha256": "46ba01fb59f0294c1287abf8f5c1a86a7ff1fc4bf714cd5864425957e103b086",
+      "adapted_sha256": "46ba01fb59f0294c1287abf8f5c1a86a7ff1fc4bf714cd5864425957e103b086"
+    },
+    {
+      "source": "scripts/engine/scenes/04_roman.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/04_roman.js",
+      "source_sha256": "697e76700a4a1bf40185893f7956b88ca156b9b86a4e605d4f057395cb703fe9",
+      "import_sha256": "697e76700a4a1bf40185893f7956b88ca156b9b86a4e605d4f057395cb703fe9",
+      "adapted_sha256": "697e76700a4a1bf40185893f7956b88ca156b9b86a4e605d4f057395cb703fe9"
+    },
+    {
+      "source": "scripts/engine/scenes/05_gothic.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/05_gothic.js",
+      "source_sha256": "2c84522e92a92424148ea7e2868f688901ac8a3864135e0363f7fb5eff51d07b",
+      "import_sha256": "2c84522e92a92424148ea7e2868f688901ac8a3864135e0363f7fb5eff51d07b",
+      "adapted_sha256": "2c84522e92a92424148ea7e2868f688901ac8a3864135e0363f7fb5eff51d07b"
+    },
+    {
+      "source": "scripts/engine/scenes/06_renaissance.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/06_renaissance.js",
+      "source_sha256": "1e9ec630009c77f2eb10de1d36817101fc8a7e63fc9faf31b8fc4b9ec9ff379e",
+      "import_sha256": "1e9ec630009c77f2eb10de1d36817101fc8a7e63fc9faf31b8fc4b9ec9ff379e",
+      "adapted_sha256": "1e9ec630009c77f2eb10de1d36817101fc8a7e63fc9faf31b8fc4b9ec9ff379e"
+    },
+    {
+      "source": "scripts/engine/scenes/08_impressionism.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/08_impressionism.js",
+      "source_sha256": "1a7485ac3d4498f14e84497f6b8a44491b7d171fc37bbbfddc3e5c5450755c5b",
+      "import_sha256": "1a7485ac3d4498f14e84497f6b8a44491b7d171fc37bbbfddc3e5c5450755c5b",
+      "adapted_sha256": "1a7485ac3d4498f14e84497f6b8a44491b7d171fc37bbbfddc3e5c5450755c5b"
+    },
+    {
+      "source": "scripts/engine/scenes/09_postimp.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/09_postimp.js",
+      "source_sha256": "f66a082551b1dd9f5e86139f6550c4b3ea55e6983e0a697cb8d8f8a37b29fe27",
+      "import_sha256": "f66a082551b1dd9f5e86139f6550c4b3ea55e6983e0a697cb8d8f8a37b29fe27",
+      "adapted_sha256": "a2454456a21d601c2ecb9c5c0e8203735e0a450fbff544e1c8916ca9739df468"
+    },
+    {
+      "source": "scripts/engine/scenes/10_nouveau.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/10_nouveau.js",
+      "source_sha256": "fe8c5f4ec754ba25a4ca73968050983774314cff2407d7faf124630b34cbfc94",
+      "import_sha256": "fe8c5f4ec754ba25a4ca73968050983774314cff2407d7faf124630b34cbfc94",
+      "adapted_sha256": "fe8c5f4ec754ba25a4ca73968050983774314cff2407d7faf124630b34cbfc94"
+    },
+    {
+      "source": "scripts/engine/scenes/11_cubism.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/11_cubism.js",
+      "source_sha256": "3711241c8d6af401e098ec8e1b268656eed5202760acb6df8aa265b4bdaf69cb",
+      "import_sha256": "3711241c8d6af401e098ec8e1b268656eed5202760acb6df8aa265b4bdaf69cb",
+      "adapted_sha256": "3711241c8d6af401e098ec8e1b268656eed5202760acb6df8aa265b4bdaf69cb"
+    },
+    {
+      "source": "scripts/engine/scenes/12_bauhaus.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/12_bauhaus.js",
+      "source_sha256": "644563686c1836ef6f20e55c2f97e75c56e4563f0cd7574b010aeb33b2292c7a",
+      "import_sha256": "644563686c1836ef6f20e55c2f97e75c56e4563f0cd7574b010aeb33b2292c7a",
+      "adapted_sha256": "644563686c1836ef6f20e55c2f97e75c56e4563f0cd7574b010aeb33b2292c7a"
+    },
+    {
+      "source": "scripts/engine/scenes/13_pop.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/13_pop.js",
+      "source_sha256": "534fd9f61b082e4ec79b7aba23448083dc3e86fa6f6cd370cdc355f61713047d",
+      "import_sha256": "534fd9f61b082e4ec79b7aba23448083dc3e86fa6f6cd370cdc355f61713047d",
+      "adapted_sha256": "534fd9f61b082e4ec79b7aba23448083dc3e86fa6f6cd370cdc355f61713047d"
+    },
+    {
+      "source": "scripts/engine/scenes/14_8bit.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/14_8bit.js",
+      "source_sha256": "d592dba924e6ff896b1e22143a9e3f944c696b81f1259a80fcbe8cfdf8a5abaa",
+      "import_sha256": "d592dba924e6ff896b1e22143a9e3f944c696b81f1259a80fcbe8cfdf8a5abaa",
+      "adapted_sha256": "d592dba924e6ff896b1e22143a9e3f944c696b81f1259a80fcbe8cfdf8a5abaa"
+    },
+    {
+      "source": "scripts/engine/scenes/15_raytrace.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/15_raytrace.js",
+      "source_sha256": "8429282ffd3ba071fdd0b87230f7ef2a38f5193c421a6a9b4960c1481c81ecd6",
+      "import_sha256": "8429282ffd3ba071fdd0b87230f7ef2a38f5193c421a6a9b4960c1481c81ecd6",
+      "adapted_sha256": "8429282ffd3ba071fdd0b87230f7ef2a38f5193c421a6a9b4960c1481c81ecd6"
+    },
+    {
+      "source": "scripts/engine/scenes/16_2026.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/16_2026.js",
+      "source_sha256": "c06bb25f95b48a08bdb0f1a8868bdb7a85f6ba849bc5da98da17201aab1e4048",
+      "import_sha256": "c06bb25f95b48a08bdb0f1a8868bdb7a85f6ba849bc5da98da17201aab1e4048",
+      "adapted_sha256": "c06bb25f95b48a08bdb0f1a8868bdb7a85f6ba849bc5da98da17201aab1e4048"
+    },
+    {
+      "source": "scripts/engine/scenes/17_ink.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/17_ink.js",
+      "source_sha256": "1616d4d99ed329ba5d9419af5b76892fc2865ac862fdb2955f68b1eb75c0f8e4",
+      "import_sha256": "1616d4d99ed329ba5d9419af5b76892fc2865ac862fdb2955f68b1eb75c0f8e4",
+      "adapted_sha256": "1616d4d99ed329ba5d9419af5b76892fc2865ac862fdb2955f68b1eb75c0f8e4"
+    },
+    {
+      "source": "scripts/engine/scenes/18_klimt.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/18_klimt.js",
+      "source_sha256": "de29f20a4eaaaf156f17fe4f90f68cc98b19376af3bc54ef1a09aface02043f6",
+      "import_sha256": "de29f20a4eaaaf156f17fe4f90f68cc98b19376af3bc54ef1a09aface02043f6",
+      "adapted_sha256": "de29f20a4eaaaf156f17fe4f90f68cc98b19376af3bc54ef1a09aface02043f6"
+    },
+    {
+      "source": "scripts/engine/scenes/19_munch.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/19_munch.js",
+      "source_sha256": "32e458aeac146ab4c9516842083f09c96435eec37de2082451d626b67481f4be",
+      "import_sha256": "32e458aeac146ab4c9516842083f09c96435eec37de2082451d626b67481f4be",
+      "adapted_sha256": "32e458aeac146ab4c9516842083f09c96435eec37de2082451d626b67481f4be"
+    },
+    {
+      "source": "scripts/engine/scenes/20_dunhuang.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/20_dunhuang.js",
+      "source_sha256": "ab9917250a418677514796bc606ba6e7e26e77534eac14960a381ed4da6c2737",
+      "import_sha256": "ab9917250a418677514796bc606ba6e7e26e77534eac14960a381ed4da6c2737",
+      "adapted_sha256": "ab9917250a418677514796bc606ba6e7e26e77534eac14960a381ed4da6c2737"
+    },
+    {
+      "source": "scripts/engine/scenes/21_kusama.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/21_kusama.js",
+      "source_sha256": "11521bd4b33e5e16bf3f613b744a02f26d995e4e5f8e9c6a07888d823b509172",
+      "import_sha256": "11521bd4b33e5e16bf3f613b744a02f26d995e4e5f8e9c6a07888d823b509172",
+      "adapted_sha256": "11521bd4b33e5e16bf3f613b744a02f26d995e4e5f8e9c6a07888d823b509172"
+    },
+    {
+      "source": "scripts/engine/scenes/22_constructivism.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/22_constructivism.js",
+      "source_sha256": "8fc219609cfd8df64cca9082e4d3d434e30d35e7887df16e08e732fa19b22180",
+      "import_sha256": "8fc219609cfd8df64cca9082e4d3d434e30d35e7887df16e08e732fa19b22180",
+      "adapted_sha256": "8fc219609cfd8df64cca9082e4d3d434e30d35e7887df16e08e732fa19b22180"
+    },
+    {
+      "source": "scripts/engine/scenes/23_dali.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/23_dali.js",
+      "source_sha256": "d39bd999c704cae16ac282459a2a37bc2f630f91da4102248472af33c333e499",
+      "import_sha256": "d39bd999c704cae16ac282459a2a37bc2f630f91da4102248472af33c333e499",
+      "adapted_sha256": "d39bd999c704cae16ac282459a2a37bc2f630f91da4102248472af33c333e499"
+    },
+    {
+      "source": "scripts/engine/scenes/24_hopper.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/24_hopper.js",
+      "source_sha256": "1a4b787eadfb2df30c978b9353eb01249aa32a3295b5d3df07edf44759ef0804",
+      "import_sha256": "1a4b787eadfb2df30c978b9353eb01249aa32a3295b5d3df07edf44759ef0804",
+      "adapted_sha256": "1a4b787eadfb2df30c978b9353eb01249aa32a3295b5d3df07edf44759ef0804"
+    },
+    {
+      "source": "scripts/engine/scenes/25_ghibli.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/25_ghibli.js",
+      "source_sha256": "de8ef7de4700e5ebfb17f71506d78b495af9ed8faecc54bb3f55cfe57ba4f201",
+      "import_sha256": "de8ef7de4700e5ebfb17f71506d78b495af9ed8faecc54bb3f55cfe57ba4f201",
+      "adapted_sha256": "de8ef7de4700e5ebfb17f71506d78b495af9ed8faecc54bb3f55cfe57ba4f201"
+    },
+    {
+      "source": "scripts/engine/scenes/26_vaporwave.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/26_vaporwave.js",
+      "source_sha256": "47968ecc2e10e0746615f1699c1951896ec9e8dd77563f4df4f5a4db8c9a1af5",
+      "import_sha256": "47968ecc2e10e0746615f1699c1951896ec9e8dd77563f4df4f5a4db8c9a1af5",
+      "adapted_sha256": "47968ecc2e10e0746615f1699c1951896ec9e8dd77563f4df4f5a4db8c9a1af5"
+    },
+    {
+      "source": "scripts/engine/scenes/27_kirby.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/27_kirby.js",
+      "source_sha256": "c4015eccf1e55f97fd7272fda67937eeeeecb8cb3957f8c7b4ea863f3be89119",
+      "import_sha256": "c4015eccf1e55f97fd7272fda67937eeeeecb8cb3957f8c7b4ea863f3be89119",
+      "adapted_sha256": "c4015eccf1e55f97fd7272fda67937eeeeecb8cb3957f8c7b4ea863f3be89119"
+    },
+    {
+      "source": "scripts/engine/scenes/28_monet.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/28_monet.js",
+      "source_sha256": "25c4314800643eb67b9d7d9e8cc5603d84a18de17766f6f8539d4279214021ad",
+      "import_sha256": "25c4314800643eb67b9d7d9e8cc5603d84a18de17766f6f8539d4279214021ad",
+      "adapted_sha256": "25c4314800643eb67b9d7d9e8cc5603d84a18de17766f6f8539d4279214021ad"
+    },
+    {
+      "source": "scripts/engine/scenes/29_seurat.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/29_seurat.js",
+      "source_sha256": "38fc8ec4d4ac63c52e5765fa985690e92fae7df8b1a6501ed23a54cadf65fe77",
+      "import_sha256": "38fc8ec4d4ac63c52e5765fa985690e92fae7df8b1a6501ed23a54cadf65fe77",
+      "adapted_sha256": "38fc8ec4d4ac63c52e5765fa985690e92fae7df8b1a6501ed23a54cadf65fe77"
+    },
+    {
+      "source": "scripts/engine/scenes/30_matisse.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/30_matisse.js",
+      "source_sha256": "947b51ddd67976d053d632523827137dc8cf219e1e5a23e0aed4098413834b64",
+      "import_sha256": "947b51ddd67976d053d632523827137dc8cf219e1e5a23e0aed4098413834b64",
+      "adapted_sha256": "947b51ddd67976d053d632523827137dc8cf219e1e5a23e0aed4098413834b64"
+    },
+    {
+      "source": "scripts/engine/scenes/31_haring.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/31_haring.js",
+      "source_sha256": "4e1b26a61e194aba16e483dbbe0b26b20efa5d02921eab043a124f40b7d09859",
+      "import_sha256": "4e1b26a61e194aba16e483dbbe0b26b20efa5d02921eab043a124f40b7d09859",
+      "adapted_sha256": "4e1b26a61e194aba16e483dbbe0b26b20efa5d02921eab043a124f40b7d09859"
+    },
+    {
+      "source": "scripts/engine/scenes/32_rembrandt.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/32_rembrandt.js",
+      "source_sha256": "07573efa8d944ce2aa9227889ef5529d3fada8f234ff2909711fd0072887459a",
+      "import_sha256": "07573efa8d944ce2aa9227889ef5529d3fada8f234ff2909711fd0072887459a",
+      "adapted_sha256": "07573efa8d944ce2aa9227889ef5529d3fada8f234ff2909711fd0072887459a"
+    },
+    {
+      "source": "scripts/engine/scenes/33_rubberhose.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/33_rubberhose.js",
+      "source_sha256": "f2cae5b8e5d6a628826352fe35698960545cae0fab78f61bca8d6cabe63679b3",
+      "import_sha256": "f2cae5b8e5d6a628826352fe35698960545cae0fab78f61bca8d6cabe63679b3",
+      "adapted_sha256": "f2cae5b8e5d6a628826352fe35698960545cae0fab78f61bca8d6cabe63679b3"
+    },
+    {
+      "source": "scripts/engine/scenes/34_shadowpuppet.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/34_shadowpuppet.js",
+      "source_sha256": "0a966f4c1815293f7a8b234d1e5bfda73d38c0a20544f9b9a7b4188d24e4117b",
+      "import_sha256": "0a966f4c1815293f7a8b234d1e5bfda73d38c0a20544f9b9a7b4188d24e4117b",
+      "adapted_sha256": "0a966f4c1815293f7a8b234d1e5bfda73d38c0a20544f9b9a7b4188d24e4117b"
+    },
+    {
+      "source": "scripts/engine/scenes/35_shinkai.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/35_shinkai.js",
+      "source_sha256": "4df1199ea8fd34cb9e0c088ed869269531cda8547c77482780dba0f741711b02",
+      "import_sha256": "4df1199ea8fd34cb9e0c088ed869269531cda8547c77482780dba0f741711b02",
+      "adapted_sha256": "4df1199ea8fd34cb9e0c088ed869269531cda8547c77482780dba0f741711b02"
+    },
+    {
+      "source": "scripts/engine/scenes/36_picasso_blue.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/36_picasso_blue.js",
+      "source_sha256": "ef37afa987da16b4b6aaef13c646f1cd72af0de81518e9caec02817f6332f94a",
+      "import_sha256": "ef37afa987da16b4b6aaef13c646f1cd72af0de81518e9caec02817f6332f94a",
+      "adapted_sha256": "ef37afa987da16b4b6aaef13c646f1cd72af0de81518e9caec02817f6332f94a"
+    },
+    {
+      "source": "scripts/engine/scenes/index.js",
+      "destination": "lib/art_motion/scripts/engine/scenes/index.js",
+      "source_sha256": "bd40b61f3a404e900915808e55e49916952d950f353f5bdd7a4feb175084e525",
+      "import_sha256": "bd40b61f3a404e900915808e55e49916952d950f353f5bdd7a4feb175084e525",
+      "adapted_sha256": "bd40b61f3a404e900915808e55e49916952d950f353f5bdd7a4feb175084e525"
+    },
+    {
+      "source": "scripts/engine/transitions.js",
+      "destination": "lib/art_motion/scripts/engine/transitions.js",
+      "source_sha256": "6b15844cdef06574037893cb378adc8430999d284c35507febbd596216d491a0",
+      "import_sha256": "6b15844cdef06574037893cb378adc8430999d284c35507febbd596216d491a0",
+      "adapted_sha256": "6b15844cdef06574037893cb378adc8430999d284c35507febbd596216d491a0"
+    },
+    {
+      "source": "scripts/engine/时代作者规范.md",
+      "destination": "lib/art_motion/scripts/engine/时代作者规范.md",
+      "source_sha256": "9169f23f68e8a495d1cdf9f0aa892c025fefeb4aeea905e223f72898fb86e964",
+      "import_sha256": "9169f23f68e8a495d1cdf9f0aa892c025fefeb4aeea905e223f72898fb86e964",
+      "adapted_sha256": "9169f23f68e8a495d1cdf9f0aa892c025fefeb4aeea905e223f72898fb86e964"
+    },
+    {
+      "source": "scripts/font_subset.py",
+      "destination": "lib/art_motion/scripts/font_subset.py",
+      "source_sha256": "66e80221135ce3aef8917a9ac287d7f9fa6a0811208d63a59762e1d50c3462cc",
+      "import_sha256": "66e80221135ce3aef8917a9ac287d7f9fa6a0811208d63a59762e1d50c3462cc",
+      "adapted_sha256": "66e80221135ce3aef8917a9ac287d7f9fa6a0811208d63a59762e1d50c3462cc"
+    },
+    {
+      "source": "scripts/key_green.py",
+      "destination": "lib/art_motion/scripts/key_green.py",
+      "source_sha256": "9fc571d53bdc1d10c3f522e11814830722991a8ecccc107b83db9f98f9528b00",
+      "import_sha256": "9fc571d53bdc1d10c3f522e11814830722991a8ecccc107b83db9f98f9528b00",
+      "adapted_sha256": "9fc571d53bdc1d10c3f522e11814830722991a8ecccc107b83db9f98f9528b00"
+    },
+    {
+      "source": "scripts/key_split.py",
+      "destination": "lib/art_motion/scripts/key_split.py",
+      "source_sha256": "a095e09205b5250cb24ac2dbb97b8b5ce3fb6a41d89e58d1403f9f1237fcee99",
+      "import_sha256": "a095e09205b5250cb24ac2dbb97b8b5ce3fb6a41d89e58d1403f9f1237fcee99",
+      "adapted_sha256": "a095e09205b5250cb24ac2dbb97b8b5ce3fb6a41d89e58d1403f9f1237fcee99"
+    },
+    {
+      "source": "scripts/qa.py",
+      "destination": "lib/art_motion/scripts/qa.py",
+      "source_sha256": "d16f415e17c2ad56cd03d1dfb11b899629cc75bd2b09fbbd88dfb3efe09a84f1",
+      "import_sha256": "a4cb28e8b75920aa0f97578c9589868660cd3f4a9207037a00ca29e78ef6c32b",
+      "adapted_sha256": "6843037f339c4e38b60621b4e29accb654da1af04363d09266cba52e6042105d"
+    },
+    {
+      "source": "scripts/subzone_gate.py",
+      "destination": "lib/art_motion/scripts/subzone_gate.py",
+      "source_sha256": "41d947f7a01dbabc3fd0a770512d53029cd4f246b53a0c2ce22afbc5c6dbf31c",
+      "import_sha256": "41d947f7a01dbabc3fd0a770512d53029cd4f246b53a0c2ce22afbc5c6dbf31c",
+      "adapted_sha256": "41d947f7a01dbabc3fd0a770512d53029cd4f246b53a0c2ce22afbc5c6dbf31c"
+    },
+    {
+      "source": "references/01-拆解.md",
+      "destination": "references/art_motion/01-拆解.md",
+      "source_sha256": "1325629d957d22fa8274ac5003ee18479017f265bec35e99eb8d064f11cce6da",
+      "import_sha256": "1325629d957d22fa8274ac5003ee18479017f265bec35e99eb8d064f11cce6da",
+      "adapted_sha256": "1325629d957d22fa8274ac5003ee18479017f265bec35e99eb8d064f11cce6da"
+    },
+    {
+      "source": "references/02-机制.md",
+      "destination": "references/art_motion/02-机制.md",
+      "source_sha256": "fc95cf167607061467a9cb00f8b4a29e6026b6bbabf4625a71d582b31ff63cf0",
+      "import_sha256": "95e928f5daede7cef4e4d52f35fb130f3d12707ef2f4aa14d78c62fadde9d98f",
+      "adapted_sha256": "95e928f5daede7cef4e4d52f35fb130f3d12707ef2f4aa14d78c62fadde9d98f"
+    },
+    {
+      "source": "references/03-一帧先行四条路线.md",
+      "destination": "references/art_motion/03-一帧先行四条路线.md",
+      "source_sha256": "611142a44f27be70eaec8b41bfbf74b930f3808962f6b07d79d92216324d2581",
+      "import_sha256": "8895fdc1f4e7f6666cd0a6f473fe8bcb80809387ce3e74b7b86b22c94a5fd9a6",
+      "adapted_sha256": "8895fdc1f4e7f6666cd0a6f473fe8bcb80809387ce3e74b7b86b22c94a5fd9a6"
+    },
+    {
+      "source": "references/04-纯代码绘制.md",
+      "destination": "references/art_motion/04-纯代码绘制.md",
+      "source_sha256": "44dbc538af454ec51e11a4dd213e9fe3f14cdbfb04e84e39b7f9d61cd182ec25",
+      "import_sha256": "44dbc538af454ec51e11a4dd213e9fe3f14cdbfb04e84e39b7f9d61cd182ec25",
+      "adapted_sha256": "44dbc538af454ec51e11a4dd213e9fe3f14cdbfb04e84e39b7f9d61cd182ec25"
+    },
+    {
+      "source": "references/05-节奏与配乐.md",
+      "destination": "references/art_motion/05-节奏与配乐.md",
+      "source_sha256": "943da404c573cad11ac33417134ee011ae86508bd49946e03ca9731ed3e163c7",
+      "import_sha256": "943da404c573cad11ac33417134ee011ae86508bd49946e03ca9731ed3e163c7",
+      "adapted_sha256": "943da404c573cad11ac33417134ee011ae86508bd49946e03ca9731ed3e163c7"
+    },
+    {
+      "source": "references/06-口播驱动的艺术短片.md",
+      "destination": "references/art_motion/06-口播驱动的艺术短片.md",
+      "source_sha256": "54724258efbdfc12a8228ddd06c2258e6ae59fc0a5d0b0fcc3a63fe2bf8ef638",
+      "import_sha256": "4907589e56cbcc3a154d2aea38adfc6ccdddc2565170bd58442331de40e41945",
+      "adapted_sha256": "4907589e56cbcc3a154d2aea38adfc6ccdddc2565170bd58442331de40e41945"
+    },
+    {
+      "source": "references/07-正面经验.md",
+      "destination": "references/art_motion/07-正面经验.md",
+      "source_sha256": "2c3ee2d9f13ed2c6f34d9a50d6b6b02b33e8c1de61e9744ae79173c9a8c008c1",
+      "import_sha256": "5b57c50bb2fda1ca641d6f0a0f5233a511e7b5a1efcbb412337fb62a51586b17",
+      "adapted_sha256": "5b57c50bb2fda1ca641d6f0a0f5233a511e7b5a1efcbb412337fb62a51586b17"
+    },
+    {
+      "source": "references/08-风格作者规范.md",
+      "destination": "references/art_motion/08-风格作者规范.md",
+      "source_sha256": "cb780b3b32af7c3cc7a4efed8e7f91c3c51d8a2a1a7b25d73eeb34c9a7d19f18",
+      "import_sha256": "b75d804c9ac60a008b4ffd04d1d17bdd071d32ae96fb58ffa111f15223ff8a4e",
+      "adapted_sha256": "b75d804c9ac60a008b4ffd04d1d17bdd071d32ae96fb58ffa111f15223ff8a4e"
+    },
+    {
+      "source": "references/09-视频动画语法.md",
+      "destination": "references/art_motion/09-视频动画语法.md",
+      "source_sha256": "6c9b7dfb30d680e1c24d46faf7743f494af894d24d0592780eb8fac36ba9f9aa",
+      "import_sha256": "ec361861295bc3d967170bb7a6224caf1ad99c9102f419cf7874fff12adb537a",
+      "adapted_sha256": "a18879f2e92ecb4419188d098e0e79deb8e6d96c56bfdcf62970417684b713f2"
+    },
+    {
+      "source": "references/10-角色.md",
+      "destination": "references/art_motion/10-角色.md",
+      "source_sha256": "cebd147397c031a238ee5a6f584d3e3794f98d85697da62d5013275383c178ea",
+      "import_sha256": "37e712d4abfd99dfd86f26d3f9c833325423fddd45d5be3d980b92210510668f",
+      "adapted_sha256": "37e712d4abfd99dfd86f26d3f9c833325423fddd45d5be3d980b92210510668f"
+    },
+    {
+      "source": "references/11-长卷穿越片.md",
+      "destination": "references/art_motion/11-长卷穿越片.md",
+      "source_sha256": "27202053fa3cda597e08d3bb8dbfc9ee18eff28ef9f70d13f61e86cd1ebf9aca",
+      "import_sha256": "5b7538d4c321204a4a0d40026c641eca7919e689506316132e8add1f9ff810ab",
+      "adapted_sha256": "5b7538d4c321204a4a0d40026c641eca7919e689506316132e8add1f9ff810ab"
+    },
+    {
+      "source": "references/12-口播整片与经验回流.md",
+      "destination": "references/art_motion/12-口播整片与经验回流.md",
+      "source_sha256": "c4c0c3f085b235c9dda10e6351973d6a286c064ded29ba67de7ae88ab011dd5e",
+      "import_sha256": "c4c0c3f085b235c9dda10e6351973d6a286c064ded29ba67de7ae88ab011dd5e",
+      "adapted_sha256": "c4c0c3f085b235c9dda10e6351973d6a286c064ded29ba67de7ae88ab011dd5e"
+    },
+    {
+      "source": "references/动画语法/t1_3b1b.md",
+      "destination": "references/art_motion/动画语法/t1_3b1b.md",
+      "source_sha256": "2ac9b744f9468a7ebd990a0776a275ab9fc3cdcb62570c0220aebeac90866018",
+      "import_sha256": "2ac9b744f9468a7ebd990a0776a275ab9fc3cdcb62570c0220aebeac90866018",
+      "adapted_sha256": "2ac9b744f9468a7ebd990a0776a275ab9fc3cdcb62570c0220aebeac90866018"
+    },
+    {
+      "source": "references/动画语法/t2_keynote_ui.md",
+      "destination": "references/art_motion/动画语法/t2_keynote_ui.md",
+      "source_sha256": "75f06aafcb7871dd2e326266af30f0aab4069bd258863e3ea5ca8bbfa051ae84",
+      "import_sha256": "75f06aafcb7871dd2e326266af30f0aab4069bd258863e3ea5ca8bbfa051ae84",
+      "adapted_sha256": "75f06aafcb7871dd2e326266af30f0aab4069bd258863e3ea5ca8bbfa051ae84"
+    },
+    {
+      "source": "references/动画语法/t3_finance_chart.md",
+      "destination": "references/art_motion/动画语法/t3_finance_chart.md",
+      "source_sha256": "0a080a557a51a1b908ddbfcf5e1271049597d0190f8f3976b6c831589f7fbdc4",
+      "import_sha256": "0a080a557a51a1b908ddbfcf5e1271049597d0190f8f3976b6c831589f7fbdc4",
+      "adapted_sha256": "0a080a557a51a1b908ddbfcf5e1271049597d0190f8f3976b6c831589f7fbdc4"
+    },
+    {
+      "source": "references/动画语法/y1_kurzgesagt.md",
+      "destination": "references/art_motion/动画语法/y1_kurzgesagt.md",
+      "source_sha256": "e381e6acfe0dced8f985d9573ce5bbbf8c73a0d0125cbb171b64319107574ebc",
+      "import_sha256": "269093e17d331b5b722adbc4215a9751230230be3fd1aa175ce1dd743fc6da79",
+      "adapted_sha256": "269093e17d331b5b722adbc4215a9751230230be3fd1aa175ce1dd743fc6da79"
+    },
+    {
+      "source": "references/动画语法/y2_vox.md",
+      "destination": "references/art_motion/动画语法/y2_vox.md",
+      "source_sha256": "588a5f8eb633bfa02d438a9dcb17a0236cc592bac33fbde3795d000d8d1e9d08",
+      "import_sha256": "e6ebb01c1ae640560536eb284dffcc294c809958a740c99d4b975f91b7cc1c13",
+      "adapted_sha256": "e6ebb01c1ae640560536eb284dffcc294c809958a740c99d4b975f91b7cc1c13"
+    },
+    {
+      "source": "references/动画语法/y3_whiteboard.md",
+      "destination": "references/art_motion/动画语法/y3_whiteboard.md",
+      "source_sha256": "7f84a4ac469fb5812f81e5e38431f3fde3c09902f967acc3edcd47712d446a18",
+      "import_sha256": "863ae922e704301d31c83e4df5636ec4157f0a41f3024490390683fe1c944a1a",
+      "adapted_sha256": "863ae922e704301d31c83e4df5636ec4157f0a41f3024490390683fe1c944a1a"
+    },
+    {
+      "source": "references/动画语法/y4_storytime.md",
+      "destination": "references/art_motion/动画语法/y4_storytime.md",
+      "source_sha256": "eaba92ad94bc6a2eae3e4aa4625b8adb607cb8a301632520678e2a01ba452180",
+      "import_sha256": "1d15500006c14065532060e4d7b87d0f65565e55e26ffec2f10e0dff77ed2872",
+      "adapted_sha256": "1d15500006c14065532060e4d7b87d0f65565e55e26ffec2f10e0dff77ed2872"
+    },
+    {
+      "source": "references/动画语法/y5_kinetic_type.md",
+      "destination": "references/art_motion/动画语法/y5_kinetic_type.md",
+      "source_sha256": "6d1cc7559d99143fc245311630369ab4656d8d14473198963fc0058a3afb5b0c",
+      "import_sha256": "6d1cc7559d99143fc245311630369ab4656d8d14473198963fc0058a3afb5b0c",
+      "adapted_sha256": "6d1cc7559d99143fc245311630369ab4656d8d14473198963fc0058a3afb5b0c"
+    },
+    {
+      "source": "references/动画语法/y6_presenter_explainer.md",
+      "destination": "references/art_motion/动画语法/y6_presenter_explainer.md",
+      "source_sha256": "66456865967ae2b266679b8a4d3ebbe5a13a4569a1e4a5348ccf879eb79d3508",
+      "import_sha256": "66456865967ae2b266679b8a4d3ebbe5a13a4569a1e4a5348ccf879eb79d3508",
+      "adapted_sha256": "4a344568dd39f826370d960c73037cf5a88acf5084c2da6f7851089ff83bb3f6"
+    },
+    {
+      "source": "references/风格配方/01_cave.md",
+      "destination": "references/art_motion/风格配方/01_cave.md",
+      "source_sha256": "f3a5a84f21cb8c2ee1126037d6054c5eaacff7eb91590927b20adf8c105a313b",
+      "import_sha256": "f3a5a84f21cb8c2ee1126037d6054c5eaacff7eb91590927b20adf8c105a313b",
+      "adapted_sha256": "f3a5a84f21cb8c2ee1126037d6054c5eaacff7eb91590927b20adf8c105a313b"
+    },
+    {
+      "source": "references/风格配方/02_egypt.md",
+      "destination": "references/art_motion/风格配方/02_egypt.md",
+      "source_sha256": "f765e10edf22e60182350d49680c78d0e2240530dae78ef24120fe0ddb233e2a",
+      "import_sha256": "f765e10edf22e60182350d49680c78d0e2240530dae78ef24120fe0ddb233e2a",
+      "adapted_sha256": "f765e10edf22e60182350d49680c78d0e2240530dae78ef24120fe0ddb233e2a"
+    },
+    {
+      "source": "references/风格配方/03_greek.md",
+      "destination": "references/art_motion/风格配方/03_greek.md",
+      "source_sha256": "c00e9d742e2b3bec1820a58876d6e8e771a76a821d4a6d14c568bd6f6da6d0bc",
+      "import_sha256": "c00e9d742e2b3bec1820a58876d6e8e771a76a821d4a6d14c568bd6f6da6d0bc",
+      "adapted_sha256": "c00e9d742e2b3bec1820a58876d6e8e771a76a821d4a6d14c568bd6f6da6d0bc"
+    },
+    {
+      "source": "references/风格配方/04_roman.md",
+      "destination": "references/art_motion/风格配方/04_roman.md",
+      "source_sha256": "0478c7581da67805eca43d395a9fc5773fb46a9ce4a83a9d8328b2c8a10fb144",
+      "import_sha256": "0478c7581da67805eca43d395a9fc5773fb46a9ce4a83a9d8328b2c8a10fb144",
+      "adapted_sha256": "0478c7581da67805eca43d395a9fc5773fb46a9ce4a83a9d8328b2c8a10fb144"
+    },
+    {
+      "source": "references/风格配方/05_gothic.md",
+      "destination": "references/art_motion/风格配方/05_gothic.md",
+      "source_sha256": "75a61a1639ddb7712445ae2c81ceed0bb32298e0314571eaf3a06ac7a21a7adf",
+      "import_sha256": "75a61a1639ddb7712445ae2c81ceed0bb32298e0314571eaf3a06ac7a21a7adf",
+      "adapted_sha256": "75a61a1639ddb7712445ae2c81ceed0bb32298e0314571eaf3a06ac7a21a7adf"
+    },
+    {
+      "source": "references/风格配方/06_renaissance.md",
+      "destination": "references/art_motion/风格配方/06_renaissance.md",
+      "source_sha256": "2c628f96e9b850b06ac959c561a7db7fac7ee87095dcd8ff96c15d2163ed6281",
+      "import_sha256": "2c628f96e9b850b06ac959c561a7db7fac7ee87095dcd8ff96c15d2163ed6281",
+      "adapted_sha256": "2c628f96e9b850b06ac959c561a7db7fac7ee87095dcd8ff96c15d2163ed6281"
+    },
+    {
+      "source": "references/风格配方/08_impressionism.md",
+      "destination": "references/art_motion/风格配方/08_impressionism.md",
+      "source_sha256": "6403fe80b8cb45c1f621b32e8ea0aee2940b7d83ba2b3b6fe8d3e37e92b97292",
+      "import_sha256": "6403fe80b8cb45c1f621b32e8ea0aee2940b7d83ba2b3b6fe8d3e37e92b97292",
+      "adapted_sha256": "6403fe80b8cb45c1f621b32e8ea0aee2940b7d83ba2b3b6fe8d3e37e92b97292"
+    },
+    {
+      "source": "references/风格配方/09_postimp.md",
+      "destination": "references/art_motion/风格配方/09_postimp.md",
+      "source_sha256": "9c9642253506519d4b60304b72e1a5a9de14fad17f3219dc0a9ea51e30386749",
+      "import_sha256": "9c9642253506519d4b60304b72e1a5a9de14fad17f3219dc0a9ea51e30386749",
+      "adapted_sha256": "9c9642253506519d4b60304b72e1a5a9de14fad17f3219dc0a9ea51e30386749"
+    },
+    {
+      "source": "references/风格配方/10_nouveau.md",
+      "destination": "references/art_motion/风格配方/10_nouveau.md",
+      "source_sha256": "c8180110e1948de2bf5f5253b03a4c335386952141cfae6b8cea5610d4243116",
+      "import_sha256": "c8180110e1948de2bf5f5253b03a4c335386952141cfae6b8cea5610d4243116",
+      "adapted_sha256": "c8180110e1948de2bf5f5253b03a4c335386952141cfae6b8cea5610d4243116"
+    },
+    {
+      "source": "references/风格配方/11_cubism.md",
+      "destination": "references/art_motion/风格配方/11_cubism.md",
+      "source_sha256": "9ec38d5d349a1f4e86c7f5db9d0021e172e7285f287e48b38d71b09f2eb0e98c",
+      "import_sha256": "9ec38d5d349a1f4e86c7f5db9d0021e172e7285f287e48b38d71b09f2eb0e98c",
+      "adapted_sha256": "9ec38d5d349a1f4e86c7f5db9d0021e172e7285f287e48b38d71b09f2eb0e98c"
+    },
+    {
+      "source": "references/风格配方/12_bauhaus.md",
+      "destination": "references/art_motion/风格配方/12_bauhaus.md",
+      "source_sha256": "d6710220ba593f140ab3618cb029af9c024f9623082eea5fdd8b86e98ec231e7",
+      "import_sha256": "d6710220ba593f140ab3618cb029af9c024f9623082eea5fdd8b86e98ec231e7",
+      "adapted_sha256": "d6710220ba593f140ab3618cb029af9c024f9623082eea5fdd8b86e98ec231e7"
+    },
+    {
+      "source": "references/风格配方/13_pop.md",
+      "destination": "references/art_motion/风格配方/13_pop.md",
+      "source_sha256": "456286596d1ee8ee58ec547275f77808fef8d284c4c81962e54913f62661a499",
+      "import_sha256": "456286596d1ee8ee58ec547275f77808fef8d284c4c81962e54913f62661a499",
+      "adapted_sha256": "456286596d1ee8ee58ec547275f77808fef8d284c4c81962e54913f62661a499"
+    },
+    {
+      "source": "references/风格配方/14_8bit.md",
+      "destination": "references/art_motion/风格配方/14_8bit.md",
+      "source_sha256": "4dee286d185c032435abaa93d344bb943fff70be8c10179ba33b22aeeb4356d2",
+      "import_sha256": "4dee286d185c032435abaa93d344bb943fff70be8c10179ba33b22aeeb4356d2",
+      "adapted_sha256": "4dee286d185c032435abaa93d344bb943fff70be8c10179ba33b22aeeb4356d2"
+    },
+    {
+      "source": "references/风格配方/15_raytrace.md",
+      "destination": "references/art_motion/风格配方/15_raytrace.md",
+      "source_sha256": "b3477570eca3cb14101f7a3d13d8240a7c836fe5af692440bb30bfbef1f2467c",
+      "import_sha256": "b3477570eca3cb14101f7a3d13d8240a7c836fe5af692440bb30bfbef1f2467c",
+      "adapted_sha256": "b3477570eca3cb14101f7a3d13d8240a7c836fe5af692440bb30bfbef1f2467c"
+    },
+    {
+      "source": "references/风格配方/16_2026.md",
+      "destination": "references/art_motion/风格配方/16_2026.md",
+      "source_sha256": "0934c1a3a88fab4720f3430215c6e395d10b4487983003e5b6e1276e035c219c",
+      "import_sha256": "0934c1a3a88fab4720f3430215c6e395d10b4487983003e5b6e1276e035c219c",
+      "adapted_sha256": "0934c1a3a88fab4720f3430215c6e395d10b4487983003e5b6e1276e035c219c"
+    },
+    {
+      "source": "references/风格配方/17_ink.md",
+      "destination": "references/art_motion/风格配方/17_ink.md",
+      "source_sha256": "5ccd214815f0054e80abbf9f195dfe281a544fb56b51a1d10afcfbdc2f48a0f0",
+      "import_sha256": "5ccd214815f0054e80abbf9f195dfe281a544fb56b51a1d10afcfbdc2f48a0f0",
+      "adapted_sha256": "5ccd214815f0054e80abbf9f195dfe281a544fb56b51a1d10afcfbdc2f48a0f0"
+    },
+    {
+      "source": "references/风格配方/18_klimt.md",
+      "destination": "references/art_motion/风格配方/18_klimt.md",
+      "source_sha256": "282d16813194c50ef26101ed8ac9a7a8eb897a4da5bf007f260d90134bd4b094",
+      "import_sha256": "282d16813194c50ef26101ed8ac9a7a8eb897a4da5bf007f260d90134bd4b094",
+      "adapted_sha256": "282d16813194c50ef26101ed8ac9a7a8eb897a4da5bf007f260d90134bd4b094"
+    },
+    {
+      "source": "references/风格配方/19_munch.md",
+      "destination": "references/art_motion/风格配方/19_munch.md",
+      "source_sha256": "1c09a88d65b2cd64034ec5a1947ff76a61e29930f405bbc510350d8b7d1e3997",
+      "import_sha256": "1c09a88d65b2cd64034ec5a1947ff76a61e29930f405bbc510350d8b7d1e3997",
+      "adapted_sha256": "1c09a88d65b2cd64034ec5a1947ff76a61e29930f405bbc510350d8b7d1e3997"
+    },
+    {
+      "source": "references/风格配方/20_dunhuang.md",
+      "destination": "references/art_motion/风格配方/20_dunhuang.md",
+      "source_sha256": "529a66f4e5b974c022da9e284bcc66d3f311f7c6c8eacb368f3f902031016b23",
+      "import_sha256": "529a66f4e5b974c022da9e284bcc66d3f311f7c6c8eacb368f3f902031016b23",
+      "adapted_sha256": "529a66f4e5b974c022da9e284bcc66d3f311f7c6c8eacb368f3f902031016b23"
+    },
+    {
+      "source": "references/风格配方/21_kusama.md",
+      "destination": "references/art_motion/风格配方/21_kusama.md",
+      "source_sha256": "099badbeb820f162b1008edd270b19f96cc13bdfbdc9f790d36997ea6db213ff",
+      "import_sha256": "099badbeb820f162b1008edd270b19f96cc13bdfbdc9f790d36997ea6db213ff",
+      "adapted_sha256": "099badbeb820f162b1008edd270b19f96cc13bdfbdc9f790d36997ea6db213ff"
+    },
+    {
+      "source": "references/风格配方/22_constructivism.md",
+      "destination": "references/art_motion/风格配方/22_constructivism.md",
+      "source_sha256": "54b2d53f0e2e153991cf0ebf81dbaab8de9a9e0a54bea5ca84e34e6b8b8a869b",
+      "import_sha256": "54b2d53f0e2e153991cf0ebf81dbaab8de9a9e0a54bea5ca84e34e6b8b8a869b",
+      "adapted_sha256": "54b2d53f0e2e153991cf0ebf81dbaab8de9a9e0a54bea5ca84e34e6b8b8a869b"
+    },
+    {
+      "source": "references/风格配方/23_dali.md",
+      "destination": "references/art_motion/风格配方/23_dali.md",
+      "source_sha256": "8e4b2161e511d56c6917b57b50f67a06baae8c5136734797fa28c7c999ea7081",
+      "import_sha256": "8e4b2161e511d56c6917b57b50f67a06baae8c5136734797fa28c7c999ea7081",
+      "adapted_sha256": "8e4b2161e511d56c6917b57b50f67a06baae8c5136734797fa28c7c999ea7081"
+    },
+    {
+      "source": "references/风格配方/24_hopper.md",
+      "destination": "references/art_motion/风格配方/24_hopper.md",
+      "source_sha256": "c4d27f38bc068f21e1c9242befafaf93d4ef8840d494d0c11a3869b63cec184d",
+      "import_sha256": "c4d27f38bc068f21e1c9242befafaf93d4ef8840d494d0c11a3869b63cec184d",
+      "adapted_sha256": "c4d27f38bc068f21e1c9242befafaf93d4ef8840d494d0c11a3869b63cec184d"
+    },
+    {
+      "source": "references/风格配方/25_ghibli.md",
+      "destination": "references/art_motion/风格配方/25_ghibli.md",
+      "source_sha256": "fea2b1211fd36b2b036bc6850158975dd46f124eee893d5e9e8342554cb55735",
+      "import_sha256": "fea2b1211fd36b2b036bc6850158975dd46f124eee893d5e9e8342554cb55735",
+      "adapted_sha256": "fea2b1211fd36b2b036bc6850158975dd46f124eee893d5e9e8342554cb55735"
+    },
+    {
+      "source": "references/风格配方/26_vaporwave.md",
+      "destination": "references/art_motion/风格配方/26_vaporwave.md",
+      "source_sha256": "7c1faf208d1b9e009cf3aba69264398d79f1fc297dd296b839a58426322a90a1",
+      "import_sha256": "7c1faf208d1b9e009cf3aba69264398d79f1fc297dd296b839a58426322a90a1",
+      "adapted_sha256": "7c1faf208d1b9e009cf3aba69264398d79f1fc297dd296b839a58426322a90a1"
+    },
+    {
+      "source": "references/风格配方/27_kirby.md",
+      "destination": "references/art_motion/风格配方/27_kirby.md",
+      "source_sha256": "a0c2624b1d012a13460fd05f49be66d2bcfb07a6507b029e00d7d813b1496be9",
+      "import_sha256": "a0c2624b1d012a13460fd05f49be66d2bcfb07a6507b029e00d7d813b1496be9",
+      "adapted_sha256": "a0c2624b1d012a13460fd05f49be66d2bcfb07a6507b029e00d7d813b1496be9"
+    },
+    {
+      "source": "references/风格配方/28_monet.md",
+      "destination": "references/art_motion/风格配方/28_monet.md",
+      "source_sha256": "cfef9c56a784c7b97004b372146dc0e988fbde515cabe1326d7a427f11de67df",
+      "import_sha256": "cfef9c56a784c7b97004b372146dc0e988fbde515cabe1326d7a427f11de67df",
+      "adapted_sha256": "cfef9c56a784c7b97004b372146dc0e988fbde515cabe1326d7a427f11de67df"
+    },
+    {
+      "source": "references/风格配方/29_seurat.md",
+      "destination": "references/art_motion/风格配方/29_seurat.md",
+      "source_sha256": "5a313ee5c0058ae1f044045810375a15ad6ab0f785592de4c0f1a6e584e45904",
+      "import_sha256": "5a313ee5c0058ae1f044045810375a15ad6ab0f785592de4c0f1a6e584e45904",
+      "adapted_sha256": "5a313ee5c0058ae1f044045810375a15ad6ab0f785592de4c0f1a6e584e45904"
+    },
+    {
+      "source": "references/风格配方/30_matisse.md",
+      "destination": "references/art_motion/风格配方/30_matisse.md",
+      "source_sha256": "66a52e478e3efe1b65c32e06fba6ab5f23c64f2310eddd3c1e9066478da7e6f8",
+      "import_sha256": "66a52e478e3efe1b65c32e06fba6ab5f23c64f2310eddd3c1e9066478da7e6f8",
+      "adapted_sha256": "66a52e478e3efe1b65c32e06fba6ab5f23c64f2310eddd3c1e9066478da7e6f8"
+    },
+    {
+      "source": "references/风格配方/31_haring.md",
+      "destination": "references/art_motion/风格配方/31_haring.md",
+      "source_sha256": "d5f67b79b05585dcf673f733112ba42d96351bf182580e8d54c736ee1abb882e",
+      "import_sha256": "d5f67b79b05585dcf673f733112ba42d96351bf182580e8d54c736ee1abb882e",
+      "adapted_sha256": "d5f67b79b05585dcf673f733112ba42d96351bf182580e8d54c736ee1abb882e"
+    },
+    {
+      "source": "references/风格配方/32_rembrandt.md",
+      "destination": "references/art_motion/风格配方/32_rembrandt.md",
+      "source_sha256": "db3dafff17fa45931b30c4c6c686d763875f68785279d818c08d5dacd3884467",
+      "import_sha256": "db3dafff17fa45931b30c4c6c686d763875f68785279d818c08d5dacd3884467",
+      "adapted_sha256": "db3dafff17fa45931b30c4c6c686d763875f68785279d818c08d5dacd3884467"
+    },
+    {
+      "source": "references/风格配方/33_rubberhose.md",
+      "destination": "references/art_motion/风格配方/33_rubberhose.md",
+      "source_sha256": "43caf717e51b30acf967f8d0d7ea48a2ac2101686ca13573964a4ee06127975f",
+      "import_sha256": "43caf717e51b30acf967f8d0d7ea48a2ac2101686ca13573964a4ee06127975f",
+      "adapted_sha256": "43caf717e51b30acf967f8d0d7ea48a2ac2101686ca13573964a4ee06127975f"
+    },
+    {
+      "source": "references/风格配方/34_shadowpuppet.md",
+      "destination": "references/art_motion/风格配方/34_shadowpuppet.md",
+      "source_sha256": "5fc320f69ab623b6a8d06a0697e17c8202d6139a3056bedd6711b5fb58d747a4",
+      "import_sha256": "5fc320f69ab623b6a8d06a0697e17c8202d6139a3056bedd6711b5fb58d747a4",
+      "adapted_sha256": "5fc320f69ab623b6a8d06a0697e17c8202d6139a3056bedd6711b5fb58d747a4"
+    },
+    {
+      "source": "references/风格配方/35_shinkai.md",
+      "destination": "references/art_motion/风格配方/35_shinkai.md",
+      "source_sha256": "2da6807639b3e65d8acd66e89ff8f20329c595cd4371c88f07218895a2dc6c3e",
+      "import_sha256": "2da6807639b3e65d8acd66e89ff8f20329c595cd4371c88f07218895a2dc6c3e",
+      "adapted_sha256": "2da6807639b3e65d8acd66e89ff8f20329c595cd4371c88f07218895a2dc6c3e"
+    },
+    {
+      "source": "references/风格配方/36_picasso_blue.md",
+      "destination": "references/art_motion/风格配方/36_picasso_blue.md",
+      "source_sha256": "82f4e817ad9066e5ba7e2c5111fdd25ea3ca7dc85d5b4b34f4fcf9d37a0969e6",
+      "import_sha256": "82f4e817ad9066e5ba7e2c5111fdd25ea3ca7dc85d5b4b34f4fcf9d37a0969e6",
+      "adapted_sha256": "82f4e817ad9066e5ba7e2c5111fdd25ea3ca7dc85d5b4b34f4fcf9d37a0969e6"
+    },
+    {
+      "source": "references/风格配方/_转场_迁移测试.md",
+      "destination": "references/art_motion/风格配方/_转场_迁移测试.md",
+      "source_sha256": "305ae1ceabfea70b8f292314d295895ff59858ed5cdc17e4a19f4783cbee6ff5",
+      "import_sha256": "305ae1ceabfea70b8f292314d295895ff59858ed5cdc17e4a19f4783cbee6ff5",
+      "adapted_sha256": "305ae1ceabfea70b8f292314d295895ff59858ed5cdc17e4a19f4783cbee6ff5"
+    },
+    {
+      "source": "references/风格配方/_音轨_艺术史速通.md",
+      "destination": "references/art_motion/风格配方/_音轨_艺术史速通.md",
+      "source_sha256": "b425b184287fa9718e8ed47ffc93789b8cfff924fd5ddc82c8ff8f774669dffb",
+      "import_sha256": "b425b184287fa9718e8ed47ffc93789b8cfff924fd5ddc82c8ff8f774669dffb",
+      "adapted_sha256": "921e6ce432127e2c1e5bfafcef644adf5ed0415525372ba34b543fdd6d04e5ff"
+    },
+    {
+      "source": "references/风格配方/INDEX.md",
+      "destination": "references/art_motion/风格配方/INDEX.md",
+      "source_sha256": "620d4f09b0036bfba5f6c8f095a95c3e1886101b8adf6fbdef5f79143f474820",
+      "import_sha256": "620d4f09b0036bfba5f6c8f095a95c3e1886101b8adf6fbdef5f79143f474820",
+      "adapted_sha256": "620d4f09b0036bfba5f6c8f095a95c3e1886101b8adf6fbdef5f79143f474820"
+    }
+  ],
+  "excluded_identity_artwork": [
+    "scripts/engine/demos/_shared/hero/c1_0.png",
+    "scripts/engine/demos/_shared/hero/c1_1.png",
+    "scripts/engine/demos/_shared/hero/c1_2.png",
+    "scripts/engine/demos/_shared/hero/c3_line.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_act/01.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_act/02.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_act/03.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_act/04.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_act/05.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_act/06.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_act/07.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_act/08.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_walk/01.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_walk/02.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_walk/03.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_walk/04.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_walk/05.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_walk/06.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_walk/07.png",
+    "scripts/engine/demos/long_scroll/frames/8bit_walk/08.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_dodge/01.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_dodge/02.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_dodge/03.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_dodge/04.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_dodge/05.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_dodge/06.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_dodge/07.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_dodge/08.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_walk8/01.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_walk8/02.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_walk8/03.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_walk8/04.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_walk8/05.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_walk8/06.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_walk8/07.png",
+    "scripts/engine/demos/long_scroll/frames/egypt_walk8/08.png",
+    "scripts/engine/demos/long_scroll/frames/monet_throw/01.png",
+    "scripts/engine/demos/long_scroll/frames/monet_throw/02.png",
+    "scripts/engine/demos/long_scroll/frames/monet_throw/03.png",
+    "scripts/engine/demos/long_scroll/frames/monet_throw/04.png",
+    "scripts/engine/demos/long_scroll/frames/monet_throw/05.png",
+    "scripts/engine/demos/long_scroll/frames/monet_throw/06.png",
+    "scripts/engine/demos/long_scroll/frames/monet_throw/07.png",
+    "scripts/engine/demos/long_scroll/frames/monet_throw/08.png",
+    "scripts/engine/demos/long_scroll/frames/monet_walk/01.png",
+    "scripts/engine/demos/long_scroll/frames/monet_walk/02.png",
+    "scripts/engine/demos/long_scroll/frames/monet_walk/03.png",
+    "scripts/engine/demos/long_scroll/frames/monet_walk/04.png",
+    "scripts/engine/demos/long_scroll/frames/monet_walk/05.png",
+    "scripts/engine/demos/long_scroll/frames/monet_walk/06.png",
+    "scripts/engine/demos/long_scroll/frames/monet_walk/07.png",
+    "scripts/engine/demos/long_scroll/frames/monet_walk/08.png"
+  ]
+}
