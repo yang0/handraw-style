@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import html
 import json
@@ -20,7 +21,10 @@ from pathlib import Path
 from PIL import Image
 
 BASE_URL = "https://handraw-style.com"
-WORK_ENDPOINT = "/studio/api/entries"
+# The share target is the handraw-web backend's work-publish contract.  It
+# accepts {"entry": {...}} and answers {"id", "kind": "work", "url"}.  The
+# previous value pointed at the Discourse plugin, which handraw-web replaces.
+WORK_ENDPOINT = "/api/entries"
 PACKAGE_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_AUTH = PACKAGE_ROOT / "client/cache/conversation_share.auth.json"
 
@@ -142,6 +146,9 @@ def work_payload(draft):
                                        "layout_ids": draft["resolved_layout_ids"]},
                         "examples": [{"theme": f"作品{i}", "image": url}
                                      for i, url in enumerate(images[1:], 2)]},
+            # Stable per draft: a retried publish must return the same work
+            # rather than creating a duplicate.
+            "requestId": f"skill-{draft['draft_id']}",
             "assets": work_assets(draft)}
 
 
@@ -204,7 +211,7 @@ def markdown_body(draft):
     original = shared_prompt(draft)
     longest = max((len(x) for x in re.findall(r"`+", original)), default=0)
     fence = "`" * max(3, longest + 1)
-    images = "\n\n".join(f"![作品{i}]({item['short_url']})"
+    images = "\n\n".join(f"![作品{i}]({upload_url(item)})"
                            for i, item in enumerate(draft["uploads"], 1))
     return (f"{images}\n\n## 最初的指令\n\n{fence}text\n{original}\n{fence}"
             f"\n\n<!-- handraw-conversation-share:{draft['draft_id']} -->")
@@ -273,34 +280,38 @@ class CommunityAPI:
             raise RuntimeError("网站连接失败或响应无效，请稍后重试。") from None
 
     def current_user(self):
-        user = self.request("GET", "/session/current.json").get("current_user")
+        # handraw-web exposes the signed-in account on /api/boot.  An invalid or
+        # revoked API key yields no user, which is the same rejection reason as
+        # before, so callers need no change.
+        boot = self.request("GET", "/api/boot")
+        user = boot.get("user") or boot.get("currentUser") or None
         if not user or not user.get("username"):
             raise APIRejected("凭据未绑定有效社区账号。")
         return {"username": user["username"], "user_id": user.get("id")}
 
     def check_work_access(self):
-        data = self.request("GET", "/studio/api/boot")
-        if not data.get("user") or not data.get("participant"):
+        # Publishing a work is open to any active account on handraw-web; the
+        # account check above already proves the key is valid and active.
+        boot = self.request("GET", "/api/boot")
+        if not (boot.get("user") or boot.get("currentUser")):
             raise APIRejected("当前账号暂无作品广场发布权限，请登录网站检查账号状态。")
 
     def upload(self, record):
+        # handraw-web takes a JSON body with a data URL and answers with a
+        # same-origin media path, so no multipart/short-url round trip is needed.
         path = Path(record["path"])
-        boundary = "Handraw" + uuid.uuid4().hex
-        filename = "handraw-" + record["sha256"][:16] + path.suffix.lower()
-        mime = mimetypes.guess_type(filename)[0] or "application/octet-stream"
-        body = (f'--{boundary}\r\nContent-Disposition: form-data; name="type"\r\n\r\ncomposer\r\n'
-                f'--{boundary}\r\nContent-Disposition: form-data; name="synchronous"\r\n\r\ntrue\r\n'
-                f'--{boundary}\r\nContent-Disposition: form-data; name="file"; filename="{filename}"\r\n'
-                f'Content-Type: {mime}\r\n\r\n').encode("utf-8")
-        body += path.read_bytes() + f"\r\n--{boundary}--\r\n".encode("ascii")
-        result = self.request("POST", "/uploads.json", body,
-                              "multipart/form-data; boundary=" + boundary)
-        url = result.get("short_url")
-        if not isinstance(url, str) or not re.fullmatch(r"upload://[A-Za-z0-9_.-]+", url):
-            raise RuntimeError("图片上传响应缺少有效short_url。")
-        record = {"short_url": url, "url": result.get("url"), "id": result.get("id"), "sha256": record["sha256"]}
-        upload_url(record)
-        return record
+        mime = mimetypes.guess_type(path.name)[0] or "image/png"
+        data_url = f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode("ascii")
+        result = self.request(
+            "POST",
+            "/api/uploads",
+            json.dumps({"dataUrl": data_url, "nameZh": path.stem, "cat": "share"}, ensure_ascii=False).encode("utf-8"),
+            "application/json; charset=utf-8",
+        )
+        url = result.get("url") or result.get("imageUrl")
+        if not isinstance(url, str) or not url.startswith("/"):
+            raise RuntimeError("图片上传响应缺少有效站内地址。")
+        return {"url": url, "id": result.get("id"), "sha256": record["sha256"]}
 
     def create_work(self, entry):
         return self.request("POST", WORK_ENDPOINT, json.dumps({"entry": entry}, ensure_ascii=False).encode("utf-8"),
@@ -388,8 +399,13 @@ def publish_draft(path, api):
             draft["status"] = "publication_uncertain"
             write_json(path, draft)
             raise PostOutcomeUnknown("作品发布结果未确认，请先核对作品广场；此草稿已阻止重复发布。") from None
+        # The server owns the canonical address; fall back to the resource route
+        # only if it did not send one.
+        work_url = str(result.get("url") or f"/forum/?view=resource&kind=work&id={entry_id}")
+        if work_url.startswith("/"):
+            work_url = BASE_URL + work_url
         receipt = {"success": True, "destination": "work_square", "entry_id": entry_id,
-                   "url": f"{BASE_URL}/studio?entry={entry_id}", "published_at": now(),
+                   "url": work_url, "published_at": now(),
                    "verified": False, "associations_verified": False}
         draft.update(status="published", receipt=receipt)
         write_json(path, draft)
