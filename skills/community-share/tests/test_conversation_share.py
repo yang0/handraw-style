@@ -38,10 +38,24 @@ class FakeAPI:
         self.works.append(entry)
         if self.uncertain:
             raise share.PostOutcomeUnknown("response lost")
-        return {"id": "12345678-1234-1234-1234-123456789abc", "kind": "work"}
+        work_id = "12345678-1234-1234-1234-123456789abc"
+        return {"id": work_id, "kind": "work",
+                "url": f"/forum/?view=resource&kind=work&id={work_id}"}
 
     def get_work(self, entry_id):
-        return {"id": entry_id, **self.works[-1]}
+        """Mirror the resource payload the real API returns for readback."""
+        entry = self.works[-1]
+        styles = [a["ref"].split(":", 1)[1] for a in entry["assets"] if a.get("role") == "style"]
+        layouts = [a["ref"].split(":", 1)[1] for a in entry["assets"] if a.get("role") == "layout"]
+        images = [entry["cover_url"]] + [e["image"] for e in entry["content"]["examples"]]
+        return {"resource": {
+            "id": entry_id,
+            "kind": "work",
+            "prompt": entry["content"]["prompt"],
+            "images": images,
+            "styles": styles,
+            "layout": layouts[0] if layouts else "",
+        }}
 
     def get_work_content(self, entry_id):
         return {"content": self.works[-1]["content"]}
@@ -343,7 +357,12 @@ def test_readback_with_missing_assets_does_not_claim_verified_associations(tmp_p
     path,_,_=draft(tmp_path)
     api=FakeAPI()
     original_get=api.get_work
-    api.get_work=lambda entry_id:{**original_get(entry_id),'assets':[]}
+    def without_styles(entry_id):
+        detail=original_get(entry_id)
+        detail["resource"]["styles"]=[]
+        detail["resource"]["layout"]=""
+        return detail
+    api.get_work=without_styles
     receipt=share.publish_draft(path,api)
     assert receipt['destination']=='work_square'
     assert not receipt['verified'] and not receipt['associations_verified']

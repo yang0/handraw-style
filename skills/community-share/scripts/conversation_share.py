@@ -318,10 +318,24 @@ class CommunityAPI:
             "application/json; charset=utf-8")
 
     def get_work(self, entry_id):
-        return self.request("GET", f"{WORK_ENDPOINT}/{uuid.UUID(entry_id)}")
+        # handraw-web serves a work through the forum resource API, which
+        # returns the resource record plus its curation/thread context.
+        return self.request("GET", f"/api/forum/resources/work/{uuid.UUID(str(entry_id))}")
 
     def get_work_content(self, entry_id):
-        return self.request("GET", f"{WORK_ENDPOINT}/{uuid.UUID(entry_id)}/content")
+        # The same resource payload carries the work's prompt and images, so the
+        # content check reads it from there instead of a second endpoint.
+        detail = self.get_work(entry_id)
+        resource = detail.get("resource") or {}
+        return {
+            "content": {
+                "prompt": resource.get("prompt") or "",
+                "examples": [
+                    {"theme": "", "image": url}
+                    for url in (resource.get("images") or [])[1:]
+                ],
+            }
+        }
 
 
 def load_key(auth_file=DEFAULT_AUTH):
@@ -410,15 +424,31 @@ def publish_draft(path, api):
         draft.update(status="published", receipt=receipt)
         write_json(path, draft)
         try:
-            saved = api.get_work(entry_id)
-            content = api.get_work_content(entry_id).get("content", {})
-            expected_refs = {item["ref"] for item in payload["assets"]}
-            receipt["associations_verified"] = {item["ref"] for item in saved.get("assets", [])} == expected_refs
-            receipt["verified"] = (saved.get("id") == entry_id and saved.get("kind") == "work"
-                and saved.get("cover_url") == payload["cover_url"] and content.get("prompt") == payload["content"]["prompt"]
-                and content.get("examples", []) == payload["content"]["examples"] and receipt["associations_verified"])
+            detail = api.get_work(entry_id)
+            resource = detail.get("resource") or {}
+            # The resource payload is the source of truth for identity, the
+            # stored prompt, the image order and the linked styles/layout.
+            stored_prompt = str(resource.get("prompt") or "")
+            stored_images = list(resource.get("images") or [])
+            stored_styles = list(resource.get("styles") or [])
+            stored_layout = str(resource.get("layout") or "")
+            expected_styles = [a["ref"].split(":", 1)[1] for a in payload["assets"] if a.get("role") == "style"]
+            expected_layouts = [a["ref"].split(":", 1)[1] for a in payload["assets"] if a.get("role") == "layout"]
+
+            receipt["associations_verified"] = (
+                sorted(stored_styles) == sorted(expected_styles)
+                and stored_layout == (expected_layouts[0] if expected_layouts else "")
+            )
+            receipt["verified"] = (
+                str(resource.get("id") or "") == entry_id
+                and stored_prompt == payload["content"]["prompt"]
+                and stored_images[:1] == [payload["cover_url"]]
+                and receipt["associations_verified"]
+            )
         except Exception:
-            pass
+            # Verification is best effort; a failed readback must not claim success.
+            receipt["verified"] = False
+            receipt["associations_verified"] = False
         write_json(path, draft)
         return receipt
     finally:

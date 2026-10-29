@@ -22,8 +22,19 @@ class FakeAPI:
         return {'sha256': record['sha256'], 'short_url': 'upload://test.png'}
     def create_work(self, entry):
         self.works.append(entry)
-        return {'id': '12345678-1234-1234-1234-123456789abc', 'kind': 'work'}
-    def get_work(self, entry_id): return {'id': entry_id, **self.works[-1]}
+        work_id = '12345678-1234-1234-1234-123456789abc'
+        return {'id': work_id, 'kind': 'work',
+                'url': f'/forum/?view=resource&kind=work&id={work_id}'}
+    def get_work(self, entry_id):
+        entry = self.works[-1]
+        styles = [a['ref'].split(':', 1)[1] for a in entry['assets'] if a.get('role') == 'style']
+        layouts = [a['ref'].split(':', 1)[1] for a in entry['assets'] if a.get('role') == 'layout']
+        return {'resource': {
+            'id': entry_id, 'kind': 'work',
+            'prompt': entry['content']['prompt'],
+            'images': [entry['cover_url']] + [e['image'] for e in entry['content']['examples']],
+            'styles': styles, 'layout': layouts[0] if layouts else '',
+        }}
     def get_work_content(self, entry_id): return {'content': self.works[-1]['content']}
 
 
