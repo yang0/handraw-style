@@ -4,13 +4,13 @@
 
 ## 作品广场接口
 
-- `GET /studio/api/boot` 验证当前账号与 `participant` 发布权限；使用现有个人 API Key，无需另建网站账号系统。
-- 图片先走 `/uploads.json`；首图为 `entry.cover_url`，其余为 `entry.content.examples`。每件作品最多封面加8张附图，超过则拆分，不能静默丢图。
-- `POST /studio/api/entries` 请求体为 `{"entry": {...}}`，设置 `kind: "work"`、`price: 0`、`paid_opt_in: false`。`entry.content.prompt` 仅放原始提示词和编号备注；`content.parameters` 仅记录编号，不能加入二阶段提示词。
-- `entry.assets` 传原生资产引用，如 `{"ref":"official:FA-013","role":"style"}`、`{"ref":"official:IG-038","role":"layout"}`。每件作品最多两个不同画风、一个图型；不使用的类别不传关联。**正文编号备注与正式关联都要保存**，不能只靠文字识别。
-- 接口返回作品 UUID。作品链接为 `https://handraw-style.com/studio?entry=<UUID>`，广场入口为 `https://handraw-style.com/studio?view=community&kind=work`。禁止用论坛主题链接作为作品成功回执。
-- 用 `GET /studio/api/entries/<UUID>` 和 `/content` 回读封面、原始指令、附图及资产引用，区分发布成功、内容核验和关联核验。
-- 这个客户端不直接调用 `/posts.json`。网站内部是否同步预览话题由网站实现处理，不影响发布目标为原生作品。
+- `GET /api/boot` 验证当前账号可用；使用现有个人 API Key（`Api-Key` 请求头），无需另建网站账号系统。
+- 图片先走 `POST /api/uploads`（JSON body：`{"dataUrl": "data:image/png;base64,...", "nameZh": "..."}`），返回站内 `/uploads/...` 地址；首图为 `entry.images[0]`，其余为附图。每件作品最多封面加8张附图，超过则拆分，不能静默丢图。
+- `POST /api/entries` 请求体为 `{"entry": {...}}`，设置 `title`、`prompt`、`originalRequest`、`images`、`styleIds`、`layoutId`、`requestId`。作品即时发布，不经审核。
+- `styleIds` 传实际使用的画风编号数组（如 `["FA-013"]`），`layoutId` 传图型编号（如 `SC-001`）。每件作品最多两个不同画风、一个图型；不使用的类别不传关联。**正文编号备注与正式关联都要保存**，不能只靠文字识别。
+- 接口返回 `{"ok": true, "id": "<UUID>", "kind": "work", "url": "/forum/?view=resource&kind=work&id=<UUID>"}`。`kind` 必须为 `"work"`。禁止用论坛主题链接作为作品成功回执。
+- `requestId` 是幂等键：同一请求重复提交返回同一作品，不会重复发布。
+- 这个客户端不直接调用论坛发帖接口。网站内部是否同步预览话题由网站实现处理，不影响发布目标为原生作品。
 
 ## 编号备注
 
