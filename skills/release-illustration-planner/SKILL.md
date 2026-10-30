@@ -91,7 +91,7 @@ flowchart TD
 ## 四、色彩与画幅红线铁律
 
 ### 1. 官方 36 色库铁律（Zero Color Hallucination）
-- 所有配色必须 100% 映射自手绘 Skill 官方标准配色库 [`references/colors.json`](file:///E:/handraw-style/skills/handdraw-style-prompter/references/colors.json)（编号 `C-01` ~ `C-36`）；
+- 所有配色必须 100% 映射自手绘 Skill 官方标准配色库 [`references/colors.json`](../handdraw-style-prompter/references/colors.json)（编号 `C-01` ~ `C-36`，路径相对安装包根目录解析）；
 - 严禁凭空捏造色彩编号；
 - 单色案例采用 `C-xx`；双色混搭采用 `C-xx + C-yy`。
 
@@ -129,7 +129,7 @@ flowchart TD
 
 ### 1. 为新画风规划配图并强制重新批量生图
 ```powershell
-python E:\handraw-style\skills\release-illustration-planner\scripts\planner.py `
+python skills/release-illustration-planner/scripts/planner.py `
   --style FG-024 `
   --article-title "手绘skill新增风格：新海诚《你的名字。》" `
   --force
@@ -137,7 +137,7 @@ python E:\handraw-style\skills\release-illustration-planner\scripts\planner.py `
 
 ### 2. 预演模式（仅输出方案与提示词，不消耗算力）
 ```powershell
-python E:\handraw-style\skills\release-illustration-planner\scripts\planner.py `
+python skills/release-illustration-planner/scripts/planner.py `
   --style FG-024 `
   --dry-run
 ```
