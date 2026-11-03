@@ -2,6 +2,8 @@
 """Build derived style JSON and an offline number-searchable adaptive waterfall gallery."""
 from __future__ import annotations
 
+from gallery_thumbnails import write_thumbnail_fallback
+
 import html
 import json
 import re
@@ -27,6 +29,14 @@ IMAGE_FALLBACK_SCRIPT = """<script>
     var src = img.getAttribute('src') || '';
     var idx = src.indexOf('images/');
     if (idx === -1) return;
+    if (location.protocol === 'file:') {
+      var key = src.substring(idx + 'images/'.length);
+      var thumbnail = window.handrawThumbnails?.[key];
+      if (thumbnail) {
+        img.src = thumbnail;
+        return;
+      }
+    }
     var sub = src.substring(idx);
     var step = parseInt(img.dataset.retry || '0', 10);
     var candidates = [
@@ -189,7 +199,7 @@ def gallery_html(styles: list[dict[str, str]], sheets: list[dict[str, str]] | No
     return f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>手绘风格编号画廊</title>
-{IMAGE_FALLBACK_SCRIPT}
+<script src="index-thumbnails.js"></script>{IMAGE_FALLBACK_SCRIPT}
 <style>
 :root{{color:#24211e;background:#f7f5f0;font:16px/1.5 system-ui,"Microsoft YaHei",sans-serif}}
 body{{margin:0}}
@@ -676,7 +686,8 @@ def main() -> None:
     STYLE_JSON.parent.mkdir(parents=True, exist_ok=True)
     GALLERY.parent.mkdir(parents=True, exist_ok=True)
     STYLE_JSON.write_text(json.dumps(styles, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    GALLERY.write_text(gallery_html(styles).replace("</body>", '<script src="personal-library.js" defer></script></body>'), encoding="utf-8")
+    GALLERY.write_text(gallery_html(styles).replace("</body>", '<script src="personal-library.js" defer></script><script src="local-navigation.js" defer></script></body>'), encoding="utf-8")
+    write_thumbnail_fallback(GALLERY)
     print(f"Built {len(styles)} styles into adaptive waterfall gallery.")
     try:
         import sys

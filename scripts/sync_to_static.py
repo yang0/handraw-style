@@ -9,6 +9,7 @@
 """
 
 import os
+import re
 import sys
 import json
 import shutil
@@ -130,8 +131,10 @@ def sync_data():
     if src_gallery_dir.exists():
         target_gallery_dir.mkdir(parents=True, exist_ok=True)
         for hf in src_gallery_dir.glob("*.html"):
-            shutil.copy2(hf, target_gallery_dir / hf.name)
-        print("  [OK] HTML 画廊页面已同步到 gallery/")
+            content = hf.read_text(encoding="utf-8")
+            adapted = re.sub(r'(\.\./)+images/', '../images/', content)
+            (target_gallery_dir / hf.name).write_text(adapted, encoding="utf-8")
+        print("  [OK] HTML 页面已自适应同步到 gallery/")
 
     print(f"  [OK] 图片同步完成 (新增/更新图片: {copied_img_count} 张)")
     return manifest

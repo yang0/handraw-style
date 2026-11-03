@@ -882,7 +882,7 @@ dialog#wechat-modal p {{ margin: 0 0 16px; font-size: 13.5px; color: #665f57; }}
     <div class="qr-card">
       <span class="qr-tag" data-i18n="wechatGroupLabel">① 优先加入群聊</span>
       <img src="../../../images/wechat_group.png" alt="微信交流群二维码">
-      <span class="qr-tip">群聊：手绘9</span>
+      <span class="qr-tip">群聊：手绘10</span>
     </div>
     <div class="qr-card">
       <span class="qr-tag" data-i18n="wechatPersonalLabel">② 个人微信备用</span>
@@ -1330,7 +1330,7 @@ hydrateCustomAssets();
 // Initialize language
 applyLang(currentLang);
 </script>
-</body>
+<script src="local-navigation.js" defer></script></body>
 </html>
 """
 

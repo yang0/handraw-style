@@ -1,13 +1,21 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>图型编号画廊</title>
-<script>
+<script src="layouts-thumbnails.js"></script><script>
 (function() {
   function fixImg(img) {
     if (!img || img.__fixed) return;
     var src = img.getAttribute('src') || '';
     var idx = src.indexOf('images/');
     if (idx === -1) return;
+    if (location.protocol === 'file:') {
+      var key = src.substring(idx + 'images/'.length);
+      var thumbnail = window.handrawThumbnails?.[key];
+      if (thumbnail) {
+        img.src = thumbnail;
+        return;
+      }
+    }
     var sub = src.substring(idx);
     var step = parseInt(img.dataset.retry || '0', 10);
     var candidates = [
@@ -1139,4 +1147,4 @@ async function copyPrompt(){
 filters.forEach(button=>button.addEventListener('click',()=>setCategory(button.dataset.category)));cards.forEach(card=>card.addEventListener('click',()=>openPreview(card)));copyButton.addEventListener('click',copyPrompt);dialog.querySelector('.close').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close()});
 const urlCat=new URLSearchParams(window.location.search).get('cat')||(window.location.hash?window.location.hash.replace(/^#/,''):'');
 if(urlCat&&filters.some(b=>b.dataset.category===urlCat)){setCategory(urlCat);}else{setCategory('social-card');}
-</script><script src="personal-library.js" defer></script></body></html>
+</script><script src="personal-library.js" defer></script><script src="local-navigation.js" defer></script></body></html>

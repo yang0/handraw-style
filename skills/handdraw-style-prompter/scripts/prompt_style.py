@@ -107,7 +107,7 @@ def resolve_style_entry(style_input: str, styles: list[dict]) -> tuple[dict, str
 
 def recommend_combination(theme: str, user_style: str | None, user_color: str | None) -> tuple[str, str, str]:
     """
-    Dynamic whole-library recommendation engine across all 367 styles and 36 theme colors.
+    Dynamic whole-library recommendation engine across all 368 styles and 36 theme colors.
     Note: In AI agent workflows (Codex, Antigravity, Claude Code), the LLM dynamically reasons
     and evaluates styles and colors at runtime. This function provides a robust, non-hardcoded
     heuristic scoring fallback for offline and CLI usage.
@@ -122,7 +122,7 @@ def recommend_combination(theme: str, user_style: str | None, user_color: str | 
     ngrams = [t[i:i+n] for n in (2, 3, 4) for i in range(len(t)-n+1)]
     words = re.findall(r'[a-zA-Z0-9]+|[\u4e00-\u9fa5]', t)
 
-    # 1. Dynamically resolve style from full 367 styles library
+    # 1. Dynamically resolve style from full 368 styles library
     if user_style:
         try:
             s_obj, final_style = resolve_style_entry(user_style, styles)

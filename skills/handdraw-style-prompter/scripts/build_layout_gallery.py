@@ -2,6 +2,8 @@
 """Build the offline layout gallery from the canonical layout index."""
 from __future__ import annotations
 
+from gallery_thumbnails import write_thumbnail_fallback
+
 import html
 from pathlib import Path
 
@@ -25,6 +27,14 @@ IMAGE_FALLBACK_SCRIPT = """<script>
     var src = img.getAttribute('src') || '';
     var idx = src.indexOf('images/');
     if (idx === -1) return;
+    if (location.protocol === 'file:') {
+      var key = src.substring(idx + 'images/'.length);
+      var thumbnail = window.handrawThumbnails?.[key];
+      if (thumbnail) {
+        img.src = thumbnail;
+        return;
+      }
+    }
     var sub = src.substring(idx);
     var step = parseInt(img.dataset.retry || '0', 10);
     var candidates = [
@@ -90,7 +100,7 @@ def gallery_html(layouts: list[dict[str, object]]) -> str:
     return f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>图型编号画廊</title>
-{IMAGE_FALLBACK_SCRIPT}
+<script src="layouts-thumbnails.js"></script>{IMAGE_FALLBACK_SCRIPT}
 <style>
 :root{{color:#24211e;background:#f7f5f0;font:16px/1.5 system-ui,"Microsoft YaHei",sans-serif}} body{{margin:0}} main{{max-width:1440px;margin:auto;padding:18px 30px 30px}} .sticky-header{{position:sticky;top:0;z-index:100}} .site-nav{{display:flex;align-items:center;gap:10px;margin:0;padding:12px 30px;border-bottom:1px solid #ded8cf;background:#fffdf9}} .site-nav a{{border:1px solid #9e9185;border-radius:8px;background:#fff;color:#403a34;padding:7px 13px;text-decoration:none;font-weight:800;line-height:1.2;transition:background .15s,color .15s,border-color .15s}} .site-nav a:hover{{border-color:#b74227;background:#fff0eb;color:#9f351f}} .site-nav a[aria-current="page"]{{border-color:#b74227;background:#b74227;color:#fff;box-shadow:0 1px 3px #b7422744}} .nav-right{{margin-left:auto;display:flex;align-items:center;gap:8px}} .nav-ext{{display:inline-flex;align-items:center;font-weight:700}} .nav-btn{{border:1px solid #9e9185;border-radius:8px;background:#fff;color:#403a34;padding:7px 13px;font:inherit;font-weight:700;line-height:1.2;cursor:pointer;transition:background .15s,color .15s,border-color .15s}} .nav-btn:hover{{border-color:#b74227;background:#fff0eb;color:#9f351f}} .nav-btn:focus-visible,.site-nav a:focus-visible{{outline:3px solid #d67d4d;outline-offset:3px}} .sub-nav{{display:flex;gap:10px;align-items:center;padding:9px 30px;background:#faf7f2;border-bottom:1px solid #ded8cf;box-shadow:0 2px 6px rgba(0,0,0,0.03)}} .filter{{display:inline-flex;align-items:center;gap:6px;border:1px solid #c9c1b6;border-radius:6px;background:#fff;color:#514a43;padding:6px 14px;font:inherit;font-size:14px;font-weight:600;line-height:1.4;cursor:pointer;transition:background .15s,color .15s,border-color .15s,box-shadow .15s}} .filter:hover{{border-color:#b74227;color:#b74227;background:#fff8f5}} .filter span{{display:inline-block;padding:1px 6px;border-radius:999px;background:#eee8df;color:#6b6257;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2;transition:all .15s}} .filter.is-active{{border-color:#b74227;background:#b74227;color:#fff;box-shadow:0 1px 3px rgba(183,66,39,0.3)}} .filter.is-active span{{background:rgba(255,255,255,0.25);color:#fff}} h1{{margin:0}} .lead{{margin:8px 0 20px;color:#665f57}}
 .gallery-title-bar{{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 2px}}
@@ -340,7 +350,8 @@ if(urlCat&&filters.some(b=>b.dataset.category===urlCat)){{setCategory(urlCat);}}
 def main() -> None:
     layouts = load_layouts()
     GALLERY.parent.mkdir(parents=True, exist_ok=True)
-    GALLERY.write_text(gallery_html(layouts).replace("</body>", '<script src="personal-library.js" defer></script></body>'), encoding="utf-8")
+    GALLERY.write_text(gallery_html(layouts).replace("</body>", '<script src="personal-library.js" defer></script><script src="local-navigation.js" defer></script></body>'), encoding="utf-8")
+    write_thumbnail_fallback(GALLERY)
     print(f"Built {len(layouts)} layouts.")
     try:
         import sys

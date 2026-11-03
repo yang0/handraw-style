@@ -343,7 +343,7 @@ sizeBtns.forEach(btn=>btn.addEventListener('click',()=>setSize(btn.dataset.size)
 const savedSize=localStorage.getItem('handdraw_color_size');
 if(savedSize)setSize(savedSize);else setSize('2x');
 </script>
-</body></html>'''
+<script src="local-navigation.js" defer></script></body></html>'''
 
 
 def main() -> None:

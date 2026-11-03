@@ -2578,7 +2578,7 @@ if (wechatBtn && wechatModal) {{
   wechatModal.querySelectorAll('.close').forEach(btn => btn.addEventListener('click', () => wechatModal.close()));
   wechatModal.addEventListener('click', e => {{ if (e.target === wechatModal) wechatModal.close(); }});
 }}
-</script></body></html>'''
+</script><script src="local-navigation.js" defer></script></body></html>'''
 
 
 def main() -> None:

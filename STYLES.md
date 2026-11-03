@@ -2,9 +2,9 @@
   <strong>中文</strong> | <a href="STYLES_en.md">English</a>
 </p>
 
-# 手绘风格完整图鉴（FA-001–FI-034 · 共 367 种）
+# 手绘风格完整图鉴（FA-001–FI-034 · 共 368 种）
 
-> 这里收录了本库全部 **367 种手绘风格**的独立编号图鉴与核心提示词特征。每种风格均配有标准图样预览、分类编号、英文生图名称、风格参考来源与核心视觉特征，供在 GitHub 上直接图文浏览选款。详细对照表见 [styles_200_reorganized.md](styles_200_reorganized.md)。
+> 这里收录了本库全部 **368 种手绘风格**的独立编号图鉴与核心提示词特征。每种风格均配有标准图样预览、分类编号、英文生图名称、风格参考来源与核心视觉特征，供在 GitHub 上直接图文浏览选款。详细对照表见 [styles_200_reorganized.md](styles_200_reorganized.md)。
 
 ## 目录导航
 
@@ -14,7 +14,7 @@
 - [FD · 日本当代插画（FD-001–FD-042 · 42 种）](#group-fd)
 - [FE · 新国风与传统工艺（FE-001–FE-068 · 68 种）](#group-fe)
 - [FF · 3D黏土毛毡与纸雕（FF-001–FF-017 · 17 种）](#group-ff)
-- [FG · 动漫和赛璐璐（FG-001–FG-024 · 24 种）](#group-fg)
+- [FG · 动漫和赛璐璐（FG-001–FG-025 · 25 种）](#group-fg)
 - [FH · 先锋实验与综合媒介（FH-001–FH-044 · 44 种）](#group-fh)
 - [FI · 写实摄影与视觉大片（FI-001–FI-034 · 34 种）](#group-fi)
 
@@ -171,7 +171,7 @@
 ---
 
 <a id="group-fg"></a>
-## FG · 动漫和赛璐璐（FG-001–FG-024 · 24 种）
+## FG · 动漫和赛璐璐（FG-001–FG-025 · 25 种）
 
 适合热血动漫、复古赛璐璐、像素街机与漫改场景。以经典赛璐璐光影、清晰分镜线稿与黄金时代动漫质感为主要特征。
 
@@ -185,6 +185,7 @@
 | <img src='images/individual/FG/FG-016.webp' width='220' alt='FG-016 Eiichiro Oda One Piece Manga Style'><br>**FG-016** <small>(#286)</small> · Eiichiro Oda One Piece Manga Style<br><sub>参考: 尾田荣一郎《海贼王》</sub> | <img src='images/individual/FG/FG-017.webp' width='220' alt='FG-017 Studio Ghibli Nostalgic Hand-Drawn Cel Anime & Painterly Landscape'><br>**FG-017** <small>(#323)</small> · Studio Ghibli Nostalgic Hand-Drawn Cel Anime & Painterly Landscape<br><sub>参考: 吉卜力 / Studio Ghibli</sub><br><details><summary>查看核心特征</summary><br>参考吉卜力动画风格</details> | <img src='images/individual/FG/FG-018.webp' width='220' alt='FG-018 Scissor Seven Season 1 Anime Style, Simple Composition, Highly Generalized Character Design'><br>**FG-018** <small>(#324)</small> · Scissor Seven Season 1 Anime Style, Simple Composition, Highly Generalized Character Design<br><sub>参考: 小疯映画《刺客伍六七》 / Scissor Seven (Sharefun Studio)</sub><br><details><summary>查看核心特征</summary><br>参考风格：小疯映画的刺客伍六七第一季，构图简单，角色高度概括</details> |
 | <img src='images/individual/FG/FG-019.webp' width='220' alt='FG-019 Cinematic American Comic Illustration, Expressive Anime Emotion, Digital Impasto'><br>**FG-019** <small>(#325)</small> · Cinematic American Comic Illustration, Expressive Anime Emotion, Digital Impasto<br><sub>参考: 高饱和电影感美漫插画 / Cinematic American Comic Illustration</sub><br><details><summary>查看核心特征</summary><br>风格：高饱和电影感美漫插画（Cinematic American Comic Illustration），也可以称作 美漫线稿 × 日漫表情 × 数字厚涂风格。线条：黑色粗描边、密集排线、手绘刮擦纹理。上色：高饱和撞色、厚涂与赛璐璐结合。人物：日漫式夸张表情，美漫式面部结构。构图：广角透视、电影分镜、强烈的视觉冲突。质感：复古印刷漫画、数字厚涂、AI 插画的混合质感。角色：中国普通老百姓的形象</details> | <img src='images/individual/FG/FG-020.webp' width='220' alt='FG-020 Retro Seinen Manga Line Art, American Narrative Illustration, Digital Cel Shading'><br>**FG-020** <small>(#326)</small> · Retro Seinen Manga Line Art, American Narrative Illustration, Digital Cel Shading<br><sub>参考: 复古青年漫画与美式叙事插画 / Retro Seinen Manga & American Narrative Illustration</sub><br><details><summary>查看核心特征</summary><br>复古漫画、半写实人物、日式青年漫画线稿、美式叙事插画、暖色低饱和、手绘墨线、复古纸张纹理、夸张表情、动态速度线、数字赛璐璐上色。</details> | <img src='images/individual/FG/FG-021.webp' width='220' alt='FG-021 Korean Webtoon'><br>**FG-021** <small>(#327)</small> · Korean Webtoon<br><sub>参考: 韩漫webtoon / Korean Webtoon</sub> |
 | <img src='images/individual/FG/FG-022.webp' width='220' alt='FG-022 Spider-Man: Into the Spider-Verse Animation Style'><br>**FG-022** <small>(#329)</small> · Spider-Man: Into the Spider-Verse Animation Style<br><sub>参考: 动画片《蜘蛛侠：平行宇宙》 / Spider-Man: Into the Spider-Verse</sub> | <img src='images/individual/FG/FG-023.webp' width='220' alt='FG-023 Retro 90s Cel Anime & Korean Emotional Webtoon Illustration, Grainy Nostalgic Film Aesthetic'><br>**FG-023** <small>(#330)</small> · Retro 90s Cel Anime & Korean Emotional Webtoon Illustration, Grainy Nostalgic Film Aesthetic<br><sub>参考: 复古日系赛璐璐与韩系情绪动画 / Retro 90s Cel Anime & Korean Mood Webtoon</sub><br><details><summary>查看核心特征</summary><br>复古日系二维动画与现代韩系情绪漫画融合的插画风格，具有1990年代手绘赛璐璐动画的朴素视觉质感。二维平面绘制，清晰但略带自然手绘感的深色轮廓线，线条轻微不规则，轮廓简洁，细节适度省略。大面积平涂色块，硬边赛璐璐阴影，明暗层次简化，阴影以完整、清晰的形状呈现，几乎没有柔和渐变或复杂体积塑造。整体配色低饱和、暗调、褪色感，偏砖红、暗青绿、灰蓝、灰褐、褪色粉橙与米灰色，色彩之间具有克制的冷暖对比，暗部厚重，黑色深沉。背景采用概括性的色块、简化的形体与有限的细节，呈现二维动画背景美术的平面感，不刻意追求写实精度。全画面覆盖明显、均匀、细密的模拟胶片噪点，颗粒与画面色彩自然融合，轻微色彩漂移、柔和的旧胶片褪色感，带有细微的模拟影像粗糙度。画面具有克制的光影、略低的清晰度、自然的暗部色彩沉积，整体像经过模拟胶片扫描和统一调色处理的旧动画截图。视觉语言安静、内敛、忧郁、怀旧，带有轻微的梦境感和疏离感，质朴而不精致化，强调二维手绘痕迹、色彩氛围和年代质感。</details> | <img src='images/individual/FG/FG-024.webp' width='220' alt='FG-024 Makoto Shinkai Your Name'><br>**FG-024** <small>(#367)</small> · Makoto Shinkai Your Name<br><sub>参考: 新海诚《你的名字。》 / Makoto Shinkai Your Name</sub> |
+| <img src='images/individual/FG/FG-025.webp' width='220' alt='FG-025 Perler Bead Pixel Art'><br>**FG-025** <small>(#368)</small> · Perler Bead Pixel Art<br><sub>参考: 拼豆像素画</sub><br><details><summary>查看核心特征</summary><br>规则排列的圆形拼豆珠孔网格、像素对齐结构、手工塑料熔珠轻微颗粒肌理与受热微熔接痕迹、鲜明纯正的平涂色彩、清晰硬朗的阶梯状像素边缘</details> |  |  |
 
 ---
 
@@ -290,6 +291,6 @@
 
 ![I 348-363](images/I_348-363.webp)
 
-![I 364-367](images/I_364-367.webp)
+![I 364-368](images/I_364-368.webp)
 
 </details>

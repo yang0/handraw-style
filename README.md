@@ -199,8 +199,8 @@ FH-039 (193)号风格，主题：大唐夜宴
 
 ![风格精选预览（FA-001–FA-016）](images/A_001-016.webp)
 
-- 🖼️ **[👉 查看更多手绘与写实风格图片（367 种完整风格拼图大表，支持 FA~FI / 001–367 检索）](STYLES.md)**
-- 📄 **[查看风格详细参数表（367 种风格 Markdown 详细表格与特征描述）](styles_200_reorganized.md)**
+- 🖼️ **[👉 查看更多手绘与写实风格图片（368 种完整风格拼图大表，支持 FA~FI / 001–368 检索）](STYLES.md)**
+- 📄 **[查看风格详细参数表（368 种风格 Markdown 详细表格与特征描述）](styles_200_reorganized.md)**
 - 💻 *（本地离线使用：可在本地浏览器打开 `skills/handdraw-style-prompter/gallery/index.html` 交互检索与放大）*
 
 ## 排版图型展示
@@ -275,7 +275,7 @@ FH-039 (193)号风格，主题：大唐夜宴
 - 📚 **官方飞书知识库**：[点击访问知识库（速查画廊 / 常见问题速查 / 创业变现案例） ↗](https://ecmn3m3i17.feishu.cn/wiki/space/7689222460876524523?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home)
 - **创作变现交流群 / 作者微信**：请优先加群，满了的话也可以尝试加我个人微信。请备注：**手绘**
 
-| ① 优先加入群聊（手绘9群） | ② 个人微信（备用） |
+| ① 优先加入群聊（手绘10群） | ② 个人微信（备用） |
 | :---: | :---: |
 | <img src="images/wechat_group.png" alt="微信群聊二维码" width="240"> | <img src="images/wechat_personal.png" alt="个人微信二维码" width="240"> |
 

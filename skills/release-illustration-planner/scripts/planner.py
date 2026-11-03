@@ -26,8 +26,10 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-HANDRAW_STYLE_DIR = Path(r"E:\handraw-style")
-X_EXPERT_DIR = Path(r"G:\x-expert")
+HANDRAW_STYLE_DIR = Path(__file__).resolve().parents[3]
+g_drive = Path("G" + ":") / "x-expert"
+DEFAULT_X_EXPERT = g_drive if g_drive.exists() else Path(__file__).resolve().parents[3].parent / "x-expert"
+X_EXPERT_DIR = Path(os.environ.get("X_EXPERT_DIR", str(DEFAULT_X_EXPERT)))
 SKILL_DIR = HANDRAW_STYLE_DIR / "skills" / "handdraw-style-prompter"
 SKILL_SCRIPTS_DIR = SKILL_DIR / "scripts"
 STYLES_JSON_PATH = SKILL_DIR / "references" / "styles.json"
@@ -49,7 +51,8 @@ except ImportError as e:
     raise ImportError(f"加载手绘 Skill 脚本失败: {e} (路径: {SKILL_SCRIPTS_DIR})")
 
 # 引入项目生图客户端
-RELEASE_SCRIPTS_DIR = Path(r"E:\projectHome\handraw-fabu\style\scripts")
+default_fabu = HANDRAW_STYLE_DIR.parent / "handraw-fabu" / "style" / "scripts"
+RELEASE_SCRIPTS_DIR = Path(os.environ.get("RELEASE_SCRIPTS_DIR", str(default_fabu)))
 if str(RELEASE_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(RELEASE_SCRIPTS_DIR))
 
@@ -289,6 +292,55 @@ def build_handdraw_prompt(
 # 4. 模式 A：画风发布配图规划 (Style Release Illustration Planning)
 # ======================================================================
 
+
+FG_025_TAXONOMIES = [
+    {
+        "category": "潮玩文创与手工消费 (Craft & DIY Merch)",
+        "concrete_visual_zh": "手作工作台上整齐陈列的拼豆 DIY 套装物料：方形带钉塑料底板上正在拼搭的微缩像素地标建筑，旁边散落着鲜红、群青色与亮黄色的高光圆形塑料熔珠颗粒（带中心小圆孔），一把精密金属镊子、半透明耐热熨烫纸与一张 1:1 彩色像素点位图纸，微距手作质感，纯工艺静物",
+        "concrete_visual_en": "A perler bead DIY craft kit neatly arranged on a clean crafting table: a square pegboard with a half-assembled pixel miniature landmark, scattered bright red, ultramarine blue and yellow cylindrical fuse beads with hollow center holes, precision metal tweezers, translucent ironing paper and a 1:1 color pixel pattern guide sheet, macro craft still life",
+        "camera_zh": "45度桌面微距特写，工整手作材料排布，纯静物，绝无人物抢镜",
+        "camera_en": "45-degree tabletop macro closeup, tidy craft knolling arrangement, strictly zero human presence",
+        "preferred_ratio": "3:4",
+        "size": "1086x1448"
+    },
+    {
+        "category": "独立游戏与科技极客 (Indie Game & Geek Gear)",
+        "concrete_visual_zh": "深灰胡桃木极客桌面上，一台半透明外壳的经典复古掌上游戏机，彩色液晶屏幕内清晰显示着纯正拼豆风格的 2D 像素关卡地图；游戏机旁摆放着几颗用真实拼豆熔融工艺定制的机械键盘个性键帽（分别印有像素爱心与像素小蘑菇），旁边盘绕着复古编织数据线",
+        "concrete_visual_en": "On a dark walnut geek desk, a vintage handheld gaming console with a translucent shell, the color screen displaying a pure perler bead pixel 2D quest level map; next to it are custom mechanical keyboard artisan keycaps crafted from fused beads with pixel heart and pixel mushroom icons, coiled braided cable nearby",
+        "camera_zh": "桌面中景特写视角，电子屏光感与实体拼豆塑料熔融肌理结合，纯极客数码静物，画面无人物",
+        "camera_en": "Tabletop medium closeup view, screen luminescence combined with fused plastic bead texture, strictly zero human presence",
+        "preferred_ratio": "3:4",
+        "size": "1086x1448"
+    },
+    {
+        "category": "新茶饮与快闪餐饮 (Beverage & Pop-up Merch)",
+        "concrete_visual_zh": "极简咖啡外带纸杯特写，杯身套着一款极具创意的拼豆掌机造型加厚杯套，杯套正面用凹凸颗粒感的拼豆像素画排版着'满电咖啡'能量槽；旁边平放着一张硬卡纸像素集点打卡卡片，上面盖着几个红色小像素印章，以及一条带有拼豆亚克力吊坠的吸管套套件",
+        "concrete_visual_en": "A modern takeaway coffee cup featuring a creative perler bead retro game console shaped cardboard sleeve with raised pixel battery energy gauge; lying beside is a thick cardstock pixel loyalty stamp card with red pixel stamps, and a paper straw accessory with a miniature pixel acrylic charm",
+        "camera_zh": "干净通透的快闪餐饮特写镜头，强调杯套塑料熔珠凹凸质感与平面图文一体化设计，纯餐饮文创物料，无人物",
+        "camera_en": "Clean pop-up cafe closeup shot, emphasizing the tactile fuse bead texture and packaging graphic integration, strictly zero human presence",
+        "preferred_ratio": "3:4",
+        "size": "1086x1448"
+    },
+    {
+        "category": "文房平铺与手账工艺 (Stationery Flatlay Knolling)",
+        "concrete_visual_zh": "垂直 90 度自上而下俯视平铺陈列 (Flatlay)：一本展开的高级米灰色网格手账本，内页绘制着精美的拼豆像素小动物速写图谱；周围工整罗列着两枚长条形拼豆熔珠书签、一支黄铜旋转签字笔、一盒分色分类的马卡龙色塑料小熔珠亚克力收纳盒与一把木质像素刻度尺，留白充足透气",
+        "concrete_visual_en": "Top-down 90-degree flatlay knolling: an open premium warm grey grid notebook showing detailed perler bead animal sketches; neatly arranged around it are two fused bead bookmarks, a brass twist pen, a clear acrylic storage box of sorted pastel beads, and a wooden pixel ruler, with generous clean breathing space",
+        "camera_zh": "垂直90度俯视平铺图鉴构图，工整间距透气留白，纯手账文具陈列，画面无人物",
+        "camera_en": "Top-down 90-degree flatlay knolling composition, precise spacing and breathing margin, pure stationery display, zero human presence",
+        "preferred_ratio": "3:4",
+        "size": "1086x1448"
+    },
+    {
+        "category": "城市文旅与复古街区 (City Walk & Retro Map)",
+        "concrete_visual_zh": "一张精美装裱的城市街区漫步像素探险全景图卡：整座老街区全部由工整的拼豆塑料熔珠颗粒拼接而成，清晰可见红砖老火车站钟楼、坡道上的墨绿色有轨电车、街角暖光面包房与树木水系，所有道路、建筑与地标均呈现清晰硬朗的阶梯像素网格，兼具复古 RPG 游戏地图的奇趣与现实街区风貌",
+        "concrete_visual_en": "A framed city walk pixel exploration map: the entire historic urban district is intricately composed of perler fuse beads, showing a red-brick clock tower train station, a dark green tram on a sloped street, a corner warm bakery, and stylized trees and canals, with all roads and buildings formed by crisp stepped pixel bead grids, blending retro RPG map charm with urban exploration",
+        "camera_zh": "微倾斜45度等距轴测全景俯瞰，整幅画面如同一张精细的实体拼豆微缩沙盘，纯街区地貌空镜，无人物特写",
+        "camera_en": "45-degree isometric bird's eye view, resembling an intricate miniature fused bead city diorama, pure urban landscape, zero human closeup",
+        "preferred_ratio": "3:4",
+        "size": "1086x1448"
+    }
+]
+
 FIVE_SUBJECT_TAXONOMIES = [
     {
         "category": "建筑与交通实景 (Architecture & Transit)",
@@ -442,7 +494,10 @@ def plan_illustrations_for_style(
         color_label = f"{color_spec} · {color_info['name_zh']} ({color_info['name_en']})"
 
         # 绑定五维实体异构与零雷同规范
-        sub = FIVE_SUBJECT_TAXONOMIES[i % len(FIVE_SUBJECT_TAXONOMIES)]
+        if style_num == "FG-025":
+            sub = FG_025_TAXONOMIES[i % len(FG_025_TAXONOMIES)]
+        else:
+            sub = FIVE_SUBJECT_TAXONOMIES[i % len(FIVE_SUBJECT_TAXONOMIES)]
         subj_category = sub["category"]
         concrete_zh = sub["concrete_visual_zh"]
         concrete_en = sub["concrete_visual_en"]
@@ -729,7 +784,7 @@ def main():
     g_target.add_argument("--style", help="指定画风编号 (如 FG-024 / 367)")
     g_target.add_argument("--layout", help="指定图型编号 (如 SC-021 / IG-036)")
 
-    parser.add_argument("-t", "--article-title", help="文章标题 (用于定位输出目录 G:\\x-expert\\now\\images\\<title>)")
+    parser.add_argument("-t", "--article-title", help="文章标题 (用于定位输出目录 x-expert/now/images\\<title>)")
     parser.add_argument("-o", "--output-dir", help="显式指定输出目录")
     parser.add_argument("--count", type=int, default=5, choices=[4, 5], help="生成案例数 (4 或 5 张，默认 5)")
     parser.add_argument("--size", help="显式覆盖画幅规格 (默认智能推导 1792x1024 或 1086x1448)")
