@@ -173,6 +173,7 @@ class CloudBridgeTests(unittest.TestCase):
     def test_pull_without_tracked_hash_never_overwrites_existing_file(self):
         root = self.make_lib()
         uid = str(uuid.uuid4())
+        original = (root / "characters" / "CH-002.webp").read_bytes()
         manifest = cloud.load_manifest(root)
         manifest["characters"][0]["cloud_uid"] = uid
         cloud.atomic_json(root / "library.json", manifest)
@@ -184,8 +185,7 @@ class CloudBridgeTests(unittest.TestCase):
              patch.object(cloud, "ROOT", Path(self.tmp.name) / "package"):
             result = cloud.asset_pull(SimpleNamespace(library_dir=str(root), force=False))
         self.assertIn("conflict", result["results"][0])
-        self.assertEqual((root / "characters" / "CH-002.webp").read_bytes(),
-                         b"RIFF\\x04\\x00\\x00\\x00WEBPTESTDATA")
+        self.assertEqual((root / "characters" / "CH-002.webp").read_bytes(), original)
 
 
     def test_history_requires_explicit_upload_and_keeps_local_copy(self):
