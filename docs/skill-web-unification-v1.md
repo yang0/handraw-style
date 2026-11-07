@@ -1,5 +1,8 @@
 # Handraw Skill × 网站一体化开发规划 v1.0（Skill 侧）
 
+> **2026-11-07 V3 更新：** 一次 Skill 本地生成任务可有多张图片，但用户执行 `history upload` 后，服务端只产生**一件多图公开作品**，广场只展示封面，详情查看全部图片；回执必须为 `workId`、单元素 `workIds` 与 `imageCount`。未上传的本地任务仍不公开。Web 同一批次的并发模型请求也只产生一件作品。权威设计详见 [Handraw Web V3 架构](https://github.com/yang0/handraw-web/blob/main/docs/generation-works-v3.md) 和 [Issue #84](https://github.com/yang0/handraw-web/issues/84)。本文旧版逐图发布或二次发布相关表述均由 V3 覆盖。
+
+
 > 版本：v1.0 · 日期：2026-11-07 · 状态：后续开发的产品/架构基线；下述内容并非全部已经实现。  
 > 本文是适合公开 Skill 仓库的开发说明。跨仓库完整产品与架构设计以网站仓库主文档为准（该仓库为私有仓库，查看需要相应 GitHub 权限）。
 
