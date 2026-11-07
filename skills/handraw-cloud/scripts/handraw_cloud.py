@@ -266,6 +266,11 @@ def asset_push(args):
         state.data["assets"][key] = {"uid": real_uid, "revision": int(remote["revision"]),
                                       "sha256": sha, "metadata": fingerprint}
         state.save()
+        # Persist the cloud identity in the original local manifest to prevent
+        # a later pull from importing this same picture as a second asset.
+        if item.get("cloud_uid") != real_uid:
+            item["cloud_uid"] = real_uid
+            atomic_json(root / "library.json", manifest)
         results.append({"localId": local_id, "uid": real_uid,
                         "revision": remote["revision"], "deduped": bool(response.get("deduped"))})
     return {"results": results}
@@ -335,6 +340,7 @@ def asset_pull(args):
             tmp = output.with_name(output.name + "." + uuid.uuid4().hex + ".tmp")
             try:
                 tmp.write_bytes(image)
+                os.chmod(tmp, 0o600)
                 os.replace(tmp, output)
             finally:
                 tmp.unlink(missing_ok=True)
