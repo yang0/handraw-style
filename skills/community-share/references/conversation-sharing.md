@@ -4,7 +4,7 @@
 
 ## 作品广场接口
 
-- `GET /api/boot` 验证当前账号可用；使用现有个人 API Key（`Api-Key` 请求头），无需另建网站账号系统。
+- 首选网站 Device Authorization 授权的 `hwt_` 令牌：通过 `GET /api/auth/me` 验证账号与 `publish` scope，发布请求使用 Bearer 令牌。旧账号 API Key 模式仅作为迁移兼容，不能将管理员密钥用于用户发帖。
 - 图片先走 `POST /api/uploads`（JSON body：`{"dataUrl": "data:image/png;base64,...", "nameZh": "..."}`），返回站内 `/uploads/...` 地址；首图为 `entry.images[0]`，其余为附图。每件作品最多封面加8张附图，超过则拆分，不能静默丢图。
 - `POST /api/entries` 请求体为 `{"entry": {...}}`，设置 `title`、`prompt`、`originalRequest`、`images`、`styleIds`、`layoutId`、`requestId`。作品即时发布，不经审核。
 - `styleIds` 传实际使用的画风编号数组（如 `["FA-013"]`），`layoutId` 传图型编号（如 `SC-001`）。每件作品最多两个不同画风、一个图型；不使用的类别不传关联。**正文编号备注与正式关联都要保存**，不能只靠文字识别。
@@ -70,7 +70,7 @@ python -X utf8 skills/community-share/scripts/conversation_share.py publish --dr
 - 先校验编号与图片，再确认账号及作品发布权限，依次上传图片，创建一件免费作品；原始指令后仅附编号，不添加二阶段提示词、内部设计推理或整个聊天记录。
 - 回传真实广场作品链接；区分创建成功、内容回读和资产关联核验。相同草稿再次点击返回原链接，不重复创建作品。
 - 上传失败只补失败项。作品创建请求结果不明时停止自动重发，先核对作品广场，避免重复投稿；不得仅凭发起请求就报告成功。
-- 不登录时先引导当前用户绑定自己的个人 API Key。只读验证不会发帖；绑定完成后继续原草稿。
+- 不登录时优先引导运行 `python scripts/handraw_cloud.py bind` 获取网站设备授权，发布前要求 `publish` scope。只读账号验证不会发帖；绑定后继续原草稿。
 - 旧版已发布论坛帖保留原回执，不删除、覆盖或谎称已进入作品广场。需要继续分享到广场时，另建 `.handraw-work-share.json` 草稿和分享链接；可复用同账号且摘要匹配的上传记录，仍须用户在新草稿点击发布。
 
 ## 绑定账号
@@ -79,6 +79,6 @@ python -X utf8 skills/community-share/scripts/conversation_share.py publish --dr
 python -X utf8 skills/community-share/scripts/conversation_share.py bind
 ```
 
-密钥从标准输入传入，不作为命令行参数、按钮参数、分享正文或公开 Skill 内容。支持 `HANDRAW_COMMUNITY_API_KEY` 环境变量；默认本地绑定文件为安装包 `client/cache/conversation_share.auth.json`（被 Git 忽略）。已有用户级 community-share 凭据也可读取。输出只包含账号名与用户 ID，不回显密钥。
+**新推荐方式：** `python scripts/handraw_cloud.py bind`，通过网页设备码审批获得 scoped token，存于用户 `~/.handraw-style/cloud_auth.json`，分享工具会优先复用。旧 `conversation_share.py bind` 可兼容存量个人密钥，密钥仅从标准输入读取。任何方式均不可把令牌放入命令行参数、按钮参数、分享正文或公开 Git 文件。
 
 API 依据：[手绘风个人 API Key 与图文帖子接口](https://handraw-style.com/t/topic/29)。只向固定官方 HTTPS 域名发送 `Api-Key`；不附加 `Api-Username`，不跟随携带凭据的重定向。
