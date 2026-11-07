@@ -365,8 +365,11 @@ def asset_pull(args):
             # No tracked local hash means we cannot prove the local file is
             # unchanged; never overwrite it unless the user explicitly forces.
             if output.exists() and not args.force:
-                known = previous.get("sha256")
                 current = hashlib.sha256(output.read_bytes()).hexdigest()
+                # Recover a lost sync index only when the local file is
+                # byte-identical to the authenticated server's SHA256.
+                # Otherwise remain fail-closed and preserve local changes.
+                known = previous.get("sha256") or item.get("sha256")
                 if not known or current != known:
                     results.append({"uid": uid, "conflict": "本地图片未验证或已修改，保留本地文件"})
                     continue
