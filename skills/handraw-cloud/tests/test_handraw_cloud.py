@@ -260,6 +260,32 @@ class CloudBridgeTests(unittest.TestCase):
         self.assertEqual(stat.S_IMODE(private_file.stat().st_mode), 0o600)
         self.assertEqual(library.index()["resources"][0]["name"], "修改后的配方")
 
+    def test_pull_recovers_lost_sync_index_when_image_and_metadata_match(self):
+        root = self.make_lib()
+        uid = str(uuid.uuid4())
+        image = (root / "characters" / "CH-002.webp").read_bytes()
+        manifest = cloud.load_manifest(root)
+        manifest["characters"][0]["cloud_uid"] = uid
+        cloud.atomic_json(root / "library.json", manifest)
+        calls = []
+        def fake_request(self, method, path, body=None, **kwargs):
+            calls.append(path)
+            if path.endswith("/image"):
+                return image
+            return {"ok": True, "items": [{"uid": uid, "cat": "characters",
+                "localId": "CH-002", "name": "喵星人", "nameEn": "",
+                "tags": ["自建"], "revision": 7,
+                "sha256": hashlib.sha256(image).hexdigest(), "deletedAt": None}],
+                "hasMore": False}
+        with patch.object(cloud.API, "request", fake_request), \
+             patch.object(cloud, "ROOT", Path(self.tmp.name) / "package"):
+            result = cloud.asset_pull(SimpleNamespace(library_dir=str(root), force=False))
+        self.assertTrue(result["results"][0]["restored"])
+        self.assertEqual(cloud.SyncState(cloud.Credentials().read()).data["assets"][
+            cloud.key_for(root, "characters", "CH-002")]["revision"], 7)
+        self.assertEqual((root / "characters" / "CH-002.webp").read_bytes(), image)
+        self.assertTrue(any(path.endswith("/image") for path in calls))
+
     def test_history_requires_explicit_upload_and_keeps_local_copy(self):
         root = Path(self.tmp.name)
         img = root / "example.webp"
