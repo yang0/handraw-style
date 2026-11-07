@@ -365,7 +365,19 @@ def asset_pull(args):
         if not next_cursor or next_cursor == cursor:
             raise ValueError("服务端分页游标没有前进，停止同步避免循环")
         cursor = str(next_cursor)
-    return {"results": results, "note": "远端删除不会自动删除本地图片；可使用 custom-asset-manager 刷新画廊"}
+    # Refresh the ignored dynamic gallery index, never bake user assets into
+    # tracked HTML. Only do so for the configured active library.
+    config = read_json(profile_home() / "config.json")
+    active = Path(str(config.get("tuku_dir") or "")).expanduser()
+    manager_dir = ROOT / "skills" / "handdraw-style-prompter" / "scripts"
+    if config.get("tuku_dir") and active.is_dir() and active.resolve() == root and manager_dir.is_dir():
+        sys.path.insert(0, str(manager_dir))
+        try:
+            import custom_library_manager
+            custom_library_manager.export_custom_assets_js()
+        except Exception:
+            results.append({"warning": "图库已恢复，但本地画廊索引刷新失败，请运行 custom-asset-manager"})
+    return {"results": results, "note": "云端删除不会自动删除本地图片"}
 
 
 def resource_push(args):
@@ -410,6 +422,7 @@ def resource_restore(args):
     spec = spec_from_file_location("handraw_personal_resources", path)
     mod = module_from_spec(spec)
     spec.loader.exec_module(mod)
+    os.environ.setdefault("HANDRAW_SKILL_ROOT", str(ROOT))
     library = mod.Library()
     local = library.index()
     by_id = {r["id"]: r for r in local["resources"]}
@@ -472,7 +485,8 @@ def local_history_create(args):
     location = profile_home() / "generation-history" / rid
     if location.exists():
         raise ValueError("该生成 ID 已有记录，不覆盖")
-    location.mkdir(parents=True, exist_ok=False)
+    location.parent.mkdir(parents=True, mode=0o700, exist_ok=True)
+    location.mkdir(mode=0o700, exist_ok=False)
     files = []
     try:
         for idx, filename in enumerate(args.image):
@@ -485,6 +499,7 @@ def local_history_create(args):
                 raise ValueError("仅允许 PNG/JPEG/WebP 图片")
             output = location / f"{idx + 1:03d}{suffix}"
             shutil.copyfile(source, output)
+            os.chmod(output, 0o600)
             files.append({"file": output.name, "sha256": hashlib.sha256(output.read_bytes()).hexdigest()})
         record = {"runId": rid, "originClient": "skill", "status": "success",
                   "originalRequest": original, "images": files,
