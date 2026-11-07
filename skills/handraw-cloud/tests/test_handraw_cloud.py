@@ -188,6 +188,56 @@ class CloudBridgeTests(unittest.TestCase):
         self.assertEqual((root / "characters" / "CH-002.webp").read_bytes(), original)
 
 
+
+    def test_push_does_not_recreate_cloud_asset_when_revision_mapping_was_lost(self):
+        root = self.make_lib()
+        uid = str(uuid.uuid4())
+        manifest = cloud.load_manifest(root)
+        manifest["characters"][0]["cloud_uid"] = uid
+        cloud.atomic_json(root / "library.json", manifest)
+        # Simulate rebuilding the Skill installation without its sync-index file.
+        with patch.object(cloud.API, "request", side_effect=AssertionError("must not upload")):
+            with self.assertRaisesRegex(ValueError, "缺少版本记录"):
+                cloud.asset_push(SimpleNamespace(id="CH-002", library_dir=str(root), force=False))
+        self.assertEqual(cloud.load_manifest(root)["characters"][0]["cloud_uid"], uid)
+
+    def test_pull_does_not_erase_offline_name_and_tag_edits(self):
+        root = self.make_lib()
+        uid = str(uuid.uuid4())
+        original_image = (root / "characters" / "CH-002.webp").read_bytes()
+        # Capture the last synchronized metadata and original image hash.
+        manifest = cloud.load_manifest(root)
+        manifest["characters"][0]["cloud_uid"] = uid
+        cloud.atomic_json(root / "library.json", manifest)
+        state = cloud.SyncState(cloud.Credentials().read())
+        original_meta = {"cat": "characters", "localId": "CH-002",
+                         "name": "喵星人", "nameEn": "", "tags": ["自建"]}
+        state.data["assets"][cloud.key_for(root, "characters", "CH-002")] = {
+            "uid": uid, "revision": 1,
+            "sha256": hashlib.sha256(original_image).hexdigest(),
+            "metadata": hashlib.sha256(json.dumps(original_meta,
+                sort_keys=True, ensure_ascii=False).encode()).hexdigest()}
+        state.save()
+        manifest["characters"][0]["name"] = "离线改过的名称"
+        manifest["characters"][0]["tags"] = ["离线标签"]
+        cloud.atomic_json(root / "library.json", manifest)
+
+        def fake_request(self, method, path, body=None, **kwargs):
+            self.assert_no_remote_image = not path.endswith("/image")
+            if path.endswith("/image"):
+                raise AssertionError("must not download when metadata conflicts")
+            return {"ok": True, "items": [{"uid": uid, "cat": "characters",
+                "name": "云端改过的名称", "nameEn": "", "tags": ["云端标签"],
+                "revision": 2, "sha256": hashlib.sha256(original_image).hexdigest(),
+                "deletedAt": None}], "hasMore": False}
+        with patch.object(cloud.API, "request", fake_request):
+            result = cloud.asset_pull(SimpleNamespace(library_dir=str(root), force=False))
+        self.assertIn("conflict", result["results"][0])
+        after = cloud.load_manifest(root)["characters"][0]
+        self.assertEqual(after["name"], "离线改过的名称")
+        self.assertEqual(after["tags"], ["离线标签"])
+        self.assertEqual((root / "characters" / "CH-002.webp").read_bytes(), original_image)
+
     def test_history_requires_explicit_upload_and_keeps_local_copy(self):
         root = Path(self.tmp.name)
         img = root / "example.webp"
