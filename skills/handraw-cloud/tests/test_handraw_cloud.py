@@ -72,7 +72,8 @@ class CloudBridgeTests(unittest.TestCase):
                     "/api/x\nX-Injected", "/outside/api/works", "/api/x#frag"):
             with self.subTest(path=bad), self.assertRaises(ValueError):
                 api.request("GET", bad)
-        self.assertIsNone(cloud.RejectRedirect().redirect_request(None, None, 302, "", {}, "https://evil.test/") if False else None)
+        with self.assertRaises(ValueError):
+            cloud.RejectRedirect().redirect_request(None, None, 302, "", {}, "https://evil.test/")
 
     def test_missing_contract_fails_closed(self):
         class Opener:
@@ -117,10 +118,7 @@ class CloudBridgeTests(unittest.TestCase):
         root = self.make_lib()
         responses = []
         def fake_request(self, method, path, body=None, **kwargs):
-            self_case = fake_request
-            self_case.headers_seen = body
             responses.append((method, path))
-            self.assertTrue if False else None
             return {"ok": True, "item": {"uid": path.split("/")[-1], "revision": 1}}
         with patch.object(cloud.API, "request", fake_request):
             first = cloud.asset_push(SimpleNamespace(id=None, library_dir=str(root), force=False))
@@ -163,7 +161,6 @@ class CloudBridgeTests(unittest.TestCase):
             "uid": uid, "revision": 1, "sha256": "different_sha"}
         state.save()
         def fake_request(self, method, path, body=None, **kwargs):
-            self.assertFalse if False else None
             return {"ok": True, "items": [{
                 "uid": uid, "cat": "characters", "revision": 2,
                 "sha256": "abc", "deletedAt": None}], "hasMore": False}
@@ -241,6 +238,42 @@ class CloudBridgeTests(unittest.TestCase):
     def test_social_comment_empty_rejected(self):
         with self.assertRaises(ValueError):
             cloud.planned_comment(SimpleNamespace(id=str(uuid.uuid4()), text="   "))
+
+
+    def test_real_collection_toggle_is_explicit_not_a_toggle(self):
+        seen = []
+        def fake_request(self, method, path, body=None, **kwargs):
+            seen.append((method, path, body))
+            return {"ok": True, "collected": body["action"] == "set"}
+        with patch.object(cloud.API, "request", fake_request):
+            cloud.planned_collect(SimpleNamespace(id="work_0123abcd", remove=False))
+            cloud.planned_collect(SimpleNamespace(id="work_0123abcd", remove=True))
+        self.assertEqual(seen[0][1], "/api/collections/toggle")
+        self.assertEqual(seen[0][2]["bucket"], "works")
+        self.assertEqual([p[2]["action"] for p in seen], ["set", "unset"])
+
+    def test_public_work_read_uses_no_token(self):
+        recorded = []
+        def fake_request(self, method, path, body=None, **kwargs):
+            recorded.append((self.token, path))
+            return {"ok": True, "work": {"comments": [{"text": "hello"}]}}
+        with patch.object(cloud.API, "request", fake_request):
+            comments = cloud.public_comments(SimpleNamespace(id="work_0123abcd"))
+        self.assertIsNone(recorded[0][0])
+        self.assertEqual(comments["comments"][0]["text"], "hello")
+        with self.assertRaises(ValueError):
+            cloud.public_comments(SimpleNamespace(id="../secret"))
+
+    def test_history_copy_permissions_are_private(self):
+        root = Path(self.tmp.name)
+        (root / "prompt.txt").write_text("private prompt", encoding="utf-8")
+        (root / "source.webp").write_bytes(b"RIFF\x04\x00\x00\x00WEBPtest")
+        row = cloud.local_history_create(SimpleNamespace(
+            image=[str(root / "source.webp")],
+            original_request_file=str(root / "prompt.txt"), run_id=None))
+        folder = root / "generation-history" / row["runId"]
+        self.assertEqual(stat.S_IMODE(folder.stat().st_mode), 0o700)
+        self.assertEqual(stat.S_IMODE((folder / "001.webp").stat().st_mode), 0o600)
 
 
 if __name__ == "__main__":
