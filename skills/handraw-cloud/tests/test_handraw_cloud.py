@@ -314,7 +314,8 @@ class CloudBridgeTests(unittest.TestCase):
         def fake_request(self, method, path, body=None, **kwargs):
             sent.append((method, path, body))
             return {"ok": True, "id": "skillgen_test", "visibility": "public",
-                    "workIds": ["work_public_1"]}
+                    "workId": "work_public_1",
+                    "workIds": ["work_public_1"], "imageCount": 1}
         with patch.object(cloud.API, "request", fake_request):
             receipt = cloud.local_history_upload(SimpleNamespace(run_id=created["runId"]))
         self.assertEqual(sent[0][0:2], ("POST", "/api/v1/me/generations"))
@@ -322,9 +323,47 @@ class CloudBridgeTests(unittest.TestCase):
         self.assertEqual(sent[0][2]["originalRequest"], "公开的原始创作需求")
         self.assertEqual(receipt["visibility"], "public")
         self.assertEqual(receipt["workIds"], ["work_public_1"])
+        self.assertEqual(receipt["workId"], "work_public_1")
+        self.assertEqual(receipt["imageCount"], 1)
         local = cloud.read_json(root / "generation-history" / created["runId"] / "record.json")
         self.assertEqual(local["cloudState"], "synced")
         self.assertEqual(local["workIds"], ["work_public_1"])
+
+    def test_multi_image_skill_upload_has_only_one_work_and_valid_receipt(self):
+        root = Path(self.tmp.name)
+        prompt = root / "prompt.txt"
+        prompt.write_text("两张图同一个作品", encoding="utf-8")
+        images = []
+        for i in range(2):
+            image_path = root / f"image_{i}.png"
+            image_path.write_bytes(b"\x89PNG\r\n\x1a\n" + bytes([i]))
+            images.append(str(image_path))
+        created = cloud.local_history_create(SimpleNamespace(
+            image=images, original_request_file=str(prompt), run_id=None))
+        sent = []
+        def fake_request(self, method, path, body=None, **kwargs):
+            sent.append(body)
+            return {"ok": True, "id": "skillgen_multi", "visibility": "public",
+                    "workId": "work_multi", "workIds": ["work_multi"], "imageCount": 2}
+        with patch.object(cloud.API, "request", fake_request):
+            receipt = cloud.local_history_upload(SimpleNamespace(run_id=created["runId"]))
+        self.assertEqual(len(sent[0]["images"]), 2)
+        self.assertEqual(receipt["workIds"], ["work_multi"])
+        self.assertEqual(receipt["imageCount"], 2)
+        saved = cloud.read_json(root / "generation-history" / created["runId"] / "record.json")
+        self.assertEqual(saved["workId"], "work_multi")
+
+        # No false synchronization if a server mistakenly acknowledges only
+        # some image results, or returns one work for each image.
+        second = cloud.local_history_create(SimpleNamespace(
+            image=images, original_request_file=str(prompt), run_id=None))
+        def bad_request(self, method, path, body=None, **kwargs):
+            return {"ok": True, "workId": "w1", "workIds": ["w1", "w2"], "imageCount": 2}
+        with patch.object(cloud.API, "request", bad_request):
+            with self.assertRaises(ValueError):
+                cloud.local_history_upload(SimpleNamespace(run_id=second["runId"]))
+        still_local = cloud.read_json(root / "generation-history" / second["runId"] / "record.json")
+        self.assertEqual(still_local["cloudState"], "local_only")
 
     def test_history_server_failure_does_not_mark_synced(self):
         root = Path(self.tmp.name)
