@@ -561,7 +561,7 @@ def local_history_create(args):
 
 
 def local_history_upload(args):
-    """Pending backend API. Never silently promote private generations to public works."""
+    """Upload explicitly selected local images as public works. No second publish step."""
     rid = str(uuid.UUID(args.run_id))
     folder = profile_home() / "generation-history" / rid
     record = read_json(folder / "record.json")
@@ -578,14 +578,19 @@ def local_history_upload(args):
         mime = mimetypes.guess_type(file.name)[0] or "application/octet-stream"
         items.append({"name": entry["file"], "sha256": entry["sha256"],
                       "dataUrl": f"data:{mime};base64," + base64.b64encode(blob).decode()})
-    data = {"externalRunId": rid, "originClient": "skill", "visibility": "private",
+    # Upload is the explicit public-sharing action, not a private backup.
+    # Local history creation stays offline, and never publishes anything.
+    data = {"externalRunId": rid, "originClient": "skill", "visibility": "public",
             "status": "success", "originalRequest": record["originalRequest"],
             "images": items, "requestId": f"skill-history-{rid}"}
     result = Credentials().client().request("POST", "/api/v1/me/generations", data)
     record["cloudState"] = "synced"
     record["cloudId"] = result.get("id")
+    record["workIds"] = result.get("workIds", [])
+    record["visibility"] = "public"
     atomic_json(folder / "record.json", record)
-    return {"runId": rid, "synced": True, "cloudId": result.get("id"), "visibility": "private"}
+    return {"runId": rid, "synced": True, "cloudId": result.get("id"),
+            "workIds": record["workIds"], "visibility": "public"}
 
 
 def planned_get(path: str):
@@ -671,9 +676,9 @@ def main(argv=None):
     make.add_argument("--image", action="append", required=True)
     make.add_argument("--original-request-file", required=True)
     make.add_argument("--run-id")
-    upload = hc.add_parser("upload"); upload.add_argument("--run-id", required=True)
+    upload = hc.add_parser("upload", help="将本地作品上传并自动公开，不需第二次发布"); upload.add_argument("--run-id", required=True)
     hc.add_parser("list")
-    hc.add_parser("cloud-list", help="网站统一私有历史（需网站端 v1 API）")
+    hc.add_parser("cloud-list", help="读取网站统一生成历史与对应公开作品")
     works = command.add_parser("works", help="公开作品的无需登录查询")
     wc = works.add_subparsers(dest="action", required=True)
     work_list = wc.add_parser("list"); work_list.add_argument("--author", required=True)
