@@ -584,13 +584,23 @@ def local_history_upload(args):
             "status": "success", "originalRequest": record["originalRequest"],
             "images": items, "requestId": f"skill-history-{rid}"}
     result = Credentials().client().request("POST", "/api/v1/me/generations", data)
+    # V3: one uploaded run -> one canonical multi-image work. A partial or
+    # malformed acknowledgement must never mark the local history as synced.
+    work_id = str(result.get("workId") or "").strip()
+    work_ids = result.get("workIds")
+    if (not work_id or work_ids != [work_id] or
+            result.get("imageCount") != len(items)):
+        raise ValueError("云端未确认整批图片属于同一件作品；本地记录未标记为已同步")
     record["cloudState"] = "synced"
     record["cloudId"] = result.get("id")
-    record["workIds"] = result.get("workIds", [])
+    record["workId"] = work_id
+    record["workIds"] = [work_id]
+    record["imageCount"] = len(items)
     record["visibility"] = "public"
     atomic_json(folder / "record.json", record)
     return {"runId": rid, "synced": True, "cloudId": result.get("id"),
-            "workIds": record["workIds"], "visibility": "public"}
+            "workId": work_id, "workIds": [work_id],
+            "imageCount": len(items), "visibility": "public"}
 
 
 def planned_get(path: str):
