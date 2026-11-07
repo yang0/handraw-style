@@ -238,6 +238,28 @@ class CloudBridgeTests(unittest.TestCase):
         self.assertEqual(after["tags"], ["离线标签"])
         self.assertEqual((root / "characters" / "CH-002.webp").read_bytes(), original_image)
 
+    def test_private_style_definitions_use_owner_only_file_permissions(self):
+        resource_file = ROOT / "skills" / "personal-library" / "scripts" / "personal_library.py"
+        resource_spec = importlib.util.spec_from_file_location("personal_resource_permission_test", resource_file)
+        resource_module = importlib.util.module_from_spec(resource_spec)
+        resource_spec.loader.exec_module(resource_module)
+        library = resource_module.Library(root=Path(self.tmp.name) / "private-resources")
+        record = {"schema_version": 1, "resources": [{
+            "id": "mine:" + str(uuid.uuid4()), "kind": "style", "section": "owned",
+            "name": "私有创作配方", "prompt_zh": "私人画风定义",
+            "prompt_en": "Private style definition", "license": "个人使用"}]}
+        library.write(record)
+        private_file = library.root / "library.json"
+        private_mirror = Path(os.environ["HANDRAW_SKILL_ROOT"]) / ".handraw-personal"
+        self.assertEqual(stat.S_IMODE(library.root.stat().st_mode), 0o700)
+        self.assertEqual(stat.S_IMODE(private_file.stat().st_mode), 0o600)
+        self.assertEqual(stat.S_IMODE(private_mirror.stat().st_mode), 0o700)
+        self.assertEqual(stat.S_IMODE((private_mirror / "library.js").stat().st_mode), 0o600)
+        record["resources"][0]["name"] = "修改后的配方"
+        library.write(record)
+        self.assertEqual(stat.S_IMODE(private_file.stat().st_mode), 0o600)
+        self.assertEqual(library.index()["resources"][0]["name"], "修改后的配方")
+
     def test_history_requires_explicit_upload_and_keeps_local_copy(self):
         root = Path(self.tmp.name)
         img = root / "example.webp"
