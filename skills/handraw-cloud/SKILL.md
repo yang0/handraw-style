@@ -1,6 +1,6 @@
 ---
 name: handraw-cloud
-description: 手绘风网站账号绑定、自建图库私有同步、个人画风图型同步、授权收藏下载、私有生成历史、作品发布和跨端互动。仅在用户明确操作时上传和发布。
+description: 手绘风网站账号绑定、自建图库私有同步、个人画风图型同步、授权收藏下载、生成历史本地保存、用户执行上传即公开作品和跨端互动。仅在用户明确操作时上传。
 ---
 
 # Handraw 统一账号与个人云空间（Skill 客户端）
@@ -54,7 +54,7 @@ python scripts/handraw_cloud.py resources restore
 - 新建画风仅描述视觉语言（媒介、线条、材质、色彩、光影），不提取参考图人物、服饰或场景。图型只保存布局约束。
 - 私人画风不会因为同步到账号自动公开；社区资源不能作为个人原创再次上传。
 
-## P2 生成历史（私有）与主动发布
+## P2 生成历史（本地记录）与自动公开作品
 
 ```sh
 python scripts/handraw_cloud.py history record --original-request-file /path/original-request.txt --image /path/01.png --image /path/02.png
@@ -63,15 +63,15 @@ python scripts/handraw_cloud.py history cloud-list
 python scripts/handraw_cloud.py history upload --run-id <本地runId>
 ```
 
-`record` 仅在本地保存原始指令及图片副本；`upload` 需要网站端实现规划中的 `POST /api/v1/me/generations` 私有历史 API，接口未上线时不伪装同步成功，也不向公开作品接口传递私人历史。
+**公开规则：** `record` 只在本地保存原始创作指令和图片，不上传、不公开。**执行 `history upload` 就是公开提交**：图片和原始创作指令通过 `POST /api/v1/me/generations` 提交，服务端为每张成功上传的图片创建公开作品，并返回 `workIds`。**不再有单独“发布到作品广场”步骤。** 上传前务必确认图片和完整原始指令可公开；请勿上传涉及私人信息、商业秘密或不具备公开权限的内容。失败时仍保留本地记录；重试同一 `runId` 不应重复创建作品。旧版已同步私有历史不会自动公开，也不能通过重试改为公开；须建立新的上传记录。
 
-作品发布复用已有 `community-share` 草稿与预览；只有用户明确点击分享/回复分享到网站时：
+如果创作已通过 `community-share` 准备了作品草稿，也可以沿用已有直接发布命令（这不是二次发布生成历史）：
 
 ```sh
 python scripts/handraw_cloud.py publish --draft /path/.handraw-share.json
 ```
 
-使用设备令牌和现有 `/api/uploads`、`/api/entries` 发布。先审阅公开标题、图片、原始创作指令和关联的资源。超时结果未确认时停止重复发布以避免双发。成功回执是网站作品链接，非论坛替代帖子。分享客户端使用不带令牌的公开作品详情接口尝试回读验证；如果网站尚未返回一致的图片/关联信息、尚未传播或接口临时不可达，回执可能显示 `verified=false`，这不表示一定未发布，也不能声称关联已经核验。
+使用设备令牌和现有 `/api/uploads`、`/api/entries` 发布。执行前先审阅公开标题、图片、原始创作指令和关联资源。超时结果未确认时停止重复发布以避免双发。成功回执是网站作品链接，非论坛替代帖子。分享客户端使用不带令牌的公开作品详情接口尝试回读验证；如果网站尚未返回一致的图片/关联信息、尚未传播或接口临时不可达，回执可能显示 `verified=false`，这不表示一定未发布，也不能声称关联已经核验。
 
 ## P3 网站互动（客户端已实现待服务端授权）
 
