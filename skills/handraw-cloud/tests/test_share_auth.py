@@ -32,6 +32,28 @@ class ScopedShareTests(unittest.TestCase):
         with self.assertRaises(share.APIRejected):
             client.check_work_access()
 
+    def test_device_readback_uses_public_works_without_credentials(self):
+        from uuid import uuid4
+        wid = str(uuid4())
+        seen = []
+        class Response:
+            def __enter__(self):
+                return self
+            def __exit__(self, *args):
+                return None
+            def read(self, count=-1):
+                return json.dumps({"ok": True, "work": {"id": wid, "images": []}}).encode()
+        class Opener:
+            def open(self, request, timeout=20):
+                seen.append(request)
+                return Response()
+        with patch.object(share.urllib.request, "build_opener", return_value=Opener()):
+            data = share.CommunityAPI("hwt_test_fixture_token").get_work(wid)
+        self.assertEqual(data["resource"]["id"], wid)
+        self.assertEqual(seen[0].full_url, "https://handraw-style.com/api/works/" + wid)
+        self.assertNotIn("Authorization", seen[0].headers)
+        self.assertNotIn("Api-key", seen[0].headers)
+
     def test_local_device_credential_is_preferred(self):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp) / "cloud_auth.json"
