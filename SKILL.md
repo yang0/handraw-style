@@ -5,6 +5,10 @@ description: Turn a 001–368 hand-drawn and realistic style number and image th
 
 # Hand-drawn Style Prompter
 
+## Skill 与网站统一账号及个人云空间
+
+当用户要求绑定网站账号、保存/恢复私有图库、同步个人画风图型、获取已授权收藏、保存生成历史或分享/互动时，读取 [handraw-cloud Skill](skills/handraw-cloud/SKILL.md)。入口为 `python scripts/handraw_cloud.py`。账号绑定使用官网设备码授权，私有资源上传和公开作品发布始终需要用户明确指令；不能因生成图片成功而自动上传或发布。云端 `/api/v1` 个人资源、生成历史和互动契约未部署时应明确说明依赖，不可报告已完成同步。
+
 This is the install entrypoint for the complete hand-drawn style package.
 The package root contains the `images/` gallery and numbered reference assets;
 the operational contract is [skills/handdraw-style-prompter/SKILL.md](skills/handdraw-style-prompter/SKILL.md).
