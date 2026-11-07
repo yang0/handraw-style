@@ -16,6 +16,24 @@
 
 两仓库属于同一个产品，但各自有独立代码、发布和测试。不要从公共 Skill 仓库复制网站私有配置、生产日志、数据库、令牌或部署细节。
 
+## 本分支实现进度（2026-11-07）
+
+本仓库已经增加 `skills/handraw-cloud/`、`scripts/handraw_cloud.py` 和离线回归测试，所有功能仅在开发分支，**尚未合并 master、未发布 Skill 安装包、未通过生产账号的端到端验收**。
+
+| 阶段 | Skill 客户端代码状态 | 可联通的现有后端 | 仍需 handraw-web 支持 |
+| --- | --- | --- | --- |
+| P0 登录 | 设备码绑定、Bearer 身份校验、凭据清理已编码并有离线测试 | `/api/auth/device`、`/api/auth/me` | 真实网站浏览器授权回归与多端验收 |
+| P1 图库 | 自建 WebP 上传/下载/冲突防覆盖、云端 UID、画廊本地索引刷新已编码 | `/api/library/assets` | 跨设备大规模验证；参考图独立分类 |
+| P1 个人画风/图型 | 私有 push、restore、版本冲突保护客户端已编码；授权资源 list/pull 复用现有客户端 | `/api/skill/library`、受控资源内容 API | `GET/PUT /api/v1/me/resources` 与 `library` scope |
+| P2 生成/发布 | 私有生成记录和本地副本、云端上传客户端、设备令牌作品发布兼容已编码 | `/api/uploads`、`/api/entries` | 私有生成历史 `/api/v1/me/generations`；发布生产验收/回读权限 |
+| P3 互动 | 公开作品/评论读取和收藏走现有 API；点赞、提交评论、通知客户端已编码 | `/api/works/*`（公开读取）、`/api/collections/toggle` | 点赞/评论写入/通知适配 API 和对应令牌 scope |
+
+已知限制：没有新 `/api/v1` 时，涉及这些服务端依赖的命令会明确返回 403/404，不会误写本地“同步成功”。当前 `publish` scope 无公开作品回读能力，成功发布后的完整关联核验可能显示 `verified=false`，应以服务端读回能力补齐。用户的本地生成历史不会因为执行 `record` 就被上传或公开。
+
+源码使用方式：在**完整 handraw-style 仓库或 full ecosystem 包**执行 `python scripts/handraw_cloud.py --help`。现有仅含单个画风提示词的 standalone ZIP 不包含额外 `handraw-cloud` 子 Skill 及其依赖，不应把该发行版宣称为支持云空间。
+
+离线回归工作流：`.github/workflows/skill-cloud-tests.yml`，覆盖设备授权、请求来源限制、图库版本、冲突/权限、历史私有文件、作品分享令牌兼容。联机真实验收必须由两个仓库完成。
+
 ## 产品目标
 
 Handraw = 一个网站账号 + 一个个人创作空间 + Skill 和网站两种创作入口 + 一个作品和社区生态。
