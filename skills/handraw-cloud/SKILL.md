@@ -46,6 +46,7 @@ python scripts/personal_library.py create --kind style --name "纸感水彩" --z
 python scripts/handraw_cloud.py resources list
 python scripts/handraw_cloud.py resources pull --id <已解锁资源ID>
 python scripts/handraw_cloud.py resources push --id mine:<个人资源UUID>
+python scripts/handraw_cloud.py resources restore
 ```
 
 - `list/pull` 使用网站已有 `/api/skill/library` 和受控资源内容接口，**只拉取已获得完整内容访问权**的资源；本地收藏保留原作者与授权信息。
@@ -58,6 +59,7 @@ python scripts/handraw_cloud.py resources push --id mine:<个人资源UUID>
 ```sh
 python scripts/handraw_cloud.py history record --original-request-file /path/original-request.txt --image /path/01.png --image /path/02.png
 python scripts/handraw_cloud.py history list
+python scripts/handraw_cloud.py history cloud-list
 python scripts/handraw_cloud.py history upload --run-id <本地runId>
 ```
 
@@ -77,10 +79,15 @@ python scripts/handraw_cloud.py publish --draft /path/.handraw-share.json
 python scripts/handraw_cloud.py social notifications
 python scripts/handraw_cloud.py social comments --id <作品UUID>
 python scripts/handraw_cloud.py social like --id <作品UUID>
-python scripts/handraw_cloud.py social like --id <作品UUID> --remove
+python scripts/handraw_cloud.py social like --id <作品ID> --remove
+python scripts/handraw_cloud.py social comment --id <作品ID> --text "作品评论"
+python scripts/handraw_cloud.py social collect --id <作品ID>
+python scripts/handraw_cloud.py social collect --id <作品ID> --remove
+python scripts/handraw_cloud.py works list --author <作者用户名>
+python scripts/handraw_cloud.py works detail --id <作品ID>
 ```
 
-这些命令调用规划中的 `/api/v1` 统一业务接口；服务端未部署对应 API 和设备权限时，返回明确错误。**不得调用论坛管理员 API 或绕过授权模拟用户互动。**
+作品浏览与评论读取通过现有公开 `/api/works` API，作品收藏直接复用现有 `/api/collections/toggle`，可在服务端现有接口允许时使用。点赞、评论提交和通知属于规划中的 `/api/v1` 客户端接口；服务端未部署对应 API 和设备权限时，返回明确错误。**不得调用论坛管理员 API 或绕过授权模拟用户互动。**
 
 ## 失败恢复与安全
 
