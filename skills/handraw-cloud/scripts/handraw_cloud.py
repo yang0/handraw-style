@@ -529,9 +529,34 @@ def planned_get(path: str):
     return Credentials().client().request("GET", path)
 
 
+def work_id(value: str) -> str:
+    # Published works may use both UUIDs and legacy 'work_...' IDs.
+    clean = str(value or "").strip()
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,100}", clean):
+        raise ValueError("作品 ID 格式不安全")
+    return clean
+
+
+def public_work(args):
+    return API().request("GET", "/api/works/" + work_id(args.id))
+
+
+def public_comments(args):
+    response = public_work(args)
+    work = response.get("work") or {}
+    return {"id": work_id(args.id), "comments": work.get("comments", [])}
+
+
+def public_works(args):
+    if not args.author:
+        raise ValueError("请指定公开作品作者用户名")
+    query = urllib.parse.urlencode({"author": args.author, "limit": "24"})
+    return API().request("GET", "/api/works/feed?" + query)
+
+
 def planned_like(args):
     return Credentials().client().request("POST",
-        "/api/v1/works/" + str(uuid.UUID(args.id)) + "/likes", {"liked": not args.remove})
+        "/api/v1/works/" + work_id(args.id) + "/likes", {"liked": not args.remove})
 
 
 def planned_comment(args):
@@ -539,14 +564,16 @@ def planned_comment(args):
     if not 1 <= len(text) <= 3000:
         raise ValueError("评论内容长度需为 1–3000 字符")
     return Credentials().client().request("POST",
-        "/api/v1/works/" + str(uuid.UUID(args.id)) + "/comments",
+        "/api/v1/works/" + work_id(args.id) + "/comments",
         {"text": text, "requestId": "skill-comment-" + str(uuid.uuid4())})
 
 
 def planned_collect(args):
-    return Credentials().client().request("POST",
-        "/api/v1/works/" + str(uuid.UUID(args.id)) + "/collections",
-        {"collected": not args.remove})
+    # This route and explicit 'set/unset' actions already exist in handraw-web
+    # and are permitted by the current library-scoped device tokens.
+    return Credentials().client().request("POST", "/api/collections/toggle",
+        {"bucket": "works", "id": work_id(args.id),
+         "action": "unset" if args.remove else "set"})
 
 
 def output(value):
@@ -584,6 +611,10 @@ def main(argv=None):
     upload = hc.add_parser("upload"); upload.add_argument("--run-id", required=True)
     hc.add_parser("list")
     hc.add_parser("cloud-list", help="网站统一私有历史（需网站端 v1 API）")
+    works = command.add_parser("works", help="公开作品的无需登录查询")
+    wc = works.add_subparsers(dest="action", required=True)
+    work_list = wc.add_parser("list"); work_list.add_argument("--author", required=True)
+    work_detail = wc.add_parser("detail"); work_detail.add_argument("--id", required=True)
     social = command.add_parser("social")
     sc = social.add_subparsers(dest="action", required=True)
     sc.add_parser("notifications")
@@ -634,11 +665,13 @@ def main(argv=None):
         else:
             folder = profile_home() / "generation-history"
             output({"records": [read_json(p) for p in sorted(folder.glob("*/record.json"))] if folder.exists() else []})
+    elif args.command == "works":
+        output(public_works(args) if args.action == "list" else public_work(args))
     elif args.command == "social":
         if args.action == "notifications":
             output(planned_get("/api/v1/me/notifications"))
         elif args.action == "comments":
-            output(planned_get("/api/v1/works/" + str(uuid.UUID(args.id)) + "/comments"))
+            output(public_comments(args))
         elif args.action == "like":
             output(planned_like(args))
         elif args.action == "comment":
