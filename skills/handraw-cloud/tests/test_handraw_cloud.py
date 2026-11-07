@@ -303,6 +303,29 @@ class CloudBridgeTests(unittest.TestCase):
             cloud.local_history_create(SimpleNamespace(image=[str(img)],
                 original_request_file=str(text), run_id=data["runId"]))
 
+    def test_explicit_history_upload_creates_public_works_without_second_publish(self):
+        root = Path(self.tmp.name)
+        (root / "prompt.txt").write_text("公开的原始创作需求", encoding="utf-8")
+        (root / "image.png").write_bytes(b"\\x89PNG\\r\\n\\x1a\\nPUBLIC")
+        created = cloud.local_history_create(SimpleNamespace(
+            image=[str(root / "image.png")],
+            original_request_file=str(root / "prompt.txt"), run_id=None))
+        sent = []
+        def fake_request(self, method, path, body=None, **kwargs):
+            sent.append((method, path, body))
+            return {"ok": True, "id": "skillgen_test", "visibility": "public",
+                    "workIds": ["work_public_1"]}
+        with patch.object(cloud.API, "request", fake_request):
+            receipt = cloud.local_history_upload(SimpleNamespace(run_id=created["runId"]))
+        self.assertEqual(sent[0][0:2], ("POST", "/api/v1/me/generations"))
+        self.assertEqual(sent[0][2]["visibility"], "public")
+        self.assertEqual(sent[0][2]["originalRequest"], "公开的原始创作需求")
+        self.assertEqual(receipt["visibility"], "public")
+        self.assertEqual(receipt["workIds"], ["work_public_1"])
+        local = cloud.read_json(root / "generation-history" / created["runId"] / "record.json")
+        self.assertEqual(local["cloudState"], "synced")
+        self.assertEqual(local["workIds"], ["work_public_1"])
+
     def test_history_server_failure_does_not_mark_synced(self):
         root = Path(self.tmp.name)
         (root / "prompt.txt").write_text("测试生成", encoding="utf-8")
