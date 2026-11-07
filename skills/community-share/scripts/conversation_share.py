@@ -328,9 +328,23 @@ class CommunityAPI:
             "application/json; charset=utf-8")
 
     def get_work(self, entry_id):
-        # handraw-web serves a work through the forum resource API, which
-        # returns the resource record plus its curation/thread context.
-        return self.request("GET", f"/api/forum/resources/work/{uuid.UUID(str(entry_id))}")
+        # Device tokens intentionally cannot read unrelated authenticated API
+        # routes. Public published-work detail is readable anonymously and
+        # offers a safe readback without broadening the publish token scope.
+        work_id = str(uuid.UUID(str(entry_id)))
+        if self.key.startswith("hwt_"):
+            req = urllib.request.Request(
+                BASE_URL + "/api/works/" + work_id,
+                headers={"Accept": "application/json", "User-Agent": "HandrawConversationShare/1.0"},
+                method="GET",
+            )
+            class NoRedirect(urllib.request.HTTPRedirectHandler):
+                def redirect_request(self, *args, **kwargs):
+                    return None
+            with urllib.request.build_opener(NoRedirect).open(req, timeout=20) as resp:
+                result = json.loads(resp.read(2 * 1024 * 1024 + 1))
+            return {"resource": result.get("work") or {}}
+        return self.request("GET", f"/api/forum/resources/work/{work_id}")
 
     def get_work_content(self, entry_id):
         # The same resource payload carries the work's prompt and images, so the
@@ -397,8 +411,13 @@ def publish_draft(path, api):
             if image_record(record["path"])["sha256"] != record["sha256"]:
                 raise ValueError("图片已更改，请重新准备分享草稿。")
         account = api.current_user()
-        if draft.get("account") and draft["account"] != account:
-            raise ValueError("该草稿已有其他账号的上传记录，请使用原账号继续。")
+        if draft.get("account"):
+            previous = draft["account"]
+            # During migration a legacy account may have numeric user_id while
+            # the scoped /api/auth/me response exposes only username. Compare
+            # the stable website username rather than treating None as another user.
+            if not isinstance(previous, dict) or previous.get("username") != account.get("username"):
+                raise ValueError("该草稿已有其他账号的上传记录，请使用原账号继续。")
         api.check_work_access()
         draft["account"] = account
         draft["destination"] = "work_square"
