@@ -26,7 +26,7 @@ from pathlib import Path
 
 BASE_URL = "https://handraw-style.com"
 MAX_JSON = 4 * 1024 * 1024
-MAX_IMAGE = 24 * 1024 * 1024
+MAX_IMAGE = 15 * 1024 * 1024
 CATEGORIES = ("characters", "props", "scenes")
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -312,7 +312,9 @@ def asset_pull(args):
                 continue
             existing = next((p for p in manifest[cat] if p.get("cloud_uid") == uid), None)
             if existing:
-                local_id = existing["id"]
+                local_id = str(existing["id"])
+                if not id_is_safe(local_id):
+                    raise ValueError("本地图库索引包含不安全的资产 ID")
             else:
                 wanted = str(item.get("localId") or "")
                 occupied = {p.get("id") for p in manifest[cat]}
@@ -326,11 +328,13 @@ def asset_pull(args):
                 continue
             if output.exists() and not existing:
                 raise ValueError(f"本地路径冲突，不覆盖：{output}")
-            # Do not overwrite a modified local image, even if this was previously synced.
-            if output.exists() and previous.get("sha256"):
+            # No tracked local hash means we cannot prove the local file is
+            # unchanged; never overwrite it unless the user explicitly forces.
+            if output.exists() and not args.force:
+                known = previous.get("sha256")
                 current = hashlib.sha256(output.read_bytes()).hexdigest()
-                if current != previous["sha256"] and not args.force:
-                    results.append({"uid": uid, "conflict": "本地图片已修改，保留本地文件"})
+                if not known or current != known:
+                    results.append({"uid": uid, "conflict": "本地图片未验证或已修改，保留本地文件"})
                     continue
             raw = api.request("GET", "/api/library/assets/" + uid + "/image", raw=True)
             if item.get("sha256") and hashlib.sha256(raw).hexdigest() != item["sha256"]:
@@ -491,8 +495,9 @@ def local_history_create(args):
     try:
         for idx, filename in enumerate(args.image):
             source = Path(filename).expanduser()
-            if not source.is_file() or source.is_symlink() or source.stat().st_size > MAX_IMAGE:
-                raise ValueError("图片不存在、是符号链接或超过大小限制")
+            if (not source.is_file() or source.is_symlink() or
+                    not 0 < source.stat().st_size <= MAX_IMAGE):
+                raise ValueError("图片不存在、为空、是符号链接或超过大小限制")
             # The original extension is preserved. Never serve this directory publicly.
             suffix = source.suffix.lower()
             if suffix not in (".png", ".jpg", ".jpeg", ".webp"):
