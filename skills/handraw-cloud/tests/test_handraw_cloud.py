@@ -42,7 +42,7 @@ class CloudBridgeTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.env = patch.dict(os.environ, {"HANDRAW_PROFILE_HOME": self.tmp.name}, clear=False)
+        self.env = patch.dict(os.environ, {"HANDRAW_PROFILE_HOME": self.tmp.name, "HANDRAW_SKILL_ROOT": str(Path(self.tmp.name) / "skill-install")}, clear=False)
         self.env.start()
         self.addCleanup(self.env.stop)
         cloud.Credentials().save({"token": "hwt_fixture", "user": {"username": "tester"},
@@ -141,7 +141,8 @@ class CloudBridgeTests(unittest.TestCase):
                 "nameEn": "Cloud role", "tags": [], "revision": 1,
                 "sha256": hashlib.sha256(blob).hexdigest(), "deletedAt": None}],
                 "hasMore": False}
-        with patch.object(cloud.API, "request", fake_request):
+        with patch.object(cloud.API, "request", fake_request), \
+             patch.object(cloud, "ROOT", Path(self.tmp.name) / "package"):
             result = cloud.asset_pull(SimpleNamespace(library_dir=str(root), force=False))
         item = [p for p in cloud.load_manifest(root)["characters"] if p.get("cloud_uid") == uid][0]
         self.assertNotEqual(item["id"], "CH-002")  # no overwrite of unrelated local asset
@@ -164,9 +165,28 @@ class CloudBridgeTests(unittest.TestCase):
             return {"ok": True, "items": [{
                 "uid": uid, "cat": "characters", "revision": 2,
                 "sha256": "abc", "deletedAt": None}], "hasMore": False}
-        with patch.object(cloud.API, "request", fake_request):
+        with patch.object(cloud.API, "request", fake_request), \
+             patch.object(cloud, "ROOT", Path(self.tmp.name) / "package"):
             result = cloud.asset_pull(SimpleNamespace(library_dir=str(root), force=False))
-        self.assertEqual(result["results"][0]["conflict"], "本地图片已修改，保留本地文件")
+        self.assertEqual(result["results"][0]["conflict"], "本地图片未验证或已修改，保留本地文件")
+
+    def test_pull_without_tracked_hash_never_overwrites_existing_file(self):
+        root = self.make_lib()
+        uid = str(uuid.uuid4())
+        manifest = cloud.load_manifest(root)
+        manifest["characters"][0]["cloud_uid"] = uid
+        cloud.atomic_json(root / "library.json", manifest)
+        def fake_request(self, method, path, body=None, **kwargs):
+            return {"ok": True, "items": [{
+                "uid": uid, "cat": "characters", "revision": 4,
+                "sha256": "abc", "deletedAt": None}], "hasMore": False}
+        with patch.object(cloud.API, "request", fake_request), \
+             patch.object(cloud, "ROOT", Path(self.tmp.name) / "package"):
+            result = cloud.asset_pull(SimpleNamespace(library_dir=str(root), force=False))
+        self.assertIn("conflict", result["results"][0])
+        self.assertEqual((root / "characters" / "CH-002.webp").read_bytes(),
+                         b"RIFF\\x04\\x00\\x00\\x00WEBPTESTDATA")
+
 
     def test_history_requires_explicit_upload_and_keeps_local_copy(self):
         root = Path(self.tmp.name)
