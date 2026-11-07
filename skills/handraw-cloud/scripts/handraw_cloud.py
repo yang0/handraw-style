@@ -596,11 +596,15 @@ def local_history_upload(args):
     record["workId"] = work_id
     record["workIds"] = [work_id]
     record["imageCount"] = len(items)
+    record["coverMediaId"] = str(result.get("coverMediaId") or "")
+    record["coverUrl"] = str(result.get("coverUrl") or "")
     record["visibility"] = "public"
     atomic_json(folder / "record.json", record)
     return {"runId": rid, "synced": True, "cloudId": result.get("id"),
             "workId": work_id, "workIds": [work_id],
-            "imageCount": len(items), "visibility": "public"}
+            "imageCount": len(items),
+            "coverMediaId": record["coverMediaId"], "coverUrl": record["coverUrl"],
+            "visibility": "public"}
 
 
 def planned_get(path: str):
