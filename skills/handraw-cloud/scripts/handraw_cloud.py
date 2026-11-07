@@ -403,6 +403,64 @@ def resources_list():
             "official": data.get("official", [])}
 
 
+def resource_restore(args):
+    """Restore owned definitions from the planned contract without destroying edits."""
+    from importlib.util import spec_from_file_location, module_from_spec
+    path = ROOT / "skills" / "personal-library" / "scripts" / "personal_library.py"
+    spec = spec_from_file_location("handraw_personal_resources", path)
+    mod = module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    library = mod.Library()
+    local = library.index()
+    by_id = {r["id"]: r for r in local["resources"]}
+    state = SyncState(Credentials().read())
+    cursor, results = None, []
+    while True:
+        query = "limit=100" + ("&since=" + urllib.parse.quote(cursor) if cursor else "")
+        response = Credentials().client().request("GET", "/api/v1/me/resources?" + query)
+        for item in response.get("items", []):
+            if item.get("kind") not in ("style", "layout"):
+                continue
+            uid = str(uuid.UUID(str(item["id"])))
+            key = "mine:" + uid
+            if item.get("deletedAt"):
+                results.append({"id": key, "skipped": "云端软删除，本地保留"})
+                continue
+            definition = item.get("definition")
+            if not isinstance(definition, dict):
+                raise ValueError("服务端个人资源缺少完整定义")
+            fields = {"id": key, "kind": item["kind"],
+                      "name": str(item.get("name") or ""),
+                      "prompt_zh": str(definition.get("zh") or ""),
+                      "prompt_en": str(definition.get("en") or ""),
+                      "license": str(item.get("license") or ""),
+                      "version": str(item.get("version") or "1.0.0"),
+                      "section": "owned", "origin": item.get("origin"),
+                      "examples": item.get("examples") or []}
+            library.validate_resource(fields)
+            existing = by_id.get(key)
+            if existing:
+                comparable = ("name", "kind", "prompt_zh", "prompt_en", "license", "version", "origin", "examples")
+                if any(existing.get(k) != fields.get(k) for k in comparable) and not args.force:
+                    results.append({"id": key, "conflict": "本地定义不同，未覆盖；使用 --force 才覆盖"})
+                    continue
+                existing.update(fields)
+            else:
+                local["resources"].append(fields)
+                by_id[key] = fields
+            state.data["resources"][key] = {"uid": uid, "revision": int(item["revision"])}
+            library.write(local)
+            state.save()
+            results.append({"id": key, "restored": True})
+        if not response.get("hasMore"):
+            break
+        next_cursor = str(response.get("nextCursor") or "")
+        if not next_cursor or next_cursor == cursor:
+            raise ValueError("个人资源分页游标无效")
+        cursor = next_cursor
+    return {"results": results}
+
+
 def local_history_create(args):
     """Durably copy explicitly supplied images. No network and no publication."""
     if not args.image or not args.original_request_file:
@@ -476,6 +534,21 @@ def planned_like(args):
         "/api/v1/works/" + str(uuid.UUID(args.id)) + "/likes", {"liked": not args.remove})
 
 
+def planned_comment(args):
+    text = args.text.strip()
+    if not 1 <= len(text) <= 3000:
+        raise ValueError("评论内容长度需为 1–3000 字符")
+    return Credentials().client().request("POST",
+        "/api/v1/works/" + str(uuid.UUID(args.id)) + "/comments",
+        {"text": text, "requestId": "skill-comment-" + str(uuid.uuid4())})
+
+
+def planned_collect(args):
+    return Credentials().client().request("POST",
+        "/api/v1/works/" + str(uuid.UUID(args.id)) + "/collections",
+        {"collected": not args.remove})
+
+
 def output(value):
     print(json.dumps(value, ensure_ascii=False, indent=2))
 
@@ -501,6 +574,7 @@ def main(argv=None):
     rc.add_parser("list")
     pull = rc.add_parser("pull"); pull.add_argument("--id", required=True)
     push = rc.add_parser("push"); push.add_argument("--id", required=True)
+    restore = rc.add_parser("restore"); restore.add_argument("--force", action="store_true")
     history = command.add_parser("history")
     hc = history.add_subparsers(dest="action", required=True)
     make = hc.add_parser("record")
@@ -509,12 +583,17 @@ def main(argv=None):
     make.add_argument("--run-id")
     upload = hc.add_parser("upload"); upload.add_argument("--run-id", required=True)
     hc.add_parser("list")
+    hc.add_parser("cloud-list", help="网站统一私有历史（需网站端 v1 API）")
     social = command.add_parser("social")
     sc = social.add_subparsers(dest="action", required=True)
     sc.add_parser("notifications")
     comments = sc.add_parser("comments"); comments.add_argument("--id", required=True)
     like = sc.add_parser("like"); like.add_argument("--id", required=True)
     like.add_argument("--remove", action="store_true")
+    comment = sc.add_parser("comment"); comment.add_argument("--id", required=True)
+    comment.add_argument("--text", required=True)
+    collect = sc.add_parser("collect"); collect.add_argument("--id", required=True)
+    collect.add_argument("--remove", action="store_true")
     publish = command.add_parser("publish", help="用户明确授权后发布已准备的作品草稿")
     publish.add_argument("--draft", required=True)
     args = parser.parse_args(argv)
@@ -541,13 +620,17 @@ def main(argv=None):
             import subprocess
             target = ROOT / "scripts" / "personal_library.py"
             subprocess.run([sys.executable, str(target), "sync", "--id", args.id], check=True)
-        else:
+        elif args.action == "push":
             output(resource_push(args))
+        else:
+            output(resource_restore(args))
     elif args.command == "history":
         if args.action == "record":
             output(local_history_create(args))
         elif args.action == "upload":
             output(local_history_upload(args))
+        elif args.action == "cloud-list":
+            output(planned_get("/api/v1/me/generations?limit=100"))
         else:
             folder = profile_home() / "generation-history"
             output({"records": [read_json(p) for p in sorted(folder.glob("*/record.json"))] if folder.exists() else []})
@@ -556,8 +639,12 @@ def main(argv=None):
             output(planned_get("/api/v1/me/notifications"))
         elif args.action == "comments":
             output(planned_get("/api/v1/works/" + str(uuid.UUID(args.id)) + "/comments"))
-        else:
+        elif args.action == "like":
             output(planned_like(args))
+        elif args.action == "comment":
+            output(planned_comment(args))
+        else:
+            output(planned_collect(args))
     elif args.command == "publish":
         import subprocess
         target = ROOT / "skills" / "community-share" / "scripts" / "conversation_share.py"
