@@ -102,3 +102,8 @@ description: 管理自建图库（角色库、道具库、场景库）全生命�
 4. **自建资产索引与 Git 严格隔离**：
    自建资产编号与元数据统一导出至本地 gitignored 索引文件（`images/custom/custom_assets.js`），由浏览器端动态渲染加载，绝不可烘焙进 Git 追踪的静态 HTML 文件（`assets.html` 与 `tutorials.html`）中，确保用户私有资产 100% 零泄露。
 
+
+
+## 可选：同步到网站个人云端（显式授权）
+
+本地保存/修改动作不自动上传。用户明确要求“同步我的图库到网站”时先执行 `python scripts/handraw_cloud.py bind`（首次）、再执行 `python scripts/handraw_cloud.py assets push`。用户在新设备需要恢复云端角色/道具/场景时执行 `assets pull`；默认从 `~/.handraw-style/config.json` 的 `tuku_dir` 查找本地图库，也可使用 `--library-dir` 显式指定。该功能复用网站已有 `/api/library/assets`；云端默认私有。离线故障、revision 冲突和服务端软删除不会删除本地唯一副本。完整命令与安全约束参见 [handraw-cloud](../handraw-cloud/SKILL.md)。
