@@ -71,7 +71,7 @@ python scripts/handraw_cloud.py history upload --run-id <本地runId>
 python scripts/handraw_cloud.py publish --draft /path/.handraw-share.json
 ```
 
-使用设备令牌和现有 `/api/uploads`、`/api/entries` 发布。先审阅公开标题、图片、原始创作指令和关联的资源。超时结果未确认时停止重复发布以避免双发。成功回执是网站作品链接，非论坛替代帖子。由于现有 publish 令牌没有公开作品详情读取 scope，发布后的回读验证可能显示 `verified=false`，不能宣称关联已核验。
+使用设备令牌和现有 `/api/uploads`、`/api/entries` 发布。先审阅公开标题、图片、原始创作指令和关联的资源。超时结果未确认时停止重复发布以避免双发。成功回执是网站作品链接，非论坛替代帖子。分享客户端使用不带令牌的公开作品详情接口尝试回读验证；如果网站尚未返回一致的图片/关联信息、尚未传播或接口临时不可达，回执可能显示 `verified=false`，这不表示一定未发布，也不能声称关联已经核验。
 
 ## P3 网站互动（客户端已实现待服务端授权）
 
