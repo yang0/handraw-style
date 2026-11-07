@@ -351,9 +351,14 @@ def asset_pull(args):
                 if known_fingerprint:
                     changed = local_fingerprint != known_fingerprint
                 else:
-                    changed = (local_meta["name"] != item.get("name", local_id)
-                               or local_meta["nameEn"] != item.get("nameEn", "")
-                               or local_meta["tags"] != item.get("tags", []))
+                    # Partial API payloads do not imply the missing metadata
+                    # was changed. Compare only fields explicitly returned.
+                    changed = any(
+                        local_meta[local_name] != item[remote_name]
+                        for remote_name, local_name in
+                        (("name", "name"), ("nameEn", "nameEn"), ("tags", "tags"))
+                        if remote_name in item
+                    )
                 if changed:
                     results.append({"uid": uid, "conflict": "本地名称或标签已有修改，保留本地数据"})
                     continue
