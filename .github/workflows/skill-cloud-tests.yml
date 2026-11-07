@@ -24,6 +24,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install share test dependency
+        run: python -m pip install -r requirements.txt
       - name: Check Python syntax
         run: |
           python -m compileall -q skills/handraw-cloud/scripts/handraw_cloud.py
@@ -31,3 +33,5 @@ jobs:
           python -m compileall -q skills/community-share/scripts/conversation_share.py
       - name: Run offline cloud contract tests
         run: python -m unittest discover -s skills/handraw-cloud/tests -p 'test_*.py' -v
+      - name: Run existing community-share regression tests
+        run: python -m unittest discover -s skills/community-share/tests -p 'test_*.py' -v
