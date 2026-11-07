@@ -255,7 +255,17 @@ def asset_push(args):
         if previous.get("sha256") == sha and previous.get("metadata") == fingerprint and not args.force:
             results.append({"localId": local_id, "uid": previous.get("uid"), "unchanged": True})
             continue
-        uid = previous.get("uid") or str(uuid.uuid4())
+        linked_uid = str(item.get("cloud_uid") or "")
+        if linked_uid:
+            try:
+                linked_uid = str(uuid.UUID(linked_uid))
+            except ValueError:
+                raise ValueError(f"{local_id} 的云端资源 ID 无效，请先检查 library.json") from None
+        if previous.get("uid") and linked_uid and previous["uid"] != linked_uid:
+            raise ValueError(f"{local_id} 的本地同步记录与图库云端 ID 不一致，已停止覆盖")
+        if linked_uid and previous.get("revision") is None:
+            raise ValueError(f"{local_id} 已绑定云端资产但缺少版本记录，请先执行 assets pull 恢复版本，避免重复创建")
+        uid = previous.get("uid") or linked_uid or str(uuid.uuid4())
         payload = dict(meta, sha256=sha, dataUrl="data:image/webp;base64," +
                        base64.b64encode(blob).decode("ascii"), origin="skill")
         if previous.get("revision") is not None:
@@ -328,6 +338,25 @@ def asset_pull(args):
                 continue
             if output.exists() and not existing:
                 raise ValueError(f"本地路径冲突，不覆盖：{output}")
+            # Metadata changes are independent from image changes. Without this
+            # check a remote pull could silently erase offline name/tag edits.
+            if existing and not args.force:
+                local_meta = {"cat": cat, "localId": local_id,
+                              "name": existing.get("name", local_id),
+                              "nameEn": existing.get("name_en", ""),
+                              "tags": existing.get("tags", [])}
+                local_fingerprint = hashlib.sha256(json.dumps(
+                    local_meta, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+                known_fingerprint = previous.get("metadata")
+                if known_fingerprint:
+                    changed = local_fingerprint != known_fingerprint
+                else:
+                    changed = (local_meta["name"] != item.get("name", local_id)
+                               or local_meta["nameEn"] != item.get("nameEn", "")
+                               or local_meta["tags"] != item.get("tags", []))
+                if changed:
+                    results.append({"uid": uid, "conflict": "本地名称或标签已有修改，保留本地数据"})
+                    continue
             # No tracked local hash means we cannot prove the local file is
             # unchanged; never overwrite it unless the user explicitly forces.
             if output.exists() and not args.force:
@@ -354,8 +383,14 @@ def asset_pull(args):
             existing.update({"cloud_uid": uid, "name": item.get("name", local_id),
                              "name_en": item.get("nameEn", ""), "tags": item.get("tags", []),
                              "image": f"../../../images/custom/{cat}/{local_id}.webp"})
+            synced_meta = {"cat": cat, "localId": local_id,
+                           "name": existing["name"], "nameEn": existing["name_en"],
+                           "tags": existing["tags"]}
+            metadata_hash = hashlib.sha256(json.dumps(
+                synced_meta, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
             state.data["assets"][key] = {"uid": uid, "revision": int(item["revision"]),
                                           "sha256": hashlib.sha256(image).hexdigest(),
+                                          "metadata": metadata_hash,
                                           "remoteSha256": item.get("sha256", "")}
             atomic_json(root / "library.json", manifest)
             state.save()
