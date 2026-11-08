@@ -451,9 +451,17 @@ def resource_push(args):
         body["baseRevision"] = int(previous["revision"])
     response = Credentials().client().request("PUT", "/api/v1/me/resources/" + uid, body)
     item = response.get("resource", response.get("item", response))
-    state.data["resources"][args.id] = {"revision": int(item["revision"]), "uid": uid}
+    # #16 / Web #21: the website is authoritative for the stable USR-S/L code.
+    # Never silently accept a conflicting code for the same local UUID/kind.
+    expected_code = ("USR-S" if record["kind"] == "style" else "USR-L") + uid.replace("-", "").upper()
+    code = str(item.get("code") or expected_code).strip().upper()
+    if code != expected_code:
+        raise ValueError("网站返回的自定义资源编号与本地 UUID/类别不一致；未确认同步")
+    state.data["resources"][args.id] = {
+        "revision": int(item["revision"]), "uid": uid, "code": code}
     state.save()
-    return {"id": args.id, "remoteId": uid, "revision": item["revision"], "visibility": "private"}
+    return {"id": args.id, "remoteId": uid, "code": code,
+            "revision": item["revision"], "visibility": "private"}
 
 
 def resources_list():
@@ -508,10 +516,15 @@ def resource_restore(args):
             else:
                 local["resources"].append(fields)
                 by_id[key] = fields
-            state.data["resources"][key] = {"uid": uid, "revision": int(item["revision"])}
+            expected_code = ("USR-S" if item["kind"] == "style" else "USR-L") + uid.replace("-", "").upper()
+            code = str(item.get("code") or expected_code).strip().upper()
+            if code != expected_code:
+                raise ValueError("网站个人资源编号与 UUID 不匹配，拒绝覆盖本地数据")
+            state.data["resources"][key] = {
+                "uid": uid, "code": code, "revision": int(item["revision"])}
             library.write(local)
             state.save()
-            results.append({"id": key, "restored": True})
+            results.append({"id": key, "code": code, "restored": True})
         if not response.get("hasMore"):
             break
         next_cursor = str(response.get("nextCursor") or "")
