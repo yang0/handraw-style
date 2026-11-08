@@ -1,0 +1,43 @@
+name: Custom library rename tests
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/custom-library-rename.yml"
+      - "skills/handdraw-style-prompter/scripts/custom_library_manager.py"
+      - "skills/handdraw-style-prompter/scripts/test_custom_library_rename.py"
+      - "skills/handdraw-style-prompter/gallery/asset-rename.js"
+      - "skills/handdraw-style-prompter/gallery/assets.html"
+      - "skills/handdraw-style-prompter/scripts/build_assets_gallery.py"
+  pull_request:
+    paths:
+      - ".github/workflows/custom-library-rename.yml"
+      - "skills/handdraw-style-prompter/scripts/custom_library_manager.py"
+      - "skills/handdraw-style-prompter/scripts/test_custom_library_rename.py"
+      - "skills/handdraw-style-prompter/gallery/asset-rename.js"
+      - "skills/handdraw-style-prompter/gallery/assets.html"
+      - "skills/handdraw-style-prompter/scripts/build_assets_gallery.py"
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            skills/handdraw-style-prompter/scripts
+            skills/handdraw-style-prompter/gallery/asset-rename.js
+            skills/handdraw-style-prompter/gallery/assets.html
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Python asset rename regression
+        run: python -m unittest discover -s skills/handdraw-style-prompter/scripts -p "test_custom_library_rename.py" -v
+      - name: Browser editor JavaScript syntax
+        run: node --check skills/handdraw-style-prompter/gallery/asset-rename.js
+      - name: Verify offline gallery includes editor
+        run: |
+          grep -q 'src="asset-rename.js"' skills/handdraw-style-prompter/gallery/assets.html
+          grep -q 'src="asset-rename.js"' skills/handdraw-style-prompter/scripts/build_assets_gallery.py
