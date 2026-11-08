@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/skill-web-unification-v1-20261107
+      - 'feature/issue21-*'
   pull_request:
     paths:
       - "skills/handraw-cloud/**"
