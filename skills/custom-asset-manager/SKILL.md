@@ -69,6 +69,20 @@ description: 管理自建图库（角色库、道具库、场景库）全生命�
   1. 更新外部 `library.json` 中对应的资产属性；
   2. 自动刷新画廊，前端卡片即刻同步更新显示。
 
+#### 离线图库页面中直接修改图片名称（Issue #14）
+
+- 打开 `skills/handdraw-style-prompter/gallery/assets.html`，在**自建**角色/道具/场景卡片点击 **修改名称**；官方预置没有该按钮。
+- 在弹窗中填写新名称，点击 **选择 library.json 并保存**。浏览器会请求你手动选取**当前自建图库根目录**的 `library.json`；选择不匹配的图库时会拒绝保存。
+- 仅变更清单内的 `name`（默认英文名和原名一致时自动同步 `name_en`），原始编号、图片路径和 WebP 文件完全不变。保存后卡片立即更新；下次执行管理 Skill 或本地图库构建脚本时，`images/custom/custom_assets.js` 离线缓存自动刷新。
+- 直接写入文件需要支持 File System Access API 的桌面浏览器（如 Chrome、Edge）及浏览器授权。**浏览器不支持时不可声称已保存**：点击 **复制 AI 修改指令**，交给使用本 Skill 的本地 AI 客户端执行即可。
+- 也可以直接用本地命令行（跨平台）进行持久化修改并刷新索引：
+
+```bash
+python skills/handdraw-style-prompter/scripts/custom_library_manager.py rename CH-002 "新的图片名称"
+```
+
+- 自建图库的物理清单始终位于用户配置的外部图库目录下，绝不能把私有图库清单提交至 Git。
+
 ### 5. 安全删除资产 (Safe Delete)
 * **用户触发词**：
   * `删除角色库中的 CH-002`
