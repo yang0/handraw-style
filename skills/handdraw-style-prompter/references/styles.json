@@ -1855,6 +1855,13 @@
     "traits": "vox 折纸3d立体拼贴动画+微缩摄影，场景有景深"
   },
   {
+    "number": "FF-018",
+    "group": "FF 3D黏土毛毡与纸雕 / 3D Clay, Felt & Papercraft",
+    "reference": "低多边形艺术",
+    "generation_name": "Low Poly Art",
+    "traits": "硬朗分明的低多边形三角面建模网格、无平滑着色的刻面平涂着色、锐利几何转折棱线、极简棱角分块、带有定向光漫反射明暗几何面、无细分曲面"
+  },
+  {
     "number": "FG-001",
     "group": "FG 动漫和赛璐璐 / Anime, Cel Animation & Retro Game",
     "reference": "OscarAI",

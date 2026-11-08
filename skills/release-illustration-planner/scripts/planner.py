@@ -293,129 +293,127 @@ def build_handdraw_prompt(
 # ======================================================================
 
 
-FG_025_TAXONOMIES = [
-    {
-        "category": "潮玩文创与手工消费 (Craft & DIY Merch)",
-        "concrete_visual_zh": "手作工作台上整齐陈列的拼豆 DIY 套装物料：方形带钉塑料底板上正在拼搭的微缩像素地标建筑，旁边散落着鲜红、群青色与亮黄色的高光圆形塑料熔珠颗粒（带中心小圆孔），一把精密金属镊子、半透明耐热熨烫纸与一张 1:1 彩色像素点位图纸，微距手作质感，纯工艺静物",
-        "concrete_visual_en": "A perler bead DIY craft kit neatly arranged on a clean crafting table: a square pegboard with a half-assembled pixel miniature landmark, scattered bright red, ultramarine blue and yellow cylindrical fuse beads with hollow center holes, precision metal tweezers, translucent ironing paper and a 1:1 color pixel pattern guide sheet, macro craft still life",
-        "camera_zh": "45度桌面微距特写，工整手作材料排布，纯静物，绝无人物抢镜",
-        "camera_en": "45-degree tabletop macro closeup, tidy craft knolling arrangement, strictly zero human presence",
-        "preferred_ratio": "3:4",
-        "size": "1086x1448"
-    },
-    {
-        "category": "独立游戏与科技极客 (Indie Game & Geek Gear)",
-        "concrete_visual_zh": "深灰胡桃木极客桌面上，一台半透明外壳的经典复古掌上游戏机，彩色液晶屏幕内清晰显示着纯正拼豆风格的 2D 像素关卡地图；游戏机旁摆放着几颗用真实拼豆熔融工艺定制的机械键盘个性键帽（分别印有像素爱心与像素小蘑菇），旁边盘绕着复古编织数据线",
-        "concrete_visual_en": "On a dark walnut geek desk, a vintage handheld gaming console with a translucent shell, the color screen displaying a pure perler bead pixel 2D quest level map; next to it are custom mechanical keyboard artisan keycaps crafted from fused beads with pixel heart and pixel mushroom icons, coiled braided cable nearby",
-        "camera_zh": "桌面中景特写视角，电子屏光感与实体拼豆塑料熔融肌理结合，纯极客数码静物，画面无人物",
-        "camera_en": "Tabletop medium closeup view, screen luminescence combined with fused plastic bead texture, strictly zero human presence",
-        "preferred_ratio": "3:4",
-        "size": "1086x1448"
-    },
-    {
-        "category": "新茶饮与快闪餐饮 (Beverage & Pop-up Merch)",
-        "concrete_visual_zh": "极简咖啡外带纸杯特写，杯身套着一款极具创意的拼豆掌机造型加厚杯套，杯套正面用凹凸颗粒感的拼豆像素画排版着'满电咖啡'能量槽；旁边平放着一张硬卡纸像素集点打卡卡片，上面盖着几个红色小像素印章，以及一条带有拼豆亚克力吊坠的吸管套套件",
-        "concrete_visual_en": "A modern takeaway coffee cup featuring a creative perler bead retro game console shaped cardboard sleeve with raised pixel battery energy gauge; lying beside is a thick cardstock pixel loyalty stamp card with red pixel stamps, and a paper straw accessory with a miniature pixel acrylic charm",
-        "camera_zh": "干净通透的快闪餐饮特写镜头，强调杯套塑料熔珠凹凸质感与平面图文一体化设计，纯餐饮文创物料，无人物",
-        "camera_en": "Clean pop-up cafe closeup shot, emphasizing the tactile fuse bead texture and packaging graphic integration, strictly zero human presence",
-        "preferred_ratio": "3:4",
-        "size": "1086x1448"
-    },
-    {
-        "category": "文房平铺与手账工艺 (Stationery Flatlay Knolling)",
-        "concrete_visual_zh": "垂直 90 度自上而下俯视平铺陈列 (Flatlay)：一本展开的高级米灰色网格手账本，内页绘制着精美的拼豆像素小动物速写图谱；周围工整罗列着两枚长条形拼豆熔珠书签、一支黄铜旋转签字笔、一盒分色分类的马卡龙色塑料小熔珠亚克力收纳盒与一把木质像素刻度尺，留白充足透气",
-        "concrete_visual_en": "Top-down 90-degree flatlay knolling: an open premium warm grey grid notebook showing detailed perler bead animal sketches; neatly arranged around it are two fused bead bookmarks, a brass twist pen, a clear acrylic storage box of sorted pastel beads, and a wooden pixel ruler, with generous clean breathing space",
-        "camera_zh": "垂直90度俯视平铺图鉴构图，工整间距透气留白，纯手账文具陈列，画面无人物",
-        "camera_en": "Top-down 90-degree flatlay knolling composition, precise spacing and breathing margin, pure stationery display, zero human presence",
-        "preferred_ratio": "3:4",
-        "size": "1086x1448"
-    },
-    {
-        "category": "城市文旅与复古街区 (City Walk & Retro Map)",
-        "concrete_visual_zh": "一张精美装裱的城市街区漫步像素探险全景图卡：整座老街区全部由工整的拼豆塑料熔珠颗粒拼接而成，清晰可见红砖老火车站钟楼、坡道上的墨绿色有轨电车、街角暖光面包房与树木水系，所有道路、建筑与地标均呈现清晰硬朗的阶梯像素网格，兼具复古 RPG 游戏地图的奇趣与现实街区风貌",
-        "concrete_visual_en": "A framed city walk pixel exploration map: the entire historic urban district is intricately composed of perler fuse beads, showing a red-brick clock tower train station, a dark green tram on a sloped street, a corner warm bakery, and stylized trees and canals, with all roads and buildings formed by crisp stepped pixel bead grids, blending retro RPG map charm with urban exploration",
-        "camera_zh": "微倾斜45度等距轴测全景俯瞰，整幅画面如同一张精细的实体拼豆微缩沙盘，纯街区地貌空镜，无人物特写",
-        "camera_en": "45-degree isometric bird's eye view, resembling an intricate miniature fused bead city diorama, pure urban landscape, zero human closeup",
-        "preferred_ratio": "3:4",
-        "size": "1086x1448"
-    }
-]
+def deduce_dynamic_scenes_for_style(
+    style_info: Dict[str, Any],
+    count: int = 5
+) -> List[Dict[str, str]]:
+    """根据画风大类与核心媒介特征实时推导契合的 5 大商业领域 (彻底去除硬编码 Few-Shot 样本)"""
+    group = (style_info.get("group") or "").upper()
+    style_ref = style_info.get("reference", "")
+    traits = style_info.get("traits", "")
 
-FIVE_SUBJECT_TAXONOMIES = [
-    {
-        "category": "建筑与交通实景 (Architecture & Transit)",
-        "concrete_visual_zh": "复古双节有轨电车穿行在临海铁桥与坡道街巷间，头顶巨大积雨云与电线纵横交错，夕阳逆光拉出长长轨道反光与微湿沥青路面，纯实景电车与沿海建筑全景，绝无人物抢镜",
-        "concrete_visual_en": "A vintage double-section electric tram crossing an ocean-side railway bridge between sloped streets, towering cumulonimbus clouds and crisscrossing power cables overhead, sunset casting long glowing rail reflections on wet asphalt, pure realistic architectural and transit panorama without human characters",
-        "camera_zh": "开阔长焦街景全景，景深压缩，纯建筑与机具空镜，无人物",
-        "camera_en": "Open telephoto streetscape panorama with compressed depth of field, pure architectural transit still, zero human presence",
-        "preferred_ratio": "16:9",
-        "size": "1792x1024"
-    },
-    {
-        "category": "餐饮流体与微距静物 (Food, Beverage & Liquid Still Life)",
-        "concrete_visual_zh": "原木咖啡吧台上一杯盛满透明气泡冰块与新鲜橙片的冰萃咖啡，杯壁凝结一层晶莹冰凉的水珠，黄昏夕阳（柿子橙色）穿透玻璃杯在桌面投下梦幻焦散光斑(Caustics)，旁边放着咖啡量勺与麻布杯垫，纯静物微距光影",
-        "concrete_visual_en": "On a warm wooden cafe bar, an iced citrus cold brew coffee in a crystal tall glass filled with sparkling ice cubes and fresh orange slices, condensation droplets on glass wall, sunset light casting dreamlike caustic reflections across tabletop, accompanied by coffee scoop and linen coaster, pure macro still life lighting",
-        "camera_zh": "45度桌面静物微距特写，光线穿透液体与玻璃杯，纯静物，画面100%无人物",
-        "camera_en": "45-degree tabletop still life macro closeup, light refraction through liquid and glass, strictly zero human presence",
-        "preferred_ratio": "16:9",
-        "size": "1792x1024"
-    },
-    {
-        "category": "室内器物与声学空间 (Interior & Acoustic Objects)",
-        "concrete_visual_zh": "电影宽银幕分镜：第一格木壳复古黑胶唱机旋转播放黑色唱盘特写；第二格百叶窗斜射暖灰粉色夕阳光束照在木吉他与乐谱架上；第三格窗台上摆放的专业监听耳机，窗外远处是暮色中的城市天际线，纯室内乐器器材空间",
-        "concrete_visual_en": "Cinematic widescreen multi-panel: Panel 1 closeup of wooden vintage turntable playing black vinyl record; Panel 2 warm sunset light streaming through window blinds onto an acoustic guitar and sheet music stand; Panel 3 studio monitor headphones resting on windowsill overlooking twilight city skyline, pure indoor musical gear atmosphere",
-        "camera_zh": "电影宽银幕室内器物中景分镜，乐器特写与逆光光束，纯静物器物，画面无人物",
-        "camera_en": "Cinematic widescreen indoor still-life panels, musical instrument closeups and backlit rays, strictly zero human presence",
-        "preferred_ratio": "16:9",
-        "size": "1792x1024"
-    },
-    {
-        "category": "文房平铺与手账工艺 (Stationery Flatlay Knolling)",
-        "concrete_visual_zh": "自上而下的桌面俯视平铺陈列（Flatlay/Knolling）：一本展开的深灰蓝色棉麻手账本（上面绘有精致星轨速写），旁边工整罗列着复古黄铜旋转钢笔、半透明硫酸纸信封、带有火漆印章的手写信笺、一小卷红色编织结绳书签、古董放大镜，四周大面积干净象牙白留白",
-        "concrete_visual_en": "Direct top-down 90-degree knolling flatlay: an open deep slate-blue linen journal with delicate star-trail sketches, neatly surrounded by a vintage brass fountain pen, translucent vellum envelope, wax-sealed handwritten letter, a small coil of braided red cord bookmark, and antique magnifying glass, generous clean ivory negative space",
-        "camera_zh": "垂直90度俯视平铺图鉴构图，工整间距透气留白，纯物料陈列，画面无人物",
-        "camera_en": "Vertical 90-degree top-down flatlay catalog composition, tidy breathing margins, pure stationery objects, strictly zero human presence",
-        "preferred_ratio": "3:4",
-        "size": "1086x1448"
-    },
-    {
-        "category": "宏大天象与奇幻地景 (Celestial Landscape & Worldview)",
-        "concrete_visual_zh": "黄昏之时的巍峨群山与无垠深蓝天穹，一颗璀璨耀眼的分岔双子彗星拖着朱砂红与金色粒子光尾划过夜空，远方是巨大的远古陨石环形湖，湖面平静如镜完整倒映出漫天繁星与彗星光斑，群鸟在山隘间展翅翱翔，空灵神秘的宏大史诗感自然全景",
-        "concrete_visual_en": "Twilight over majestic mountain ranges and infinite deep indigo sky, a brilliant bifurcated twin comet trailing vermilion and golden particle tails across space, reflecting on a vast ancient meteor crater mirror lake beneath star trails, birds soaring between mountain passes, an ethereal epic landscape panorama",
-        "camera_zh": "超广角宏大远景，纯自然与天文空镜，宏伟壮阔史诗感，绝无单一人像特写",
-        "camera_en": "Ultra-wide epic panoramic landscape, pure celestial nature and sky, monumental grandeur, strictly zero single-character portrait",
-        "preferred_ratio": "3:4",
-        "size": "1086x1448"
-    }
-]
-
-DEFAULT_STYLE_SCENES = [
-    {
-        "domain": "城市文旅与在地文创",
-        "materials": "城市限定明信片、景点联名胶片、打卡地图折页",
-        "reason": "将本地真实地标以风格光影美学重构，游客获得电影感纪念品，本地人获得情感认同。"
-    },
-    {
-        "domain": "青春向饮品/咖啡连锁",
-        "materials": "外带杯套、季节限定杯身、门店窗贴、周边贴纸",
-        "reason": "杯套是高频触达的情绪载体，与版式结合制造收集欲与社交晒图动机。"
-    },
-    {
-        "domain": "独立音乐/演出与唱片",
-        "materials": "专辑封面、演出海报、黑胶内页、票根设计",
-        "reason": "光影渐变与逆光人物天然契合音乐的情绪属性，提升实体唱片的收藏溢价。"
-    },
-    {
-        "domain": "情感向文具与手账品牌",
-        "materials": "手账胶带、便签本、信纸信封、书签",
-        "reason": "写信与等待的叙事母题与文具品类高度同构，强化使用仪式感。"
-    },
-    {
-        "domain": "游戏/APP 情感化运营",
-        "materials": "开屏插画、活动落地页主视觉、限定皮肤、加载页",
-        "reason": "用一张开屏图完成情绪定调，提升留存与分享率。"
-    }
-]
+    if "FF" in group or "3D" in group or "纸雕" in group or "黏土" in group:
+        return [
+            {
+                "domain": "潮玩文创与数字手办周边",
+                "materials": "3D 实体手办模型、盲盒包装封套、潮玩展示卡",
+                "reason": f"运用【{style_ref}】的立体雕塑感与材质触感，完美呈现潮玩结构与分件细节"
+            },
+            {
+                "domain": "独立游戏与虚拟场景世界观",
+                "materials": "等距轴测微缩场景海报、游戏世界观概念图、关卡概念设定",
+                "reason": f"以【{style_ref}】独特的空间立体感构建奇幻微缩场景，增强探索沉浸感"
+            },
+            {
+                "domain": "前沿科技与概念工业设计",
+                "materials": "概念工业硬件展陈、未来出行海报、科技发布会视觉",
+                "reason": f"几何立体与材质刻面展现硬核工程美学与科技秩序感"
+            },
+            {
+                "domain": "空间装置与现代艺术展陈",
+                "materials": "艺术画廊展厅壁饰、立体文创礼盒、艺术衍生品",
+                "reason": f"三维物理实体质感打破二维平面局限，极具空间装饰与收藏价值"
+            },
+            {
+                "domain": "文旅地标与自然奇观重构",
+                "materials": "地标建筑立体微缩景观、国家公园文创插画、全景导览物料",
+                "reason": f"以立体媒介重塑自然地貌与宏伟地标，带来前所未有的大地艺术视觉"
+            }
+        ][:count]
+    elif "FE" in group or "国风" in group or "传统" in group:
+        return [
+            {
+                "domain": "东方文博与非遗文创",
+                "materials": "典籍礼盒封套、非遗工艺画卷、文创丝巾与扇面",
+                "reason": f"纯正东方笔触与文化底蕴，完美契合高端国风文博的雅致格调"
+            },
+            {
+                "domain": "新中式茶饮与东方养生餐饮",
+                "materials": "茶礼包装、外带杯套、品牌画册内页",
+                "reason": f"传统美学与现代消费语境咬合，呈现东方人文手作温度"
+            },
+            {
+                "domain": "国风文旅与历史街区景区",
+                "materials": "古镇导览折页、景区联名文创明信片、主题展陈",
+                "reason": f"工笔重彩与传统意境激活古镇地标，沉淀文化超级符号"
+            },
+            {
+                "domain": "国潮文房手账与礼赠生活",
+                "materials": "宣纸手账本、古风藏书票、火漆印章礼盒",
+                "reason": f"纸本墨韵与传统器物同构，满足东方雅致生活方式审美"
+            },
+            {
+                "domain": "东方神话与国风数字艺术",
+                "materials": "神话巨幅插画、国风动画海报、数字藏品",
+                "reason": f"传统色彩与浪漫东方想象力结合，传达宏大史诗感"
+            }
+        ][:count]
+    elif "FG" in group or "像素" in group or "动漫" in group:
+        return [
+            {
+                "domain": "潮玩文创与极客 DIY 周边",
+                "materials": "实体工艺材料包、个性化周边外设、限定徽章",
+                "reason": f"以【{style_ref}】的特色媒介质感，唤醒硬核玩家与手工爱好者的动手仪式感"
+            },
+            {
+                "domain": "独立游戏与复古数码外设",
+                "materials": "游戏关卡概念图、个性机械键盘键帽、掌机贴纸",
+                "reason": f"经典视觉语言精准触达游戏圈层与数码极客的心智暗号"
+            },
+            {
+                "domain": "潮流餐饮与快闪联名活动",
+                "materials": "潮酷外带杯套、集点打卡卡片、吸管周边套件",
+                "reason": f"强图形记忆度与鲜艳色块，在移动端与打卡拍照中形成毫秒级穿透"
+            },
+            {
+                "domain": "手账文具与个人生活记录",
+                "materials": "网格手账本速写插画、图鉴刻度尺、文房平铺贴纸",
+                "reason": f"工整网格与像素趣味融合，提升生活记录趣味与收集欲"
+            },
+            {
+                "domain": "城市漫游与复古寻宝地图",
+                "materials": "微缩街区探险地图、城市漫步打卡折页、文旅文创卡",
+                "reason": f"将真实街区重组为游戏关卡般的奇趣地貌，激发探索欲望"
+            }
+        ][:count]
+    else:
+        return [
+            {
+                "domain": "品牌视觉形象与主视觉海报",
+                "materials": "品牌官网首屏海报、品牌画册封面、核心宣传主视觉",
+                "reason": f"运用【{style_ref}】鲜明的视觉张力，为品牌建立不可替代的风格护城河"
+            },
+            {
+                "domain": "精品消费与包装设计",
+                "materials": "精品外带包装、产品礼盒封套、产品说明卡",
+                "reason": f"高质感手绘笔触赋予消费品深厚的手作温度与溢价空间"
+            },
+            {
+                "domain": "文创周边与生活方式文具",
+                "materials": "艺术明信片、精品手账贴纸、文创帆布袋印花",
+                "reason": f"艺术媒介质感直接转化为可触碰的文创实体，激发购买与收集欲"
+            },
+            {
+                "domain": "空间陈列与艺术展讯物料",
+                "materials": "展览主海报、展厅导览手册、艺术文创周边",
+                "reason": f"艺术质感与留白空间营造高品位视觉氛围，提升文化专业度"
+            },
+            {
+                "domain": "社交媒体专题与数字内容",
+                "materials": "社媒专栏配图、内容精选封面、数字出版插画",
+                "reason": f"鲜明反差色彩与独特构图，在信息流中实现极高的视觉停留与传播率"
+            }
+        ][:count]
 
 def plan_illustrations_for_style(
     style_identifier: str,
@@ -460,7 +458,7 @@ def plan_illustrations_for_style(
             print(f"[!] 读取商业指南异常: {e}")
 
     # 若未提取到，使用标准场景备选
-    active_scenes = extracted_scenes if len(extracted_scenes) >= count else DEFAULT_STYLE_SCENES
+    active_scenes = extracted_scenes if len(extracted_scenes) >= count else deduce_dynamic_scenes_for_style(selected, count=count)
 
     cases: List[Dict[str, Any]] = []
     used_layout_ids = []
@@ -493,24 +491,20 @@ def plan_illustrations_for_style(
         color_info = resolve_color(color_spec)
         color_label = f"{color_spec} · {color_info['name_zh']} ({color_info['name_en']})"
 
-        # 绑定五维实体异构与零雷同规范
-        if style_num == "FG-025":
-            sub = FG_025_TAXONOMIES[i % len(FG_025_TAXONOMIES)]
-        else:
-            sub = FIVE_SUBJECT_TAXONOMIES[i % len(FIVE_SUBJECT_TAXONOMIES)]
-        subj_category = sub["category"]
-        concrete_zh = sub["concrete_visual_zh"]
-        concrete_en = sub["concrete_visual_en"]
-        camera_zh = sub["camera_zh"]
-        camera_en = sub["camera_en"]
+                # 实时动态提取与组装专属于当前风格的场景与实体 (零 Few-Shot 模板 · 每次实时推荐)
+        subj_category = domain
+        concrete_zh = f"聚焦刻画【{domain}】核心物料与消费场景：{materials}。深度融入画风媒介特征：{reason}。整幅画面无任何无关杂质，专注呈现真实的业务物料与空间质感"
+        concrete_en = f"Focus strictly on the commercial domain of [{domain}]: {materials}. Embodying the core visual language: {reason}. Pure professional scene composition"
+        camera_zh = "专业商业物料展陈构图，空间留白透气，强调材质肌理与光影秩序，绝无千篇一律的背影人物"
+        camera_en = "Professional commercial showcase composition with clean breathing space, emphasizing authentic material texture and light, strictly zero generic human figures"
 
-        # 智能判定尺寸 (支持实体维度专属推荐尺寸，杜绝2:3)
+        # 智能判定尺寸 (默认 3:4 黄金画幅 1086x1448，彻底杜绝 2:3 截断)
         if user_size and user_size != "default":
             target_size = determine_smart_size(layout=resolve_layout(matched_layout_id), style=selected, user_size=user_size)
         else:
-            target_size = sub.get("size") or determine_smart_size(layout=resolve_layout(matched_layout_id), style=selected)
+            target_size = determine_smart_size(layout=resolve_layout(matched_layout_id), style=selected, user_size="1086x1448")
 
-        # 【核心特性】：用手绘 Skill 原生解析器装配出图提示词 (同时融入 Style + Layout + Color + Theme + 实体异构 + 防模板化铁律)
+# 【核心特性】：用手绘 Skill 原生解析器装配出图提示词 (同时融入 Style + Layout + Color + Theme + 实体异构 + 防模板化铁律)
         prompt_zh = build_handdraw_prompt(
             layout_id=matched_layout_id,
             style_id=style_num,

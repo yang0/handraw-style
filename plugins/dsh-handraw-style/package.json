@@ -1,0 +1,43 @@
+{
+  "name": "dsh-plugin-handraw-style",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "main": "./host.js",
+  "exports": {
+    ".": "./host.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-layout"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs && node --check host.js && node --check client.js"
+  },
+  "files": [
+    "host.js",
+    "client.js",
+    "catalog.js",
+    "prompt.js",
+    "assist.js",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "description": "手绘风工作台：DSH 宿主受限参数选择（不自由改写提示词）、角色与场景双画风融合、弹窗选择与独立浏览画廊，支持提示词和直接生图",
+  "homepage": "https://github.com/yang0/handraw-style",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yang0/handraw-style.git",
+    "directory": "plugins/dsh-handraw-style"
+  }
+}

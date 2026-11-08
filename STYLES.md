@@ -2,9 +2,9 @@
   <strong>中文</strong> | <a href="STYLES_en.md">English</a>
 </p>
 
-# 手绘风格完整图鉴（FA-001–FI-034 · 共 368 种）
+# 手绘风格完整图鉴（FA-001–FI-034 · 共 369 种）
 
-> 这里收录了本库全部 **368 种手绘风格**的独立编号图鉴与核心提示词特征。每种风格均配有标准图样预览、分类编号、英文生图名称、风格参考来源与核心视觉特征，供在 GitHub 上直接图文浏览选款。详细对照表见 [styles_200_reorganized.md](styles_200_reorganized.md)。
+> 这里收录了本库全部 **369 种手绘风格**的独立编号图鉴与核心提示词特征。每种风格均配有标准图样预览、分类编号、英文生图名称、风格参考来源与核心视觉特征，供在 GitHub 上直接图文浏览选款。详细对照表见 [styles_200_reorganized.md](styles_200_reorganized.md)。
 
 ## 目录导航
 
@@ -13,7 +13,7 @@
 - [FC · 现代平面艺术（FC-001–FC-032 · 32 种）](#group-fc)
 - [FD · 日本当代插画（FD-001–FD-042 · 42 种）](#group-fd)
 - [FE · 新国风与传统工艺（FE-001–FE-068 · 68 种）](#group-fe)
-- [FF · 3D黏土毛毡与纸雕（FF-001–FF-017 · 17 种）](#group-ff)
+- [FF · 3D黏土毛毡与纸雕（FF-001–FF-018 · 18 种）](#group-ff)
 - [FG · 动漫和赛璐璐（FG-001–FG-025 · 25 种）](#group-fg)
 - [FH · 先锋实验与综合媒介（FH-001–FH-044 · 44 种）](#group-fh)
 - [FI · 写实摄影与视觉大片（FI-001–FI-034 · 34 种）](#group-fi)
@@ -155,7 +155,7 @@
 ---
 
 <a id="group-ff"></a>
-## FF · 3D黏土毛毡与纸雕（FF-001–FF-017 · 17 种）
+## FF · 3D黏土毛毡与纸雕（FF-001–FF-018 · 18 种）
 
 适合萌系手工、定格动画感、童趣立体与材质艺术。以手工黏土捏塑、针织毛毡、立体纸雕与真实微缩质感为主要特征。
 
@@ -166,7 +166,7 @@
 | <img src='images/individual/FF/FF-007.webp' width='220' alt='FF-007 Scandinavian Folk-Art Naive Storybook'><br>**FF-007** <small>(#228)</small> · Scandinavian Folk-Art Naive Storybook<br><sub>参考: OscarAI</sub><br><details><summary>查看核心特征</summary><br>北欧极简民间艺术绘本风、质朴稚拙的童趣造型、柔和哑光大地色系、松弛质感手绘笔触与克制留白、带有温暖手工民俗温度。</details> | <img src='images/individual/FF/FF-008.webp' width='220' alt='FF-008 Fuzzy Plush Toy 3D Character'><br>**FF-008** <small>(#232)</small> · Fuzzy Plush Toy 3D Character<br><sub>参考: OscarAI</sub><br><details><summary>查看核心特征</summary><br>蓬松柔软的雪尼尔毛绒纤维触感、明快马卡龙粉彩配色、圆润几何微缩体块感、温和无影柔光照明、潮流艺术玩具立体质感。</details> | <img src='images/individual/FF/FF-009.webp' width='220' alt='FF-009 Chunky Knit Mohair Stop-Motion Puppet'><br>**FF-009** <small>(#234)</small> · Chunky Knit Mohair Stop-Motion Puppet<br><sub>参考: OscarAI</sub><br><details><summary>查看核心特征</summary><br>定格动画式粗棒针编织与长毛马海毛微纤维肌理、微缩实体定格偶模型质感、低调复古暖调光影、手工艺温润体块感。</details> |
 | <img src='images/individual/FF/FF-010.webp' width='220' alt='FF-010 Stylized 3D Animation Feature Character'><br>**FF-010** <small>(#236)</small> · Stylized 3D Animation Feature Character<br><sub>参考: OscarAI</sub><br><details><summary>查看核心特征</summary><br>现代3D动画长片角色概念质感、温润细腻的次表面散射材质（SSS）、圆润流线形体雕刻感、柔和三点式工作棚暖调布光。</details> | <img src='images/individual/FF/FF-011.webp' width='220' alt='FF-011 Chubby Pastel Knitted Toy 3D Character'><br>**FF-011** <small>(#237)</small> · Chubby Pastel Knitted Toy 3D Character<br><sub>参考: OscarAI</sub><br><details><summary>查看核心特征</summary><br>软萌棉线织物与哑光黏土复合3D质感、糖果粉彩马卡龙高明度配色、圆润饱满的微缩实体造型感、柔和清澈的工作室柔光。</details> | <img src='images/individual/FF/FF-012.webp' width='220' alt='FF-012 Tactile Soft 3D Claymation & Storybook Character'><br>**FF-012** <small>(#248)</small> · Tactile Soft 3D Claymation & Storybook Character<br><sub>参考: OscarAI</sub><br><details><summary>查看核心特征</summary><br>手作触感软萌3D黏土定格动画风、圆润柔和造型与趣味夸张身体比例、微颗粒手作黏土肌理、生动鲜明的个性化角色、介于定格动画玩偶与现代儿童插画绘本之间的温暖美学。</details> |
 | <img src='images/individual/FF/FF-013.webp' width='220' alt='FF-013 Tactile Papercraft & Fabric 3D Cartoon'><br>**FF-013** <small>(#249)</small> · Tactile Papercraft & Fabric 3D Cartoon<br><sub>参考: OscarAI</sub><br><details><summary>查看核心特征</summary><br>纸雕+折纸+布纹质感3D卡通风、夸张生动五官与趣味身体比例、真实微距立体柔光光影。</details> | <img src='images/individual/FF/FF-014.webp' width='220' alt='FF-014 Charming 2D Animation Feature Character Visdev'><br>**FF-014** <small>(#261)</small> · Charming 2D Animation Feature Character Visdev<br><sub>参考: OscarAI</sub><br><details><summary>查看核心特征</summary><br>温润细腻的2D动画长片角色概念设计风、大眼与黑框眼镜的生动表情、利落剪影造型与微质感笔触边缘、纯白留白背景、质朴温和的大地与森林色系、极具亲和力与故事感的动画视觉开发(visdev)艺术。</details> | <img src='images/individual/FF/FF-015.webp' width='220' alt='FF-015 Paper Sculpture Illustration'><br>**FF-015** <small>(#272)</small> · Paper Sculpture Illustration<br><sub>参考: 纸雕</sub><br><details><summary>查看核心特征</summary><br>纸雕，角色高度概括、比例略夸张、造型笨拙有趣；场景只保留最必要的物件与动作；大面积留白</details> |
-| <img src='images/individual/FF/FF-016.webp' width='220' alt='FF-016 Hand-Torn Paper Collage Illustration'><br>**FF-016** <small>(#273)</small> · Hand-Torn Paper Collage Illustration<br><sub>参考: 手撕纸拼贴风</sub><br><details><summary>查看核心特征</summary><br>角色高度概括、比例略夸张、造型笨拙有趣；场景只保留最必要的物件与动作；大面积留白</details> | <img src='images/individual/FF/FF-017.webp' width='220' alt='FF-017 Vox 3D Origami Collage Animation'><br>**FF-017** <small>(#278)</small> · Vox 3D Origami Collage Animation<br><sub>参考: VOX 折纸3D立体拼贴动画</sub><br><details><summary>查看核心特征</summary><br>vox 折纸3d立体拼贴动画+微缩摄影，场景有景深</details> |  |
+| <img src='images/individual/FF/FF-016.webp' width='220' alt='FF-016 Hand-Torn Paper Collage Illustration'><br>**FF-016** <small>(#273)</small> · Hand-Torn Paper Collage Illustration<br><sub>参考: 手撕纸拼贴风</sub><br><details><summary>查看核心特征</summary><br>角色高度概括、比例略夸张、造型笨拙有趣；场景只保留最必要的物件与动作；大面积留白</details> | <img src='images/individual/FF/FF-017.webp' width='220' alt='FF-017 Vox 3D Origami Collage Animation'><br>**FF-017** <small>(#278)</small> · Vox 3D Origami Collage Animation<br><sub>参考: VOX 折纸3D立体拼贴动画</sub><br><details><summary>查看核心特征</summary><br>vox 折纸3d立体拼贴动画+微缩摄影，场景有景深</details> | <img src='images/individual/FF/FF-018.webp' width='220' alt='FF-018 Low Poly Art'><br>**FF-018** <small>(#369)</small> · Low Poly Art<br><sub>参考: 低多边形艺术</sub><br><details><summary>查看核心特征</summary><br>硬朗分明的低多边形三角面建模网格、无平滑着色的刻面平涂着色、锐利几何转折棱线、极简棱角分块、带有定向光漫反射明暗几何面、无细分曲面</details> |
 
 ---
 
@@ -291,6 +291,6 @@
 
 ![I 348-363](images/I_348-363.webp)
 
-![I 364-368](images/I_364-368.webp)
+![I 364-369](images/I_364-369.webp)
 
 </details>
