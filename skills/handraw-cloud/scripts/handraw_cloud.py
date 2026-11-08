@@ -543,8 +543,8 @@ def local_history_create(args):
                 raise ValueError("图片不存在、为空、是符号链接或超过大小限制")
             # The original extension is preserved. Never serve this directory publicly.
             suffix = source.suffix.lower()
-            if suffix not in (".png", ".jpg", ".jpeg", ".webp"):
-                raise ValueError("仅允许 PNG/JPEG/WebP 图片")
+            if suffix not in (".png", ".jpg", ".jpeg", ".webp", ".gif"):
+                raise ValueError("仅允许 PNG/JPEG/WebP/GIF 图片")
             output = location / f"{idx + 1:03d}{suffix}"
             shutil.copyfile(source, output)
             os.chmod(output, 0o600)
