@@ -431,6 +431,69 @@ class CloudBridgeTests(unittest.TestCase):
         self.assertEqual(request_body[0]["visibility"], "private")
         self.assertFalse(cloud.SyncState(cloud.Credentials().read()).data["resources"])
 
+    def test_owned_style_push_retains_web_code_and_revision(self):
+        root = Path(self.tmp.name) / "personal-library"
+        root.mkdir()
+        rid = str(uuid.uuid4())
+        key = "mine:" + rid
+        cloud.atomic_json(root / "library.json", {"schema_version": 1, "resources": [{
+            "id": key, "kind": "style", "section": "owned", "name": "原创线稿",
+            "prompt_zh": "细腻铅笔素描", "prompt_en": "Fine original pencil ink",
+            "license": "本人原创", "version": "1.0.0"
+        }]})
+        code = "USR-S" + rid.replace("-", "").upper()
+        sent = []
+        def fake_request(self, method, path, body=None, **kwargs):
+            sent.append((method, path, body))
+            return {"resource": {"revision": 1, "code": code}}
+        with patch.object(cloud.API, "request", fake_request):
+            response = cloud.resource_push(SimpleNamespace(id=key))
+        self.assertEqual(response["code"], code)
+        self.assertEqual(response["revision"], 1)
+        self.assertEqual(sent[0][1], "/api/v1/me/resources/" + rid)
+        self.assertEqual(sent[0][2]["visibility"], "private")
+        state = cloud.SyncState(cloud.Credentials().read())
+        self.assertEqual(state.data["resources"][key]["code"], code)
+        self.assertEqual(state.data["resources"][key]["revision"], 1)
+        with patch.object(cloud.API, "request", fake_request):
+            cloud.resource_push(SimpleNamespace(id=key))
+        self.assertEqual(sent[-1][2]["baseRevision"], 1)
+
+        with patch.object(cloud.API, "request",
+                          return_value={"resource": {"revision": 2, "code": "USR-SWRONG"}}):
+            with self.assertRaisesRegex(ValueError, "编号"):
+                cloud.resource_push(SimpleNamespace(id=key))
+        self.assertEqual(cloud.SyncState(cloud.Credentials().read())
+                         .data["resources"][key]["revision"], 1)
+
+    def test_owned_layout_restore_stable_code_and_invalid_server_code(self):
+        root = Path(self.tmp.name) / "personal-library"
+        root.mkdir()
+        cloud.atomic_json(root / "library.json", {"schema_version": 1, "resources": []})
+        rid = str(uuid.uuid4())
+        expected = "USR-L" + rid.replace("-", "").upper()
+        payload = {"ok": True, "items": [{
+            "id": rid, "kind": "layout", "name": "原创布局",
+            "definition": {"zh": "自创版式", "en": "Original layout"},
+            "license": "本人原创", "version": "1.0.0",
+            "revision": 2, "code": expected
+        }], "hasMore": False}
+        with patch.object(cloud.API, "request", return_value=payload):
+            result = cloud.resource_restore(SimpleNamespace(force=False))
+        self.assertEqual(result["results"][0]["code"], expected)
+        self.assertEqual(cloud.SyncState(cloud.Credentials().read())
+                         .data["resources"]["mine:" + rid]["code"], expected)
+        self.assertEqual(cloud.read_json(root / "library.json")
+                         ["resources"][0]["name"], "原创布局")
+
+        bad = {**payload, "items": [{**payload["items"][0],
+               "code": "USR-LINVALID", "name": "恶意覆盖"}]}
+        with patch.object(cloud.API, "request", return_value=bad):
+            with self.assertRaisesRegex(ValueError, "UUID"):
+                cloud.resource_restore(SimpleNamespace(force=True))
+        self.assertEqual(cloud.read_json(root / "library.json")
+                         ["resources"][0]["name"], "原创布局")
+
     def test_resource_restore_refuses_silent_overwrite(self):
         root = Path(self.tmp.name) / "personal-library"
         root.mkdir()
