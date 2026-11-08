@@ -2,6 +2,7 @@
 
 No production network calls, credentials or databases.
 """
+import base64
 import contextlib
 import hashlib
 import importlib.util
@@ -302,6 +303,40 @@ class CloudBridgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             cloud.local_history_create(SimpleNamespace(image=[str(img)],
                 original_request_file=str(text), run_id=data["runId"]))
+
+    def test_gif_local_history_stays_offline_until_explicit_public_upload(self):
+        root = Path(self.tmp.name)
+        original = base64.b64decode("R0lGODlhAwADAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQACgAAACwAAAAAAwADAAAIBwABCBw4MCAAIfkEAQ8AAQAsAAAAAAMAAwCBAAD/AAAAAAAAAAAACAcAAQgcODAgADs=")
+        image = root / "two-frame.gif"
+        image.write_bytes(original)
+        prompt = root / "prompt-gif.txt"
+        prompt.write_text("两帧原创 GIF 动图", encoding="utf-8")
+        with patch.object(cloud.API, "request",
+                          side_effect=AssertionError("record must remain offline")):
+            created = cloud.local_history_create(SimpleNamespace(
+                image=[str(image)], original_request_file=str(prompt), run_id=None))
+        self.assertTrue(created["localOnly"])
+        sent = []
+        def fake_request(client, method, path, body=None, **kwargs):
+            sent.append((method, path, body))
+            return {"ok": True, "id": "gif_run",
+                    "workId": "gif_work", "workIds": ["gif_work"],
+                    "imageCount": 1, "visibility": "public"}
+        with patch.object(cloud.API, "request", fake_request):
+            receipt = cloud.local_history_upload(
+                SimpleNamespace(run_id=created["runId"]))
+        self.assertEqual((sent[0][0], sent[0][1]),
+                         ("POST", "/api/v1/me/generations"))
+        self.assertEqual(sent[0][2]["images"][0]["name"], "001.gif")
+        data_url = sent[0][2]["images"][0]["dataUrl"]
+        self.assertTrue(data_url.startswith("data:image/gif;base64,"))
+        self.assertEqual(base64.b64decode(data_url.split(",", 1)[1]), original)
+        self.assertEqual(receipt["workIds"], ["gif_work"])
+        self.assertEqual(receipt["visibility"], "public")
+        saved = cloud.read_json(
+            root / "generation-history" / created["runId"] / "record.json")
+        self.assertEqual(saved["cloudState"], "synced")
+        self.assertEqual(saved["imageCount"], 1)
 
     def test_explicit_history_upload_creates_public_works_without_second_publish(self):
         root = Path(self.tmp.name)
