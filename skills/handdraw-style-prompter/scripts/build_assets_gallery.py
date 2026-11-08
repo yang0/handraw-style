@@ -1330,6 +1330,7 @@ hydrateCustomAssets();
 // Initialize language
 applyLang(currentLang);
 </script>
+<script src="asset-rename.js" defer></script>
 <script src="local-navigation.js" defer></script></body>
 </html>
 """
