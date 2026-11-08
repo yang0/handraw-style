@@ -484,10 +484,24 @@ def update_asset_metadata(asset_id: str, name: str | None = None, name_en: str |
     if not target_entry:
         raise KeyError(f"Custom asset {aid} not found in custom library.")
 
+    def clean_name(value: str) -> str:
+        if not isinstance(value, str):
+            raise ValueError("Asset name must be a string.")
+        value = value.strip()
+        if not value or len(value) > 80 or any(ord(ch) < 32 or ord(ch) == 127 for ch in value):
+            raise ValueError("Asset name must be 1-80 characters without control characters.")
+        return value
+
     if name is not None:
-        target_entry["name"] = name
+        new_name = clean_name(name)
+        old_name = target_entry.get("name")
+        target_entry["name"] = new_name
+        # The default bilingual name mirrors the primary name. Preserve an independently
+        # translated English name unless the caller explicitly overrides it.
+        if name_en is None and target_entry.get("name_en") in (None, "", old_name):
+            target_entry["name_en"] = new_name
     if name_en is not None:
-        target_entry["name_en"] = name_en
+        target_entry["name_en"] = clean_name(name_en)
     if tags is not None:
         target_entry["tags"] = tags
 
@@ -552,5 +566,16 @@ def delete_asset(asset_id: str) -> dict[str, object]:
 
 
 if __name__ == "__main__":
-    tuku = get_custom_library_dir()
-    print(f"Active custom library directory: {tuku}")
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Manage your local HandRaw custom asset library.")
+    commands = parser.add_subparsers(dest="command")
+    rename_parser = commands.add_parser("rename", help="Change the display name of a custom asset.")
+    rename_parser.add_argument("asset_id", help="Asset ID, for example CH-002 / PR-001 / SCN-001")
+    rename_parser.add_argument("name", help="New display name (does not rename the image file or ID)")
+    args = parser.parse_args()
+
+    if args.command == "rename":
+        print(json.dumps(update_asset_metadata(args.asset_id, name=args.name), ensure_ascii=False, indent=2))
+    else:
+        print(f"Active custom library directory: {get_custom_library_dir()}")
