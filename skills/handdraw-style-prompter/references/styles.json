@@ -1862,6 +1862,13 @@
     "traits": "硬朗分明的低多边形三角面建模网格、无平滑着色的刻面平涂着色、锐利几何转折棱线、极简棱角分块、带有定向光漫反射明暗几何面、无细分曲面"
   },
   {
+    "number": "FF-019",
+    "group": "FF 3D黏土毛毡与纸雕 / 3D Clay, Felt & Papercraft",
+    "reference": "超现实 3D 卡通肖像",
+    "generation_name": "Hyperreal 3D Cartoon Portrait",
+    "traits": "超现实 3D 卡通肖像，超大头部，夸张但可辨识的面部特征，真实的皮肤毛孔，细微皱纹，自然瑕疵，次表面散射，逼真的眼睛，详细的发丝，[标志性服装]，[富有表现力的姿势]，幽默的比例，逼真的皮肤/毛发着色器，高分辨率 PBR 纹理，照片级真实 CGI 渲染，电影工作室灯光"
+  },
+  {
     "number": "FG-001",
     "group": "FG 动漫和赛璐璐 / Anime, Cel Animation & Retro Game",
     "reference": "OscarAI",

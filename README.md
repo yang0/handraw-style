@@ -199,8 +199,8 @@ FH-039 (193)号风格，主题：大唐夜宴
 
 ![风格精选预览（FA-001–FA-016）](images/A_001-016.webp)
 
-- 🖼️ **[👉 查看更多手绘与写实风格图片（369 种完整风格拼图大表，支持 FA~FI / 001–369 检索）](STYLES.md)**
-- 📄 **[查看风格详细参数表（369 种风格 Markdown 详细表格与特征描述）](styles_200_reorganized.md)**
+- 🖼️ **[👉 查看更多手绘与写实风格图片（370 种完整风格拼图大表，支持 FA~FI / 001–370 检索）](STYLES.md)**
+- 📄 **[查看风格详细参数表（370 种风格 Markdown 详细表格与特征描述）](styles_200_reorganized.md)**
 - 💻 *（本地离线使用：可在本地浏览器打开 `skills/handdraw-style-prompter/gallery/index.html` 交互检索与放大）*
 
 ## 排版图型展示

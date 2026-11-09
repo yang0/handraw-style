@@ -1,6 +1,6 @@
 ---
 name: community-share
-description: 通用手绘风社区发帖与静态页面/资产发布 Skill。打通 handraw-style.com (Discourse) 官方论坛账号系统与静态画廊发布系统。涵盖双重能力：(1) 全板块论坛发帖与管理（创作交流、好用的工具、综合大厅、运营与变现、实战作品与爆款、手绘skill）：支持发布通用长帖、出版级手绘提示词卡片、自动配图直传短链、回帖、帖子查询与删除；(2) 风格画廊与静态资产一键部署上云（index.html、tutorials.html、assets.html、369 种画风WebP、色彩/版式元数据）与论坛联动公告。触发词：手绘风发帖, 社区发帖, 论坛发帖, 发到论坛, 发到社区, 发布帖子, 分享作品, 手绘提示词分享, 查看我的帖子, 删除帖子, 发布静态页面到社区, 发布静态页, 同步画廊, 更新网站, 部署静态页, 画廊发布.
+description: 通用手绘风社区发帖与静态页面/资产发布 Skill。打通 handraw-style.com (Discourse) 官方论坛账号系统与静态画廊发布系统。涵盖双重能力：(1) 全板块论坛发帖与管理（创作交流、好用的工具、综合大厅、运营与变现、实战作品与爆款、手绘skill）：支持发布通用长帖、出版级手绘提示词卡片、自动配图直传短链、回帖、帖子查询与删除；(2) 风格画廊与静态资产一键部署上云（index.html、tutorials.html、assets.html、370 种画风WebP、色彩/版式元数据）与论坛联动公告。触发词：手绘风发帖, 社区发帖, 论坛发帖, 发到论坛, 发到社区, 发布帖子, 分享作品, 手绘提示词分享, 查看我的帖子, 删除帖子, 发布静态页面到社区, 发布静态页, 同步画廊, 更新网站, 部署静态页, 画廊发布.
 ---
 
 # HandRaw Community Publisher & Manager (手绘风社区发帖与静态页面发布中枢)
@@ -193,7 +193,7 @@ python scripts/discourse_client.py reply \
    - 必须字段：`type="composer"`, `synchronous="true"`, `file=<二进制流>`。
    - 成功后返回 `short_url`（如 `upload://xxx.webp`），Discourse 前端会自动解析为带 Lightbox 灯箱缩放的高清视图。
 3. **静态部署增量安全机制**：
-   - 自动跳过 `individual_backup` 等历史目录，只同步有效 369 种画风和自建资产。
+   - 自动跳过 `individual_backup` 等历史目录，只同步有效 370 种画风和自建资产。
    - 上传后自动触发 Nginx 软链接补齐 (`ln -sfn`)，保证 `img.handraw-style.com`、`static.handraw-style.com` 与主站即时生效。
 4. **Discourse 权限控制规则**：
    - 标题长度：必须 $\ge 5$ 个字符。
