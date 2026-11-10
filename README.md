@@ -275,7 +275,7 @@ FH-039 (193)号风格，主题：大唐夜宴
 - 📚 **官方飞书知识库**：[点击访问知识库（速查画廊 / 常见问题速查 / 创业变现案例） ↗](https://ecmn3m3i17.feishu.cn/wiki/space/7689222460876524523?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home)
 - **创作变现交流群 / 作者微信**：请优先加群，满了的话也可以尝试加我个人微信。请备注：**手绘**
 
-| ① 优先加入群聊（手绘11群） | ② 个人微信（备用） |
+| ① 优先加入群聊（手绘12群） | ② 个人微信（备用） |
 | :---: | :---: |
 | <img src="images/wechat_group.png" alt="微信群聊二维码" width="240"> | <img src="images/wechat_personal.png" alt="个人微信二维码" width="240"> |
 
