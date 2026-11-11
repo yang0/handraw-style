@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="README.md">中文</a> | <strong>English</strong>
+  <a href="README.md">中文</a> | <strong>English</strong> | <a href="README_ja.md">日本語</a>
 </p>
 
 # Hand-drawn Style & Layout Prompter for AI Image Generation

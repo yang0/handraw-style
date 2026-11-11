@@ -1,5 +1,5 @@
 <p align="center">
-  <strong>中文</strong> | <a href="README_en.md">English</a>
+  <strong>中文</strong> | <a href="README_en.md">English</a> | <a href="README_ja.md">日本語</a>
 </p>
 
 # 手绘风格与排版图型提示词库（Hand-drawn Style & Layout Prompter）
