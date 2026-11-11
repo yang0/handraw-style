@@ -283,6 +283,11 @@ class CommunityAPI:
         # handraw-web exposes the signed-in account on /api/boot.  An invalid or
         # revoked API key yields no user, which is the same rejection reason as
         # before, so callers need no change.
+        if self.key.startswith("hwt_"):
+            data = self.request("GET", "/api/auth/me")
+            if not data.get("username"):
+                raise APIRejected("设备授权已失效，请重新绑定网站账号。")
+            return {"username": data["username"], "user_id": None}
         boot = self.request("GET", "/api/boot")
         user = boot.get("user") or boot.get("currentUser") or None
         if not user or not user.get("username"):
@@ -292,6 +297,11 @@ class CommunityAPI:
     def check_work_access(self):
         # Publishing a work is open to any active account on handraw-web; the
         # account check above already proves the key is valid and active.
+        if self.key.startswith("hwt_"):
+            me = self.request("GET", "/api/auth/me")
+            if "publish" not in me.get("scopes", []):
+                raise APIRejected("当前设备尚未获得作品发布权限，请在网站重新授权。")
+            return
         boot = self.request("GET", "/api/boot")
         if not (boot.get("user") or boot.get("currentUser")):
             raise APIRejected("当前账号暂无作品广场发布权限，请登录网站检查账号状态。")
@@ -318,9 +328,23 @@ class CommunityAPI:
             "application/json; charset=utf-8")
 
     def get_work(self, entry_id):
-        # handraw-web serves a work through the forum resource API, which
-        # returns the resource record plus its curation/thread context.
-        return self.request("GET", f"/api/forum/resources/work/{uuid.UUID(str(entry_id))}")
+        # Device tokens intentionally cannot read unrelated authenticated API
+        # routes. Public published-work detail is readable anonymously and
+        # offers a safe readback without broadening the publish token scope.
+        work_id = str(uuid.UUID(str(entry_id)))
+        if self.key.startswith("hwt_"):
+            req = urllib.request.Request(
+                BASE_URL + "/api/works/" + work_id,
+                headers={"Accept": "application/json", "User-Agent": "HandrawConversationShare/1.0"},
+                method="GET",
+            )
+            class NoRedirect(urllib.request.HTTPRedirectHandler):
+                def redirect_request(self, *args, **kwargs):
+                    return None
+            with urllib.request.build_opener(NoRedirect).open(req, timeout=20) as resp:
+                result = json.loads(resp.read(2 * 1024 * 1024 + 1))
+            return {"resource": result.get("work") or {}}
+        return self.request("GET", f"/api/forum/resources/work/{work_id}")
 
     def get_work_content(self, entry_id):
         # The same resource payload carries the work's prompt and images, so the
@@ -342,7 +366,16 @@ def load_key(auth_file=DEFAULT_AUTH):
     key = os.environ.get("HANDRAW_COMMUNITY_API_KEY", "").strip()
     if key:
         return key
-    candidates = [Path(auth_file), Path.home() / ".handraw-style/community_auth.json",
+    # New device authorization takes precedence; unlike legacy cookies, hwt_
+    # tokens are narrowly scoped and can be revoked in website account settings.
+    profile_home = Path(os.environ.get("HANDRAW_PROFILE_HOME") or (Path.home() / ".handraw-style"))
+    cloud_auth = profile_home / "cloud_auth.json"
+    if cloud_auth.is_file():
+        cloud_data = json.loads(cloud_auth.read_text(encoding="utf-8"))
+        token = cloud_data.get("token", "")
+        if isinstance(token, str) and token.startswith("hwt_"):
+            return token
+    candidates = [Path(auth_file), profile_home / "community_auth.json",
                   PACKAGE_ROOT / "client/cache/community_auth.json"]
     for path in candidates:
         if path.is_file():
@@ -378,8 +411,13 @@ def publish_draft(path, api):
             if image_record(record["path"])["sha256"] != record["sha256"]:
                 raise ValueError("图片已更改，请重新准备分享草稿。")
         account = api.current_user()
-        if draft.get("account") and draft["account"] != account:
-            raise ValueError("该草稿已有其他账号的上传记录，请使用原账号继续。")
+        if draft.get("account"):
+            previous = draft["account"]
+            # During migration a legacy account may have numeric user_id while
+            # the scoped /api/auth/me response exposes only username. Compare
+            # the stable website username rather than treating None as another user.
+            if not isinstance(previous, dict) or previous.get("username") != account.get("username"):
+                raise ValueError("该草稿已有其他账号的上传记录，请使用原账号继续。")
         api.check_work_access()
         draft["account"] = account
         draft["destination"] = "work_square"
