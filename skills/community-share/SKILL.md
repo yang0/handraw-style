@@ -5,6 +5,10 @@ description: 通用手绘风社区发帖与静态页面/资产发布 Skill。打
 
 # HandRaw Community Publisher & Manager (手绘风社区发帖与静态页面发布中枢)
 
+## 自然语言账号与回复状态
+
+遵循安装包根目录 `skills/handraw-cloud/references/conversation-account.md`：用户说“绑定手绘风账号”即可由 Agent 启动网页授权；每次回复最后附脚本返回的账号状态，未绑定时说明好处并引导自然语言绑定。用户无需操作终端，未绑定也可继续本地创作。
+
 ## 对话内“分享到网站”
 
 当用户要在 Codex / Claude 出图后的回复中提供分享入口，或点击“分享到网站”时，先读安装包根目录下的 [对话分享合同](references/conversation-sharing.md)，使用 `scripts/conversation_share.py`。该流程分享生成图片与逐字保存的最初创作指令，末尾只附实际编号标签，如 `【画风：FA-013 】`；实际用了图型才附图型标签。不写备注标题、编号解释或“未使用”字段，不加入二阶段参数或完整生图提示词；原有 `share --prompt` 是解析后提示词分享，不能代替此流程。
@@ -62,11 +66,13 @@ flowchart TD
 
 ### 1. 账号绑定与凭据管理 (Authentication)
 
+普通用户绑定 Handraw 网站账号时，使用上方自然语言账号合同：说“绑定手绘风账号”后由 Agent 开始网页设备授权，不索取 API Key、密码或 Cookie。以下命令只保留给旧 Discourse 论坛集成的开发排错，不能代替默认的网站绑定流程，也不代表设备授权支持所有论坛管理员操作。
+
 - **检查当前登录账号**：
   ```bash
   python scripts/discourse_client.py whoami
   ```
-- **使用 API Key 绑定登录 (推荐模式)**：
+- **旧论坛 API Key 登录（兼容模式）**：
   ```bash
   python scripts/discourse_client.py login --api-key <your_api_key>
   ```

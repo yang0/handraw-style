@@ -1,9 +1,13 @@
 ---
 name: handraw-cloud
-description: 手绘风网站账号绑定、自建图库私有同步、个人画风图型同步、授权收藏下载、生成历史本地保存、用户执行上传即公开作品和跨端互动。仅在用户明确操作时上传。
+description: 用自然语言绑定或查看手绘风账号，显示回复末尾账号状态，处理私有图库和画风图型同步、授权收藏、作品分享及互动。仅在用户明确操作时上传。
 ---
 
 # Handraw 统一账号与个人云空间（Skill 客户端）
+
+## 自然语言账号与回复状态
+
+遵循安装包根目录 `skills/handraw-cloud/references/conversation-account.md`：用户说“绑定手绘风账号”即可由 Agent 启动网页授权；每次回复最后附脚本返回的账号状态，未绑定时说明好处并引导自然语言绑定。用户无需操作终端，未绑定也可继续本地创作。
 
 仓库：**https://github.com/yang0/handraw-style**（本仓库，完整联动测试分支 `claude`；原整合分支 `feature/skill-web-unification-v1-20261107` 已合入）
 服务端仓库：**https://github.com/yang0/handraw-web**（主分支 `main`，私有）  
@@ -14,6 +18,8 @@ description: 手绘风网站账号绑定、自建图库私有同步、个人画�
 Windows 建议使用 `python -X utf8`，避免终端中文编码错误。完整测试顺序与通过边界见仓库根目录 `docs/claude-web-testing.md`。
 
 ## P0 网站账号绑定（已有服务端接口）
+
+面向用户默认采用自然语言绑定；先按 [账号对话合同](references/conversation-account.md) 用 `bind --start --no-browser` 返回链接，用户说“我已授权”后用 `bind --check` 确认，不使用下方阻塞式命令等待用户。status 可返回不含密钥的状态和 footer。下方命令是兼容入口及 Agent 内部实现说明，正常用户不需要执行它们。
 
 ```sh
 python scripts/handraw_cloud.py bind

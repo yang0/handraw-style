@@ -5,6 +5,10 @@ description: Automatically scrape any X/Twitter tweet and its images, assign the
 
 # Tweet Style Importer (推文画风自动入库 Skill)
 
+## 自然语言账号与回复状态
+
+遵循安装包根目录 `skills/handraw-cloud/references/conversation-account.md`：用户说“绑定手绘风账号”即可由 Agent 启动网页授权；每次回复最后附脚本返回的账号状态，未绑定时说明好处并引导自然语言绑定。用户无需操作终端，未绑定也可继续本地创作。
+
 本 Skill 用于将 X (Twitter) 上的 AI 生图风格推文（如 Midjourney `--sref` 风格、艺术家作品图集等）一键自动抓取、处理并标准化入库到手绘风格库中。
 
 ---

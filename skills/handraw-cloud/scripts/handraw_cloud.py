@@ -10,6 +10,7 @@ import argparse
 import base64
 import hashlib
 import json
+import math
 import mimetypes
 import os
 import re
@@ -78,7 +79,7 @@ class API:
         self.opener = opener or urllib.request.build_opener(RejectRedirect())
 
     def request(self, method: str, path: str, body: dict | None = None,
-                *, raw: bool = False, limit: int | None = None):
+                *, raw: bool = False, limit: int | None = None, timeout: int = 40):
         parsed = urllib.parse.urlsplit(path)
         if (parsed.scheme or parsed.netloc or parsed.fragment or
                 not parsed.path.startswith(("/api/", "/studio/api/")) or
@@ -99,7 +100,7 @@ class API:
         req = urllib.request.Request(BASE_URL + path, data=payload, headers=headers, method=method)
         cap = limit or (MAX_IMAGE if raw else MAX_JSON)
         try:
-            with self.opener.open(req, timeout=40) as response:
+            with self.opener.open(req, timeout=timeout) as response:
                 data = response.read(cap + 1)
         except urllib.error.HTTPError as exc:
             try:
@@ -145,8 +146,158 @@ class Credentials:
     def client(self) -> API:
         token = self.read().get("token")
         if not token:
-            raise ValueError("Skill 尚未绑定网站账号：运行 handraw_cloud.py bind")
+            raise ValueError("还没绑定手绘风账号。告诉 Skill“绑定手绘风账号”，即可继续。")
         return API(token)
+
+
+def account_status(state: str, **fields) -> dict:
+    """Return only presentation-safe account information, never credentials."""
+    footers = {
+        "unbound": "👤 手绘风账号：未绑定｜说“绑定手绘风账号”，可同步私有图库与画风图型、下载获准离线使用的收藏、分享作品和互动。",
+        "pending": "👤 手绘风账号：等待网页授权｜完成后说“我已授权”，我会继续绑定。",
+        "expired": "👤 手绘风账号：授权链接已过期｜说“重新绑定账号”即可获取新链接。",
+        "needs_rebind": "👤 手绘风账号：绑定已失效｜说“重新绑定账号”即可恢复连接。",
+        "denied": "👤 手绘风账号：本次授权未获批准｜需要时说“绑定手绘风账号”重试。",
+        "unverified": "👤 手绘风账号：本机已保存绑定，暂时无法向网站核验｜本地创作可以继续。",
+        "unavailable": "👤 手绘风账号：暂时无法连接网站｜稍后说“绑定手绘风账号”重试，本地创作可以继续。",
+    }
+    if state == "connected":
+        # A username is an identifier, not markdown or user-authored instructions.
+        username = "".join(c for c in str(fields.get("username", "")) if c.isalnum() or c in "-_.")[:64]
+        fields["username"] = username
+        footer = f"👤 手绘风账号：已绑定 @{username}"
+    else:
+        footer = footers[state]
+    return {"state": state, "connected": state == "connected", "footer": footer, **fields}
+
+
+def pending_path() -> Path:
+    return profile_home() / "cloud_pending_auth.json"
+
+
+def verification_path(value) -> str:
+    path = str(value)
+    parsed = urllib.parse.urlsplit(path)
+    if (not path.startswith("/") or parsed.netloc or parsed.scheme or parsed.fragment
+            or "\\" in path or any(ord(c) < 32 for c in path)
+            or any(part in (".", "..") for part in parsed.path.split("/"))):
+        raise ValueError("网站返回了不安全的授权地址")
+    return path
+
+
+def read_pending() -> dict:
+    pending = read_json(pending_path())
+    if pending:
+        verification_path(pending["verificationPath"])
+        if (not isinstance(pending.get("deviceCode"), str) or not pending["deviceCode"]
+                or not re.fullmatch(r"[A-Z0-9-]{4,32}", str(pending.get("userCode", "")))
+                or not isinstance(pending.get("expiresAt"), (int, float))
+                or not isinstance(pending.get("interval"), int) or not 5 <= pending["interval"] <= 60):
+            raise ValueError("本机授权进度无效，请重新绑定账号")
+    return pending
+
+
+def pending_status(pending: dict) -> dict:
+    return account_status("pending", userCode=pending["userCode"],
+                          verificationUrl=BASE_URL + verification_path(pending["verificationPath"]),
+                          expiresIn=max(0, int(pending["expiresAt"] - time.time())),
+                          retryAfter=max(0, math.ceil(pending.get("nextPollAt", 0) - time.time())))
+
+
+def current_account_status() -> dict:
+    """A footer read never starts authorization, polls a device or uploads data."""
+    try:
+        credentials = Credentials().read()
+    except (ValueError, OSError):
+        return account_status("needs_rebind")
+    token = credentials.get("token")
+    try:
+        pending = read_pending()
+    except (ValueError, KeyError, OSError):
+        if not token:
+            return account_status("needs_rebind")
+        pending = {}
+    if pending and pending["expiresAt"] > time.time():
+        return pending_status(pending)
+    if token:
+        if not isinstance(token, str) or not token.startswith("hwt_"):
+            return account_status("needs_rebind")
+        try:
+            who = API(token).request("GET", "/api/auth/me", timeout=5)
+        except CloudError as exc:
+            return account_status("needs_rebind" if exc.status == 401 else "unverified")
+        if not isinstance(who.get("username"), str) or not who["username"].strip():
+            return account_status("unverified")
+        return account_status("connected", username=who["username"])
+    if pending:
+        return account_status("expired")
+    return account_status("unbound")
+
+
+def start_binding(args) -> dict:
+    """Start/resume device approval and return immediately to the conversation."""
+    try:
+        pending = read_pending()
+    except (ValueError, KeyError, OSError):
+        pending = {}
+    if not pending or pending["expiresAt"] <= time.time():
+        try:
+            result = API().request("POST", "/api/auth/device",
+                                   {"clientName": "Handraw Style Skill", "scopes": ["library", "publish"]})
+        except CloudError:
+            return account_status("unavailable")
+        path = verification_path(result["verificationUrl"])
+        code, secret = result["userCode"], result["deviceCode"]
+        if (not isinstance(secret, str) or not secret
+                or not re.fullmatch(r"[A-Z0-9-]{4,32}", str(code))):
+            raise ValueError("网站未返回有效的设备授权信息")
+        interval = max(5, min(int(result.get("interval", 5)), 60))
+        pending = {"deviceCode": secret, "userCode": code, "verificationPath": path,
+                   "expiresAt": time.time() + max(1, min(int(result.get("expiresIn", 600)), 600)),
+                   "interval": interval, "nextPollAt": time.time() + interval}
+        atomic_json(pending_path(), pending)
+    receipt = pending_status(pending)
+    if not args.no_browser:
+        webbrowser.open(receipt["verificationUrl"])
+    return receipt
+
+
+def complete_binding() -> dict:
+    """Check once after the user returns; do not block the conversational turn."""
+    try:
+        pending = read_pending()
+    except (ValueError, KeyError, OSError):
+        return account_status("needs_rebind")
+    if not pending:
+        return current_account_status()
+    if pending["expiresAt"] <= time.time():
+        return account_status("expired")
+    if pending.get("nextPollAt", 0) > time.time():
+        return pending_status(pending)
+    pending["nextPollAt"] = time.time() + pending["interval"]
+    atomic_json(pending_path(), pending)
+    try:
+        result = API().request("POST", "/api/auth/device/token", {"deviceCode": pending["deviceCode"]})
+    except CloudError as exc:
+        if exc.code == "slow_down":
+            pending["interval"] = min(60, pending["interval"] + 5)
+            pending["nextPollAt"] = time.time() + pending["interval"]
+            atomic_json(pending_path(), pending)
+        if exc.code in ("authorization_pending", "slow_down"):
+            return pending_status(pending)
+        if exc.code in ("access_denied", "expired_token", "invalid_grant"):
+            pending_path().unlink(missing_ok=True)
+            return account_status("denied" if exc.code == "access_denied" else "expired")
+        return {**pending_status(pending), "message": "暂时无法确认授权，请稍后告诉我“我已授权”重试。"}
+    # Persist the exchanged token before identity verification: device exchange
+    # is one-shot, and a transient /me failure must not discard that grant.
+    Credentials().save(result)
+    pending_path().unlink(missing_ok=True)
+    status = current_account_status()
+    if status["connected"]:
+        result["user"] = {"username": status["username"]}
+        Credentials().save(result)
+    return status
 
 
 class SyncState:
@@ -169,9 +320,7 @@ def bind_account(args):
     result = api.request("POST", "/api/auth/device",
                          {"clientName": "Handraw Style Skill", "scopes": ["library", "publish"]})
     code, secret = result["userCode"], result["deviceCode"]
-    verification = str(result["verificationUrl"])
-    if not verification.startswith("/") or verification.startswith("//"):
-        raise ValueError("网站返回了不安全的授权地址")
+    verification = verification_path(result["verificationUrl"])
     url = BASE_URL + verification
     print(f"请在网站登录并批准 Skill 授权：{url}\n设备验证码：{code}", flush=True)
     if not args.no_browser:
@@ -190,6 +339,7 @@ def bind_account(args):
                 continue
             raise
         Credentials().save(token)
+        pending_path().unlink(missing_ok=True)
         who = Credentials().client().request("GET", "/api/auth/me")
         print(json.dumps({"connected": True, "username": who.get("username"),
                           "scopes": who.get("scopes")}, ensure_ascii=False))
@@ -680,6 +830,10 @@ def main(argv=None):
     command = parser.add_subparsers(dest="command", required=True)
     bind = command.add_parser("bind", help="网站授权 Skill 设备令牌")
     bind.add_argument("--no-browser", action="store_true")
+    binding_mode = bind.add_mutually_exclusive_group()
+    binding_mode.add_argument("--start", action="store_true", help="返回授权链接，供自然语言对话使用")
+    binding_mode.add_argument("--check", action="store_true", help="用户完成网页授权后检查一次")
+    command.add_parser("status", help="返回可直接展示的账号状态，不自动绑定或上传")
     command.add_parser("whoami", help="校验当前网站身份")
     command.add_parser("unbind", help="清除本机令牌（网站也可撤销授权）")
     assets = command.add_parser("assets")
@@ -724,12 +878,20 @@ def main(argv=None):
     publish.add_argument("--draft", required=True)
     args = parser.parse_args(argv)
     if args.command == "bind":
-        bind_account(args)
+        if args.start:
+            output(start_binding(args))
+        elif args.check:
+            output(complete_binding())
+        else:
+            bind_account(args)
         return
-    if args.command == "whoami":
+    if args.command == "status":
+        output(current_account_status())
+    elif args.command == "whoami":
         output(Credentials().client().request("GET", "/api/auth/me"))
     elif args.command == "unbind":
         Credentials().clear()
+        pending_path().unlink(missing_ok=True)
         output({"localCredentialsCleared": True,
                 "note": "如需服务端撤销令牌，请在网站账号设置的授权设备页面撤销"})
     elif args.command == "assets":

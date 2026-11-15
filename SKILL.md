@@ -1,11 +1,13 @@
 ---
 name: handdraw-style-prompter
-description: Turn a 001–370 hand-drawn and realistic style number and image theme into bilingual prompts, using model capability data to decide when core traits and a numbered reference image are required.
+description: Create bilingual Handraw image prompts from style numbers and themes; handle natural-language Handraw account binding, personal resources and website sharing through the bundled skills.
 ---
 
 # Hand-drawn Style Prompter
 
 ## Skill 与网站统一账号及个人云空间
+
+所有手绘风 Skill 用自然语言与用户交互。用户说“绑定手绘风账号”时由 Agent 启动网页授权，说“我已授权”后继续确认；不要求用户运行命令。每次用户可见回复的最后一行附真实账号状态，未绑定时简短说明绑定好处并引导说“绑定手绘风账号”。执行与状态规则见 [账号对话合同](skills/handraw-cloud/references/conversation-account.md)，适用于本入口及下方所有路由的回复。正常本地创作不要求先绑定。
 
 当用户要求绑定网站账号、保存/恢复私有图库、同步个人画风图型、获取已授权收藏、保存生成历史或分享/互动时，读取 [handraw-cloud Skill](skills/handraw-cloud/SKILL.md)。入口为 `python -X utf8 scripts/handraw_cloud.py`（需完整源码仓库或 full ecosystem 包；单一提示词 standalone ZIP 不含此子 Skill）。账号绑定使用官网设备码授权，私有资源上传和公开作品发布始终需要用户明确指令；不能因生成图片成功而自动上传或发布。`history record` 仅在本地保存；用户明确执行 `history upload` 即公开整批图片和原始指令，形成一件多图作品，不再二次发布。真实同步及互动以服务器回执为准。`claude` 联动测试步骤见 [测试指南](docs/claude-web-testing.md)。
 

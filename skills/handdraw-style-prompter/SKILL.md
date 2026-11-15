@@ -19,6 +19,10 @@ examples_en:
 
 # Hand-drawn Style Prompter
 
+## 自然语言账号与回复状态
+
+遵循安装包根目录 `skills/handraw-cloud/references/conversation-account.md`：用户说“绑定手绘风账号”即可由 Agent 启动网页授权；每次回复最后附脚本返回的账号状态，未绑定时说明好处并引导自然语言绑定。用户无需操作终端，未绑定也可继续本地创作。
+
 ## 跨端账号与个人资产（可选）
 
 需要网站账号、云端图库、个人画风/图型、已解锁收藏、生成历史或作品互动时，先从安装包根目录读取 `skills/handraw-cloud/SKILL.md`，在完整源码仓库或 full ecosystem 包根目录运行 `python -X utf8 scripts/handraw_cloud.py`，单独的提示词 standalone 包不包含云空间组件。未经用户明确允许绝不把私有图片/原始指令上传到网站。`history record` 仅在本地记录；用户主动执行 `history upload` 就会公开该任务的图片和原始指令，形成一件多图作品，无需二次发布。个人图库与自建画风/图型同步仍私有。联动测试步骤见安装包根目录 `docs/claude-web-testing.md`，服务端失败不得报告为成功。

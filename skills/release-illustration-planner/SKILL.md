@@ -17,6 +17,10 @@ examples_en:
 
 # 风格与图型发布配图规划器 (Release Illustration Planner)
 
+## 自然语言账号与回复状态
+
+遵循安装包根目录 `skills/handraw-cloud/references/conversation-account.md`：用户说“绑定手绘风账号”即可由 Agent 启动网页授权；每次回复最后附脚本返回的账号状态，未绑定时说明好处并引导自然语言绑定。用户无需操作终端，未绑定也可继续本地创作。
+
 专为 HandRaw 风格库发布新【画风 (Style)】或新【图型 (Layout)】文章时定制的**专业配图规划与生图工作流**。
 
 ---

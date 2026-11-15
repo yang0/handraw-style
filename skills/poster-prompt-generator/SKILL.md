@@ -5,6 +5,10 @@ description: 专门生成极简结构化 AI 海报提示词的专业设计技能
 
 # 海报提示词生成器 (Poster Prompt Generator)
 
+## 自然语言账号与回复状态
+
+遵循安装包根目录 `skills/handraw-cloud/references/conversation-account.md`：用户说“绑定手绘风账号”即可由 Agent 启动网页授权；每次回复最后附脚本返回的账号状态，未绑定时说明好处并引导自然语言绑定。用户无需操作终端，未绑定也可继续本地创作。
+
 ## 核心设计哲学：高维结构化锚定，深度协同风格与色彩画廊
 
 > [!IMPORTANT]

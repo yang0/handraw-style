@@ -5,6 +5,10 @@ description: 专业 IP 形象设计与 Character Bible / IP Design Manual 交付
 
 # IP 形象设计交付体系 (Character Bible)
 
+## 自然语言账号与回复状态
+
+遵循安装包根目录 `skills/handraw-cloud/references/conversation-account.md`：用户说“绑定手绘风账号”即可由 Agent 启动网页授权；每次回复最后附脚本返回的账号状态，未绑定时说明好处并引导自然语言绑定。用户无需操作终端，未绑定也可继续本地创作。
+
 ## 一、设计与生成原则
 
 1. **文字简洁，画面不碎**：

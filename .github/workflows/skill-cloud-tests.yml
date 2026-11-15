@@ -9,6 +9,9 @@ on:
       - 'feature/issue17-*'
   pull_request:
     paths:
+      - "AGENTS.md"
+      - "SKILL.md"
+      - "skills/*/SKILL.md"
       - "skills/handraw-cloud/**"
       - "skills/personal-library/**"
       - "skills/community-share/scripts/conversation_share.py"

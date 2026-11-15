@@ -5,6 +5,10 @@ description: Add a named or text-defined visual style to the numbered hand-drawn
 
 # Text-Defined Style Library Importer
 
+## 自然语言账号与回复状态
+
+遵循安装包根目录 `skills/handraw-cloud/references/conversation-account.md`：用户说“绑定手绘风账号”即可由 Agent 启动网页授权；每次回复最后附脚本返回的账号状态，未绑定时说明好处并引导自然语言绑定。用户无需操作终端，未绑定也可继续本地创作。
+
 Use this Skill when the user wants to add a visual style to the local hand-drawn style library with a style name, visual traits, or both. It is separate from `tweet-style-importer`: an image-only request belongs to the Tweet workflow and must not receive a new number here.
 
 ## 核心铁律：严禁从示意图提取具体画面内容到特征描述 (Prohibition on Content Extraction)
