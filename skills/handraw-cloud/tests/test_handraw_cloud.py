@@ -57,7 +57,10 @@ class CloudBridgeTests(unittest.TestCase):
             "props": [], "scenes": []})
         (root / "characters" / "CH-002.webp").write_bytes(b"RIFF\x04\x00\x00\x00WEBPTESTDATA")
         cloud.atomic_json(Path(self.tmp.name) / "config.json", {"tuku_dir": str(root)})
-        return root
+        # The CLI resolves roots before deriving sync keys. Windows temp paths
+        # may contain 8.3 aliases (RUNNER~1), so assertions must use that same
+        # canonical path rather than the environment's spelling.
+        return root.resolve()
 
     def test_api_pins_origin_and_does_not_redirect(self):
         seen = []
