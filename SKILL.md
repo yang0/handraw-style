@@ -7,7 +7,7 @@ description: Turn a 001–370 hand-drawn and realistic style number and image th
 
 ## Skill 与网站统一账号及个人云空间
 
-当用户要求绑定网站账号、保存/恢复私有图库、同步个人画风图型、获取已授权收藏、保存生成历史或分享/互动时，读取 [handraw-cloud Skill](skills/handraw-cloud/SKILL.md)。入口为 `python scripts/handraw_cloud.py`（需完整源码仓库或 full ecosystem 包；单一提示词 standalone ZIP 不含此子 Skill）。账号绑定使用官网设备码授权，私有资源上传和公开作品发布始终需要用户明确指令；不能因生成图片成功而自动上传或发布。云端 `/api/v1` 个人资源、生成历史和互动契约未部署时应明确说明依赖，不可报告已完成同步。
+当用户要求绑定网站账号、保存/恢复私有图库、同步个人画风图型、获取已授权收藏、保存生成历史或分享/互动时，读取 [handraw-cloud Skill](skills/handraw-cloud/SKILL.md)。入口为 `python -X utf8 scripts/handraw_cloud.py`（需完整源码仓库或 full ecosystem 包；单一提示词 standalone ZIP 不含此子 Skill）。账号绑定使用官网设备码授权，私有资源上传和公开作品发布始终需要用户明确指令；不能因生成图片成功而自动上传或发布。`history record` 仅在本地保存；用户明确执行 `history upload` 即公开整批图片和原始指令，形成一件多图作品，不再二次发布。真实同步及互动以服务器回执为准。`claude` 联动测试步骤见 [测试指南](docs/claude-web-testing.md)。
 
 This is the install entrypoint for the complete hand-drawn style package.
 The package root contains the `images/` gallery and numbered reference assets;

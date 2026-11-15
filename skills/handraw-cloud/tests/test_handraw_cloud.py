@@ -86,12 +86,15 @@ class CloudBridgeTests(unittest.TestCase):
 
     def test_credential_file_is_private_and_unbind_local_only(self):
         p = cloud.Credentials().path
-        self.assertEqual(stat.S_IMODE(p.stat().st_mode), 0o600)
         self.assertEqual(cloud.Credentials().read()["token"], "hwt_fixture")
         cloud.Credentials().clear()
         self.assertFalse(p.exists())
         with self.assertRaises(ValueError):
             cloud.Credentials().client()
+
+    @unittest.skipUnless(os.name == "posix", "POSIX permission bits do not describe Windows ACLs")
+    def test_posix_credential_file_is_owner_only(self):
+        self.assertEqual(stat.S_IMODE(cloud.Credentials().path.stat().st_mode), 0o600)
 
     def test_bind_device_code_and_prove_account(self):
         calls = []
@@ -239,6 +242,7 @@ class CloudBridgeTests(unittest.TestCase):
         self.assertEqual(after["tags"], ["离线标签"])
         self.assertEqual((root / "characters" / "CH-002.webp").read_bytes(), original_image)
 
+    @unittest.skipUnless(os.name == "posix", "POSIX permission bits do not describe Windows ACLs")
     def test_private_style_definitions_use_owner_only_file_permissions(self):
         resource_file = ROOT / "skills" / "personal-library" / "scripts" / "personal_library.py"
         resource_spec = importlib.util.spec_from_file_location("personal_resource_permission_test", resource_file)
@@ -542,6 +546,7 @@ class CloudBridgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             cloud.public_comments(SimpleNamespace(id="../secret"))
 
+    @unittest.skipUnless(os.name == "posix", "POSIX permission bits do not describe Windows ACLs")
     def test_history_copy_permissions_are_private(self):
         root = Path(self.tmp.name)
         (root / "prompt.txt").write_text("private prompt", encoding="utf-8")

@@ -21,7 +21,7 @@ examples_en:
 
 ## 跨端账号与个人资产（可选）
 
-需要网站账号、云端图库、个人画风/图型、已解锁收藏、Skill 私有生图历史或作品互动时，先阅读 `skills/handraw-cloud/SKILL.md`，在完整源码仓库或 full ecosystem 包根目录运行 `python scripts/handraw_cloud.py`，单独的提示词 standalone 包不包含云空间组件。未经用户明确允许绝不把私有图片/原始指令上传到网站；成功生图、保存到云端与公开发布是三个独立动作。本站新 `/api/v1` 接口未部署前必须标记不可用。
+需要网站账号、云端图库、个人画风/图型、已解锁收藏、生成历史或作品互动时，先从安装包根目录读取 `skills/handraw-cloud/SKILL.md`，在完整源码仓库或 full ecosystem 包根目录运行 `python -X utf8 scripts/handraw_cloud.py`，单独的提示词 standalone 包不包含云空间组件。未经用户明确允许绝不把私有图片/原始指令上传到网站。`history record` 仅在本地记录；用户主动执行 `history upload` 就会公开该任务的图片和原始指令，形成一件多图作品，无需二次发布。个人图库与自建画风/图型同步仍私有。联动测试步骤见安装包根目录 `docs/claude-web-testing.md`，服务端失败不得报告为成功。
 
 Default to creating prompts only. Do not call an image-generation tool unless the user explicitly asks to generate, render, or preview an image.
 

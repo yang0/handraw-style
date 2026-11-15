@@ -5,11 +5,13 @@ description: 手绘风网站账号绑定、自建图库私有同步、个人画�
 
 # Handraw 统一账号与个人云空间（Skill 客户端）
 
-仓库：**https://github.com/yang0/handraw-style**（本仓库，开发分支 `feature/skill-web-unification-v1-20261107`）  
+仓库：**https://github.com/yang0/handraw-style**（本仓库，完整联动测试分支 `claude`；原整合分支 `feature/skill-web-unification-v1-20261107` 已合入）
 服务端仓库：**https://github.com/yang0/handraw-web**（主分支 `main`，私有）  
 跨仓库规划：https://github.com/yang0/handraw-web/blob/main/docs/skill-web-unification-v1.md
 
 从 **handraw-style 项目根目录** 执行以下命令。Skill 只管理本地数据和与官网的明确交互，不自行决定云端授权、资源版权或公开状态。
+
+Windows 建议使用 `python -X utf8`，避免终端中文编码错误。完整测试顺序与通过边界见仓库根目录 `docs/claude-web-testing.md`。
 
 ## P0 网站账号绑定（已有服务端接口）
 
@@ -50,7 +52,7 @@ python scripts/handraw_cloud.py resources restore
 ```
 
 - `list/pull` 使用网站已有 `/api/skill/library` 和受控资源内容接口，**只拉取已获得完整内容访问权**的资源；本地收藏保留原作者与授权信息。
-- `push` 适配规划中的 `PUT /api/v1/me/resources/{id}`，只允许 owned 资源、强制 visibility=private、携带 baseRevision。**网站部署该 API 和 library scope 权限前会拒绝，不能称其已经上线。**
+- `push` 使用 `PUT /api/v1/me/resources/{id}`，只允许 owned 资源、强制 visibility=private、携带 baseRevision。当前 Web 已有该接口；是否同步成功必须检查真实回执，不能只凭接口存在判断。
 - 新建画风仅描述视觉语言（媒介、线条、材质、色彩、光影），不提取参考图人物、服饰或场景。图型只保存布局约束。
 - 私人画风不会因为同步到账号自动公开；社区资源不能作为个人原创再次上传。
 
@@ -73,7 +75,7 @@ python scripts/handraw_cloud.py publish --draft /path/.handraw-share.json
 
 使用设备令牌和现有 `/api/uploads`、`/api/entries` 发布。执行前先审阅公开标题、图片、原始创作指令和关联资源。超时结果未确认时停止重复发布以避免双发。成功回执是网站作品链接，非论坛替代帖子。分享客户端使用不带令牌的公开作品详情接口尝试回读验证；如果网站尚未返回一致的图片/关联信息、尚未传播或接口临时不可达，回执可能显示 `verified=false`，这不表示一定未发布，也不能声称关联已经核验。
 
-## P3 网站互动（客户端已实现待服务端授权）
+## P3 网站互动
 
 ```sh
 python scripts/handraw_cloud.py social notifications
@@ -87,7 +89,7 @@ python scripts/handraw_cloud.py works list --author <作者用户名>
 python scripts/handraw_cloud.py works detail --id <作品ID>
 ```
 
-作品浏览与评论读取通过现有公开 `/api/works` API，作品收藏直接复用现有 `/api/collections/toggle`，可在服务端现有接口允许时使用。点赞、评论提交和通知属于规划中的 `/api/v1` 客户端接口；服务端未部署对应 API 和设备权限时，返回明确错误。**不得调用论坛管理员 API 或绕过授权模拟用户互动。**
+作品浏览与评论读取通过公开 `/api/works` API，作品收藏直接复用 `/api/collections/toggle`。点赞、评论提交和通知使用 Web 已实现的 `/api/v1` 接口与设备令牌权限；账号绑定、读写和网页状态回读需要真实联测。服务端版本不兼容或权限不足时应报告明确错误。**不得调用论坛管理员 API 或绕过授权模拟用户互动。**
 
 ## 失败恢复与安全
 

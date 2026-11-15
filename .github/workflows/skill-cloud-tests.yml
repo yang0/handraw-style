@@ -3,6 +3,7 @@ name: Skill cloud bridge contract tests
 on:
   push:
     branches:
+      - claude
       - feature/skill-web-unification-v1-20261107
       - 'feature/issue21-*'
       - 'feature/issue17-*'
@@ -19,7 +20,13 @@ permissions:
 
 jobs:
   offline-contract:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      PYTHONUTF8: '1'
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
@@ -37,3 +44,5 @@ jobs:
         run: python -m unittest discover -s skills/handraw-cloud/tests -p 'test_*.py' -v
       - name: Run existing community-share regression tests
         run: python -m pytest skills/community-share/tests -q
+      - name: Run existing custom-library rename regressions
+        run: python -m unittest discover -s skills/handdraw-style-prompter/scripts -p 'test_custom_library_rename.py' -v
