@@ -14,6 +14,16 @@ POLICY = SKILL / "references" / "model_capabilities.json"
 STYLES = SKILL / "references" / "styles.json"
 ALLOWED = {"strong", "weak", "none", "unknown"}
 
+# Data-driven trait filtering rules (exported to the client resource pack as prompt_rules.json).
+TRAIT_SPLIT_PATTERN = r"[；;。\n]+"
+TRAIT_STRIP_CHARS = " ，,、：:。；;\t"
+TRAIT_JOINER = "；"
+NEGATIVE_TRAIT_WORDS = ("避免", "不要", "不准", "禁止")
+NEGATIVE_TRAIT_PATTERN = r"无(?:写实纹理|精细材质|真实纹理)"
+# Styles whose traits are used verbatim (negative phrases are part of the look).
+KEEP_RAW_STYLES = ("FE-048", "FE-049", "FE-051", "FH-050", "FD-042")
+KEEP_RAW_LEGACY = ("240", "242", "257", "259", "260")
+
 
 def load_policy() -> dict:
     return json.loads(POLICY.read_text(encoding="utf-8"))
@@ -27,18 +37,18 @@ def load_style(number: str) -> dict:
 def positive_traits(traits: str) -> str:
     if not traits:
         return ""
-    parts = re.split(r"[；;。\n]+", traits)
+    parts = re.split(TRAIT_SPLIT_PATTERN, traits)
     kept = []
     for part in parts:
-        part = part.strip(" ，,、：:。；;\t")
+        part = part.strip(TRAIT_STRIP_CHARS)
         if not part:
             continue
-        if any(word in part for word in ("避免", "不要", "不准", "禁止")):
+        if any(word in part for word in NEGATIVE_TRAIT_WORDS):
             continue
-        if re.search(r"无(?:写实纹理|精细材质|真实纹理)", part):
+        if re.search(NEGATIVE_TRAIT_PATTERN, part):
             continue
         kept.append(part)
-    return "；".join(kept)
+    return TRAIT_JOINER.join(kept)
 
 
 def get_reference_path(number: str) -> str | None:
@@ -91,7 +101,7 @@ def resolve(model: str, style: str, policy: dict | None = None) -> dict:
     traits_activation = entry.get("traits_activation", "unknown")
     if name_activation not in ALLOWED or traits_activation not in ALLOWED:
         raise ValueError("Invalid name_activation or traits_activation")
-    keep_raw = number in ("FE-048", "FE-049", "FE-051", "FH-050", "FD-042") or legacy_number in ("240", "242", "257", "259", "260")
+    keep_raw = number in KEEP_RAW_STYLES or legacy_number in KEEP_RAW_LEGACY
     traits = style_record.get("traits", "") if keep_raw else positive_traits(style_record.get("traits", ""))
     if name_activation == "strong":
         activation_source = "name+style"

@@ -8,9 +8,14 @@ from pathlib import Path
 
 from layout_library import detect_language, resolve_layout
 from resolve_reference import resolve
+from style_asset_paths import ROOT as ASSET_ROOT
 
 SKILL = Path(__file__).resolve().parents[1]
 
+# ---------------------------------------------------------------------------
+# Prompt assembly data. scripts/build_client_resources.py exports these values
+# as prompt_rules.json so the desktop client assembles identical prompts.
+# ---------------------------------------------------------------------------
 REFERENCE_ISOLATION_ZH = (
     "所附图片仅用于参考画风。只提取参考图的风格特征，例如线条、笔触、媒介、材质、色彩倾向和整体视觉语言；"
     "不要使用、复制或延续参考图中的任何主体、人物、动物、服装、道具、动作、姿态、场景、背景、构图、布局、文字或故事。"
@@ -25,6 +30,72 @@ REFERENCE_ISOLATION_EN = (
 GRAPHIC_TEXT_SUFFIX = "【如果主题直白包含画面元素那就按主题出图，文案由你来升华，但是不要直接描述画面。 如果主题比较概念化，那么文案和主题尽量保持一致，如果文案较长由你提炼，由你先设计画面隐喻（人类和非人类都行）再出图   。    文字参与构图，图文一体】"
 REDRAW_INSTRUCTION_ZH = "【请只提取人物的五官特征和姿态，场景轮廓，在画风上严格按 选择的风格重新画，不要在原照片上加质感。】"
 REDRAW_INSTRUCTION_EN = "[Extract only the character's facial features and posture, and the scene contours. Strictly redraw from scratch according to the selected style; do not add texture or filters onto the original photo.]"
+
+THEME_PLACEHOLDER_ZH = "【请在此输入画面主题，或在生图模型中垫入你的照片】"
+THEME_PLACEHOLDER_EN = "[Enter theme here, or attach your photo in the image AI]"
+
+COLOR_SPLIT_PATTERN = r"[,+、/]+"
+COLOR_TEMPLATES = {
+    "free_zh": "主题色：{name}。",
+    "free_en": "Theme color: {name}.",
+    "pair_zh": "主题色：主色为{primary_zh}（{primary_en}），点缀色为{accent_zh}（{accent_en}）。",
+    "pair_en": "Theme color: {primary_en} as primary tone, accented with {accent_en}.",
+    "multi_zh": "主题色：{names}。",
+    "multi_en": "Theme color: {names}.",
+    "multi_item_zh": "{name_zh}（{name_en}）",
+    "multi_joiner_zh": " 搭配 ",
+    "multi_joiner_en": " paired with ",
+    "id_joiner": " + ",
+    "name_joiner_zh": " 搭配 ",
+    "name_joiner_en": " + ",
+}
+
+# Fragments; empty values are skipped. See prompt_rules.json "assembly" for order.
+TEMPLATES = {
+    "zh": {
+        "style_name": "风格名称：{name}。",
+        "theme": "主题：{theme}。",
+        "reference_author": "参考作者/风格名称：{reference}。",
+        "traits": "核心风格特征：{traits}。",
+        "reference_image_path": "参考图：请上传本地参考图 {path}。{isolation}",
+        "reference_image": "参考图：{isolation}",
+        "extra_ratio": "画幅：{ratio}",
+        "extra_subject": "主体限制：{subject}",
+        "extra_text": "文字要求：{text}",
+        "extra_joiner": "；",
+        "extra": "；{extra}",
+        "layout_name": "图型：{name}。",
+        "layout_theme": "主题：{theme}。",
+        "layout_instructions": "排版要求：{prompt}",
+        "layout_style": "风格名称：{name}。参考作者/风格名称：{reference}。",
+        "layout_traits": "核心风格特征：{traits}。",
+        "layout_extra": "；{extra}",
+        "layout_part_joiner": "",
+    },
+    "en": {
+        "style_name": "Style name: {name}.",
+        "theme": " Theme: {theme}.",
+        "reference_author": " Reference author/style name: {reference}.",
+        "traits": " Core style traits: {traits}.",
+        "reference_image_path": " Reference image: upload local reference image {path}. {isolation}",
+        "reference_image": " Reference image: {isolation}",
+        "extra_ratio": "aspect ratio: {ratio}",
+        "extra_subject": "subject constraints: {subject}",
+        "extra_text": "text requirement: {text}",
+        "extra_joiner": "; ",
+        "extra": " {extra}.",
+        "layout_name": "Layout: {name}.",
+        "layout_theme": "Theme: {theme}.",
+        "layout_instructions": "Layout instructions: {prompt}",
+        "layout_style": "Style name: {name}. Reference author/style name: {reference}.",
+        "layout_traits": "Core style traits: {traits}.",
+        "layout_extra": "{extra}.",
+        "layout_part_joiner": " ",
+    },
+}
+# A color prompt is prefixed with a space in English style/color-only prompts.
+COLOR_PREFIX = {"zh": "", "en": " "}
+REDRAW_PREFIX = {"zh": "", "en": " "}
 
 
 def resolve_single_color(query_str: str, colors_list: list[dict]) -> dict[str, str]:
@@ -43,8 +114,8 @@ def resolve_single_color(query_str: str, colors_list: list[dict]) -> dict[str, s
         "id": "",
         "name_zh": name,
         "name_en": name,
-        "prompt_zh": f"主题色：{name}。",
-        "prompt_en": f"Theme color: {name}."
+        "prompt_zh": COLOR_TEMPLATES["free_zh"].format(name=name),
+        "prompt_en": COLOR_TEMPLATES["free_en"].format(name=name)
     }
 
 
@@ -52,27 +123,28 @@ def resolve_color(query_str: str) -> dict[str, str]:
     colors_file = SKILL / "references" / "colors.json"
     colors_list = json.loads(colors_file.read_text(encoding="utf-8")) if colors_file.exists() else []
     import re
-    tokens = [t.strip() for t in re.split(r'[,+、/]+', query_str) if t.strip()]
+    tokens = [t.strip() for t in re.split(COLOR_SPLIT_PATTERN, query_str) if t.strip()]
     if len(tokens) <= 1:
         return resolve_single_color(query_str, colors_list)
 
     resolved = [resolve_single_color(t, colors_list) for t in tokens]
     c_ids = [r["id"] for r in resolved if r.get("id")]
-    id_str = " + ".join(c_ids) if c_ids else ""
-    zh_names = [f"{r['name_zh']}（{r['name_en']}）" if r.get('name_en') else r['name_zh'] for r in resolved]
+    id_str = COLOR_TEMPLATES["id_joiner"].join(c_ids) if c_ids else ""
+    zh_names = [COLOR_TEMPLATES["multi_item_zh"].format(name_zh=r['name_zh'], name_en=r['name_en']) if r.get('name_en') else r['name_zh'] for r in resolved]
     en_names = [r['name_en'] for r in resolved]
 
     if len(resolved) == 2:
-        prompt_zh = f"主题色：主色为{resolved[0]['name_zh']}（{resolved[0]['name_en']}），点缀色为{resolved[1]['name_zh']}（{resolved[1]['name_en']}）。"
-        prompt_en = f"Theme color: {resolved[0]['name_en']} as primary tone, accented with {resolved[1]['name_en']}."
+        prompt_zh = COLOR_TEMPLATES["pair_zh"].format(primary_zh=resolved[0]['name_zh'], primary_en=resolved[0]['name_en'],
+                                                      accent_zh=resolved[1]['name_zh'], accent_en=resolved[1]['name_en'])
+        prompt_en = COLOR_TEMPLATES["pair_en"].format(primary_en=resolved[0]['name_en'], accent_en=resolved[1]['name_en'])
     else:
-        prompt_zh = f"主题色：{' 搭配 '.join(zh_names)}。"
-        prompt_en = f"Theme color: {' paired with '.join(en_names)}."
+        prompt_zh = COLOR_TEMPLATES["multi_zh"].format(names=COLOR_TEMPLATES["multi_joiner_zh"].join(zh_names))
+        prompt_en = COLOR_TEMPLATES["multi_en"].format(names=COLOR_TEMPLATES["multi_joiner_en"].join(en_names))
 
     return {
         "id": id_str,
-        "name_zh": " 搭配 ".join(r["name_zh"] for r in resolved),
-        "name_en": " + ".join(en_names),
+        "name_zh": COLOR_TEMPLATES["name_joiner_zh"].join(r["name_zh"] for r in resolved),
+        "name_en": COLOR_TEMPLATES["name_joiner_en"].join(en_names),
         "prompt_zh": prompt_zh,
         "prompt_en": prompt_en,
     }
@@ -214,6 +286,161 @@ def recommend_combination(theme: str, user_style: str | None, user_color: str | 
     return final_style, final_color, rationale
 
 
+def _reference_path(path: str | None, path_base: str | None) -> str | None:
+    """Return the reference path as an absolute OS path, or pack-relative when path_base is given."""
+    if not path or path_base is None:
+        return path
+    try:
+        relative = Path(path).resolve().relative_to(ASSET_ROOT.resolve()).as_posix()
+    except ValueError:
+        relative = Path(path).as_posix()
+    return f"{path_base}{relative}"
+
+
+def _fill(template: str, **values: str) -> str:
+    return template.format(**values)
+
+
+def build_prompt(style: str | None = None, layout: str | None = None, color: str | None = None,
+                 theme: str = "", ratio: str | None = None, subject: str | None = None, text: str | None = None,
+                 model: str = "gpt-image-2", mode: str = "pure-image", redraw: bool = False,
+                 language: str = "auto", auto: bool = False, path_base: str | None = None) -> dict:
+    """Assemble bilingual prompts without printing.
+
+    Returns a dict with "zh" and "en" prompts plus selection metadata. For layout prompts the CLI prints
+    only result[result["language"]]; both languages are still assembled so other clients can compare.
+    ``path_base`` makes reference-image paths machine independent: ``""`` yields
+    ``images/individual/FH/FH-039_grid.webp``; ``None`` keeps the local absolute path.
+    Raises ValueError for unknown identifiers or missing selections.
+    """
+    if mode not in ("pure-image", "graphic-text"):
+        raise ValueError(f"Unknown mode: {mode}")
+    if language not in ("auto", "zh", "en"):
+        raise ValueError(f"Unknown language: {language}")
+    styles = json.loads((SKILL / "references" / "styles.json").read_text(encoding="utf-8"))
+    if not theme:
+        theme = THEME_PLACEHOLDER_ZH if language != "en" else THEME_PLACEHOLDER_EN
+
+    recommendation = None
+    if auto:
+        rec_s, rec_c, recommendation = recommend_combination(theme, style, color)
+        style = style or rec_s
+        color = color or rec_c
+    elif not style and not layout and not color:
+        raise ValueError("Provide --style, --layout, or both (or --color, or use --auto).")
+
+    color_info = resolve_color(color) if color else None
+    selected = None
+    number = None
+    if style:
+        selected, number = resolve_style_entry(style, styles)
+
+    result: dict = {
+        "zh": "", "en": "", "language": None, "kind": None,
+        "style": number, "style_name": selected["generation_name"] if selected else None,
+        "color": color_info, "layout": None, "is_ecommerce": False,
+        "use_reference_image": False, "reference_path": None,
+        "recommendation": recommendation, "mode": mode,
+    }
+
+    def extras(lang: str) -> str:
+        t = TEMPLATES[lang]
+        return t["extra_joiner"].join(filter(None, [
+            _fill(t["extra_ratio"], ratio=ratio) if ratio else "",
+            _fill(t["extra_subject"], subject=subject) if subject else "",
+            _fill(t["extra_text"], text=text) if text else "",
+        ]))
+
+    if layout:
+        layout_obj = resolve_layout(layout)
+        is_ecommerce = layout_obj.get("category") == "ecommerce" or layout_obj["id"].startswith("EC-")
+        include_style = bool(selected and number and (not is_ecommerce or style))
+        decision = resolve(model, number) if include_style else None
+        for lang in ("zh", "en"):
+            t = TEMPLATES[lang]
+            layout_name = layout_obj["name"] if lang == "zh" else (layout_obj.get("name_en") or layout_obj["name"])
+            parts = [
+                _fill(t["layout_name"], name=layout_name),
+                _fill(t["layout_theme"], theme=theme),
+                _fill(t["layout_instructions"], prompt=layout_obj["prompts"][lang]),
+            ]
+            if color_info:
+                parts.insert(1, color_info["prompt_zh"] if lang == "zh" else color_info["prompt_en"])
+            if include_style and decision is not None:
+                parts.append(_fill(t["layout_style"], name=selected["generation_name"], reference=selected["reference"]))
+                if decision["prompt_traits"]:
+                    parts.append(_fill(t["layout_traits"], traits=decision["prompt_traits"]))
+            if redraw:
+                parts.append(REDRAW_INSTRUCTION_ZH if lang == "zh" else REDRAW_INSTRUCTION_EN)
+            extra = extras(lang)
+            if extra:
+                parts.append(_fill(t["layout_extra"], extra=extra))
+            if not is_ecommerce:
+                parts.append(GRAPHIC_TEXT_SUFFIX)
+            result[lang] = t["layout_part_joiner"].join(parts)
+        result.update(
+            kind="layout",
+            language=detect_language(theme) if language == "auto" else language,
+            layout={"id": layout_obj["id"], "name": layout_obj["name"], "name_en": layout_obj.get("name_en")},
+            is_ecommerce=is_ecommerce,
+            style=number if include_style else None,
+            style_name=selected["generation_name"] if include_style else None,
+        )
+        return result
+
+    graphic_text_suffix = GRAPHIC_TEXT_SUFFIX if mode == "graphic-text" else ""
+    extra_zh, extra_en = extras("zh"), extras("en")
+    zh_extra = _fill(TEMPLATES["zh"]["extra"], extra=extra_zh) if extra_zh else ""
+    en_extra = _fill(TEMPLATES["en"]["extra"], extra=extra_en) if extra_en else ""
+    redraw_zh = REDRAW_PREFIX["zh"] + REDRAW_INSTRUCTION_ZH if redraw else ""
+    redraw_en = REDRAW_PREFIX["en"] + REDRAW_INSTRUCTION_EN if redraw else ""
+
+    if not selected and color_info:
+        result.update(
+            kind="color",
+            zh=f"{color_info['prompt_zh']}{_fill(TEMPLATES['zh']['theme'], theme=theme)}{zh_extra}{redraw_zh}{graphic_text_suffix}",
+            en=f"{color_info['prompt_en']}{_fill(TEMPLATES['en']['theme'], theme=theme)}{en_extra}{redraw_en}{graphic_text_suffix}",
+        )
+        return result
+
+    assert selected is not None and number is not None
+    decision = resolve(model, number)
+    traits = decision["prompt_traits"]
+    reference_path = None
+    pieces: dict[str, str] = {}
+    for lang in ("zh", "en"):
+        t = TEMPLATES[lang]
+        isolation = REFERENCE_ISOLATION_ZH if lang == "zh" else REFERENCE_ISOLATION_EN
+        reference_image = ""
+        if decision["use_reference_image"] and mode == "pure-image":
+            reference_path = _reference_path(decision.get("reference_path"), path_base)
+            if reference_path:
+                reference_image = _fill(t["reference_image_path"], path=reference_path, isolation=isolation)
+            else:
+                reference_image = _fill(t["reference_image"], isolation=isolation)
+        color_text = COLOR_PREFIX[lang] + color_info[f"prompt_{lang}"] if color_info else ""
+        pieces[lang] = "".join([
+            _fill(t["style_name"], name=selected["generation_name"]),
+            color_text,
+            _fill(t["theme"], theme=theme),
+            _fill(t["reference_author"], reference=selected["reference"]),
+            _fill(t["traits"], traits=traits) if traits else "",
+            reference_image,
+            zh_extra if lang == "zh" else en_extra,
+            redraw_zh if lang == "zh" else redraw_en,
+            graphic_text_suffix,
+        ])
+    result.update(kind="style", zh=pieces["zh"], en=pieces["en"],
+                  use_reference_image=bool(decision["use_reference_image"] and mode == "pure-image"),
+                  reference_path=reference_path, activation_source=decision["activation_source"])
+    return result
+
+
+def _color_line(color_info: dict) -> str:
+    c_label = f"{color_info['id']} · " if color_info.get("id") else ""
+    return f"Selected color: {c_label}{color_info['name_zh']} ({color_info['name_en']})"
+
+
 def main() -> None:
     styles = json.loads((SKILL / "references" / "styles.json").read_text(encoding="utf-8"))
     max_num = len(styles)
@@ -232,146 +459,41 @@ def main() -> None:
     parser.add_argument("--language", choices=("auto", "zh", "en"), default="auto")
     args = parser.parse_args()
 
-    if not args.theme:
-        args.theme = "【请在此输入画面主题，或在生图模型中垫入你的照片】" if args.language != "en" else "[Enter theme here, or attach your photo in the image AI]"
+    try:
+        result = build_prompt(style=args.style, layout=args.layout, color=args.color, theme=args.theme,
+                              ratio=args.ratio, subject=args.subject, text=args.text, model=args.model,
+                              mode=args.mode, redraw=args.redraw, language=args.language, auto=args.auto)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
 
-    recommendation_banner = None
-    if args.auto:
-        rec_s, rec_c, rationale = recommend_combination(args.theme, args.style, args.color)
-        if not args.style:
-            args.style = rec_s
-        if not args.color:
-            args.color = rec_c
-        recommendation_banner = rationale
-    elif not args.style and not args.layout and not args.color:
-        raise SystemExit("Provide --style, --layout, or both (or --color, or use --auto).")
-    if args.color:
-        try:
-            color_info = resolve_color(args.color)
-        except ValueError as exc:
-            raise SystemExit(str(exc)) from exc
-    else:
-        color_info = None
-    selected = None
-    number = None
-    if args.style:
-        try:
-            selected, number = resolve_style_entry(args.style, styles)
-        except ValueError as exc:
-            raise SystemExit(str(exc)) from exc
-    extra_zh = "；".join(filter(None, [f"画幅：{args.ratio}" if args.ratio else "", f"主体限制：{args.subject}" if args.subject else "", f"文字要求：{args.text}" if args.text else ""]))
-    extra_en = "; ".join(filter(None, [f"aspect ratio: {args.ratio}" if args.ratio else "", f"subject constraints: {args.subject}" if args.subject else "", f"text requirement: {args.text}" if args.text else ""]))
-    if args.layout:
-        try:
-            layout = resolve_layout(args.layout)
-        except ValueError as exc:
-            raise SystemExit(str(exc)) from exc
-        language = detect_language(args.theme) if args.language == "auto" else args.language
-        layout_prompt = layout["prompts"][language]
-        if language == "zh":
-            parts = [
-                f"图型：{layout['name']}。",
-                f"主题：{args.theme}。",
-                f"排版要求：{layout_prompt}",
-            ]
-        else:
-            layout_name = layout.get("name_en") or layout["name"]
-            parts = [
-                f"Layout: {layout_name}.",
-                f"Theme: {args.theme}.",
-                f"Layout instructions: {layout_prompt}",
-            ]
-        is_ecommerce = layout.get("category") == "ecommerce" or layout["id"].startswith("EC-")
+    color_info = result["color"]
+    if result["kind"] == "layout":
+        language = result["language"]
+        if result["recommendation"]:
+            print(f"💡 推荐理由：{result['recommendation']}")
+        print(f"Selected layout: {result['layout']['id']} · {result['layout']['name']}")
         if color_info:
-            color_prompt = color_info["prompt_zh"] if language == "zh" else color_info["prompt_en"]
-            parts.insert(1, color_prompt)
-        # For e-commerce layouts, do not stitch style by default; only include if user explicitly passed --style
-        if selected and number and (not is_ecommerce or args.style):
-            decision = resolve(args.model, number)
-            traits = decision["prompt_traits"]
-            if language == "zh":
-                parts.append(f"风格名称：{selected['generation_name']}。参考作者/风格名称：{selected['reference']}。")
-                if traits:
-                    parts.append(f"核心风格特征：{traits}。")
-            else:
-                parts.append(f"Style name: {selected['generation_name']}. Reference author/style name: {selected['reference']}.")
-                if traits:
-                    parts.append(f"Core style traits: {traits}.")
-        if args.redraw:
-            if language == "zh":
-                parts.append(REDRAW_INSTRUCTION_ZH)
-            else:
-                parts.append(REDRAW_INSTRUCTION_EN)
-        if language == "zh":
-            if extra_zh:
-                parts.append(f"；{extra_zh}")
-            if not is_ecommerce:
-                parts.append(GRAPHIC_TEXT_SUFFIX)
-        else:
-            if extra_en:
-                parts.append(f"{extra_en}.")
-            if not is_ecommerce:
-                parts.append(GRAPHIC_TEXT_SUFFIX)
-        if recommendation_banner:
-            print(f"💡 推荐理由：{recommendation_banner}")
-        print(f"Selected layout: {layout['id']} · {layout['name']}")
-        if color_info:
-            c_label = f"{color_info['id']} · " if color_info.get("id") else ""
-            print(f"Selected color: {c_label}{color_info['name_zh']} ({color_info['name_en']})")
-        if selected and number and (not is_ecommerce or args.style):
-            print(f"Selected style: #{number} · {selected['generation_name']}")
+            print(_color_line(color_info))
+        if result["style"]:
+            print(f"Selected style: #{result['style']} · {result['style_name']}")
         print("\nPrompt:")
-        print("".join(parts) if language == "zh" else " ".join(parts))
-        if not is_ecommerce:
+        print(result[language])
+        if not result["is_ecommerce"]:
             print("\n已自动使用图文模式。" if language == "zh" else "\nThe selected layout automatically uses graphic-text mode.")
         return
 
-    graphic_text_suffix = GRAPHIC_TEXT_SUFFIX if args.mode == "graphic-text" else ""
-    zh_extra = f"；{extra_zh}" if extra_zh else ""
-    en_extra = f" {extra_en}." if extra_en else ""
-    redraw_zh = REDRAW_INSTRUCTION_ZH if args.redraw else ""
-    redraw_en = f" {REDRAW_INSTRUCTION_EN}" if args.redraw else ""
-
-    if not selected and color_info:
-        c_label = f"{color_info['id']} · " if color_info.get("id") else ""
-        print(f"Selected color: {c_label}{color_info['name_zh']} ({color_info['name_en']})")
-        print("\n中文提示词：")
-        print(f"{color_info['prompt_zh']}主题：{args.theme}。{zh_extra}{redraw_zh}{graphic_text_suffix}")
-        print("\nEnglish prompt:")
-        print(f"{color_info['prompt_en']} Theme: {args.theme}.{en_extra}{redraw_en}{graphic_text_suffix}")
-        print("\nPaste either prompt into an image AI; this skill does not generate an image.")
-        if args.mode == "pure-image":
-            print("当前处于纯图模式，可切换为图文模式。")
-        return
-
-    assert selected is not None and number is not None
-    if recommendation_banner:
-        print(f"💡 推荐理由：{recommendation_banner}")
-    print(f"Selected style: #{number} · {selected['generation_name']}")
-    if color_info:
-        c_label = f"{color_info['id']} · " if color_info.get("id") else ""
-        print(f"Selected color: {c_label}{color_info['name_zh']} ({color_info['name_en']})")
+    if result["kind"] == "color":
+        print(_color_line(color_info))
+    else:
+        if result["recommendation"]:
+            print(f"💡 推荐理由：{result['recommendation']}")
+        print(f"Selected style: #{result['style']} · {result['style_name']}")
+        if color_info:
+            print(_color_line(color_info))
     print("\n中文提示词：")
-    reference_zh = f"参考作者/风格名称：{selected['reference']}。"
-    reference_en = f" Reference author/style name: {selected['reference']}."
-    decision = resolve(args.model, number)
-    traits = decision["prompt_traits"]
-    traits_zh = f"核心风格特征：{traits}。" if traits else ""
-    traits_en = f" Core style traits: {traits}." if traits else ""
-    reference_image_zh = ""
-    reference_image_en = ""
-    if decision["use_reference_image"] and args.mode == "pure-image":
-        if decision.get("reference_path"):
-            reference_image_zh = f"参考图：请上传本地参考图 {decision['reference_path']}。{REFERENCE_ISOLATION_ZH}"
-            reference_image_en = f" Reference image: upload local reference image {decision['reference_path']}. {REFERENCE_ISOLATION_EN}"
-        else:
-            reference_image_zh = f"参考图：{REFERENCE_ISOLATION_ZH}"
-            reference_image_en = f" Reference image: {REFERENCE_ISOLATION_EN}"
-    color_zh = f"{color_info['prompt_zh']}" if color_info else ""
-    color_en = f" {color_info['prompt_en']}" if color_info else ""
-    print(f"风格名称：{selected['generation_name']}。{color_zh}主题：{args.theme}。{reference_zh}{traits_zh}{reference_image_zh}{zh_extra}{redraw_zh}{graphic_text_suffix}")
+    print(result["zh"])
     print("\nEnglish prompt:")
-    print(f"Style name: {selected['generation_name']}.{color_en} Theme: {args.theme}.{reference_en}{traits_en}{reference_image_en}{en_extra}{redraw_en}{graphic_text_suffix}")
+    print(result["en"])
     print("\nPaste either prompt into an image AI; this skill does not generate an image.")
     if args.mode == "pure-image":
         print("当前处于纯图模式，可切换为图文模式。")
