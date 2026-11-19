@@ -2,15 +2,15 @@
   <strong>中文</strong> | <a href="STYLES_en.md">English</a>
 </p>
 
-# 手绘风格完整图鉴（FA-001–FI-034 · 共 370 种）
+# 手绘风格完整图鉴（FA-001–FI-034 · 共 371 种）
 
-> 这里收录了本库全部 **370 种手绘风格**的独立编号图鉴与核心提示词特征。每种风格均配有标准图样预览、分类编号、英文生图名称、风格参考来源与核心视觉特征，供在 GitHub 上直接图文浏览选款。详细对照表见 [styles_200_reorganized.md](styles_200_reorganized.md)。
+> 这里收录了本库全部 **371 种手绘风格**的独立编号图鉴与核心提示词特征。每种风格均配有标准图样预览、分类编号、英文生图名称、风格参考来源与核心视觉特征，供在 GitHub 上直接图文浏览选款。详细对照表见 [styles_200_reorganized.md](styles_200_reorganized.md)。
 
 ## 目录导航
 
 - [FA · 国际社论幽默（FA-001–FA-040 · 40 种）](#group-fa)
 - [FB · 经典绘本叙事（FB-001–FB-066 · 66 种）](#group-fb)
-- [FC · 现代平面艺术（FC-001–FC-032 · 32 种）](#group-fc)
+- [FC · 现代平面艺术（FC-001–FC-033 · 33 种）](#group-fc)
 - [FD · 日本当代插画（FD-001–FD-042 · 42 种）](#group-fd)
 - [FE · 新国风与传统工艺（FE-001–FE-068 · 68 种）](#group-fe)
 - [FF · 3D黏土毛毡与纸雕（FF-001–FF-019 · 19 种）](#group-ff)
@@ -77,7 +77,7 @@
 ---
 
 <a id="group-fc"></a>
-## FC · 现代平面艺术（FC-001–FC-032 · 32 种）
+## FC · 现代平面艺术（FC-001–FC-033 · 33 种）
 
 适合现代平面广告、波普艺术、时尚杂志与高饱和海报。以醒目色块、现代构成与矢量平面为主要特征。
 
@@ -93,7 +93,7 @@
 | <img src='images/individual/FC/FC-022.webp' width='220' alt='FC-022 Angular Expressive Figure Line'><br>**FC-022** <small>(#076)</small> · Angular Expressive Figure Line<br><sub>参考: Egon Schiele drawing</sub><br><details><summary>查看核心特征</summary><br>断裂敏感线条、细瘦人体、扭曲姿态、强情绪。</details> | <img src='images/individual/FC/FC-023.webp' width='220' alt='FC-023 Raw Art-Brut Figure'><br>**FC-023** <small>(#077)</small> · Raw Art-Brut Figure<br><sub>参考: Jean Dubuffet</sub><br><details><summary>查看核心特征</summary><br>Art Brut、粗糙线、人形符号、儿童式反精致。</details> | <img src='images/individual/FC/FC-024.webp' width='220' alt='FC-024 Poetic Geometric Symbol Figure'><br>**FC-024** <small>(#078)</small> · Poetic Geometric Symbol Figure<br><sub>参考: Paul Klee</sub><br><details><summary>查看核心特征</summary><br>细线几何、童真符号、诗意色块、抽象人物。</details> |
 | <img src='images/individual/FC/FC-025.webp' width='220' alt='FC-025 Biomorphic Symbolic Character'><br>**FC-025** <small>(#079)</small> · Biomorphic Symbolic Character<br><sub>参考: Joan Miró</sub><br><details><summary>查看核心特征</summary><br>生物符号、原始线条、红蓝黄点色、自由空间。</details> | <img src='images/individual/FC/FC-026.webp' width='220' alt='FC-026 Fluid Single-Line Motion Figure'><br>**FC-026** <small>(#080)</small> · Fluid Single-Line Motion Figure<br><sub>参考: Alexander Calder drawings</sub><br><details><summary>查看核心特征</summary><br>单线人物、流畅连续线、极简动态。</details> | <img src='images/individual/FC/FC-027.webp' width='220' alt='FC-027 Cinematic Grainy Flat-Shape Illustration'><br>**FC-027** <small>(#081)</small> · Cinematic Grainy Flat-Shape Illustration<br><sub>参考: Tom Haugomat</sub><br><details><summary>查看核心特征</summary><br>电影感极简色块、颗粒、强光影、远近层次；脸部与服装主动做减法，依靠清楚轮廓、眼口和少量关键形状建立人物辨识度；保留纸纹、颗粒、套印或手工媒介的不完美，强化独立出版物的触感。</details> |
 | <img src='images/individual/FC/FC-028.webp' width='220' alt='FC-028 Retro Silkscreen Geometric Figure'><br>**FC-028** <small>(#082)</small> · Retro Silkscreen Geometric Figure<br><sub>参考: Blexbolex</sub><br><details><summary>查看核心特征</summary><br>复古丝网印刷、厚重几何色层、旧书颗粒；人物以圆、方、弧线等大形构成，五官图标化，比例强调图形辨识而非写实解剖；保留纸纹、颗粒、套印或手工媒介的不完美，强化独立出版物的触感。</details> | <img src='images/individual/FC/FC-029.webp' width='220' alt='FC-029 Clean Airy Flat Vector Illustration'><br>**FC-029** <small>(#276)</small> · Clean Airy Flat Vector Illustration<br><sub>参考: 清透扁平插画</sub><br><details><summary>查看核心特征</summary><br>轮廓清晰的大面积平涂色块塑造形体；造型适度概括与圆润几何化，保留关键识别特征；每个区域最多两级平面明暗与清晰硬边阴影，通过色块明度、冷暖和面积对比表现空间层次；色彩明亮清爽、柔和通透，纯净平滑的画面质感；极简主义、简洁现代，具有轻盈的现代商业插画与编辑插画感</details> | <img src='images/individual/FC/FC-030.webp' width='220' alt='FC-030 Flat Geometric Airbrush Grain Illustration'><br>**FC-030** <small>(#287)</small> · Flat Geometric Airbrush Grain Illustration<br><sub>参考: 扁平几何气刷颗粒插画</sub><br><details><summary>查看核心特征</summary><br>扁平几何插图、夸张的不对称比例、柔和的气刷阴影、精细的印刷颗粒感。角色由几个超大尺寸、不对称的形状构建而成。大型物体是姿势的一部分，并改变轮廓。黑色剪纸面部特征。情感从全身姿态中传达出来。扁平颜色块带有清晰边缘；形状重叠处采用柔和的深色到颜色的喷雾渐变。精细的点刻颗粒主要位于墨水区域内部，在纸张上几乎不可见。</details> |
-| <img src='images/individual/FC/FC-031.webp' width='220' alt='FC-031 Modern Retro Rubber-Hose Cartoon Illustration'><br>**FC-031** <small>(#288)</small> · Modern Retro Rubber-Hose Cartoon Illustration<br><sub>参考: 美式现代复古橡皮管卡通插画</sub><br><details><summary>查看核心特征</summary><br>灵感来自美式现代复古 Rubber-Hose 插画风格。但整体更加现代、明亮、干净、可爱。角色采用圆润、简洁、夸张的卡通造型，四肢像柔软的橡皮管一样自然弯曲和延伸，弱化真实关节与人体结构，让动作更自由、更有节奏感。整体以粗而流畅的黑色轮廓线搭配干净的平涂色块，减少复杂光影和厚重做旧效果。造型简洁时尚，比例可爱，表情有个性。整体清爽、协调、有设计感。画面具有轻松幽默、俏皮可爱和一点点怪趣感，动作夸张流畅，像带有爵士节奏的动态瞬间。整体视觉偏现代潮流插画、复古海报和独立品牌插画质感，干净、可爱、有辨识度，减少老旧胶片颗粒与过度怀旧感。</details> | <img src='images/individual/FC/FC-032.webp' width='220' alt='FC-032 Alphonse Mucha Art Nouveau Illustration'><br>**FC-032** <small>(#328)</small> · Alphonse Mucha Art Nouveau Illustration<br><sub>参考: 阿尔丰斯·穆夏 / Alphonse Mucha</sub> |  |
+| <img src='images/individual/FC/FC-031.webp' width='220' alt='FC-031 Modern Retro Rubber-Hose Cartoon Illustration'><br>**FC-031** <small>(#288)</small> · Modern Retro Rubber-Hose Cartoon Illustration<br><sub>参考: 美式现代复古橡皮管卡通插画</sub><br><details><summary>查看核心特征</summary><br>灵感来自美式现代复古 Rubber-Hose 插画风格。但整体更加现代、明亮、干净、可爱。角色采用圆润、简洁、夸张的卡通造型，四肢像柔软的橡皮管一样自然弯曲和延伸，弱化真实关节与人体结构，让动作更自由、更有节奏感。整体以粗而流畅的黑色轮廓线搭配干净的平涂色块，减少复杂光影和厚重做旧效果。造型简洁时尚，比例可爱，表情有个性。整体清爽、协调、有设计感。画面具有轻松幽默、俏皮可爱和一点点怪趣感，动作夸张流畅，像带有爵士节奏的动态瞬间。整体视觉偏现代潮流插画、复古海报和独立品牌插画质感，干净、可爱、有辨识度，减少老旧胶片颗粒与过度怀旧感。</details> | <img src='images/individual/FC/FC-032.webp' width='220' alt='FC-032 Alphonse Mucha Art Nouveau Illustration'><br>**FC-032** <small>(#328)</small> · Alphonse Mucha Art Nouveau Illustration<br><sub>参考: 阿尔丰斯·穆夏 / Alphonse Mucha</sub> | <img src='images/individual/FC/FC-033.webp' width='220' alt='FC-033 Pop Art'><br>**FC-033** <small>(#371)</small> · Pop Art<br><sub>参考: 波普艺术 / Pop Art</sub> |
 
 ---
 
@@ -292,6 +292,6 @@
 
 ![I 348-363](images/I_348-363.webp)
 
-![I 364-370](images/I_364-370.webp)
+![I 364-371](images/I_364-371.webp)
 
 </details>

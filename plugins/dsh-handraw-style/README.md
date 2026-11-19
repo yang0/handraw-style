@@ -46,7 +46,7 @@ dsh web
 Windows：
 
 ```powershell
-dsh plugin --profile web add "link:C:\\work\\handraw-style\\plugins\\dsh-handraw-style"
+dsh plugin --profile web add "link:C:\path\to\handraw-style\plugins\dsh-handraw-style"
 dsh web
 ```
 

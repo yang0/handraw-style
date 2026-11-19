@@ -2,15 +2,15 @@
   <a href="STYLES.md">中文</a> | <strong>English</strong>
 </p>
 
-# Hand-drawn Style Visual Gallery (FA-001–FI-034 · 370 Styles)
+# Hand-drawn Style Visual Gallery (FA-001–FI-034 · 371 Styles)
 
-> Complete visual catalogue and prompt traits for all **370 hand-drawn illustration styles** (FA-001–FI-034). Each style includes image preview, classification ID, generation name, artistic reference, and core prompt traits for direct browsing on GitHub. For detailed generation names and prompt traits, see [styles_200_reorganized.md](styles_200_reorganized.md).
+> Complete visual catalogue and prompt traits for all **371 hand-drawn illustration styles** (FA-001–FI-034). Each style includes image preview, classification ID, generation name, artistic reference, and core prompt traits for direct browsing on GitHub. For detailed generation names and prompt traits, see [styles_200_reorganized.md](styles_200_reorganized.md).
 
 ## Table of Contents
 
 - [FA · Editorial & Humor Doodle (FA-001–FA-040 · 40 Styles)](#group-fa)
 - [FB · Picture Book & Watercolor (FB-001–FB-066 · 66 Styles)](#group-fb)
-- [FC · Modern Graphic & Pop (FC-001–FC-032 · 32 Styles)](#group-fc)
+- [FC · Modern Graphic & Pop (FC-001–FC-033 · 33 Styles)](#group-fc)
 - [FD · Japanese Contemporary & Manga (FD-001–FD-042 · 42 Styles)](#group-fd)
 - [FE · Chinese Traditional & Folk Craft (FE-001–FE-068 · 68 Styles)](#group-fe)
 - [FF · 3D Clay, Felt & Papercraft (FF-001–FF-019 · 19 Styles)](#group-ff)
@@ -77,7 +77,7 @@ Ideal for heartwarming narratives, children's picture books, healing watercolors
 ---
 
 <a id="group-fc"></a>
-## FC · Modern Graphic & Pop (FC-001–FC-032 · 32 Styles)
+## FC · Modern Graphic & Pop (FC-001–FC-033 · 33 Styles)
 
 Ideal for modern graphic design, pop art, editorial fashion, and bold posters. Features clean vectors, dynamic color blocking, and contemporary graphic shapes.
 
@@ -93,7 +93,7 @@ Ideal for modern graphic design, pop art, editorial fashion, and bold posters. F
 | <img src='images/individual/FC/FC-022.webp' width='220' alt='FC-022 Angular Expressive Figure Line'><br>**FC-022** <small>(#076)</small> · Angular Expressive Figure Line<br><sub>Ref: Egon Schiele drawing</sub><br><details><summary>View Traits</summary><br>断裂敏感线条、细瘦人体、扭曲姿态、强情绪。</details> | <img src='images/individual/FC/FC-023.webp' width='220' alt='FC-023 Raw Art-Brut Figure'><br>**FC-023** <small>(#077)</small> · Raw Art-Brut Figure<br><sub>Ref: Jean Dubuffet</sub><br><details><summary>View Traits</summary><br>Art Brut、粗糙线、人形符号、儿童式反精致。</details> | <img src='images/individual/FC/FC-024.webp' width='220' alt='FC-024 Poetic Geometric Symbol Figure'><br>**FC-024** <small>(#078)</small> · Poetic Geometric Symbol Figure<br><sub>Ref: Paul Klee</sub><br><details><summary>View Traits</summary><br>细线几何、童真符号、诗意色块、抽象人物。</details> |
 | <img src='images/individual/FC/FC-025.webp' width='220' alt='FC-025 Biomorphic Symbolic Character'><br>**FC-025** <small>(#079)</small> · Biomorphic Symbolic Character<br><sub>Ref: Joan Miró</sub><br><details><summary>View Traits</summary><br>生物符号、原始线条、红蓝黄点色、自由空间。</details> | <img src='images/individual/FC/FC-026.webp' width='220' alt='FC-026 Fluid Single-Line Motion Figure'><br>**FC-026** <small>(#080)</small> · Fluid Single-Line Motion Figure<br><sub>Ref: Alexander Calder drawings</sub><br><details><summary>View Traits</summary><br>单线人物、流畅连续线、极简动态。</details> | <img src='images/individual/FC/FC-027.webp' width='220' alt='FC-027 Cinematic Grainy Flat-Shape Illustration'><br>**FC-027** <small>(#081)</small> · Cinematic Grainy Flat-Shape Illustration<br><sub>Ref: Tom Haugomat</sub><br><details><summary>View Traits</summary><br>电影感极简色块、颗粒、强光影、远近层次；脸部与服装主动做减法，依靠清楚轮廓、眼口和少量关键形状建立人物辨识度；保留纸纹、颗粒、套印或手工媒介的不完美，强化独立出版物的触感。</details> |
 | <img src='images/individual/FC/FC-028.webp' width='220' alt='FC-028 Retro Silkscreen Geometric Figure'><br>**FC-028** <small>(#082)</small> · Retro Silkscreen Geometric Figure<br><sub>Ref: Blexbolex</sub><br><details><summary>View Traits</summary><br>复古丝网印刷、厚重几何色层、旧书颗粒；人物以圆、方、弧线等大形构成，五官图标化，比例强调图形辨识而非写实解剖；保留纸纹、颗粒、套印或手工媒介的不完美，强化独立出版物的触感。</details> | <img src='images/individual/FC/FC-029.webp' width='220' alt='FC-029 Clean Airy Flat Vector Illustration'><br>**FC-029** <small>(#276)</small> · Clean Airy Flat Vector Illustration<br><sub>Ref: 清透扁平插画</sub><br><details><summary>View Traits</summary><br>轮廓清晰的大面积平涂色块塑造形体；造型适度概括与圆润几何化，保留关键识别特征；每个区域最多两级平面明暗与清晰硬边阴影，通过色块明度、冷暖和面积对比表现空间层次；色彩明亮清爽、柔和通透，纯净平滑的画面质感；极简主义、简洁现代，具有轻盈的现代商业插画与编辑插画感</details> | <img src='images/individual/FC/FC-030.webp' width='220' alt='FC-030 Flat Geometric Airbrush Grain Illustration'><br>**FC-030** <small>(#287)</small> · Flat Geometric Airbrush Grain Illustration<br><sub>Ref: 扁平几何气刷颗粒插画</sub><br><details><summary>View Traits</summary><br>扁平几何插图、夸张的不对称比例、柔和的气刷阴影、精细的印刷颗粒感。角色由几个超大尺寸、不对称的形状构建而成。大型物体是姿势的一部分，并改变轮廓。黑色剪纸面部特征。情感从全身姿态中传达出来。扁平颜色块带有清晰边缘；形状重叠处采用柔和的深色到颜色的喷雾渐变。精细的点刻颗粒主要位于墨水区域内部，在纸张上几乎不可见。</details> |
-| <img src='images/individual/FC/FC-031.webp' width='220' alt='FC-031 Modern Retro Rubber-Hose Cartoon Illustration'><br>**FC-031** <small>(#288)</small> · Modern Retro Rubber-Hose Cartoon Illustration<br><sub>Ref: 美式现代复古橡皮管卡通插画</sub><br><details><summary>View Traits</summary><br>灵感来自美式现代复古 Rubber-Hose 插画风格。但整体更加现代、明亮、干净、可爱。角色采用圆润、简洁、夸张的卡通造型，四肢像柔软的橡皮管一样自然弯曲和延伸，弱化真实关节与人体结构，让动作更自由、更有节奏感。整体以粗而流畅的黑色轮廓线搭配干净的平涂色块，减少复杂光影和厚重做旧效果。造型简洁时尚，比例可爱，表情有个性。整体清爽、协调、有设计感。画面具有轻松幽默、俏皮可爱和一点点怪趣感，动作夸张流畅，像带有爵士节奏的动态瞬间。整体视觉偏现代潮流插画、复古海报和独立品牌插画质感，干净、可爱、有辨识度，减少老旧胶片颗粒与过度怀旧感。</details> | <img src='images/individual/FC/FC-032.webp' width='220' alt='FC-032 Alphonse Mucha Art Nouveau Illustration'><br>**FC-032** <small>(#328)</small> · Alphonse Mucha Art Nouveau Illustration<br><sub>Ref: 阿尔丰斯·穆夏 / Alphonse Mucha</sub> |  |
+| <img src='images/individual/FC/FC-031.webp' width='220' alt='FC-031 Modern Retro Rubber-Hose Cartoon Illustration'><br>**FC-031** <small>(#288)</small> · Modern Retro Rubber-Hose Cartoon Illustration<br><sub>Ref: 美式现代复古橡皮管卡通插画</sub><br><details><summary>View Traits</summary><br>灵感来自美式现代复古 Rubber-Hose 插画风格。但整体更加现代、明亮、干净、可爱。角色采用圆润、简洁、夸张的卡通造型，四肢像柔软的橡皮管一样自然弯曲和延伸，弱化真实关节与人体结构，让动作更自由、更有节奏感。整体以粗而流畅的黑色轮廓线搭配干净的平涂色块，减少复杂光影和厚重做旧效果。造型简洁时尚，比例可爱，表情有个性。整体清爽、协调、有设计感。画面具有轻松幽默、俏皮可爱和一点点怪趣感，动作夸张流畅，像带有爵士节奏的动态瞬间。整体视觉偏现代潮流插画、复古海报和独立品牌插画质感，干净、可爱、有辨识度，减少老旧胶片颗粒与过度怀旧感。</details> | <img src='images/individual/FC/FC-032.webp' width='220' alt='FC-032 Alphonse Mucha Art Nouveau Illustration'><br>**FC-032** <small>(#328)</small> · Alphonse Mucha Art Nouveau Illustration<br><sub>Ref: 阿尔丰斯·穆夏 / Alphonse Mucha</sub> | <img src='images/individual/FC/FC-033.webp' width='220' alt='FC-033 Pop Art'><br>**FC-033** <small>(#371)</small> · Pop Art<br><sub>Ref: 波普艺术 / Pop Art</sub> |
 
 ---
 
@@ -292,6 +292,6 @@ Ideal for brand commercial photography, haute couture fashion editorials, humani
 
 ![I 348-363](images/I_348-363.webp)
 
-![I 364-370](images/I_364-370.webp)
+![I 364-371](images/I_364-371.webp)
 
 </details>
