@@ -371,6 +371,68 @@ class CloudBridgeTests(unittest.TestCase):
         self.assertEqual(local["cloudState"], "synced")
         self.assertEqual(local["workIds"], ["work_public_1"])
 
+    def test_history_upload_sends_share_webp_title_and_recipe(self):
+        try:
+            from PIL import Image
+        except ImportError:
+            self.skipTest("Pillow not installed")
+        root = Path(self.tmp.name)
+        (root / "prompt.txt").write_text("春天的咖啡馆", encoding="utf-8")
+        Image.new("RGB", (3000, 1500), (200, 75, 49)).save(root / "big.png")
+        created = cloud.local_history_create(SimpleNamespace(
+            image=[str(root / "big.png")], original_request_file=str(root / "prompt.txt"), run_id=None))
+        sent = []
+        def fake_request(self, method, path, body=None, **kwargs):
+            sent.append(body)
+            return {"workId": "w1", "workIds": ["w1"], "imageCount": 1,
+                    "url": "https://forum.handraw-style.com/t/work-w1"}
+        mine = str(uuid.uuid4())
+        with patch.object(cloud.API, "request", fake_request):
+            receipt = cloud.local_history_upload(SimpleNamespace(
+                run_id=created["runId"], title="春日咖啡馆", notes="纸感配方", style=["FA-001", "MY-S-001"],
+                layout="MY-L-002", ratio="3:4", personal_resource=["mine:" + mine]))
+        body = sent[0]
+        self.assertEqual(body["title"], "春日咖啡馆")
+        self.assertEqual(body["notes"], "纸感配方")
+        self.assertEqual(body["recipe"], {"styles": ["FA-001"], "ratio": "3:4", "personalResources": [mine]})
+        data_url = body["images"][0]["dataUrl"]
+        self.assertTrue(data_url.startswith("data:image/webp;base64,"))
+        with Image.open(io.BytesIO(base64.b64decode(data_url.split(",", 1)[1]))) as img:
+            self.assertEqual(img.size, (2048, 1024))
+        self.assertEqual(receipt["url"], "https://forum.handraw-style.com/t/work-w1")
+
+    def test_resource_publish_pushes_then_publishes_with_square_cover(self):
+        try:
+            from PIL import Image
+        except ImportError:
+            self.skipTest("Pillow not installed")
+        root = Path(self.tmp.name)
+        files = []
+        for i, size in enumerate(((800, 600), (600, 900), (700, 700))):
+            f = root / f"ex{i}.png"
+            Image.new("RGB", size, (i * 40, 120, 90)).save(f)
+            files.append(str(f))
+        rid = str(uuid.uuid4())
+        sent = []
+        def fake_request(self, method, path, body=None, **kwargs):
+            sent.append((method, path, body))
+            return {"published": {"code": "USR-S-9", "status": "approved", "url": "/styles/USR-S-9"}}
+        args = SimpleNamespace(id="mine:" + rid, description="暖纸肌理与细墨线的手绘画风", price=0,
+                               cover=files[0], image=files[1:])
+        with patch.object(cloud, "resource_push", lambda a: {"remoteId": rid}), \
+                patch.object(cloud.API, "request", fake_request):
+            out = cloud.resource_publish(args)
+        method, path, body = sent[0]
+        self.assertEqual((method, path), ("POST", f"/api/v1/me/resources/{rid}/publish"))
+        with Image.open(io.BytesIO(base64.b64decode(body["cover"].split(",", 1)[1]))) as img:
+            self.assertEqual(img.width, img.height)
+            self.assertEqual(img.format, "WEBP")
+        self.assertEqual(len(body["images"]), 2)
+        self.assertEqual(out["status"], "approved")
+        with patch.object(cloud, "resource_push", lambda a: {"remoteId": rid}):
+            with self.assertRaises(ValueError):
+                cloud.resource_publish(SimpleNamespace(**dict(vars(args), image=files[1:2])))
+
     def test_multi_image_skill_upload_has_only_one_work_and_valid_receipt(self):
         root = Path(self.tmp.name)
         prompt = root / "prompt.txt"

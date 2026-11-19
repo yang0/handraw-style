@@ -62,14 +62,26 @@ python scripts/handraw_cloud.py resources restore
 - 新建画风仅描述视觉语言（媒介、线条、材质、色彩、光影），不提取参考图人物、服饰或场景。图型只保存布局约束。
 - 私人画风不会因为同步到账号自动公开；社区资源不能作为个人原创再次上传。
 
+**发布到社区（用户明确要求时才执行）：**
+
+```sh
+python scripts/handraw_cloud.py resources publish --id mine:<UUID> --description "8–300 字简介" --price 0 --cover /path/cover.png --image /path/ex1.png --image /path/ex2.png
+```
+
+- 先自动 `push` 最新定义，再调用 `POST /api/v1/me/resources/{id}/publish`。封面自动裁成正方形，所有图片转 WebP（长边 ≤2048）。
+- `--price 0` 免费：立即公开，定义可见，别人可加入使用。积分价格（须为网站档位，如 10/30/50/100/200/500）：定义保密，由社区评审团审核通过后开售，买家只能用网站模型生成。积分只用于站内解锁，不能提现。
+- 回执里的 `status` 为 `approved`（已公开）或 `pending`（评审中），把结果如实告诉用户。
+
 ## P2 生成历史（本地记录）与自动公开作品
 
 ```sh
 python scripts/handraw_cloud.py history record --original-request-file /path/original-request.txt --image /path/01.png --image /path/02.png
 python scripts/handraw_cloud.py history list
 python scripts/handraw_cloud.py history cloud-list
-python scripts/handraw_cloud.py history upload --run-id <本地runId>
+python scripts/handraw_cloud.py history upload --run-id <本地runId> --title "作品标题" --style FA-001 --layout SC-001 --ratio 3:4 --notes "配方心得"
 ```
+
+`--title/--notes/--style/--layout/--ratio/--personal-resource` 都是可选的，但应尽量带上：作品页会显示配方，别人可以一键做同款。只传官方编号；`MY-*` 自建编号会被忽略，自建资源只通过 `--personal-resource mine:<UUID>` 传网站 ID，不会上传定义。图片自动转 WebP（长边 ≤2048），GIF 保持原样；回执中的 `url` 是作品的论坛链接，可以直接发给用户。
 
 **公开规则：** `record` 只在本地保存原始创作指令和图片，不上传、不公开。**执行 `history upload` 就是公开提交**：图片和原始创作指令通过 `POST /api/v1/me/generations` 提交，服务端将同一任务的全部图片归为**一件公开多图作品**，仅在作品广场显示一张首图封面；作品详情展示全部图片，返回 `workId`、`workIds: [workId]` 与 `imageCount`。**不再有单独“发布到作品广场”步骤。** 上传前务必确认图片和完整原始指令可公开；请勿上传涉及私人信息、商业秘密或不具备公开权限的内容。失败时仍保留本地记录；重试同一 `runId` 不应重复创建作品。旧版已同步私有历史不会自动公开，也不能通过重试改为公开；须建立新的上传记录。
 

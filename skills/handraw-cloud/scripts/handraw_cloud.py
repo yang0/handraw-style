@@ -452,6 +452,42 @@ def _webp(blob: bytes) -> bytes:
         raise ValueError("云端 PNG/JPEG 导入图库需要 Pillow：pip install Pillow") from None
 
 
+def share_webp(blob: bytes, max_edge: int = 2048, square: bool = False) -> tuple[bytes, str]:
+    """Share-size image (handraw-web docs/sharing-v2.md: WebP, long edge <= 2048, q85).
+
+    Without Pillow the original bytes are returned unchanged; the website also
+    accepts PNG/JPEG.
+    """
+    if blob[:4] == b"GIF8":
+        return blob, "image/gif"  # keep animation
+    try:
+        from PIL import Image
+        from io import BytesIO
+    except ImportError:
+        if blob[8:12] == b"WEBP":
+            return blob, "image/webp"
+        return blob, "image/png" if blob[:4] == b"\x89PNG" else "image/jpeg"
+    try:
+        opened = Image.open(BytesIO(blob))
+    except Exception:
+        # Unreadable here: send unchanged and let the website validate it.
+        if blob[8:12] == b"WEBP":
+            return blob, "image/webp"
+        return blob, "image/png" if blob[:4] == b"\x89PNG" else "image/jpeg"
+    with opened as img:
+        if img.width * img.height > 40_000_000:
+            raise ValueError("图片像素过大")
+        img = img.convert("RGBA" if "A" in img.getbands() else "RGB")
+        if square:
+            side = min(img.size)
+            left, top = (img.width - side) // 2, (img.height - side) // 2
+            img = img.crop((left, top, left + side, top + side))
+        img.thumbnail((max_edge, max_edge))
+        out = BytesIO()
+        img.save(out, "WEBP", quality=85)
+        return out.getvalue(), "image/webp"
+
+
 def asset_pull(args):
     """Import into an explicit custom library. Never delete local files on remote tombstones."""
     api, state = Credentials().client(), SyncState(Credentials().read())
@@ -614,6 +650,39 @@ def resource_push(args):
             "revision": item["revision"], "visibility": "private"}
 
 
+def resource_publish(args):
+    """Publish one owned style/layout to the community (website sharing-v2 §2.1).
+
+    Free resources go live at once; a point price sends it to the community
+    jury first. The definition is pushed (private sync) before publishing.
+    """
+    pushed = resource_push(args)
+    description = (args.description or "").strip()
+    if not 8 <= len(description) <= 300:
+        raise ValueError("简介需要 8 到 300 字")
+    images = [Path(v).expanduser() for v in (args.image or [])]
+    cover = Path(args.cover).expanduser()
+    if not 2 <= len(images) <= 9:
+        raise ValueError("需要 2 到 9 张示例图（加封面共至少 3 张）")
+    for f in [cover, *images]:
+        if not f.is_file() or f.is_symlink() or not 0 < f.stat().st_size <= MAX_IMAGE:
+            raise ValueError(f"图片不可用：{f}")
+
+    def data_url(path, **kw):
+        blob, mime = share_webp(path.read_bytes(), **kw)
+        return f"data:{mime};base64," + base64.b64encode(blob).decode()
+
+    body = {"price": int(args.price), "description": description,
+            "cover": data_url(cover, max_edge=1024, square=True),
+            "images": [data_url(f) for f in images]}
+    result = Credentials().client().request(
+        "POST", f"/api/v1/me/resources/{pushed['remoteId']}/publish", body)
+    published = result.get("published") or {}
+    return {"id": args.id, "code": published.get("code"), "status": published.get("status"),
+            "path": published.get("url"), "idempotent": bool(result.get("idempotent")),
+            "note": "已公开到社区" if published.get("status") == "approved" else "已提交社区评审，通过后开售"}
+
+
 def resources_list():
     data = Credentials().client().request("GET", "/api/skill/library")
     return {"collected": data.get("collected", []), "owned": data.get("owned", []),
@@ -738,14 +807,32 @@ def local_history_upload(args):
         blob = file.read_bytes()
         if hashlib.sha256(blob).hexdigest() != entry["sha256"]:
             raise ValueError("生成历史图片已变化，禁止误传")
-        mime = mimetypes.guess_type(file.name)[0] or "application/octet-stream"
-        items.append({"name": entry["file"], "sha256": entry["sha256"],
-                      "dataUrl": f"data:{mime};base64," + base64.b64encode(blob).decode()})
+        shared, mime = share_webp(blob)
+        name = Path(entry["file"]).stem + (".webp" if mime == "image/webp" else Path(entry["file"]).suffix)
+        items.append({"name": name, "sha256": hashlib.sha256(shared).hexdigest(),
+                      "dataUrl": f"data:{mime};base64," + base64.b64encode(shared).decode()})
     # Upload is the explicit public-sharing action, not a private backup.
     # Local history creation stays offline, and never publishes anything.
     data = {"externalRunId": rid, "originClient": "skill", "visibility": "public",
             "status": "success", "originalRequest": record["originalRequest"],
             "images": items, "requestId": f"skill-history-{rid}"}
+    # Sharing v2: optional title, notes and a structured recipe so others can
+    # make the same picture. Only official codes; own resources by website id.
+    if getattr(args, "title", None):
+        data["title"] = args.title.strip()[:60]
+    if getattr(args, "notes", None):
+        data["notes"] = args.notes.strip()[:2000]
+    recipe = {}
+    if getattr(args, "style", None):
+        recipe["styles"] = [code for code in args.style if not code.upper().startswith("MY-")][:2]
+    if getattr(args, "layout", None) and not args.layout.upper().startswith("MY-"):
+        recipe["layout"] = args.layout
+    if getattr(args, "ratio", None):
+        recipe["ratio"] = args.ratio
+    if getattr(args, "personal_resource", None):
+        recipe["personalResources"] = [str(uuid.UUID(v.removeprefix("mine:"))) for v in args.personal_resource][:4]
+    if recipe:
+        data["recipe"] = recipe
     result = Credentials().client().request("POST", "/api/v1/me/generations", data)
     # V3: one uploaded run -> one canonical multi-image work. A partial or
     # malformed acknowledgement must never mark the local history as synced.
@@ -762,12 +849,13 @@ def local_history_upload(args):
     record["coverMediaId"] = str(result.get("coverMediaId") or "")
     record["coverUrl"] = str(result.get("coverUrl") or "")
     record["visibility"] = "public"
+    record["url"] = str(result.get("url") or "")
     atomic_json(folder / "record.json", record)
     return {"runId": rid, "synced": True, "cloudId": result.get("id"),
             "workId": work_id, "workIds": [work_id],
             "imageCount": len(items),
             "coverMediaId": record["coverMediaId"], "coverUrl": record["coverUrl"],
-            "visibility": "public"}
+            "url": record["url"], "visibility": "public"}
 
 
 def planned_get(path: str):
@@ -850,6 +938,12 @@ def main(argv=None):
     rc.add_parser("list")
     pull = rc.add_parser("pull"); pull.add_argument("--id", required=True)
     push = rc.add_parser("push"); push.add_argument("--id", required=True)
+    rpub = rc.add_parser("publish", help="把自建画风/图型发布到社区：免费即上架，收费经社区评审")
+    rpub.add_argument("--id", required=True)
+    rpub.add_argument("--description", required=True)
+    rpub.add_argument("--price", type=int, default=0, help="积分价格，0 为免费；须为网站配置的档位")
+    rpub.add_argument("--cover", required=True, help="封面图，会自动裁成正方形")
+    rpub.add_argument("--image", action="append", required=True, help="示例图，2-9 张")
     restore = rc.add_parser("restore"); restore.add_argument("--force", action="store_true")
     history = command.add_parser("history")
     hc = history.add_subparsers(dest="action", required=True)
@@ -858,6 +952,12 @@ def main(argv=None):
     make.add_argument("--original-request-file", required=True)
     make.add_argument("--run-id")
     upload = hc.add_parser("upload", help="将本地作品上传并自动公开，不需第二次发布"); upload.add_argument("--run-id", required=True)
+    upload.add_argument("--title", help="作品标题，最多 60 字")
+    upload.add_argument("--notes", help="创作说明/配方心得，最多 2000 字")
+    upload.add_argument("--style", action="append", help="官方画风编号，最多 2 个")
+    upload.add_argument("--layout", help="官方图型编号")
+    upload.add_argument("--ratio", help="画面比例，如 3:4")
+    upload.add_argument("--personal-resource", action="append", help="用到的自建资源 ID（只传网站 ID，不传定义）")
     hc.add_parser("list")
     hc.add_parser("cloud-list", help="读取网站统一生成历史与对应公开作品")
     works = command.add_parser("works", help="公开作品的无需登录查询")
@@ -910,6 +1010,8 @@ def main(argv=None):
             subprocess.run([sys.executable, str(target), "sync", "--id", args.id], check=True)
         elif args.action == "push":
             output(resource_push(args))
+        elif args.action == "publish":
+            output(resource_publish(args))
         else:
             output(resource_restore(args))
     elif args.command == "history":
