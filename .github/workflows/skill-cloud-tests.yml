@@ -16,6 +16,9 @@ on:
       - "skills/personal-library/**"
       - "skills/community-share/scripts/conversation_share.py"
       - "scripts/handraw_cloud.py"
+      - "scripts/build_client_resources.py"
+      - "skills/handdraw-style-prompter/**"
+      - "tests/**"
       - ".github/workflows/skill-cloud-tests.yml"
 
 permissions:
@@ -45,6 +48,8 @@ jobs:
           python -m compileall -q skills/community-share/scripts/conversation_share.py
       - name: Run offline cloud contract tests
         run: python -m unittest discover -s skills/handraw-cloud/tests -p 'test_*.py' -v
+      - name: Run prompt golden and client resource pack tests
+        run: python -m pytest tests -q
       - name: Run existing community-share regression tests
         run: python -m pytest skills/community-share/tests -q
       - name: Run existing custom-library rename regressions
