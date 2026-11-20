@@ -36,16 +36,34 @@ class Library:
         return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"schema_version": 1, "resources": []}
 
     def write(self, data: dict) -> None:
-        self.root.mkdir(parents=True, exist_ok=True)
-        temporary = self.root / f".index-{uuid.uuid4().hex}.tmp"
-        temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-        temporary.replace(self.root / "library.json")
+        """Atomically persist personal definitions with owner-only permissions."""
+        self.root.mkdir(parents=True, mode=0o700, exist_ok=True)
+        os.chmod(self.root, 0o700)
+        content = json.dumps(data, ensure_ascii=False, indent=2)
+        fd, temporary = tempfile.mkstemp(prefix=".index-", suffix=".tmp", dir=str(self.root))
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as handle:
+                handle.write(content)
+            os.chmod(temporary, 0o600)
+            os.replace(temporary, self.root / "library.json")
+        finally:
+            if os.path.exists(temporary):
+                os.unlink(temporary)
         skill_root = os.environ.get("HANDRAW_SKILL_ROOT")
         if skill_root:
             mirror = Path(skill_root).resolve() / ".handraw-personal"
-            mirror.mkdir(parents=True, exist_ok=True)
+            mirror.mkdir(parents=True, mode=0o700, exist_ok=True)
+            os.chmod(mirror, 0o700)
             safe_json = json.dumps(data, ensure_ascii=False).replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
-            (mirror / "library.js").write_text("window.HANDRAW_PERSONAL_LIBRARY=" + safe_json + ";\n", encoding="utf-8")
+            fd, mirror_temp = tempfile.mkstemp(prefix=".library-", suffix=".tmp", dir=str(mirror))
+            try:
+                with os.fdopen(fd, "w", encoding="utf-8") as handle:
+                    handle.write("window.HANDRAW_PERSONAL_LIBRARY=" + safe_json + ";\n")
+                os.chmod(mirror_temp, 0o600)
+                os.replace(mirror_temp, mirror / "library.js")
+            finally:
+                if os.path.exists(mirror_temp):
+                    os.unlink(mirror_temp)
 
     def get(self, resource_id: str) -> dict:
         return next((item for item in self.index()["resources"] if item["id"] == resource_id), None) or self._missing(resource_id)
@@ -201,9 +219,17 @@ class Library:
 class Client:
     def __init__(self):
         profile_path = home() / "community_auth.json"
-        if not profile_path.exists():
-            raise ValueError("请先使用 community-share 绑定社区账号")
-        self.profile = json.loads(profile_path.read_text(encoding="utf-8"))
+        cloud_path = home() / "cloud_auth.json"
+        if cloud_path.exists():
+            account = json.loads(cloud_path.read_text(encoding="utf-8"))
+            token = account.get("token", "")
+            if not isinstance(token, str) or not token.startswith("hwt_"):
+                raise ValueError("Skill 设备授权文件无效，请重新绑定账号")
+            self.profile = {"base_url": BASE_URL, "bearer_token": token}
+        elif profile_path.exists():
+            self.profile = json.loads(profile_path.read_text(encoding="utf-8"))
+        else:
+            raise ValueError("请先运行 python scripts/handraw_cloud.py bind 绑定网站账号")
         base = self.profile.get("base_url", BASE_URL).rstrip("/")
         if base != BASE_URL:
             raise ValueError("社区同步只向 https://handraw-style.com 发送凭据")
@@ -217,7 +243,9 @@ class Client:
             raise ValueError("下载地址不属于本站资源 API")
         headers = {"Accept": "application/json", "X-Requested-With": "XMLHttpRequest",
                    "User-Agent": "HandRawStudio/1.0"}
-        if self.profile.get("api_key"):
+        if self.profile.get("bearer_token"):
+            headers["Authorization"] = "Bearer " + self.profile["bearer_token"]
+        if self.profile.get("api_key") and not self.profile.get("bearer_token"):
             headers["Api-Key"] = self.profile["api_key"]
             username = self.profile.get("username", "")
             if username and username.isascii():

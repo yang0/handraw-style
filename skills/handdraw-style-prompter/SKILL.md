@@ -19,6 +19,10 @@ examples_en:
 
 # Hand-drawn Style Prompter
 
+## 跨端账号与个人资产（可选）
+
+需要网站账号、云端图库、个人画风/图型、已解锁收藏、Skill 私有生图历史或作品互动时，先阅读 `skills/handraw-cloud/SKILL.md`，在完整源码仓库或 full ecosystem 包根目录运行 `python scripts/handraw_cloud.py`，单独的提示词 standalone 包不包含云空间组件。未经用户明确允许绝不把私有图片/原始指令上传到网站；成功生图、保存到云端与公开发布是三个独立动作。本站新 `/api/v1` 接口未部署前必须标记不可用。
+
 Default to creating prompts only. Do not call an image-generation tool unless the user explicitly asks to generate, render, or preview an image.
 
 ## Conversation share action after image delivery
