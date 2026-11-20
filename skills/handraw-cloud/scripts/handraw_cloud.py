@@ -166,6 +166,10 @@ def account_status(state: str, **fields) -> dict:
         username = "".join(c for c in str(fields.get("username", "")) if c.isalnum() or c in "-_.")[:64]
         fields["username"] = username
         footer = f"👤 手绘风账号：已绑定 @{username}"
+        level = fields.get("level")
+        if isinstance(level, dict) and isinstance(level.get("level"), int):
+            name = "".join(c for c in str(level.get("name", "")) if c.isalnum())[:12]
+            footer += f" · Lv{level['level']} {name}".rstrip()
     else:
         footer = footers[state]
     return {"state": state, "connected": state == "connected", "footer": footer, **fields}
@@ -228,7 +232,14 @@ def current_account_status() -> dict:
             return account_status("needs_rebind" if exc.status == 401 else "unverified")
         if not isinstance(who.get("username"), str) or not who["username"].strip():
             return account_status("unverified")
-        return account_status("connected", username=who["username"])
+        level = None
+        try:  # best effort: a level lookup never changes the account state
+            raw = API(token).request("GET", "/api/me/level", timeout=5)
+            if isinstance(raw.get("level"), int):
+                level = {"level": raw["level"], "name": raw.get("name", ""), "xp": raw.get("xp", 0)}
+        except Exception:
+            level = None
+        return account_status("connected", username=who["username"], **({"level": level} if level else {}))
     if pending:
         return account_status("expired")
     return account_status("unbound")
@@ -683,6 +694,20 @@ def resource_publish(args):
             "note": "已公开到社区" if published.get("status") == "approved" else "已提交社区评审，通过后开售"}
 
 
+def my_level():
+    """Creator level, progress, price cap and jury checklist for the bound account."""
+    raw = Credentials().client().request("GET", "/api/me/level")
+    jury = raw.get("jury") or {}
+    return {
+        "level": raw.get("level"), "name": raw.get("name"), "xp": raw.get("xp"),
+        "next": ({"level": raw.get("nextLevel"), "name": raw.get("nextName"), "xpNeeded": int(raw.get("nextXp") or 0) - int(raw.get("xp") or 0)}
+                 if raw.get("nextLevel") else None),
+        "perks": raw.get("perks") or [],
+        "priceCap": raw.get("priceCap", 0),
+        "jury": {"eligible": bool(jury.get("eligible")), "checks": jury.get("checks") or []},
+    }
+
+
 def resources_list():
     data = Credentials().client().request("GET", "/api/skill/library")
     return {"collected": data.get("collected", []), "owned": data.get("owned", []),
@@ -923,6 +948,7 @@ def main(argv=None):
     binding_mode.add_argument("--check", action="store_true", help="用户完成网页授权后检查一次")
     command.add_parser("status", help="返回可直接展示的账号状态，不自动绑定或上传")
     command.add_parser("whoami", help="校验当前网站身份")
+    command.add_parser("level", help="查看创作等级、经验、收费定价上限与评审团条件")
     command.add_parser("unbind", help="清除本机令牌（网站也可撤销授权）")
     assets = command.add_parser("assets")
     ac = assets.add_subparsers(dest="action", required=True)
@@ -987,6 +1013,8 @@ def main(argv=None):
         return
     if args.command == "status":
         output(current_account_status())
+    elif args.command == "level":
+        output(my_level())
     elif args.command == "whoami":
         output(Credentials().client().request("GET", "/api/auth/me"))
     elif args.command == "unbind":

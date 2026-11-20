@@ -24,8 +24,12 @@ Windows 建议使用 `python -X utf8`，避免终端中文编码错误。完整�
 ```sh
 python scripts/handraw_cloud.py bind
 python scripts/handraw_cloud.py whoami
+python scripts/handraw_cloud.py level
 python scripts/handraw_cloud.py unbind
 ```
+
+- `status` 已绑定时页脚会附带创作等级（如「Lv3 手绘匠人」）；读取等级失败不影响账号状态。
+- `level` 返回等级、经验、距下一级还差多少、当前权益、收费定价上限（`priceCap`，0 表示只能免费发布）和评审团条件。用户问“我几级 / 怎么升级 / 能不能收费”时用它，按回执如实回答。
 
 - 绑定流程基于网站设备码授权；网页审批成功后使用 `hwt_` Bearer Token。
 - 不索取或记录网站密码、Cookie、管理密钥；用户名与权限从 `/api/auth/me` 验证。

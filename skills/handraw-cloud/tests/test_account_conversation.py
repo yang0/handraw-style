@@ -87,8 +87,10 @@ class ConversationAccountTests(unittest.TestCase):
         with patch.object(cloud.API, "request", side_effect=replies) as api, \
                 patch.object(cloud.time, "time", return_value=1006):
             result = cloud.complete_binding()
-        self.assertEqual([call.args[:2] for call in api.call_args_list],
+        # Identity is verified before anything else; the level read is read-only and best effort.
+        self.assertEqual([call.args[:2] for call in api.call_args_list][:2],
                          [("POST", "/api/auth/device/token"), ("GET", "/api/auth/me")])
+        self.assertTrue(all(call.args[0] == "GET" for call in api.call_args_list[1:]))
         self.assertTrue(result["connected"])
         self.assertEqual(result["username"], "actual-user")
         self.assertFalse(cloud.pending_path().exists())
@@ -110,7 +112,7 @@ class ConversationAccountTests(unittest.TestCase):
         with patch.object(cloud.API, "request", return_value={"username": "actual-user"}) as api:
             recovered = cloud.complete_binding()
         self.assertEqual(recovered["state"], "connected")
-        self.assertEqual(api.call_args.args[:2], ("GET", "/api/auth/me"))
+        self.assertIn(("GET", "/api/auth/me"), [call.args[:2] for call in api.call_args_list])
         self.assert_no_secrets(result)
 
     def test_rejected_expired_and_network_failure_preserve_local_creation(self):
@@ -182,6 +184,40 @@ class ConversationAccountTests(unittest.TestCase):
                 contextlib.redirect_stdout(output):
             cloud.main(["bind", "--check"])
         self.assertEqual(json.loads(output.getvalue())["state"], "connected")
+        self.assertNotIn("hwt_private_token", output.getvalue())
+
+    def test_connected_footer_shows_level_and_ignores_level_failures(self):
+        cloud.Credentials().save({"token": "hwt_private_token", "user": {"username": "lv-user"}})
+
+        calls = iter([{"username": "lv-user"}, {"level": 3, "name": "手绘匠人", "xp": 240}])
+        with patch.object(cloud.API, "request", side_effect=lambda *a, **k: next(calls)):
+            status = cloud.current_account_status()
+        self.assertEqual(status["state"], "connected")
+        self.assertIn("Lv3 手绘匠人", status["footer"])
+        self.assert_no_secrets(status)
+        calls = iter([{"username": "lv-user"}])
+
+        def failing(*a, **k):
+            try:
+                return next(calls)
+            except StopIteration:
+                raise cloud.CloudError(404, "not_found")
+        with patch.object(cloud.API, "request", side_effect=failing):
+            status = cloud.current_account_status()
+        self.assertEqual(status["state"], "connected")
+        self.assertNotIn("Lv", status["footer"])
+
+    def test_level_command_reports_progress_cap_and_jury(self):
+        cloud.Credentials().save({"token": "hwt_private_token", "user": {"username": "lv-user"}})
+        reply = {"level": 4, "name": "风格作者", "xp": 700, "nextLevel": 5, "nextName": "画坊主理", "nextXp": 1500,
+                 "perks": ["收费定价最高 50 积分"], "priceCap": 50, "jury": {"eligible": False, "checks": [{"label": "注册满 30 天", "ok": False}]}}
+        output = io.StringIO()
+        with patch.object(cloud.API, "request", return_value=reply), contextlib.redirect_stdout(output):
+            cloud.main(["level"])
+        data = json.loads(output.getvalue())
+        self.assertEqual((data["level"], data["priceCap"]), (4, 50))
+        self.assertEqual(data["next"], {"level": 5, "name": "画坊主理", "xpNeeded": 800})
+        self.assertFalse(data["jury"]["eligible"])
         self.assertNotIn("hwt_private_token", output.getvalue())
 
     def test_switching_accounts_reports_pending_instead_of_old_cached_identity(self):
