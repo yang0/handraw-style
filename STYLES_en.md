@@ -2,9 +2,9 @@
   <a href="STYLES.md">中文</a> | <strong>English</strong>
 </p>
 
-# Hand-drawn Style Visual Gallery (FA-001–FI-034 · 371 Styles)
+# Hand-drawn Style Visual Gallery (FA-001–FI-035 · 372 Styles)
 
-> Complete visual catalogue and prompt traits for all **371 hand-drawn illustration styles** (FA-001–FI-034). Each style includes image preview, classification ID, generation name, artistic reference, and core prompt traits for direct browsing on GitHub. For detailed generation names and prompt traits, see [styles_200_reorganized.md](styles_200_reorganized.md).
+> Complete visual catalogue and prompt traits for all **372 hand-drawn illustration styles** (FA-001–FI-035). Each style includes image preview, classification ID, generation name, artistic reference, and core prompt traits for direct browsing on GitHub. For detailed generation names and prompt traits, see [styles_200_reorganized.md](styles_200_reorganized.md).
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@
 - [FF · 3D Clay, Felt & Papercraft (FF-001–FF-019 · 19 Styles)](#group-ff)
 - [FG · Anime, Cel Animation & Retro Game (FG-001–FG-025 · 25 Styles)](#group-fg)
 - [FH · Mixed Media & Impasto Arts (FH-001–FH-044 · 44 Styles)](#group-fh)
-- [FI · Realistic, Photography & Cinematic Styles (FI-001–FI-034 · 34 Styles)](#group-fi)
+- [FI · Realistic, Photography & Cinematic Styles (FI-001–FI-035 · 35 Styles)](#group-fi)
 
 ---
 
@@ -216,7 +216,7 @@ Ideal for experimental visuals, avant-garde illustration, mixed-media collage, a
 ---
 
 <a id="group-fi"></a>
-## FI · Realistic, Photography & Cinematic Styles (FI-001–FI-034 · 34 Styles)
+## FI · Realistic, Photography & Cinematic Styles (FI-001–FI-035 · 35 Styles)
 
 Ideal for brand commercial photography, haute couture fashion editorials, humanist documentary, and cinematic master visuals. Features precise lighting, cinematic framing, rich light-shadow dynamics, and authentic realism.
 
@@ -233,7 +233,7 @@ Ideal for brand commercial photography, haute couture fashion editorials, humani
 | <img src='images/individual/FI/FI-025.webp' width='220' alt='FI-025 Daido Moriyama Grainy High-Contrast Noir Street Photography'><br>**FI-025** <small>(#356)</small> · Daido Moriyama Grainy High-Contrast Noir Street Photography<br><sub>Ref: Daido Moriyama / 森山大道</sub><br><details><summary>View Traits</summary><br>日本粗颗粒高反差黑白街头摄影大师，代表作：《野犬》《新宿》</details> | <img src='images/individual/FI/FI-026.webp' width='220' alt='FI-026 Andreas Gursky Monumental Scale Repetitive Geometric Architecture Photography'><br>**FI-026** <small>(#357)</small> · Andreas Gursky Monumental Scale Repetitive Geometric Architecture Photography<br><sub>Ref: Andreas Gursky / 安德烈亚斯·古尔斯基</sub><br><details><summary>View Traits</summary><br>德国超大画幅上帝视角几何秩序摄影大师，代表作：《莱茵河二号》《99美分》</details> | <img src='images/individual/FI/FI-027.webp' width='220' alt='FI-027 Wes Anderson Pastel Symmetry & Retro Whimsical Cinematic Aesthetic'><br>**FI-027** <small>(#358)</small> · Wes Anderson Pastel Symmetry & Retro Whimsical Cinematic Aesthetic<br><sub>Ref: Wes Anderson / 韦斯·安德森</sub><br><details><summary>View Traits</summary><br>美国对称美学与马卡龙色调电影导演，代表作：《布达佩斯大饭店》《月升王国》</details> |
 | <img src='images/individual/FI/FI-028.webp' width='220' alt='FI-028 Wong Kar-wai Hong Kong Retro Neon Glow Atmospheric Cinematic Mood'><br>**FI-028** <small>(#359)</small> · Wong Kar-wai Hong Kong Retro Neon Glow Atmospheric Cinematic Mood<br><sub>Ref: Wong Kar-wai / 王家卫</sub><br><details><summary>View Traits</summary><br>中国香港复古港风与霓虹光影电影导演，代表作：《花样年华》《重庆森林》《堕落天使》</details> | <img src='images/individual/FI/FI-029.webp' width='220' alt='FI-029 Stanley Kubrick One-Point Perspective Cold Symmetrical Sci-Fi Cinema'><br>**FI-029** <small>(#360)</small> · Stanley Kubrick One-Point Perspective Cold Symmetrical Sci-Fi Cinema<br><sub>Ref: Stanley Kubrick / 斯坦利·库布里克</sub><br><details><summary>View Traits</summary><br>美国一点透视与冷峻理性科幻电影导演，代表作：《2001太空漫游》《闪灵》</details> | <img src='images/individual/FI/FI-030.webp' width='220' alt='FI-030 David Fincher Desaturated Moody Green-Toned Precision Thriller Cinema'><br>**FI-030** <small>(#361)</small> · David Fincher Desaturated Moody Green-Toned Precision Thriller Cinema<br><sub>Ref: David Fincher / 大卫·芬奇</sub><br><details><summary>View Traits</summary><br>美国低饱和冷调心理悬疑电影导演，代表作：《七宗罪》《搏击俱乐部》《消失的爱人》</details> |
 | <img src='images/individual/FI/FI-031.webp' width='220' alt='FI-031 Taobao E-Commerce Product Commercial Photography'><br>**FI-031** <small>(#362)</small> · Taobao E-Commerce Product Commercial Photography<br><sub>Ref: 淘宝电商图 / Taobao E-Commerce</sub> | <img src='images/individual/FI/FI-032.webp' width='220' alt='FI-032 iPhone 17 Candid Everyday Snapshot Photography'><br>**FI-032** <small>(#363)</small> · iPhone 17 Candid Everyday Snapshot Photography<br><sub>Ref: iPhone 17 随手拍 / iPhone 17 Snapshot</sub> | <img src='images/individual/FI/FI-033.webp' width='220' alt='FI-033 Security Camera CCTV & Doorbell Surveillance Footage Photography'><br>**FI-033** <small>(#364)</small> · Security Camera CCTV & Doorbell Surveillance Footage Photography<br><sub>Ref: 监控摄像头截屏 / Security Camera Screenshot</sub><br><details><summary>View Traits</summary><br>安防监控摄像头广角鱼眼与夜视真实视频录像截屏</details> |
-| <img src='images/individual/FI/FI-034.webp' width='220' alt='FI-034 DJI Drone Cinematic Aerial Landscape Photography'><br>**FI-034** <small>(#365)</small> · DJI Drone Cinematic Aerial Landscape Photography<br><sub>Ref: 大疆无人机航拍 / DJI Drone Aerial</sub><br><details><summary>View Traits</summary><br>大疆无人机高清高空俯拍与全景航拍摄影</details> |  |  |
+| <img src='images/individual/FI/FI-034.webp' width='220' alt='FI-034 DJI Drone Cinematic Aerial Landscape Photography'><br>**FI-034** <small>(#365)</small> · DJI Drone Cinematic Aerial Landscape Photography<br><sub>Ref: 大疆无人机航拍 / DJI Drone Aerial</sub><br><details><summary>View Traits</summary><br>大疆无人机高清高空俯拍与全景航拍摄影</details> | <img src='images/individual/FI/FI-035.webp' width='220' alt='FI-035 Next-Gen Open-World In-Engine Aesthetic'><br>**FI-035** <small>(#372)</small> · Next-Gen Open-World In-Engine Aesthetic<br><sub>Ref: 次世代开放世界实机美学</sub><br><details><summary>View Traits</summary><br>次世代开放世界实机美学（RAGE引擎升级版 / UE5 Lumen + Nanite 级别的半写实渲染）。高密度的生活化环境叙事，极具呼吸感的抓拍构图。 整体追求一种高度自然、真实、丰富且具有生活气息的次世代游戏视觉质感。画面既具有顶级3A游戏的精细度，又保留真实世界摄影的自然光线、空间氛围。 高饱和撞色设计。</details> |  |
 
 ---
 
@@ -292,6 +292,6 @@ Ideal for brand commercial photography, haute couture fashion editorials, humani
 
 ![I 348-363](images/I_348-363.webp)
 
-![I 364-371](images/I_364-371.webp)
+![I 364-372](images/I_364-372.webp)
 
 </details>

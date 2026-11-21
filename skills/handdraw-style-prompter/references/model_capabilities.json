@@ -834,6 +834,10 @@
         "FC-033": {
           "name_activation": "strong",
           "traits_activation": "none"
+        },
+        "FI-035": {
+          "name_activation": "weak",
+          "traits_activation": "strong"
         }
       }
     }

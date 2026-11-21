@@ -2595,5 +2595,12 @@
     "reference": "大疆无人机航拍 / DJI Drone Aerial",
     "generation_name": "DJI Drone Cinematic Aerial Landscape Photography",
     "traits": "大疆无人机高清高空俯拍与全景航拍摄影"
+  },
+  {
+    "number": "FI-035",
+    "group": "FI 写实摄影与视觉大片 / Realistic, Photography & Cinematic Styles",
+    "reference": "次世代开放世界实机美学",
+    "generation_name": "Next-Gen Open-World In-Engine Aesthetic",
+    "traits": "次世代开放世界实机美学（RAGE引擎升级版 / UE5 Lumen + Nanite 级别的半写实渲染）。高密度的生活化环境叙事，极具呼吸感的抓拍构图。 整体追求一种高度自然、真实、丰富且具有生活气息的次世代游戏视觉质感。画面既具有顶级3A游戏的精细度，又保留真实世界摄影的自然光线、空间氛围。 高饱和撞色设计。"
   }
 ]

@@ -1,4 +1,4 @@
-# 371 种人物 IP 手绘与视觉风格库（全新品类独立编号版）
+# 372 种人物 IP 手绘与视觉风格库（全新品类独立编号版）
 
 规则：采用 FA~FI 9 大品类独立编号（FA-001 ~ FI-034）；保留原参考名称用于索引；生图时优先使用“生图名称”。通用/历史风格保持短描述；当代个人创作者型条目使用稍详细的视觉描述，以减少只靠作者名造成的生成不稳定。
 
@@ -778,3 +778,6 @@
 | FI-033 · 监控摄像头截屏 / Security Camera Screenshot | Security Camera CCTV & Doorbell Surveillance Footage Photography | 安防监控摄像头广角鱼眼与夜视真实视频录像截屏 |
 
 | FI-034 · 大疆无人机航拍 / DJI Drone Aerial | DJI Drone Cinematic Aerial Landscape Photography | 大疆无人机高清高空俯拍与全景航拍摄影 |
+
+| FI-035 · 次世代开放世界实机美学 | Next-Gen Open-World In-Engine Aesthetic | 次世代开放世界实机美学（RAGE引擎升级版 / UE5 Lumen + Nanite 级别的半写实渲染）。高密度的生活化环境叙事，极具呼吸感的抓拍构图。 整体追求一种高度自然、真实、丰富且具有生活气息的次世代游戏视觉质感。画面既具有顶级3A游戏的精细度，又保留真实世界摄影的自然光线、空间氛围。 高饱和撞色设计。 |
+
