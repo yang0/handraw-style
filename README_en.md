@@ -1,4 +1,12 @@
 <p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/brand-lockup-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/brand/brand-lockup-light.svg">
+    <img src="assets/brand/brand-lockup-light.svg" alt="Handraw 手绘风" width="320">
+  </picture>
+</p>
+
+<p align="center">
   <a href="README.md">中文</a> | <strong>English</strong>
 </p>
 
