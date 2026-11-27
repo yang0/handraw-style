@@ -106,7 +106,7 @@
 
 | FB-008 · E. H. Shepard | Classic Pen-and-Light-Wash Storybook | 钢笔速写、淡水彩、古典角色、优雅而轻松。 |
 
-| FB-009 · Satoshi Kitamura | Quirky Ink-and-Watercolor Tale | 怪趣人物、墨线、水彩、不规则比例、现代童话；保留明显手绘笔压、停顿与轻微不齐整感，让轮廓产生真实纸上绘制的节奏；上色保留透明叠染、柔软边缘和纸纹，允许轻微颜色不均与留白。 |
+| FB-009 · 英国独立先锋绘本水彩钢笔 / Satoshi Kitamura | British Avant-Garde Dip Pen & Watercolor Picture Book | 英国独立先锋绘本水彩钢笔插画（非低幼甜美卡通，无腮红，无眼神高光），极细且锋利的玻璃蘸水笔黑墨勾线，带有生涩的手绘抖动、锐利折角与局部细密交叉排线阴影（cross-hatching），通透浓郁的手工水彩罩染，明显粗糙水彩纸肌理，受保罗·克利启发的扁平几何化折角造型，古怪冷幽默的荒诞感，夸张倾斜的广角畸变透视，四周不规则留白。 |
 
 | FB-010 · Oliver Jeffers | Minimal Poetic Picturebook Doodle | 极简人物、手写感、松散涂色、诗意荒诞；脸部与服装主动做减法，依靠清楚轮廓、眼口和少量关键形状建立人物辨识度；表情偏冷脸、尴尬或突然夸张，姿态要有明确喜剧节奏，避免统一的可爱微笑。 |
 

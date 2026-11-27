@@ -124,7 +124,8 @@
           "name_activation": "strong"
         },
         "FB-009": {
-          "name_activation": "strong"
+          "name_activation": "weak",
+          "traits_activation": "strong"
         },
         "FB-010": {
           "name_activation": "strong"
