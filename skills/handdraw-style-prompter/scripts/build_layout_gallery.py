@@ -102,7 +102,7 @@ def gallery_html(layouts: list[dict[str, object]]) -> str:
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>图型编号画廊</title>
 {BRAND_HEAD_TAGS}
-<script src="layouts-thumbnails.js"></script>{IMAGE_FALLBACK_SCRIPT}
+<script src="layouts-thumbnails.js"></script><script src="showcase-cache.js"></script>{IMAGE_FALLBACK_SCRIPT}
 <style>
 :root{{color:#24211e;background:#f7f5f0;font:16px/1.5 system-ui,"Microsoft YaHei",sans-serif}} body{{margin:0}} main{{max-width:1440px;margin:auto;padding:18px 30px 30px}} .sticky-header{{position:sticky;top:0;z-index:100}} .site-nav{{display:flex;align-items:center;gap:10px;margin:0;padding:12px 30px;border-bottom:1px solid #ded8cf;background:#fffdf9}} {BRAND_NAV_CSS} .site-nav a{{border:1px solid #9e9185;border-radius:8px;background:#fff;color:#403a34;padding:7px 13px;text-decoration:none;font-weight:800;line-height:1.2;transition:background .15s,color .15s,border-color .15s}} .site-nav a:hover{{border-color:#b74227;background:#fff0eb;color:#9f351f}} .site-nav a[aria-current="page"]{{border-color:#b74227;background:#b74227;color:#fff;box-shadow:0 1px 3px #b7422744}} .nav-right{{margin-left:auto;display:flex;align-items:center;gap:8px}} .nav-ext{{display:inline-flex;align-items:center;font-weight:700}} .nav-btn{{border:1px solid #9e9185;border-radius:8px;background:#fff;color:#403a34;padding:7px 13px;font:inherit;font-weight:700;line-height:1.2;cursor:pointer;transition:background .15s,color .15s,border-color .15s}} .nav-btn:hover{{border-color:#b74227;background:#fff0eb;color:#9f351f}} .nav-btn:focus-visible,.site-nav a:focus-visible{{outline:3px solid #d67d4d;outline-offset:3px}} .sub-nav{{display:flex;gap:10px;align-items:center;padding:9px 30px;background:#faf7f2;border-bottom:1px solid #ded8cf;box-shadow:0 2px 6px rgba(0,0,0,0.03)}} .filter{{display:inline-flex;align-items:center;gap:6px;border:1px solid #c9c1b6;border-radius:6px;background:#fff;color:#514a43;padding:6px 14px;font:inherit;font-size:14px;font-weight:600;line-height:1.4;cursor:pointer;transition:background .15s,color .15s,border-color .15s,box-shadow .15s}} .filter:hover{{border-color:#b74227;color:#b74227;background:#fff8f5}} .filter span{{display:inline-block;padding:1px 6px;border-radius:999px;background:#eee8df;color:#6b6257;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2;transition:all .15s}} .filter.is-active{{border-color:#b74227;background:#b74227;color:#fff;box-shadow:0 1px 3px rgba(183,66,39,0.3)}} .filter.is-active span{{background:rgba(255,255,255,0.25);color:#fff}} h1{{margin:0}} .lead{{margin:8px 0 20px;color:#665f57}}
 .gallery-title-bar{{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 2px}}
@@ -143,7 +143,7 @@ def gallery_html(layouts: list[dict[str, object]]) -> str:
 dialog{{width:min(94vw,1100px);padding:14px;border:0;border-radius:14px;background:#171513;color:#fff;box-shadow:0 20px 70px #0008}} dialog::backdrop{{background:#000b}} dialog img{{display:block;max-width:100%;max-height:78vh;margin:auto;object-fit:contain}} .dialog-actions{{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-start;margin-top:10px}} .dialog-label{{margin:0;font-weight:700;margin-right:auto}} .copy,.close,.action-link{{border:0;border-radius:7px;padding:7px 11px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;line-height:1.25;transition:background .15s,border-color .15s,color .15s}} .copy{{background:#b74227;color:#fff}} .copy:hover{{background:#cf4f33}} .action-link{{background:#38332c;color:#ded8cf;border:1px solid #544d44}} .action-link:hover{{background:#4a443b;color:#fff;border-color:#786d60}} .action-link-primary{{background:#2f5d50;color:#fff;border:1px solid #3f7a69}} .action-link-primary:hover{{background:#3b7565;border-color:#529884}} .close{{background:#332f2b;color:#ded8cf}} .close:hover{{background:#47423d;color:#fff}} .nav-cta{{border-color:#b74227!important;background:#fff4ef!important;color:#9f351f!important}} .nav-cta:hover{{background:#b74227!important;color:#fff!important}} .filter-exclusive{{border-color:#d98e7a!important;background:#fff4ef!important;color:#9f351f!important}} .filter-exclusive.is-active{{border-color:#b74227!important;background:#b74227!important;color:#fff!important}} .filter-exclusive span{{background:#f5d5cb!important;color:#8f321e!important}} .filter-exclusive.is-active span{{background:rgba(255,255,255,0.25)!important;color:#fff!important}} .exclusive-teaser{{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 14px;padding:10px 14px;border:1px solid #e6c8be;border-left:4px solid #b74227;border-radius:10px;background:linear-gradient(90deg,#fff6f2 0%,#fffdf9 100%);color:#3b352f;font-size:13.5px}} .exclusive-teaser-copy{{display:flex;align-items:center;gap:8px;flex-wrap:wrap}} .exclusive-teaser-badge{{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;background:#b74227;color:#fff;font-size:11.5px;font-weight:750}} .exclusive-teaser-actions{{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}} .exclusive-teaser-btn{{border:1px solid #b74227;border-radius:7px;background:#b74227;color:#fff;padding:5px 12px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}} .exclusive-teaser-btn:hover{{background:#9f351f}} .exclusive-teaser-link{{color:#9f351f;font-size:12.5px;font-weight:700;text-decoration:underline;text-underline-offset:2px}} .exclusive-panel{{margin:14px 0 28px}} .exclusive-grid{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}} @media(max-width:1100px){{.exclusive-grid{{grid-template-columns:repeat(3,minmax(0,1fr))}}}} @media(max-width:720px){{.exclusive-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}} @media(max-width:420px){{.exclusive-grid{{grid-template-columns:1fr}}}} .exclusive-card{{display:flex;flex-direction:column;width:100%;margin:0;padding:0;border:1px solid #e3d6cc;border-radius:12px;background:#fffdf9;box-shadow:0 2px 8px rgba(36,33,30,0.06);overflow:hidden;cursor:zoom-in;text-align:left;transition:transform .15s,box-shadow .15s,border-color .15s}} .exclusive-card:hover{{transform:translateY(-2px);border-color:#d98e7a;box-shadow:0 8px 20px rgba(183,66,39,0.12)}} .exclusive-card-media{{position:relative;width:100%;aspect-ratio:4/3;background:#efeae0;overflow:hidden}} .exclusive-card-media img{{display:block;width:100%;height:100%;object-fit:cover}} .exclusive-card-badge{{position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:999px;background:rgba(183,66,39,0.92);color:#fff;font-size:11px;font-weight:750}} .exclusive-card-badge.is-community{{background:rgba(47,93,80,0.92)}} .exclusive-card-body{{padding:10px 12px;display:flex;flex-direction:column;gap:4px}} .exclusive-card-code{{color:#b74227;font-size:12px;font-weight:800}} .exclusive-card-name{{font-size:14px;font-weight:750;color:#24211e}} .exclusive-card-desc{{font-size:12px;color:#6b6257;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}} .dialog-tip{{margin:8px 0 0;font-size:12px;color:#a8a199;text-align:center}} [hidden]{{display:none!important}}
 </style></head><body>
 <header class="sticky-header">
-<nav class="site-nav" aria-label="画廊导航">{BRAND_NAV_HTML}<a href="index.html" data-i18n="stylesNav">风格画廊</a><a href="layouts.html" aria-current="page" data-i18n="layoutsNav">图型画廊</a><a href="colors.html" data-i18n="colorsNav">色彩画廊</a><a href="assets.html" data-i18n="assetsNav">自建图库</a><a href="tutorials.html" data-i18n="tutorialsNav">提示词</a><div class="nav-right"><a class="nav-ext nav-cta" href="https://studio.handraw-style.com/?entry=quick&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="webStudioNav">✨ 在线生图</a><a class="nav-ext" href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="desktopAppNav">💻 桌面客户端</a><a class="nav-ext" href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" title="GitHub 仓库"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a><a class="nav-ext" href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" title="X (Twitter) @yang02010"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a><button class="nav-btn" id="wechat-btn" type="button" data-i18n="wechatBtn">💬 交流群</button><button class="nav-btn" id="lang-btn" type="button" aria-label="Switch Language">🌐 EN / 中</button></div></nav>
+<nav class="site-nav" aria-label="画廊导航">{BRAND_NAV_HTML}<a href="index.html" data-i18n="stylesNav">风格画廊</a><a href="layouts.html" aria-current="page" data-i18n="layoutsNav">图型画廊</a><a href="colors.html" data-i18n="colorsNav">色彩画廊</a><a href="inspirations.html" data-i18n="inspirationsNav">灵感库</a><a href="assets.html" data-i18n="assetsNav">自建图库</a><a href="tutorials.html" data-i18n="tutorialsNav">提示词</a><div class="nav-right"><a class="nav-ext nav-cta" href="https://studio.handraw-style.com/?entry=quick&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="webStudioNav">✨ 在线生图</a><a class="nav-ext" href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="desktopAppNav">💻 桌面客户端</a><a class="nav-ext" href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" title="GitHub 仓库"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a><a class="nav-ext" href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" title="X (Twitter) @yang02010"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a><button class="nav-btn" id="wechat-btn" type="button" data-i18n="wechatBtn">💬 交流群</button><button class="nav-btn" id="lang-btn" type="button" aria-label="Switch Language">🌐 EN / 中</button></div></nav>
 <nav class="sub-nav filters" aria-label="图型分类">{controls}<button class="filter filter-exclusive" id="exclusive-filter-btn" type="button" data-category="exclusive" data-label-zh="✨ 限定新图型" data-label-en="✨ Exclusive Layouts" hidden>✨ 限定新图型 <span id="exclusive-filter-count">0</span></button></nav>
 </header>
 <main data-exclusive-api-url="https://handraw-style.com/api/public/featured-exclusives?kind=layout&amp;limit=24">
@@ -173,6 +173,7 @@ const I18N = {{
     stylesNav: "风格画廊",
     layoutsNav: "图型画廊",
     colorsNav: "色彩画廊",
+    inspirationsNav: "灵感库",
     assetsNav: "自建图库",
     tutorialsNav: "提示词",
     webStudioNav: "✨ 在线生图",
@@ -209,6 +210,7 @@ const I18N = {{
     stylesNav: "Styles",
     layoutsNav: "Layouts",
     colorsNav: "Colors",
+    inspirationsNav: "Inspirations",
     assetsNav: "Custom Library",
     tutorialsNav: "Prompts",
     webStudioNav: "✨ Web Studio",
@@ -385,29 +387,7 @@ function renderExclusiveShowcase(){{
     const totalCount=(exclusiveMeta&&exclusiveMeta.counts&&exclusiveMeta.counts.total)||exclusiveItems.length;
     exclusiveFilterBtn.hidden=false;
     if(exclusiveFilterCount)exclusiveFilterCount.textContent=String(totalCount);
-    if(exclusiveTeaser){{
-        exclusiveTeaser.replaceChildren();
-        const copy=document.createElement('div');
-        copy.className='exclusive-teaser-copy';
-        const badge=document.createElement('span');
-        badge.className='exclusive-teaser-badge';
-        badge.textContent=currentLang==='en'?'Exclusive':'限定上新';
-        const text=document.createElement('span');
-        text.textContent=currentLang==='en'
-          ? `${{totalCount}} exclusive & community layouts are live on Handraw Web & Desktop Client.`
-          : `官网与电脑版现有 ${{totalCount}} 款限定及社群共创新图型，点开卡片即可直接套用出图。`;
-        copy.append(badge,text);
-        const actions=document.createElement('div');
-        actions.className='exclusive-teaser-actions';
-        const goBtn=document.createElement('button');
-        goBtn.type='button';
-        goBtn.className='exclusive-teaser-btn';
-        goBtn.textContent=currentLang==='en'?'Browse Exclusive Layouts →':'查看全部限定图型 →';
-        goBtn.addEventListener('click',()=>setCategory('exclusive'));
-        actions.append(goBtn);
-        exclusiveTeaser.append(copy,actions);
-        exclusiveTeaser.hidden=(activeCategory==='exclusive');
-    }}
+    if(exclusiveTeaser) exclusiveTeaser.hidden=true;
     exclusiveGallery.replaceChildren();
     const grid=document.createElement('div');
     grid.className='exclusive-grid';
@@ -418,10 +398,14 @@ function renderExclusiveShowcase(){{
         const media=document.createElement('div');
         media.className='exclusive-card-media';
         const img=document.createElement('img');
-        img.src=safeHref(item.image,'');
         img.alt=`${{item.code}} ${{item.name}}`;
         img.loading='lazy';
-        img.referrerPolicy='no-referrer';
+        if(window.HandrawShowcaseCache&&window.HandrawShowcaseCache.attachImage){{
+            window.HandrawShowcaseCache.attachImage(img,item.thumbImage,item.image);
+        }}else{{
+            img.referrerPolicy='no-referrer';
+            img.src=safeHref(item.thumbImage||item.image,'');
+        }}
         const badge=document.createElement('span');
         badge.className='exclusive-card-badge'+(item.sourceType==='community'?' is-community':'');
         badge.textContent=currentLang==='en'?(item.badgeEn||item.badge||'Exclusive'):(item.badge||'官网限定');
@@ -435,32 +419,21 @@ function renderExclusiveShowcase(){{
         nameEl.className='exclusive-card-name';
         nameEl.textContent=item.name||item.code||'';
         body.append(codeEl,nameEl);
-        if(item.description){{
-            const descEl=document.createElement('div');
-            descEl.className='exclusive-card-desc';
-            descEl.textContent=item.description;
-            body.append(descEl);
-        }}
         card.append(media,body);
         card.addEventListener('click',()=>openExclusivePreview(item));
         grid.append(card);
     }});
     exclusiveGallery.append(grid);
 }}
-async function loadExclusiveShowcase(){{
-    if(!exclusiveApiUrl)return;
-    try{{
-        const ctrl=typeof AbortController==='function'?new AbortController():null;
-        const timer=ctrl?setTimeout(()=>ctrl.abort(),5000):0;
-        const resp=await fetch(exclusiveApiUrl,{{mode:'cors',credentials:'omit',signal:ctrl?ctrl.signal:undefined}});
-        if(timer)clearTimeout(timer);
-        if(!resp.ok)return;
-        const data=await resp.json();
-        if(!data||!Array.isArray(data.items)||!data.items.length)return;
-        exclusiveItems=data.items;
-        exclusiveMeta=data;
-        renderExclusiveShowcase();
-    }}catch{{}}
+function loadExclusiveShowcase(){{
+    if(window.HandrawShowcaseCache&&window.HandrawShowcaseCache.load){{
+        window.HandrawShowcaseCache.load({{kind:'layout',exclusiveLimit:24,inspirationLimit:0}},(data)=>{{
+            if(!data||!Array.isArray(data.exclusives)||!data.exclusives.length)return;
+            exclusiveItems=data.exclusives;
+            exclusiveMeta=data;
+            renderExclusiveShowcase();
+        }});
+    }}
 }}
 loadExclusiveShowcase();
 async function copyPrompt(){{

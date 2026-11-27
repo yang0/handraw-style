@@ -2,7 +2,7 @@
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>图型编号画廊</title>
 <meta name="theme-color" content="#f6f3ec"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20128%22%20fill%3D%22none%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22hw-seal-sm%22%20x1%3D%2212%22%20y1%3D%228%22%20x2%3D%22116%22%20y2%3D%22120%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23C94D30%22%2F%3E%3Cstop%20offset%3D%2252%25%22%20stop-color%3D%22%23B74227%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239E351D%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M64%203C97.5%202.8%20110.2%205.4%20117.6%2012.8C125%2020.2%20125.6%2033.4%20125.2%2064C124.8%2094.8%20124%20108%20116.6%20115.4C109.2%20122.8%2096.4%20125.2%2064%20125C31.6%20124.8%2018.8%20123%2011.4%20115.6C4%20108.2%202.8%2095.2%203%2064C3.2%2032.8%204.4%2020%2011.8%2012.6C19.2%205.2%2030.8%203.2%2064%203Z%22%20fill%3D%22url%28%23hw-seal-sm%29%22%2F%3E%3Cpath%20d%3D%22M51.0%2087.6C41.8%2081.2%2026.8%2082.0%2019.6%2089.8C13.0%2096.8%2015.8%20108.0%2028.2%20110.6C44.4%20114.0%2066.8%20103.6%2085.4%2098.8C93.2%2096.8%2099.6%2097.6%20101.4%20101.2C102.2%20102.8%20101.0%20105.0%2099.2%20106.4C104.8%20105.6%20109.8%20100.6%20108.0%2094.2C106.0%2087.2%2095.6%2084.8%2082.0%2088.2C65.4%2092.4%2046.2%20100.6%2034.6%2098.6C28.4%2097.6%2027.2%2093.2%2032.2%2090.0C37.2%2086.8%2045.2%2087.0%2050.6%2088.8Z%22%20fill%3D%22%23FFFDF9%22%2F%3E%3Cg%20transform%3D%22translate%2850.8%2088.0%29%20rotate%2836%29%22%20stroke%3D%22%231E1B18%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M-10.0%20-34.8C-11.2%20-49.0%20-10.8%20-64.0%20-9.0%20-77.0C-8.0%20-84.0%20-4.6%20-87.4%200%20-87.4C4.6%20-87.4%208.0%20-84.0%209.0%20-77.0C10.8%20-64.0%2011.2%20-49.0%2010.0%20-34.8Z%22%20fill%3D%22%23FFFDF9%22%20stroke-width%3D%225.4%22%2F%3E%3Cpath%20d%3D%22M-9.0%20-70.6Q0%20-73.2%209.0%20-70.6%22%20stroke-width%3D%224.4%22%2F%3E%3Cpath%20d%3D%22M0%200C-5.2%20-8.4%20-9.8%20-15.2%20-10.8%20-20.6C-11.4%20-23.8%20-8.8%20-28.0%20-6.6%20-31.0L6.6%20-31.0C8.8%20-28.0%2011.4%20-23.8%2010.8%20-20.6C9.8%20-15.2%205.2%20-8.4%200%200Z%22%20fill%3D%22%23FFFDF9%22%20stroke-width%3D%225.4%22%2F%3E%3Cpath%20d%3D%22M0%20-1.4L0%20-17.6%22%20stroke-width%3D%224.0%22%2F%3E%3Cpath%20d%3D%22M-11.8%20-33.4C-11.8%20-37.4%20-6.4%20-39.4%200%20-39.4C6.4%20-39.4%2011.8%20-37.4%2011.8%20-33.4C11.8%20-29.6%206.4%20-28.4%200%20-28.4C-6.4%20-28.4%20-11.8%20-29.6%20-11.8%20-33.4Z%22%20fill%3D%22%23FFFDF9%22%20stroke-width%3D%225.4%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
-<script src="layouts-thumbnails.js"></script><script>
+<script src="layouts-thumbnails.js"></script><script src="showcase-cache.js"></script><script>
 (function() {
   function fixImg(img) {
     if (!img || img.__fixed) return;
@@ -95,7 +95,7 @@
 dialog{width:min(94vw,1100px);padding:14px;border:0;border-radius:14px;background:#171513;color:#fff;box-shadow:0 20px 70px #0008} dialog::backdrop{background:#000b} dialog img{display:block;max-width:100%;max-height:78vh;margin:auto;object-fit:contain} .dialog-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-start;margin-top:10px} .dialog-label{margin:0;font-weight:700;margin-right:auto} .copy,.close,.action-link{border:0;border-radius:7px;padding:7px 11px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;line-height:1.25;transition:background .15s,border-color .15s,color .15s} .copy{background:#b74227;color:#fff} .copy:hover{background:#cf4f33} .action-link{background:#38332c;color:#ded8cf;border:1px solid #544d44} .action-link:hover{background:#4a443b;color:#fff;border-color:#786d60} .action-link-primary{background:#2f5d50;color:#fff;border:1px solid #3f7a69} .action-link-primary:hover{background:#3b7565;border-color:#529884} .close{background:#332f2b;color:#ded8cf} .close:hover{background:#47423d;color:#fff} .nav-cta{border-color:#b74227!important;background:#fff4ef!important;color:#9f351f!important} .nav-cta:hover{background:#b74227!important;color:#fff!important} .filter-exclusive{border-color:#d98e7a!important;background:#fff4ef!important;color:#9f351f!important} .filter-exclusive.is-active{border-color:#b74227!important;background:#b74227!important;color:#fff!important} .filter-exclusive span{background:#f5d5cb!important;color:#8f321e!important} .filter-exclusive.is-active span{background:rgba(255,255,255,0.25)!important;color:#fff!important} .exclusive-teaser{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 14px;padding:10px 14px;border:1px solid #e6c8be;border-left:4px solid #b74227;border-radius:10px;background:linear-gradient(90deg,#fff6f2 0%,#fffdf9 100%);color:#3b352f;font-size:13.5px} .exclusive-teaser-copy{display:flex;align-items:center;gap:8px;flex-wrap:wrap} .exclusive-teaser-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;background:#b74227;color:#fff;font-size:11.5px;font-weight:750} .exclusive-teaser-actions{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap} .exclusive-teaser-btn{border:1px solid #b74227;border-radius:7px;background:#b74227;color:#fff;padding:5px 12px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px} .exclusive-teaser-btn:hover{background:#9f351f} .exclusive-teaser-link{color:#9f351f;font-size:12.5px;font-weight:700;text-decoration:underline;text-underline-offset:2px} .exclusive-panel{margin:14px 0 28px} .exclusive-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start} @media(max-width:1100px){.exclusive-grid{grid-template-columns:repeat(3,minmax(0,1fr))}} @media(max-width:720px){.exclusive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}} @media(max-width:420px){.exclusive-grid{grid-template-columns:1fr}} .exclusive-card{display:flex;flex-direction:column;width:100%;margin:0;padding:0;border:1px solid #e3d6cc;border-radius:12px;background:#fffdf9;box-shadow:0 2px 8px rgba(36,33,30,0.06);overflow:hidden;cursor:zoom-in;text-align:left;transition:transform .15s,box-shadow .15s,border-color .15s} .exclusive-card:hover{transform:translateY(-2px);border-color:#d98e7a;box-shadow:0 8px 20px rgba(183,66,39,0.12)} .exclusive-card-media{position:relative;width:100%;aspect-ratio:4/3;background:#efeae0;overflow:hidden} .exclusive-card-media img{display:block;width:100%;height:100%;object-fit:cover} .exclusive-card-badge{position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:999px;background:rgba(183,66,39,0.92);color:#fff;font-size:11px;font-weight:750} .exclusive-card-badge.is-community{background:rgba(47,93,80,0.92)} .exclusive-card-body{padding:10px 12px;display:flex;flex-direction:column;gap:4px} .exclusive-card-code{color:#b74227;font-size:12px;font-weight:800} .exclusive-card-name{font-size:14px;font-weight:750;color:#24211e} .exclusive-card-desc{font-size:12px;color:#6b6257;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden} .dialog-tip{margin:8px 0 0;font-size:12px;color:#a8a199;text-align:center} [hidden]{display:none!important}
 </style></head><body>
 <header class="sticky-header">
-<nav class="site-nav" aria-label="画廊导航"><a class="site-brand" href="index.html" title="手绘风 Handraw"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none"><defs><linearGradient id="hw-seal-sm" x1="12" y1="8" x2="116" y2="120" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#C94D30"/><stop offset="52%" stop-color="#B74227"/><stop offset="100%" stop-color="#9E351D"/></linearGradient></defs><path d="M64 3C97.5 2.8 110.2 5.4 117.6 12.8C125 20.2 125.6 33.4 125.2 64C124.8 94.8 124 108 116.6 115.4C109.2 122.8 96.4 125.2 64 125C31.6 124.8 18.8 123 11.4 115.6C4 108.2 2.8 95.2 3 64C3.2 32.8 4.4 20 11.8 12.6C19.2 5.2 30.8 3.2 64 3Z" fill="url(#hw-seal-sm)"/><path d="M51.0 87.6C41.8 81.2 26.8 82.0 19.6 89.8C13.0 96.8 15.8 108.0 28.2 110.6C44.4 114.0 66.8 103.6 85.4 98.8C93.2 96.8 99.6 97.6 101.4 101.2C102.2 102.8 101.0 105.0 99.2 106.4C104.8 105.6 109.8 100.6 108.0 94.2C106.0 87.2 95.6 84.8 82.0 88.2C65.4 92.4 46.2 100.6 34.6 98.6C28.4 97.6 27.2 93.2 32.2 90.0C37.2 86.8 45.2 87.0 50.6 88.8Z" fill="#FFFDF9"/><g transform="translate(50.8 88.0) rotate(36)" stroke="#1E1B18" stroke-linecap="round" stroke-linejoin="round"><path d="M-10.0 -34.8C-11.2 -49.0 -10.8 -64.0 -9.0 -77.0C-8.0 -84.0 -4.6 -87.4 0 -87.4C4.6 -87.4 8.0 -84.0 9.0 -77.0C10.8 -64.0 11.2 -49.0 10.0 -34.8Z" fill="#FFFDF9" stroke-width="5.4"/><path d="M-9.0 -70.6Q0 -73.2 9.0 -70.6" stroke-width="4.4"/><path d="M0 0C-5.2 -8.4 -9.8 -15.2 -10.8 -20.6C-11.4 -23.8 -8.8 -28.0 -6.6 -31.0L6.6 -31.0C8.8 -28.0 11.4 -23.8 10.8 -20.6C9.8 -15.2 5.2 -8.4 0 0Z" fill="#FFFDF9" stroke-width="5.4"/><path d="M0 -1.4L0 -17.6" stroke-width="4.0"/><path d="M-11.8 -33.4C-11.8 -37.4 -6.4 -39.4 0 -39.4C6.4 -39.4 11.8 -37.4 11.8 -33.4C11.8 -29.6 6.4 -28.4 0 -28.4C-6.4 -28.4 -11.8 -29.6 -11.8 -33.4Z" fill="#FFFDF9" stroke-width="5.4"/></g></svg><span>手绘风</span></a><a href="index.html" data-i18n="stylesNav">风格画廊</a><a href="layouts.html" aria-current="page" data-i18n="layoutsNav">图型画廊</a><a href="colors.html" data-i18n="colorsNav">色彩画廊</a><a href="assets.html" data-i18n="assetsNav">自建图库</a><a href="tutorials.html" data-i18n="tutorialsNav">提示词</a><div class="nav-right"><a class="nav-ext nav-cta" href="https://studio.handraw-style.com/?entry=quick&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="webStudioNav">✨ 在线生图</a><a class="nav-ext" href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="desktopAppNav">💻 桌面客户端</a><a class="nav-ext" href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" title="GitHub 仓库"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a><a class="nav-ext" href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" title="X (Twitter) @yang02010"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a><button class="nav-btn" id="wechat-btn" type="button" data-i18n="wechatBtn">💬 交流群</button><button class="nav-btn" id="lang-btn" type="button" aria-label="Switch Language">🌐 EN / 中</button></div></nav>
+<nav class="site-nav" aria-label="画廊导航"><a class="site-brand" href="index.html" title="手绘风 Handraw"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none"><defs><linearGradient id="hw-seal-sm" x1="12" y1="8" x2="116" y2="120" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#C94D30"/><stop offset="52%" stop-color="#B74227"/><stop offset="100%" stop-color="#9E351D"/></linearGradient></defs><path d="M64 3C97.5 2.8 110.2 5.4 117.6 12.8C125 20.2 125.6 33.4 125.2 64C124.8 94.8 124 108 116.6 115.4C109.2 122.8 96.4 125.2 64 125C31.6 124.8 18.8 123 11.4 115.6C4 108.2 2.8 95.2 3 64C3.2 32.8 4.4 20 11.8 12.6C19.2 5.2 30.8 3.2 64 3Z" fill="url(#hw-seal-sm)"/><path d="M51.0 87.6C41.8 81.2 26.8 82.0 19.6 89.8C13.0 96.8 15.8 108.0 28.2 110.6C44.4 114.0 66.8 103.6 85.4 98.8C93.2 96.8 99.6 97.6 101.4 101.2C102.2 102.8 101.0 105.0 99.2 106.4C104.8 105.6 109.8 100.6 108.0 94.2C106.0 87.2 95.6 84.8 82.0 88.2C65.4 92.4 46.2 100.6 34.6 98.6C28.4 97.6 27.2 93.2 32.2 90.0C37.2 86.8 45.2 87.0 50.6 88.8Z" fill="#FFFDF9"/><g transform="translate(50.8 88.0) rotate(36)" stroke="#1E1B18" stroke-linecap="round" stroke-linejoin="round"><path d="M-10.0 -34.8C-11.2 -49.0 -10.8 -64.0 -9.0 -77.0C-8.0 -84.0 -4.6 -87.4 0 -87.4C4.6 -87.4 8.0 -84.0 9.0 -77.0C10.8 -64.0 11.2 -49.0 10.0 -34.8Z" fill="#FFFDF9" stroke-width="5.4"/><path d="M-9.0 -70.6Q0 -73.2 9.0 -70.6" stroke-width="4.4"/><path d="M0 0C-5.2 -8.4 -9.8 -15.2 -10.8 -20.6C-11.4 -23.8 -8.8 -28.0 -6.6 -31.0L6.6 -31.0C8.8 -28.0 11.4 -23.8 10.8 -20.6C9.8 -15.2 5.2 -8.4 0 0Z" fill="#FFFDF9" stroke-width="5.4"/><path d="M0 -1.4L0 -17.6" stroke-width="4.0"/><path d="M-11.8 -33.4C-11.8 -37.4 -6.4 -39.4 0 -39.4C6.4 -39.4 11.8 -37.4 11.8 -33.4C11.8 -29.6 6.4 -28.4 0 -28.4C-6.4 -28.4 -11.8 -29.6 -11.8 -33.4Z" fill="#FFFDF9" stroke-width="5.4"/></g></svg><span>手绘风</span></a><a href="index.html" data-i18n="stylesNav">风格画廊</a><a href="layouts.html" aria-current="page" data-i18n="layoutsNav">图型画廊</a><a href="colors.html" data-i18n="colorsNav">色彩画廊</a><a href="inspirations.html" data-i18n="inspirationsNav">灵感库</a><a href="assets.html" data-i18n="assetsNav">自建图库</a><a href="tutorials.html" data-i18n="tutorialsNav">提示词</a><div class="nav-right"><a class="nav-ext nav-cta" href="https://studio.handraw-style.com/?entry=quick&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="webStudioNav">✨ 在线生图</a><a class="nav-ext" href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="desktopAppNav">💻 桌面客户端</a><a class="nav-ext" href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" title="GitHub 仓库"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a><a class="nav-ext" href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" title="X (Twitter) @yang02010"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a><button class="nav-btn" id="wechat-btn" type="button" data-i18n="wechatBtn">💬 交流群</button><button class="nav-btn" id="lang-btn" type="button" aria-label="Switch Language">🌐 EN / 中</button></div></nav>
 <nav class="sub-nav filters" aria-label="图型分类"><button class="filter" type="button" data-category="social-card" data-label-zh="社媒卡" data-label-en="Social Cards">社媒卡 <span>24</span></button><button class="filter" type="button" data-category="infographic" data-label-zh="信息图" data-label-en="Infographics">信息图 <span>38</span></button><button class="filter" type="button" data-category="comic-storyboard" data-label-zh="漫画分镜" data-label-en="Comic Storyboards">漫画分镜 <span>71</span></button><button class="filter" type="button" data-category="ip-character" data-label-zh="IP设计" data-label-en="IP Design">IP设计 <span>13</span></button><button class="filter" type="button" data-category="ecommerce" data-label-zh="电商" data-label-en="E-commerce">电商 <span>24</span></button><button class="filter filter-exclusive" id="exclusive-filter-btn" type="button" data-category="exclusive" data-label-zh="✨ 限定新图型" data-label-en="✨ Exclusive Layouts" hidden>✨ 限定新图型 <span id="exclusive-filter-count">0</span></button></nav>
 </header>
 <main data-exclusive-api-url="https://handraw-style.com/api/public/featured-exclusives?kind=layout&amp;limit=24">
@@ -975,6 +975,7 @@ const I18N = {
     stylesNav: "风格画廊",
     layoutsNav: "图型画廊",
     colorsNav: "色彩画廊",
+    inspirationsNav: "灵感库",
     assetsNav: "自建图库",
     tutorialsNav: "提示词",
     webStudioNav: "✨ 在线生图",
@@ -1011,6 +1012,7 @@ const I18N = {
     stylesNav: "Styles",
     layoutsNav: "Layouts",
     colorsNav: "Colors",
+    inspirationsNav: "Inspirations",
     assetsNav: "Custom Library",
     tutorialsNav: "Prompts",
     webStudioNav: "✨ Web Studio",
@@ -1187,29 +1189,7 @@ function renderExclusiveShowcase(){
     const totalCount=(exclusiveMeta&&exclusiveMeta.counts&&exclusiveMeta.counts.total)||exclusiveItems.length;
     exclusiveFilterBtn.hidden=false;
     if(exclusiveFilterCount)exclusiveFilterCount.textContent=String(totalCount);
-    if(exclusiveTeaser){
-        exclusiveTeaser.replaceChildren();
-        const copy=document.createElement('div');
-        copy.className='exclusive-teaser-copy';
-        const badge=document.createElement('span');
-        badge.className='exclusive-teaser-badge';
-        badge.textContent=currentLang==='en'?'Exclusive':'限定上新';
-        const text=document.createElement('span');
-        text.textContent=currentLang==='en'
-          ? `${totalCount} exclusive & community layouts are live on Handraw Web & Desktop Client.`
-          : `官网与电脑版现有 ${totalCount} 款限定及社群共创新图型，点开卡片即可直接套用出图。`;
-        copy.append(badge,text);
-        const actions=document.createElement('div');
-        actions.className='exclusive-teaser-actions';
-        const goBtn=document.createElement('button');
-        goBtn.type='button';
-        goBtn.className='exclusive-teaser-btn';
-        goBtn.textContent=currentLang==='en'?'Browse Exclusive Layouts →':'查看全部限定图型 →';
-        goBtn.addEventListener('click',()=>setCategory('exclusive'));
-        actions.append(goBtn);
-        exclusiveTeaser.append(copy,actions);
-        exclusiveTeaser.hidden=(activeCategory==='exclusive');
-    }
+    if(exclusiveTeaser) exclusiveTeaser.hidden=true;
     exclusiveGallery.replaceChildren();
     const grid=document.createElement('div');
     grid.className='exclusive-grid';
@@ -1220,10 +1200,14 @@ function renderExclusiveShowcase(){
         const media=document.createElement('div');
         media.className='exclusive-card-media';
         const img=document.createElement('img');
-        img.src=safeHref(item.image,'');
         img.alt=`${item.code} ${item.name}`;
         img.loading='lazy';
-        img.referrerPolicy='no-referrer';
+        if(window.HandrawShowcaseCache&&window.HandrawShowcaseCache.attachImage){
+            window.HandrawShowcaseCache.attachImage(img,item.thumbImage,item.image);
+        }else{
+            img.referrerPolicy='no-referrer';
+            img.src=safeHref(item.thumbImage||item.image,'');
+        }
         const badge=document.createElement('span');
         badge.className='exclusive-card-badge'+(item.sourceType==='community'?' is-community':'');
         badge.textContent=currentLang==='en'?(item.badgeEn||item.badge||'Exclusive'):(item.badge||'官网限定');
@@ -1237,32 +1221,21 @@ function renderExclusiveShowcase(){
         nameEl.className='exclusive-card-name';
         nameEl.textContent=item.name||item.code||'';
         body.append(codeEl,nameEl);
-        if(item.description){
-            const descEl=document.createElement('div');
-            descEl.className='exclusive-card-desc';
-            descEl.textContent=item.description;
-            body.append(descEl);
-        }
         card.append(media,body);
         card.addEventListener('click',()=>openExclusivePreview(item));
         grid.append(card);
     });
     exclusiveGallery.append(grid);
 }
-async function loadExclusiveShowcase(){
-    if(!exclusiveApiUrl)return;
-    try{
-        const ctrl=typeof AbortController==='function'?new AbortController():null;
-        const timer=ctrl?setTimeout(()=>ctrl.abort(),5000):0;
-        const resp=await fetch(exclusiveApiUrl,{mode:'cors',credentials:'omit',signal:ctrl?ctrl.signal:undefined});
-        if(timer)clearTimeout(timer);
-        if(!resp.ok)return;
-        const data=await resp.json();
-        if(!data||!Array.isArray(data.items)||!data.items.length)return;
-        exclusiveItems=data.items;
-        exclusiveMeta=data;
-        renderExclusiveShowcase();
-    }catch{}
+function loadExclusiveShowcase(){
+    if(window.HandrawShowcaseCache&&window.HandrawShowcaseCache.load){
+        window.HandrawShowcaseCache.load({kind:'layout',exclusiveLimit:24,inspirationLimit:0},(data)=>{
+            if(!data||!Array.isArray(data.exclusives)||!data.exclusives.length)return;
+            exclusiveItems=data.exclusives;
+            exclusiveMeta=data;
+            renderExclusiveShowcase();
+        });
+    }
 }
 loadExclusiveShowcase();
 async function copyPrompt(){
