@@ -278,6 +278,35 @@ dialog img{{display:block;max-width:100%;max-height:60vh;margin:auto;object-fit:
 .action-link-primary:hover{{background:#3b7565;border-color:#529884}}
 .nav-cta{{border-color:#b74227!important;background:#fff4ef!important;color:#9f351f!important}}
 .nav-cta:hover{{background:#b74227!important;color:#fff!important}}
+.filter-exclusive{{border-color:#d98e7a!important;background:#fff4ef!important;color:#9f351f!important}}
+.filter-exclusive.is-active{{border-color:#b74227!important;background:#b74227!important;color:#fff!important}}
+.filter-exclusive span{{background:#f5d5cb!important;color:#8f321e!important}}
+.filter-exclusive.is-active span{{background:rgba(255,255,255,0.25)!important;color:#fff!important}}
+.exclusive-teaser{{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 14px;padding:10px 14px;border:1px solid #e6c8be;border-left:4px solid #b74227;border-radius:10px;background:linear-gradient(90deg,#fff6f2 0%,#fffdf9 100%);color:#3b352f;font-size:13.5px}}
+.exclusive-teaser-copy{{display:flex;align-items:center;gap:8px;flex-wrap:wrap}}
+.exclusive-teaser-badge{{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;background:#b74227;color:#fff;font-size:11.5px;font-weight:750}}
+.exclusive-teaser-actions{{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}}
+.exclusive-teaser-btn{{border:1px solid #b74227;border-radius:7px;background:#b74227;color:#fff;padding:5px 12px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}}
+.exclusive-teaser-btn:hover{{background:#9f351f}}
+.exclusive-teaser-link{{color:#9f351f;font-size:12.5px;font-weight:700;text-decoration:underline;text-underline-offset:2px}}
+.exclusive-panel{{margin:14px 0 28px}}
+.exclusive-panel-head{{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}}
+.exclusive-panel-head h2{{margin:0 0 4px;font-size:20px;font-weight:800;color:#24211e}}
+.exclusive-panel-head p{{margin:0;font-size:13.5px;color:#665f57}}
+.exclusive-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;align-items:start}}
+.exclusive-card{{display:flex;flex-direction:column;width:100%;margin:0;padding:0;border:1px solid #e3d6cc;border-radius:12px;background:#fffdf9;box-shadow:0 2px 8px rgba(36,33,30,0.06);overflow:hidden;cursor:zoom-in;text-align:left;transition:transform .15s,box-shadow .15s,border-color .15s}}
+.exclusive-card:hover{{transform:translateY(-2px);border-color:#d98e7a;box-shadow:0 8px 20px rgba(183,66,39,0.12)}}
+.exclusive-card-media{{position:relative;width:100%;aspect-ratio:4/3;background:#efeae0;overflow:hidden}}
+.exclusive-card-media img{{display:block;width:100%;height:100%;object-fit:cover}}
+.exclusive-card-badge{{position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:999px;background:rgba(183,66,39,0.92);color:#fff;font-size:11px;font-weight:750}}
+.exclusive-card-badge.is-community{{background:rgba(47,93,80,0.92)}}
+.exclusive-card-body{{padding:10px 12px;display:flex;flex-direction:column;gap:4px}}
+.exclusive-card-top{{display:flex;align-items:baseline;justify-content:space-between;gap:6px}}
+.exclusive-card-code{{color:#b74227;font-size:12px;font-weight:800}}
+.exclusive-card-author{{color:#857b70;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.exclusive-card-name{{font-size:14px;font-weight:750;color:#24211e;line-height:1.3}}
+.exclusive-card-desc{{font-size:12px;color:#6b6257;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}}
+.exclusive-panel-foot{{margin-top:18px;padding:14px 16px;border:1px solid #e3dcd0;border-radius:12px;background:#fffdf9;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13.5px;color:#514a43}}
 .update-status a{{color:#9f351f;font-weight:700;text-decoration:underline;text-underline-offset:2px}}
 .close{{background:#332f2b;color:#ded8cf;margin-left:auto}}
 .close:hover{{background:#47423d;color:#fff}}
@@ -355,9 +384,9 @@ dialog img{{display:block;max-width:100%;max-height:60vh;margin:auto;object-fit:
 <body>
 <header class="sticky-header">
 <nav class="site-nav" aria-label="画廊导航">{BRAND_NAV_HTML}<a href="index.html" aria-current="page" data-i18n="stylesNav">风格画廊</a><a href="layouts.html" data-i18n="layoutsNav">图型画廊</a><a href="colors.html" data-i18n="colorsNav">色彩画廊</a><a href="assets.html" data-i18n="assetsNav">自建图库</a><a href="tutorials.html" data-i18n="tutorialsNav">提示词</a><div class="nav-right"><a class="nav-ext nav-cta" href="https://studio.handraw-style.com/?entry=quick&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="webStudioNav">✨ 在线生图</a><a class="nav-ext" href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="desktopAppNav">💻 桌面客户端</a><a class="nav-ext" href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" title="GitHub 仓库"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a><a class="nav-ext" href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" title="X (Twitter) @yang02010"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a><button class="nav-btn" id="wechat-btn" type="button" data-i18n="wechatBtn">💬 交流群</button><button class="nav-btn" id="lang-btn" type="button" aria-label="Switch Language">🌐 EN / 中</button></div></nav>
-<nav class="sub-nav filters" aria-label="风格分类">{controls}</nav>
+<nav class="sub-nav filters" aria-label="风格分类">{controls}<button class="filter filter-exclusive" id="exclusive-filter-btn" type="button" data-group="exclusive" data-label-zh="✨ 限定新画风" data-label-en="✨ Exclusive Styles" hidden>✨ 限定新画风 <span id="exclusive-filter-count">0</span></button></nav>
 </header>
-<main data-local-version="{version}" data-remote-version-url="{REMOTE_VERSION_URL}">
+<main data-local-version="{version}" data-remote-version-url="{REMOTE_VERSION_URL}" data-exclusive-api-url="https://handraw-style.com/api/public/featured-exclusives?kind=style&amp;limit=24">
 <div class="gallery-title-bar">
 <h1 data-i18n="title">手绘风格编号画廊</h1>
 <div class="size-switcher" role="group" aria-label="图片尺寸">
@@ -379,12 +408,14 @@ dialog img{{display:block;max-width:100%;max-height:60vh;margin:auto;object-fit:
 <div class="prompt-notice" data-i18n-html="promptNotice">💡 强烈推荐大家关注我的<a href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer">x账号</a>，或者<button type="button" class="open-wechat-modal">加入交流群</button>获取skill更新的最新信息。因为这不是一个发布就完事的skill，这段时间几乎每天都会有新的风格或者功能发布。</div>
 </section>
 <section id="update-status" class="update-status" role="status" aria-live="polite" hidden></section>
+<section id="exclusive-teaser" class="exclusive-teaser" aria-label="官网与电脑版限定新画风" hidden></section>
+<section id="exclusive-gallery" class="exclusive-panel" aria-label="官网限定新画风画廊" hidden></section>
 <h2 data-i18n="stylesTitle" class="visually-hidden">风格索引（{total_count}）</h2>
 <section id="gallery" class="gallery-root">{gallery_groups}</section>
 </main>
 <dialog id="preview" aria-labelledby="dialog-title">
 <div class="dialog-content">
-<div class="dialog-image-box"><img id="preview-image" alt=""></div>
+<div class="dialog-image-box"><img id="preview-image" referrerpolicy="no-referrer" alt=""></div>
 <div class="dialog-body">
 <div class="dialog-title-row"><h3 class="dialog-title" id="dialog-title"></h3><span class="dialog-ref" id="dialog-ref"></span></div>
 <div class="dialog-traits" id="dialog-traits"></div>
@@ -394,6 +425,7 @@ dialog img{{display:block;max-width:100%;max-height:60vh;margin:auto;object-fit:
 <a class="action-link action-link-primary" id="open-web-studio" href="https://studio.handraw-style.com/?entry=quick&amp;utm_source=skill_gallery_card" target="_blank" rel="noopener noreferrer" data-i18n="openStudioBtn">✨ 官网直接生图 ↗</a>
 <a class="action-link" id="open-web-detail" href="https://handraw-style.com/?view=styles&amp;utm_source=skill_gallery_detail" target="_blank" rel="noopener noreferrer" data-i18n="openDetailBtn">🖼️ 看社区实测</a>
 <a class="action-link" id="open-client-app" href="handraw://studio" data-i18n="openClientBtn">⚡ 客户端打开</a>
+<a class="action-link" id="open-client-dl" href="https://handraw-style.com/?view=download&amp;utm_source=skill_exclusive_card" target="_blank" rel="noopener noreferrer" data-i18n="openClientDlBtn" hidden>💻 下载电脑版</a>
 <button class="close" type="button" data-i18n="closeBtn">关闭 ×</button>
 </div>
 </div>
@@ -402,8 +434,8 @@ dialog img{{display:block;max-width:100%;max-height:60vh;margin:auto;object-fit:
 </dialog>
 <dialog id="wechat-modal" aria-labelledby="wechat-title" style="width:min(94vw,560px);padding:22px;border:0;border-radius:14px;background:#1e1b18;color:#fff;box-shadow:0 20px 70px #000a;text-align:center"><button class="close" type="button" aria-label="关闭" style="position:absolute;top:12px;right:12px;border:0;border-radius:7px;padding:5px 9px;background:#fff;color:#24211e;cursor:pointer;font:inherit">关闭 ×</button><h3 id="wechat-title" style="margin:4px 0 10px;font-size:17px;color:#fff" data-i18n="wechatTitle">💬 创作变现交流群</h3><p style="margin:0 0 4px;font-size:14px;color:#eee" data-i18n="wechatSub">请优先加群，满了的话也可以尝试加我个人微信</p><p style="margin:0 0 16px;font-size:13px;color:#d67d4d;font-weight:600" data-i18n="wechatNote">请备注：手绘</p><div style="display:flex;justify-content:center;align-items:flex-start;gap:24px;flex-wrap:wrap"><div style="flex:1 1 200px;max-width:240px;background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3)"><div style="color:#24211e;font-size:13px;font-weight:700;margin-bottom:6px" data-i18n="wechatGroupLabel">① 优先加入群聊</div><img src="../../../images/wechat_group.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/yang0/handraw-style/master/images/wechat_group.png';" alt="手绘交流群二维码" style="display:block;width:100%;height:auto;border-radius:6px"></div><div style="flex:1 1 200px;max-width:240px;background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3)"><div style="color:#24211e;font-size:13px;font-weight:700;margin-bottom:6px" data-i18n="wechatPersonalLabel">② 个人微信备用</div><img src="../../../images/wechat_personal.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/yang0/handraw-style/master/images/wechat_personal.png';" alt="旺德福个人微信二维码" style="display:block;width:100%;height:auto;border-radius:6px"></div></div><div style="margin-top:16px;padding-top:12px;border-top:1px solid #332f2b;display:flex;justify-content:center;gap:16px;font-size:13px"><a href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" style="color:#d67d4d;text-decoration:none;font-weight:600">GitHub 仓库 ↗</a><a href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" style="color:#d67d4d;text-decoration:none;font-weight:600">X @yang02010 ↗</a></div></dialog>
 <script>
-const cards=[...document.querySelectorAll('.style-card')],filters=[...document.querySelectorAll('.filter')],sizeBtns=[...document.querySelectorAll('.size-btn')],dialog=document.querySelector('#preview'),preview=document.querySelector('#preview-image'),dialogTitle=document.querySelector('#dialog-title'),dialogRef=document.querySelector('#dialog-ref'),dialogTraits=document.querySelector('#dialog-traits'),copyCmdBtn=document.querySelector('#copy-cmd'),copyTraitsBtn=document.querySelector('#copy-traits'),openWebStudioLink=document.querySelector('#open-web-studio'),openWebDetailLink=document.querySelector('#open-web-detail'),openClientAppLink=document.querySelector('#open-client-app'),gallery=document.querySelector('#gallery'),groupGalleries=[...document.querySelectorAll('.group-gallery')],styleGroups=[...document.querySelectorAll('.style-group')],mainElem=document.querySelector('main'),updateStatus=document.querySelector('#update-status'),localVersion=mainElem.dataset.localVersion||'1.0.0',remoteVersionUrl=mainElem.dataset.remoteVersionUrl,updateCommand='{UPDATE_COMMAND}',wechatBtn=document.querySelector('#wechat-btn'),wechatModal=document.querySelector('#wechat-modal'),langBtn=document.querySelector('#lang-btn');
-let activeCard=null;
+const cards=[...document.querySelectorAll('.style-card')],filters=[...document.querySelectorAll('.filter')],sizeBtns=[...document.querySelectorAll('.size-btn')],dialog=document.querySelector('#preview'),preview=document.querySelector('#preview-image'),dialogTitle=document.querySelector('#dialog-title'),dialogRef=document.querySelector('#dialog-ref'),dialogTraits=document.querySelector('#dialog-traits'),copyCmdBtn=document.querySelector('#copy-cmd'),copyTraitsBtn=document.querySelector('#copy-traits'),openWebStudioLink=document.querySelector('#open-web-studio'),openWebDetailLink=document.querySelector('#open-web-detail'),openClientAppLink=document.querySelector('#open-client-app'),openClientDlLink=document.querySelector('#open-client-dl'),gallery=document.querySelector('#gallery'),groupGalleries=[...document.querySelectorAll('.group-gallery')],styleGroups=[...document.querySelectorAll('.style-group')],mainElem=document.querySelector('main'),updateStatus=document.querySelector('#update-status'),exclusiveFilterBtn=document.querySelector('#exclusive-filter-btn'),exclusiveFilterCount=document.querySelector('#exclusive-filter-count'),exclusiveTeaser=document.querySelector('#exclusive-teaser'),exclusiveGallery=document.querySelector('#exclusive-gallery'),localVersion=mainElem.dataset.localVersion||'1.0.0',remoteVersionUrl=mainElem.dataset.remoteVersionUrl,exclusiveApiUrl=mainElem.dataset.exclusiveApiUrl||'',updateCommand='{UPDATE_COMMAND}',wechatBtn=document.querySelector('#wechat-btn'),wechatModal=document.querySelector('#wechat-modal'),langBtn=document.querySelector('#lang-btn');
+let activeCard=null, activeExclusive=null, exclusiveItems=[], exclusiveMeta=null, currentGroup='all';
 const groupMap=new Map();
 groupGalleries.forEach(gGal=>groupMap.set(gGal,[...gGal.querySelectorAll('.style-card')]));
 const I18N = {{
@@ -421,7 +453,7 @@ const I18N = {{
     desktopAppNav: "💻 桌面客户端",
     wechatBtn: "💬 交流群",
     promptTitle: "提示词案例",
-    promptNotice: '💡 想要免配置直接出图或看更多社区爆款灵感？欢迎体验 <a href="https://handraw-style.com/?utm_source=skill_gallery_notice" target="_blank" rel="noopener noreferrer">手绘风官网</a>（新人验证送免费额度 + 20 积分）或下载 <a href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_notice" target="_blank" rel="noopener noreferrer">桌面客户端</a>（画风自动增量更新 + 快门与批注改图）；也欢迎关注 <a href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer">X 账号</a> 或 <button type="button" class="open-wechat-modal">加入交流群</button>。',
+    promptNotice: '💡 想要免配置直接出图、一键做小红书全套图文或逛灵感库？欢迎体验 <a href="https://handraw-style.com/?utm_source=skill_gallery_notice" target="_blank" rel="noopener noreferrer">手绘风官网</a>（新号验证送免费次数 + 20 积分）或下载 <a href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_notice" target="_blank" rel="noopener noreferrer">手绘风电脑版</a>（画风自动更新 + 社群共创画风互通）；也欢迎关注 <a href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer">X 账号</a> 或 <button type="button" class="open-wechat-modal">加入交流群</button>。',
     ex1Label: "1 · 出图",
     ex1Code: "风格：FA-001，主题：吃冰淇淋的小姑娘",
     ex2Label: "2 · 切换图文模式",
@@ -432,8 +464,17 @@ const I18N = {{
     copyCmdBtn: "复制出图指令",
     copyTraitsBtn: "复制特征词",
     openStudioBtn: "✨ 官网直接生图 ↗",
+    openExclusiveStudioBtn: "✨ 去官网直接画（新号免费试）↗",
     openDetailBtn: "🖼️ 看社区实测",
     openClientBtn: "⚡ 客户端打开",
+    openClientDlBtn: "💻 下载电脑版",
+    exclusiveTeaserBadge: "限定上新",
+    exclusiveTeaserBtn: "查看全部限定画风 →",
+    exclusiveDownloadLink: "下载电脑版自动同步 ↗",
+    exclusivePanelTitle: "✨ 官网 & 电脑版限定新画风",
+    exclusivePanelSub: "以下为官网与电脑版专属及社群共创画风（本地开源库原有画风永久免费）。点开卡片即可去官网或电脑版直接出图，无需折腾提示词。",
+    exclusiveMoreBtn: "去官网逛更多画风 ↗",
+    exclusiveNoteDefault: "此画风为官网与电脑版专属限定资源，无需手动复制提示词，点击下方按钮即可直接开画。",
     copied: "已复制",
     copyFailed: "复制失败",
     closeBtn: "关闭 ×",
@@ -465,7 +506,7 @@ const I18N = {{
     desktopAppNav: "💻 Desktop App",
     wechatBtn: "💬 Community",
     promptTitle: "Prompt Examples",
-    promptNotice: '💡 Want zero-setup image generation or community inspirations? Try <a href="https://handraw-style.com/?utm_source=skill_gallery_notice" target="_blank" rel="noopener noreferrer">Handraw Web Studio</a> (free trial + 20 credits on signup) or download the <a href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_notice" target="_blank" rel="noopener noreferrer">Desktop Client</a> (auto style updates + Quick Shot). Also follow <a href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer">X</a> or <button type="button" class="open-wechat-modal">join the community</button>.',
+    promptNotice: '💡 Want zero-setup generation, 1-click Xiaohongshu graphic posts, and Inspirations Vault? Try <a href="https://handraw-style.com/?utm_source=skill_gallery_notice" target="_blank" rel="noopener noreferrer">Handraw Web Studio</a> (free trial + 20 credits on signup) or download the <a href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_notice" target="_blank" rel="noopener noreferrer">Desktop Client</a> (auto style updates + community custom styles). Also follow <a href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer">X</a> or <button type="button" class="open-wechat-modal">join the community</button>.',
     ex1Label: "1 · Generate",
     ex1Code: "Style: FA-001, Theme: Little girl eating ice cream",
     ex2Label: "2 · Graphic-Text Mode",
@@ -476,8 +517,17 @@ const I18N = {{
     copyCmdBtn: "Copy Command",
     copyTraitsBtn: "Copy Traits",
     openStudioBtn: "✨ Generate Online ↗",
+    openExclusiveStudioBtn: "✨ Try in Web Studio ↗",
     openDetailBtn: "🖼️ Community Works",
     openClientBtn: "⚡ Open in Client",
+    openClientDlBtn: "💻 Desktop Client",
+    exclusiveTeaserBadge: "Exclusive",
+    exclusiveTeaserBtn: "Browse Exclusive Styles →",
+    exclusiveDownloadLink: "Get Desktop Client ↗",
+    exclusivePanelTitle: "✨ Web & Desktop Exclusive Styles",
+    exclusivePanelSub: "Curated exclusive & community styles available on Handraw Web and Desktop Client (all open-source styles remain free forever). Click any card to generate directly.",
+    exclusiveMoreBtn: "Explore More on Web ↗",
+    exclusiveNoteDefault: "This style is exclusive to Handraw Web & Desktop Client. Click below to generate directly without copying prompts.",
     copied: "Copied!",
     copyFailed: "Copy failed",
     closeBtn: "Close ×",
@@ -530,7 +580,8 @@ function applyLang(lang) {{
     }}
   }});
   if (langBtn) langBtn.textContent = I18N[lang].langBtn;
-  if (activeCard) updateDialogContent();
+  if (exclusiveItems.length) renderExclusiveShowcase();
+  if (activeCard || activeExclusive) updateDialogContent();
 }}
 if (langBtn) {{
   langBtn.addEventListener('click', () => {{
@@ -566,15 +617,22 @@ function arrangeCards(){{
   if(cards.includes(focused)&&!focused.hidden)focused.focus({{preventScroll:true}});
 }}
 function setCategory(group){{
+  currentGroup=group;
+  const isEx=group==='exclusive';
   document.body.classList.toggle('is-filtered',group!=='all');
   filters.forEach(btn=>btn.classList.toggle('is-active',btn.dataset.group===group));
-  styleGroups.forEach(sec=>{{
-    sec.hidden=group!=='all'&&sec.dataset.group!==group;
-  }});
-  cards.forEach(card=>{{
-    card.hidden=group!=='all'&&card.dataset.group!==group;
-  }});
-  scheduleLayout();
+  if(gallery)gallery.hidden=isEx;
+  if(exclusiveGallery)exclusiveGallery.hidden=!isEx;
+  if(exclusiveTeaser)exclusiveTeaser.hidden=isEx||!exclusiveItems.length;
+  if(!isEx){{
+    styleGroups.forEach(sec=>{{
+      sec.hidden=group!=='all'&&sec.dataset.group!==group;
+    }});
+    cards.forEach(card=>{{
+      card.hidden=group!=='all'&&card.dataset.group!==group;
+    }});
+    scheduleLayout();
+  }}
 }}
 cards.forEach(card=>{{
   const img=card.querySelector('img');
@@ -589,8 +647,33 @@ new ResizeObserver(entries=>{{
 window.addEventListener('resize',scheduleLayout);
 if(document.fonts)document.fonts.ready.then(scheduleLayout);
 
+function safeHref(url, fallback){{
+  const s=String(url||'').trim();
+  if(/^https:\/\//i.test(s)||/^handraw:\/\//i.test(s))return s;
+  return fallback;
+}}
 function updateDialogContent(){{
+  const t = I18N[currentLang] || I18N.zh;
+  if(activeExclusive){{
+    const it=activeExclusive;
+    const badge=currentLang==='en'?(it.badgeEn||it.badge||'Exclusive'):(it.badge||'官网限定');
+    const author=it.authorName?(' · '+it.authorName):'';
+    dialogTitle.textContent=`#${{it.code}} · ${{it.name}}`;
+    dialogRef.textContent=`${{badge}}${{author}}`;
+    dialogTraits.textContent=it.description||t.exclusiveNoteDefault;
+    copyCmdBtn.hidden=true;
+    copyTraitsBtn.hidden=true;
+    if(openClientDlLink){{openClientDlLink.hidden=false;openClientDlLink.textContent=t.openClientDlBtn;}}
+    const enc=encodeURIComponent(it.code||'');
+    if(openWebStudioLink){{openWebStudioLink.href=safeHref(it.studioUrl,`https://studio.handraw-style.com/?entry=quick&style=${{enc}}&utm_source=skill_exclusive_card`);openWebStudioLink.textContent=t.openExclusiveStudioBtn;}}
+    if(openWebDetailLink){{openWebDetailLink.href=safeHref(it.detailUrl,`https://handraw-style.com/t/${{enc}}?utm_source=skill_exclusive_detail`);openWebDetailLink.textContent=t.openDetailBtn;}}
+    if(openClientAppLink){{openClientAppLink.href=safeHref(it.clientUrl,`handraw://studio?style=${{enc}}`);openClientAppLink.textContent=t.openClientBtn;}}
+    return;
+  }}
   if(!activeCard) return;
+  copyCmdBtn.hidden=false;
+  copyTraitsBtn.hidden=false;
+  if(openClientDlLink)openClientDlLink.hidden=true;
   const num=activeCard.dataset.number;
   const name=activeCard.dataset.name;
   const ref=activeCard.dataset.reference;
@@ -598,14 +681,15 @@ function updateDialogContent(){{
   dialogTitle.textContent=`#${{num}} · ${{name}}`;
   dialogRef.textContent=(currentLang==='en'?'Reference: ':'参考：')+ref;
   dialogTraits.textContent=traits;
-  copyCmdBtn.textContent=I18N[currentLang].copyCmdBtn;
-  copyTraitsBtn.textContent=I18N[currentLang].copyTraitsBtn;
+  copyCmdBtn.textContent=t.copyCmdBtn;
+  copyTraitsBtn.textContent=t.copyTraitsBtn;
   const enc=encodeURIComponent(num);
-  if(openWebStudioLink){{openWebStudioLink.href=`https://studio.handraw-style.com/?entry=quick&style=${{enc}}&utm_source=skill_gallery_card`;openWebStudioLink.textContent=I18N[currentLang].openStudioBtn;}}
-  if(openWebDetailLink){{openWebDetailLink.href=`https://handraw-style.com/t/${{enc}}?utm_source=skill_gallery_detail`;openWebDetailLink.textContent=I18N[currentLang].openDetailBtn;}}
-  if(openClientAppLink){{openClientAppLink.href=`handraw://studio?style=${{enc}}`;openClientAppLink.textContent=I18N[currentLang].openClientBtn;}}
+  if(openWebStudioLink){{openWebStudioLink.href=`https://studio.handraw-style.com/?entry=quick&style=${{enc}}&utm_source=skill_gallery_card`;openWebStudioLink.textContent=t.openStudioBtn;}}
+  if(openWebDetailLink){{openWebDetailLink.href=`https://handraw-style.com/t/${{enc}}?utm_source=skill_gallery_detail`;openWebDetailLink.textContent=t.openDetailBtn;}}
+  if(openClientAppLink){{openClientAppLink.href=`handraw://studio?style=${{enc}}`;openClientAppLink.textContent=t.openClientBtn;}}
 }}
 function openPreview(card){{
+  activeExclusive=null;
   activeCard=card;
   const cardImg=card.querySelector('img');
   preview.src=(cardImg&&cardImg.src)?cardImg.src:card.dataset.image;
@@ -613,6 +697,148 @@ function openPreview(card){{
   updateDialogContent();
   dialog.showModal();
 }}
+function openExclusivePreview(item){{
+  activeCard=null;
+  activeExclusive=item;
+  preview.src=safeHref(item.image,'');
+  preview.alt=`#${{item.code}} ${{item.name}}`;
+  updateDialogContent();
+  dialog.showModal();
+}}
+function renderExclusiveShowcase(){{
+  if(!exclusiveItems.length||!exclusiveGallery||!exclusiveFilterBtn)return;
+  const t = I18N[currentLang] || I18N.zh;
+  const totalCount = (exclusiveMeta&&exclusiveMeta.counts&&exclusiveMeta.counts.total)||exclusiveItems.length;
+  exclusiveFilterBtn.hidden=false;
+  if(exclusiveFilterCount)exclusiveFilterCount.textContent=String(totalCount);
+
+  if(exclusiveTeaser){{
+    exclusiveTeaser.replaceChildren();
+    const copy=document.createElement('div');
+    copy.className='exclusive-teaser-copy';
+    const badge=document.createElement('span');
+    badge.className='exclusive-teaser-badge';
+    badge.textContent=t.exclusiveTeaserBadge;
+    const text=document.createElement('span');
+    text.textContent=currentLang==='en'
+      ? `${{totalCount}} exclusive & community styles are live on Handraw Web & Desktop Client (free starter credits on signup).`
+      : `官网与电脑版现有 ${{totalCount}} 款限定及社群共创新画风，不用抄提示词，点开就能直接画。`;
+    copy.append(badge,text);
+
+    const actions=document.createElement('div');
+    actions.className='exclusive-teaser-actions';
+    const goBtn=document.createElement('button');
+    goBtn.type='button';
+    goBtn.className='exclusive-teaser-btn';
+    goBtn.textContent=t.exclusiveTeaserBtn;
+    goBtn.addEventListener('click',()=>setCategory('exclusive'));
+    const dlLink=document.createElement('a');
+    dlLink.className='exclusive-teaser-link';
+    dlLink.href=safeHref(exclusiveMeta&&exclusiveMeta.downloadUrl,'https://handraw-style.com/?view=download&utm_source=skill_exclusive_teaser');
+    dlLink.target='_blank';
+    dlLink.rel='noopener noreferrer';
+    dlLink.textContent=t.exclusiveDownloadLink;
+    actions.append(goBtn,dlLink);
+
+    exclusiveTeaser.append(copy,actions);
+    exclusiveTeaser.hidden=(currentGroup==='exclusive');
+  }}
+
+  exclusiveGallery.replaceChildren();
+  const head=document.createElement('div');
+  head.className='exclusive-panel-head';
+  const headLeft=document.createElement('div');
+  const h2=document.createElement('h2');
+  h2.textContent=t.exclusivePanelTitle;
+  const p=document.createElement('p');
+  p.textContent=t.exclusivePanelSub;
+  headLeft.append(h2,p);
+  const moreTop=document.createElement('a');
+  moreTop.className='exclusive-teaser-btn';
+  moreTop.href=safeHref(exclusiveMeta&&exclusiveMeta.webCatalogUrl,'https://handraw-style.com/?view=styles&utm_source=skill_exclusive_more');
+  moreTop.target='_blank';
+  moreTop.rel='noopener noreferrer';
+  moreTop.textContent=t.exclusiveMoreBtn;
+  head.append(headLeft,moreTop);
+
+  const grid=document.createElement('div');
+  grid.className='exclusive-grid';
+  exclusiveItems.forEach(item=>{{
+    const card=document.createElement('button');
+    card.type='button';
+    card.className='exclusive-card';
+    card.setAttribute('aria-label',`${{item.code}} ${{item.name}}`);
+
+    const media=document.createElement('div');
+    media.className='exclusive-card-media';
+    const img=document.createElement('img');
+    img.src=safeHref(item.image,'');
+    img.alt=`${{item.code}} ${{item.name}}`;
+    img.loading='lazy';
+    img.referrerPolicy='no-referrer';
+    const badge=document.createElement('span');
+    badge.className='exclusive-card-badge'+(item.sourceType==='community'?' is-community':'');
+    badge.textContent=currentLang==='en'?(item.badgeEn||item.badge||'Exclusive'):(item.badge||'官网限定');
+    media.append(img,badge);
+
+    const body=document.createElement('div');
+    body.className='exclusive-card-body';
+    const top=document.createElement('div');
+    top.className='exclusive-card-top';
+    const codeEl=document.createElement('span');
+    codeEl.className='exclusive-card-code';
+    codeEl.textContent=item.code||'';
+    const authEl=document.createElement('span');
+    authEl.className='exclusive-card-author';
+    authEl.textContent=item.authorName||'';
+    top.append(codeEl,authEl);
+    const nameEl=document.createElement('div');
+    nameEl.className='exclusive-card-name';
+    nameEl.textContent=item.name||item.code||'';
+    body.append(top,nameEl);
+    if(item.description){{
+      const descEl=document.createElement('div');
+      descEl.className='exclusive-card-desc';
+      descEl.textContent=item.description;
+      body.append(descEl);
+    }}
+    card.append(media,body);
+    card.addEventListener('click',()=>openExclusivePreview(item));
+    grid.append(card);
+  }});
+
+  const foot=document.createElement('div');
+  foot.className='exclusive-panel-foot';
+  const footText=document.createElement('span');
+  footText.textContent=currentLang==='en'
+    ? 'Want automatic updates, built-in Inspirations Vault, and 1-click social series?'
+    : '想让新画风自动送到手边，还能一键做小红书全套图文、用灵感库收藏做同款？';
+  const footDl=document.createElement('a');
+  footDl.className='exclusive-teaser-btn';
+  footDl.href=safeHref(exclusiveMeta&&exclusiveMeta.downloadUrl,'https://handraw-style.com/?view=download&utm_source=skill_exclusive_footer');
+  footDl.target='_blank';
+  footDl.rel='noopener noreferrer';
+  footDl.textContent=t.exclusiveDownloadLink;
+  foot.append(footText,footDl);
+
+  exclusiveGallery.append(head,grid,foot);
+}}
+async function loadExclusiveShowcase(){{
+  if(!exclusiveApiUrl)return;
+  try{{
+    const ctrl=typeof AbortController==='function'?new AbortController():null;
+    const timer=ctrl?setTimeout(()=>ctrl.abort(),5000):0;
+    const resp=await fetch(exclusiveApiUrl,{{mode:'cors',credentials:'omit',signal:ctrl?ctrl.signal:undefined}});
+    if(timer)clearTimeout(timer);
+    if(!resp.ok)return;
+    const data=await resp.json();
+    if(!data||!Array.isArray(data.items)||!data.items.length)return;
+    exclusiveItems=data.items;
+    exclusiveMeta=data;
+    renderExclusiveShowcase();
+  }}catch{{}}
+}}
+loadExclusiveShowcase();
 async function copyText(text,button,successLabel){{
   try{{
     await navigator.clipboard.writeText(text);
