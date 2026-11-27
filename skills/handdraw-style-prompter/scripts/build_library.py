@@ -649,7 +649,7 @@ if(document.fonts)document.fonts.ready.then(scheduleLayout);
 
 function safeHref(url, fallback){{
   const s=String(url||'').trim();
-  if(/^https:\/\//i.test(s)||/^handraw:\/\//i.test(s))return s;
+  if(/^https:\\/\\//i.test(s)||/^handraw:\\/\\//i.test(s))return s;
   return fallback;
 }}
 function updateDialogContent(){{
