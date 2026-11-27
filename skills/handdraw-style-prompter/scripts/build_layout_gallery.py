@@ -140,10 +140,10 @@ def gallery_html(layouts: list[dict[str, object]]) -> str:
 @media(max-width:720px){{[data-size="1x"] .gallery{{--columns:4;--gap:8px}} [data-size="1x"] .layout-info{{display:block;padding:5px 6px}}}}
 @media(max-width:480px){{[data-size="1x"] .gallery{{--columns:2;--gap:6px}}}}
 
-dialog{{width:min(94vw,1100px);padding:14px;border:0;border-radius:14px;background:#171513;color:#fff;box-shadow:0 20px 70px #0008}} dialog::backdrop{{background:#000b}} dialog img{{display:block;max-width:100%;max-height:78vh;margin:auto;object-fit:contain}} .dialog-actions{{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-top:10px}} .dialog-label{{margin:0;font-weight:700}} .copy,.close{{border:0;border-radius:7px;padding:7px 10px;background:#fff;color:#24211e;font:inherit;cursor:pointer}} .copy{{margin-left:auto}} .dialog-tip{{margin:8px 0 0;font-size:12px;color:#a8a199;text-align:center}} [hidden]{{display:none!important}}
+dialog{{width:min(94vw,1100px);padding:14px;border:0;border-radius:14px;background:#171513;color:#fff;box-shadow:0 20px 70px #0008}} dialog::backdrop{{background:#000b}} dialog img{{display:block;max-width:100%;max-height:78vh;margin:auto;object-fit:contain}} .dialog-actions{{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-start;margin-top:10px}} .dialog-label{{margin:0;font-weight:700;margin-right:auto}} .copy,.close,.action-link{{border:0;border-radius:7px;padding:7px 11px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px;line-height:1.25;transition:background .15s,border-color .15s,color .15s}} .copy{{background:#b74227;color:#fff}} .copy:hover{{background:#cf4f33}} .action-link{{background:#38332c;color:#ded8cf;border:1px solid #544d44}} .action-link:hover{{background:#4a443b;color:#fff;border-color:#786d60}} .action-link-primary{{background:#2f5d50;color:#fff;border:1px solid #3f7a69}} .action-link-primary:hover{{background:#3b7565;border-color:#529884}} .close{{background:#332f2b;color:#ded8cf}} .close:hover{{background:#47423d;color:#fff}} .nav-cta{{border-color:#b74227!important;background:#fff4ef!important;color:#9f351f!important}} .nav-cta:hover{{background:#b74227!important;color:#fff!important}} .dialog-tip{{margin:8px 0 0;font-size:12px;color:#a8a199;text-align:center}} [hidden]{{display:none!important}}
 </style></head><body>
 <header class="sticky-header">
-<nav class="site-nav" aria-label="画廊导航">{BRAND_NAV_HTML}<a href="index.html" data-i18n="stylesNav">风格画廊</a><a href="layouts.html" aria-current="page" data-i18n="layoutsNav">图型画廊</a><a href="colors.html" data-i18n="colorsNav">色彩画廊</a><a href="assets.html" data-i18n="assetsNav">自建图库</a><a href="tutorials.html" data-i18n="tutorialsNav">提示词</a><div class="nav-right"><a class="nav-ext" href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" title="GitHub 仓库"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a><a class="nav-ext" href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" title="X (Twitter) @yang02010"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X (@yang02010)</a><button class="nav-btn" id="wechat-btn" type="button" data-i18n="wechatBtn">💬 创作变现交流群</button><button class="nav-btn" id="lang-btn" type="button" aria-label="Switch Language">🌐 EN / 中</button></div></nav>
+<nav class="site-nav" aria-label="画廊导航">{BRAND_NAV_HTML}<a href="index.html" data-i18n="stylesNav">风格画廊</a><a href="layouts.html" aria-current="page" data-i18n="layoutsNav">图型画廊</a><a href="colors.html" data-i18n="colorsNav">色彩画廊</a><a href="assets.html" data-i18n="assetsNav">自建图库</a><a href="tutorials.html" data-i18n="tutorialsNav">提示词</a><div class="nav-right"><a class="nav-ext nav-cta" href="https://studio.handraw-style.com/?entry=quick&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="webStudioNav">✨ 在线生图</a><a class="nav-ext" href="https://handraw-style.com/?view=download&amp;utm_source=skill_gallery_nav" target="_blank" rel="noopener noreferrer" data-i18n="desktopAppNav">💻 桌面客户端</a><a class="nav-ext" href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" title="GitHub 仓库"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a><a class="nav-ext" href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" title="X (Twitter) @yang02010"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a><button class="nav-btn" id="wechat-btn" type="button" data-i18n="wechatBtn">💬 交流群</button><button class="nav-btn" id="lang-btn" type="button" aria-label="Switch Language">🌐 EN / 中</button></div></nav>
 <nav class="sub-nav filters" aria-label="图型分类">{controls}</nav>
 </header>
 <main>
@@ -160,10 +160,10 @@ dialog{{width:min(94vw,1100px);padding:14px;border:0;border-radius:14px;backgrou
 <p class="lead" id="gallery-lead" data-i18n="lead">社媒卡：画面有呼吸感，认知负担低，适合小红书和公众号贴图</p>
 <section id="gallery" class="gallery">{cards}</section>
 </main>
-<dialog id="preview" aria-labelledby="dialog-label"><img id="preview-image" alt=""><div class="dialog-actions"><p class="dialog-label" id="dialog-label"></p><button class="copy" id="copy" type="button" data-i18n="copyBtn">复制排版提示词</button><button class="close" type="button" data-i18n="closeBtn">关闭 ×</button></div><p class="dialog-tip" data-i18n="dialogTip">图片出于展示目的做了压缩，AI出的图字迹是很清晰的</p></dialog>
+<dialog id="preview" aria-labelledby="dialog-label"><img id="preview-image" alt=""><div class="dialog-actions"><p class="dialog-label" id="dialog-label"></p><button class="copy" id="copy" type="button" data-i18n="copyBtn">复制排版提示词</button><a class="action-link action-link-primary" id="dialog-studio-link" href="https://studio.handraw-style.com/?entry=quick&amp;utm_source=skill_gallery_card" target="_blank" rel="noopener noreferrer" data-i18n="studioBtn">✨ 官网直接生图 ↗</a><a class="action-link" id="dialog-detail-link" href="https://handraw-style.com/?view=layouts&amp;utm_source=skill_gallery_detail" target="_blank" rel="noopener noreferrer" data-i18n="detailBtn">🖼️ 看社区实测</a><a class="action-link" id="dialog-client-link" href="handraw://studio" data-i18n="clientBtn">⚡ 客户端打开</a><button class="close" type="button" data-i18n="closeBtn">关闭 ×</button></div><p class="dialog-tip" data-i18n="dialogTip">图片出于展示目的做了压缩，AI出的图字迹是很清晰的</p></dialog>
 <dialog id="wechat-modal" aria-labelledby="wechat-title" style="width:min(94vw,560px);padding:22px;border:0;border-radius:14px;background:#1e1b18;color:#fff;box-shadow:0 20px 70px #000a;text-align:center"><button class="close" type="button" aria-label="关闭" style="position:absolute;top:12px;right:12px;border:0;border-radius:7px;padding:5px 9px;background:#fff;color:#24211e;cursor:pointer;font:inherit">关闭 ×</button><h3 id="wechat-title" style="margin:4px 0 10px;font-size:17px;color:#fff" data-i18n="wechatTitle">💬 创作变现交流群</h3><p style="margin:0 0 4px;font-size:14px;color:#eee" data-i18n="wechatSub">请优先加群，满了的话也可以尝试加我个人微信</p><p style="margin:0 0 16px;font-size:13px;color:#d67d4d;font-weight:600" data-i18n="wechatNote">请备注：手绘</p><div style="display:flex;justify-content:center;align-items:flex-start;gap:24px;flex-wrap:wrap"><div style="flex:1 1 200px;max-width:240px;background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3)"><div style="color:#24211e;font-size:13px;font-weight:700;margin-bottom:6px" data-i18n="wechatGroupLabel">① 优先加入群聊</div><img src="../../../images/wechat_group.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/yang0/handraw-style/master/images/wechat_group.png';" alt="手绘交流群二维码" style="display:block;width:100%;height:auto;border-radius:6px"></div><div style="flex:1 1 200px;max-width:240px;background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3)"><div style="color:#24211e;font-size:13px;font-weight:700;margin-bottom:6px" data-i18n="wechatPersonalLabel">② 个人微信备用</div><img src="../../../images/wechat_personal.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/yang0/handraw-style/master/images/wechat_personal.png';" alt="旺德福个人微信二维码" style="display:block;width:100%;height:auto;border-radius:6px"></div></div><div style="margin-top:16px;padding-top:12px;border-top:1px solid #332f2b;display:flex;justify-content:center;gap:16px;font-size:13px"><a href="https://github.com/yang0/handraw-style" target="_blank" rel="noopener noreferrer" style="color:#d67d4d;text-decoration:none;font-weight:600">GitHub 仓库 ↗</a><a href="https://x.com/yang02010" target="_blank" rel="noopener noreferrer" style="color:#d67d4d;text-decoration:none;font-weight:600">X @yang02010 ↗</a></div></dialog>
 <script>
-const cards=[...document.querySelectorAll('.layout-card')],filters=[...document.querySelectorAll('.filter')],sizeBtns=[...document.querySelectorAll('.size-btn')],dialog=document.querySelector('#preview'),preview=document.querySelector('#preview-image'),label=document.querySelector('#dialog-label'),copyButton=document.querySelector('#copy'),wechatBtn=document.querySelector('#wechat-btn'),wechatModal=document.querySelector('#wechat-modal'),langBtn=document.querySelector('#lang-btn');
+const cards=[...document.querySelectorAll('.layout-card')],filters=[...document.querySelectorAll('.filter')],sizeBtns=[...document.querySelectorAll('.size-btn')],dialog=document.querySelector('#preview'),preview=document.querySelector('#preview-image'),label=document.querySelector('#dialog-label'),copyButton=document.querySelector('#copy'),studioLink=document.querySelector('#dialog-studio-link'),detailLink=document.querySelector('#dialog-detail-link'),clientLink=document.querySelector('#dialog-client-link'),wechatBtn=document.querySelector('#wechat-btn'),wechatModal=document.querySelector('#wechat-modal'),langBtn=document.querySelector('#lang-btn');
 let activePrompt='', activeCard=null;
 const I18N = {{
   zh: {{
@@ -173,7 +173,9 @@ const I18N = {{
     colorsNav: "色彩画廊",
     assetsNav: "自建图库",
     tutorialsNav: "提示词",
-    wechatBtn: "💬 创作变现交流群",
+    webStudioNav: "✨ 在线生图",
+    desktopAppNav: "💻 桌面客户端",
+    wechatBtn: "💬 交流群",
     title: "图型编号画廊",
     sizeLabel: "尺寸",
     leads: {{
@@ -184,6 +186,9 @@ const I18N = {{
       "ecommerce": "电商：图片只做业务场景演示，不做排版演示，根据商品不同，出的图可能完全不同"
     }},
     copyBtn: "复制排版提示词",
+    studioBtn: "✨ 官网直接生图 ↗",
+    detailBtn: "🖼️ 看社区实测",
+    clientBtn: "⚡ 客户端打开",
     copied: "已复制",
     copyFailed: "复制失败",
     closeBtn: "关闭 ×",
@@ -202,7 +207,9 @@ const I18N = {{
     colorsNav: "Colors",
     assetsNav: "Custom Library",
     tutorialsNav: "Prompts",
-    wechatBtn: "💬 Creator Community",
+    webStudioNav: "✨ Web Studio",
+    desktopAppNav: "💻 Desktop App",
+    wechatBtn: "💬 Community",
     title: "Layout Numbered Gallery",
     sizeLabel: "Size",
     leads: {{
@@ -213,6 +220,9 @@ const I18N = {{
       "ecommerce": "E-commerce: Images are for business scenario demonstration only, not layout templates; actual visuals will vary based on product inputs."
     }},
     copyBtn: "Copy Layout Prompt",
+    studioBtn: "✨ Generate Online ↗",
+    detailBtn: "🖼️ Community Works",
+    clientBtn: "⚡ Open in Client",
     copied: "Copied!",
     copyFailed: "Copy failed",
     closeBtn: "Close ×",
@@ -312,9 +322,14 @@ if(wechatBtn&&wechatModal){{wechatBtn.addEventListener('click',()=>wechatModal.s
 function updateActivePrompt(){{
     if(!activeCard) return;
     activePrompt=(currentLang==='en'?activeCard.dataset.promptEn:activeCard.dataset.promptZh)||activeCard.dataset.prompt||'';
+    const id = activeCard.dataset.id || '';
     const name = currentLang === 'en' ? (activeCard.dataset.nameEn || activeCard.dataset.name) : activeCard.dataset.nameZh;
     label.textContent=`${{activeCard.querySelector('.layout-id').textContent}} · ${{name}}`;
-    if (preview) preview.alt=`${{activeCard.dataset.id||''}} ${{name}}`;
+    if (preview) preview.alt=`${{id}} ${{name}}`;
+    const enc = encodeURIComponent(id);
+    if (studioLink) studioLink.href = `https://studio.handraw-style.com/?entry=quick&layout=${{enc}}&utm_source=skill_gallery_card`;
+    if (detailLink) detailLink.href = `https://handraw-style.com/t/${{enc}}?utm_source=skill_gallery_detail`;
+    if (clientLink) clientLink.href = `handraw://studio?layout=${{enc}}`;
 }}
 function openPreview(card){{
     activeCard=card;

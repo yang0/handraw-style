@@ -27,6 +27,30 @@ REDRAW_INSTRUCTION_ZH = "【请只提取人物的五官特征和姿态，场景�
 REDRAW_INSTRUCTION_EN = "[Extract only the character's facial features and posture, and the scene contours. Strictly redraw from scratch according to the selected style; do not add texture or filters onto the original photo.]"
 
 
+def build_studio_direct_url(style: str | None = None, layout: str | None = None, color: str | None = None) -> str:
+    """Build a parameterized Handraw Web Studio direct link for one-click generation (#30)."""
+    from urllib.parse import urlencode
+    params: list[tuple[str, str]] = [("entry", "quick")]
+    if style:
+        params.append(("style", str(style).strip().upper().lstrip("#")))
+    if layout:
+        params.append(("layout", str(layout).strip().upper().lstrip("#")))
+    if color:
+        first_c = str(color).split("+")[0].strip().upper().lstrip("#")
+        if first_c:
+            params.append(("color", first_c))
+    params.append(("utm_source", "skill_cli"))
+    return "https://studio.handraw-style.com/?" + urlencode(params)
+
+
+def format_action_hint(language: str, style: str | None = None, layout: str | None = None, color: str | None = None) -> str:
+    studio_url = build_studio_direct_url(style=style, layout=layout, color=color)
+    dl_url = "https://handraw-style.com/?view=download&utm_source=skill_cli"
+    if language == "en":
+        return f"Paste into any image AI, or generate directly in Handraw Web Studio: {studio_url} (Desktop Client: {dl_url})"
+    return f"可复制到任意生图 AI，或一键带此配方去官网直接出图：{studio_url}（桌面客户端：{dl_url}）"
+
+
 def resolve_single_color(query_str: str, colors_list: list[dict]) -> dict[str, str]:
     q = query_str.strip().lower()
     is_id_pattern = q.startswith("c-")
@@ -324,6 +348,7 @@ def main() -> None:
         print("".join(parts) if language == "zh" else " ".join(parts))
         if not is_ecommerce:
             print("\n已自动使用图文模式。" if language == "zh" else "\nThe selected layout automatically uses graphic-text mode.")
+        print("\n" + format_action_hint(language, style=number if (selected and number and (not is_ecommerce or args.style)) else None, layout=layout["id"], color=color_info.get("id") if color_info else None))
         return
 
     graphic_text_suffix = GRAPHIC_TEXT_SUFFIX if args.mode == "graphic-text" else ""
@@ -339,7 +364,7 @@ def main() -> None:
         print(f"{color_info['prompt_zh']}主题：{args.theme}。{zh_extra}{redraw_zh}{graphic_text_suffix}")
         print("\nEnglish prompt:")
         print(f"{color_info['prompt_en']} Theme: {args.theme}.{en_extra}{redraw_en}{graphic_text_suffix}")
-        print("\nPaste either prompt into an image AI; this skill does not generate an image.")
+        print("\n" + format_action_hint(detect_language(args.theme), color=color_info.get("id")))
         if args.mode == "pure-image":
             print("当前处于纯图模式，可切换为图文模式。")
         return
@@ -372,7 +397,7 @@ def main() -> None:
     print(f"风格名称：{selected['generation_name']}。{color_zh}主题：{args.theme}。{reference_zh}{traits_zh}{reference_image_zh}{zh_extra}{redraw_zh}{graphic_text_suffix}")
     print("\nEnglish prompt:")
     print(f"Style name: {selected['generation_name']}.{color_en} Theme: {args.theme}.{reference_en}{traits_en}{reference_image_en}{en_extra}{redraw_en}{graphic_text_suffix}")
-    print("\nPaste either prompt into an image AI; this skill does not generate an image.")
+    print("\n" + format_action_hint(detect_language(args.theme), style=number, color=color_info.get("id") if color_info else None))
     if args.mode == "pure-image":
         print("当前处于纯图模式，可切换为图文模式。")
 

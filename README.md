@@ -29,12 +29,14 @@
 > 唯一的小请求：如果这个项目对你有帮助，或者你的项目基于它进行了二次开发，**请保留作者 yang0 和原仓库地址**（[https://github.com/yang0/handraw-style](https://github.com/yang0/handraw-style)）。开源不易，感谢你的理解与支持！
 
 > [!TIP]
-> ### 📚 官方飞书知识库已上线
-> 🔗 **[👉 点击进入官方飞书知识库 ↗](https://ecmn3m3i17.feishu.cn/wiki/space/7689222460876524523?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home)**
-> 
-> 1. 🖼️ **速查画廊**：移动端与网页端秒级检索 365 种视觉风格与 170 种排版效果大图
-> 2. ❓ **Skill 常见问题与提示词速查**：安装配置、出图答疑、常见生图报错排查与经典提示词模版
-> 3. 💡 **创业与变现经验**：持续更新社群创作者分享的一线实操变现案例与商业探索心得
+> ### 🚀 三种使用方式（按需选择，三端画风与配方互通）
+> | 使用方式 | 适合人群 | 核心优势 | 入口 |
+> | :--- | :--- | :--- | :--- |
+> | **🌐 官网在线创作台** | 零配置尝鲜 / 手机与网页直出 | 免梯子免 API Key，注册验证即送免费生图体验 + 20 积分；含社区实测作品广场与爆款灵感库 | **[👉 打开 handraw-style.com ↗](https://handraw-style.com/?utm_source=github_readme)** |
+> | **💻 桌面工作台客户端** | 高频创作者 / 批量配图 / 隐私本地存 | Windows & macOS 原生体验：画册秒搜对比、`Alt+Space` 快门出图、批注改图、文章一键配图、画风库自动增量更新（支持自带 Key 或官网算力） | **[👉 下载客户端（国内加速直链）↗](https://handraw-style.com/?view=download&utm_source=github_readme)** |
+> | **🧩 开源 Skill（本仓库）** | Codex / Claude Code / Cursor 用户 | 永久免费开源、离线生成中英双语提示词与本地画廊浏览，支持与官网账号同步个人画风 | 见下方「安装」章节 |
+>
+> 📚 延伸文档：**[官方飞书知识库 ↗](https://ecmn3m3i17.feishu.cn/wiki/space/7689222460876524523?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home)**（常见问题速查与社群变现案例） · **[官网灵感库 ↗](https://handraw-style.com/?view=inspirations&utm_source=github_readme)** · **[官网作品广场 ↗](https://handraw-style.com/?view=works&utm_source=github_readme)**
 
 ---
 

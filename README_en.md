@@ -30,12 +30,14 @@ Whether you are crafting social media post covers, educational infographics, arc
 > The only small request: if this project helps you, or if your project is based on secondary development of this work, **please retain author yang0 and the original repository link** ([https://github.com/yang0/handraw-style](https://github.com/yang0/handraw-style)). Thank you for your support and respect for open source!
 
 > [!TIP]
-> ### 📚 Official Feishu Knowledge Base is Live
-> 🔗 **[👉 Click to Access Feishu Knowledge Base ↗](https://ecmn3m3i17.feishu.cn/wiki/space/7689222460876524523?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home)**
-> 
-> 1. 🖼️ **Quick Visual Gallery**: Instant mobile & desktop browsing of all 365 styles and 170 layouts
-> 2. ❓ **Skill FAQ & Prompt Cheat Sheet**: Setup walkthroughs, troubleshooting tips, and ready-to-use prompt patterns
-> 3. 💡 **Entrepreneurship & Monetization**: Continuously updated real-world case studies and revenue strategies shared by the community
+> ### 🚀 Three Ways to Use Handraw (Synced Styles & Recipes)
+> | Option | Best For | Key Benefits | Link |
+> | :--- | :--- | :--- | :--- |
+> | **🌐 Web Studio** | Zero-setup instant generation | No API key or proxy needed; sign up & verify email for free starter generations + 20 community credits, curated Inspirations Vault & Works Square | **[👉 Open handraw-style.com ↗](https://handraw-style.com/?utm_source=github_readme)** |
+> | **💻 Desktop Client** | Power creators & batch workflows | Windows & macOS app: Style Atlas side-by-side compare, `Alt+Space` Quick Shot, annotation editing, 1-click article illustration, auto incremental style updates (BYO Key or Web credits) | **[👉 Download Desktop Client ↗](https://handraw-style.com/?view=download&utm_source=github_readme)** |
+> | **🧩 Open-Source Skill** | Codex / Claude Code / Cursor users | 100% free & offline bilingual prompt engine + local visual gallery, with optional account sync to Web & Desktop | See Installation below |
+>
+> 📚 More resources: **[Official Feishu Knowledge Base ↗](https://ecmn3m3i17.feishu.cn/wiki/space/7689222460876524523?ccm_open_type=lark_wiki_spaceLink&open_tab_from=wiki_home)** · **[Inspirations Vault ↗](https://handraw-style.com/?view=inspirations&utm_source=github_readme)** · **[Community Works ↗](https://handraw-style.com/?view=works&utm_source=github_readme)**
 
 ---
 
